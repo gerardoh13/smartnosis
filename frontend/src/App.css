@@ -4,5 +4,8 @@
   flex-direction: column;
   align-items: center;
   background-color: #282c34;
+}
 
+.w60 {
+  width: 60%;
 }

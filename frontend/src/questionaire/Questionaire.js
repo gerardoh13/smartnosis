@@ -1,12 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
+// import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
+
 import StepOne from "./StepOne";
-// import StepTwo from "./StepTwo";
+import StepTwo from "./StepTwo";
 // import StepThree from "./StepThree";
 // import UserContext from "../users/UserContext";
 // import { useNavigate } from "react-router-dom";
 import "./Questionaire.css";
 
-function Register({ additionalChild }) {
+function Questionaire({ additionalChild }) {
   const INITIAL_STATE = {
     firstName: "",
     lastName: "",
@@ -37,16 +39,16 @@ function Register({ additionalChild }) {
     setStep((prev) => prev + n);
   };
 
-  const submit = async () => {
-    // await registerInfant({
-    //   firstName: formData.firstName,
-    //   gender: formData.firstName,
-    //   dob: formData.dob,
-    //   publicId: formData.publicId,
-    // });
-    // navigate("/");
-    console.log(formData);
-  };
+  //   const submit = async () => {
+  //     await registerInfant({
+  //       firstName: formData.firstName,
+  //       gender: formData.firstName,
+  //       dob: formData.dob,
+  //       publicId: formData.publicId,
+  //     });
+  //     navigate("/");
+  //     console.log(formData);
+  //   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,14 +71,13 @@ function Register({ additionalChild }) {
       );
       break;
     case 1:
-      //   currStep = (
-      //     <StepTwo
-      //       data={formData}
-      //       handleChange={handleChange}
-      //       changeStep={changeStep}
-      //     />
-      //   );
-      <h1>Step 2</h1>;
+      currStep = (
+        <StepTwo
+          data={formData}
+          handleChange={handleChange}
+          changeStep={changeStep}
+        />
+      );
       break;
     case 2:
       //   currStep = (
@@ -103,11 +104,20 @@ function Register({ additionalChild }) {
 
   return (
     <>
-      <div className="card my-auto text-center col-lg-4 col-md-5 col-sm-6 col-11">
+      <div className="card my-4 col-lg-6 col-md-5 col-sm-10 col-11">
+        <img
+          src="smartnosis-logo.jpg"
+          className="rounded mx-auto w60 mt-2"
+          alt="smartnosis logo"
+        />
+        <h2 className="my-3 text-center">Patient Intake Form</h2>
+      </div>
+
+      <div className="card col-lg-6 col-md-5 col-sm-10 col-11">
         <div className="card-body">
           {currStep}
           <div className="row">
-            <div className="mt-2">
+            <div className="mt-2 text-center">
               <span
                 className={`step ${
                   formData.firstName && formData.lastName ? "finish" : ""
@@ -133,4 +143,4 @@ function Register({ additionalChild }) {
   );
 }
 
-export default Register;
+export default Questionaire;

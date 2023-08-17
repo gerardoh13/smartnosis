@@ -3,11 +3,11 @@ import React from "react";
 function StepOne({ data, handleChange, changeStep }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (data.firstName && data.lastName && data.dob) changeStep(1);
+    changeStep(1);
+    // if (data.firstName && data.lastName && data.dob) changeStep(1);
   };
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
-      <h4 className="my-4">Patient Intake Form</h4>
       <div className="form-floating">
         <input
           type="text"
@@ -17,7 +17,7 @@ function StepOne({ data, handleChange, changeStep }) {
           placeholder="First Name"
           value={data.firstName}
           onChange={handleChange}
-          required
+          //   required
         />
         <label htmlFor="firstName">First Name</label>
         <div className="invalid-feedback">Please enter your first name.</div>
@@ -31,7 +31,7 @@ function StepOne({ data, handleChange, changeStep }) {
           placeholder="Last Name"
           value={data.lastName}
           onChange={handleChange}
-          required
+          //   required
         />
         <label htmlFor="lastName">Last Name</label>
       </div>
@@ -49,7 +49,7 @@ function StepOne({ data, handleChange, changeStep }) {
             // min={minDate}
             value={data.dob}
             onChange={handleChange}
-            required
+            // required
           />
         </div>
       </div>
@@ -116,7 +116,7 @@ function StepOne({ data, handleChange, changeStep }) {
             id="weight"
             value={data.weight}
             onChange={handleChange}
-            required
+            // required
           />
         </div>
       </div>
@@ -124,16 +124,37 @@ function StepOne({ data, handleChange, changeStep }) {
         <div className="col-6">
           <p className="text-start ms-1">Do you have insurance?</p>
         </div>
-        <div className="col-6">
+        <div className="col-6 text-center">
           <input
-            className="form-control"
-            type="number"
-            name="weight"
-            id="weight"
-            value={data.weight}
+            type="radio"
+            className="btn-check gender"
+            name="gender"
+            id="yes-insurance"
+            autoComplete="off"
+            checked={data.gender === "male"}
+            value="male"
+            // required
             onChange={handleChange}
-            required
           />
+          <label
+            className="btn btn-outline-secondary me-2"
+            htmlFor="yes-insurance"
+          >
+            Yes
+          </label>
+          <input
+            type="radio"
+            className="btn-check gender"
+            name="gender"
+            id="no-insurance"
+            autoComplete="off"
+            checked={data.gender === "female"}
+            value="female"
+            onChange={handleChange}
+          />
+          <label className="btn btn-outline-secondary" htmlFor="no-insurance">
+            No
+          </label>
         </div>
       </div>
       <button className="btn btn-success mt-3 form-control">Next</button>
