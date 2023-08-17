@@ -3,7 +3,7 @@ import React from "react";
 function StepTwo({ data, handleChange, changeStep }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (data.firstName && data.lastName && data.dob) changeStep(1);
+    changeStep(1);
   };
 
   const conditions = [
@@ -52,8 +52,7 @@ function StepTwo({ data, handleChange, changeStep }) {
   });
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
-      <h4 className="my-4">Patient Intake Form</h4>
-      <p>Medical History</p>
+      <h4>Medical History</h4>
       <p>
         Have you been diagnosed with any of the following (past or present)?
       </p>

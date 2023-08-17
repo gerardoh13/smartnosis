@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
-// import StepThree from "./StepThree";
+import StepThree from "./StepThree";
 // import UserContext from "../users/UserContext";
 // import { useNavigate } from "react-router-dom";
 import "./Questionaire.css";
@@ -80,14 +80,13 @@ function Questionaire({ additionalChild }) {
       );
       break;
     case 2:
-      //   currStep = (
-      //     <StepThree
-      //       data={formData}
-      //       setFormData={setFormData}
-      //       changeStep={changeStep}
-      //     />
-      //   );
-      <h1>Step 3</h1>;
+        currStep = (
+          <StepThree
+            data={formData}
+            setFormData={setFormData}
+            changeStep={changeStep}
+          />
+        );
       break;
     case 3:
       //   currStep = (
