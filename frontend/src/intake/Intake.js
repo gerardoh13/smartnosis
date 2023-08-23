@@ -76,14 +76,34 @@ function Intake({ additionalChild }) {
     }));
   };
 
+const handleKeydown = (e) => {
+  let value = formData[e.target.name]
+  if (e.keyCode !== 8) return
+  if (value[value.length - 1] !== "-") return
+  value = e.target.value.slice(0, -1)
+  setFormData((data) => ({
+    ...data,
+    [e.target.name]: value,
+  }));
+}
+
   const handlePhones = (e) => {
     const { value, name } = e.target;
-    let sanitizedValue = value.replace(/[^0-9-]/g, ""); // Remove all non-numeric characters
+    const sanitizedValue = value.replace(/[^0-9]/g, ''); // Remove all non-numeric characters
+
     // Format the value with dashes for a US phone number
-    if (value.length === 3) sanitizedValue += "-"
+    const formattedValue = sanitizedValue
+      .replace(/^(\d{0,3})(\d{0,3})(\d{0,4})$/, (_, p1, p2, p3) => {
+        if (p1 && p2) {
+          return `${p1}-${p2}-${p3}`;
+        } else if (p1) {
+          return `${p1}-${p2}`;
+        }
+        return p1;
+      });
     setFormData((data) => ({
       ...data,
-      [name]: sanitizedValue,
+      [name]: formattedValue,
     }));
   };
 
@@ -97,6 +117,7 @@ function Intake({ additionalChild }) {
           changeStep={changeStep}
           maxDate={maxDate}
           handlePhones={handlePhones}
+          handleKeydown={handleKeydown}
         />
       );
       break;

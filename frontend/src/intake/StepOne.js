@@ -1,6 +1,13 @@
 import React from "react";
 
-function StepOne({ data, handleChange, changeStep, maxDate, handlePhones }) {
+function StepOne({
+  data,
+  handleChange,
+  changeStep,
+  maxDate,
+  handlePhones,
+  handleKeydown,
+}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     changeStep(1);
@@ -70,50 +77,52 @@ function StepOne({ data, handleChange, changeStep, maxDate, handlePhones }) {
         {/* Sex */}
       </div>
 
-      <div>
+      <div className="mt-3">
         <span className="text-start ms-1 me-3">Sex:</span>
-        <input
-          type="radio"
-          className="btn-check ms-3"
-          name="sex"
-          id="male"
-          autoComplete="off"
-          onChange={handleChange}
-          value="male"
-          // required
-        />
-        <label className="btn btn-outline-secondary me-2" htmlFor="male">
-          Male
-        </label>
-        <input
-          type="radio"
-          className="btn-check"
-          name="sex"
-          id="female"
-          autoComplete="off"
-          onChange={handleChange}
-          value="female"
-          // required
-        />
-        <label className="btn btn-outline-secondary me-2" htmlFor="female">
-          Female
-        </label>
-        <input
-          type="radio"
-          className="btn-check"
-          name="sex"
-          id="other"
-          autoComplete="off"
-          onChange={handleChange}
-          value="other"
-          // required
-        />
-        <label className="btn btn-outline-secondary me-2" htmlFor="other">
-          Other
-        </label>
+        <div className="text-center">
+          <input
+            type="radio"
+            className="btn-check ms-3"
+            name="sex"
+            id="male"
+            autoComplete="off"
+            onChange={handleChange}
+            value="male"
+            // required
+          />
+          <label className="btn btn-outline-secondary me-2" htmlFor="male">
+            Male
+          </label>
+          <input
+            type="radio"
+            className="btn-check"
+            name="sex"
+            id="female"
+            autoComplete="off"
+            onChange={handleChange}
+            value="female"
+            // required
+          />
+          <label className="btn btn-outline-secondary me-2" htmlFor="female">
+            Female
+          </label>
+          <input
+            type="radio"
+            className="btn-check"
+            name="sex"
+            id="other"
+            autoComplete="off"
+            onChange={handleChange}
+            value="other"
+            // required
+          />
+          <label className="btn btn-outline-secondary me-2" htmlFor="other">
+            Other
+          </label>
+        </div>
       </div>
 
-      <div>
+      <div className="my-3">
         <span>Phone</span>
         <input
           className="form-control"
@@ -122,9 +131,52 @@ function StepOne({ data, handleChange, changeStep, maxDate, handlePhones }) {
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           name="phone"
           onChange={handlePhones}
+          onKeyDown={handleKeydown}
           value={data.phone}
           required
         />
+      </div>
+
+      <div className="form-floating mb-3">
+        <input
+          type="text"
+          className="form-control"
+          id="address1"
+          name="address1"
+          placeholder="Address 1"
+          value={data.address1}
+          onChange={handleChange}
+          //   required
+        />
+        <label htmlFor="address1">Address 1</label>
+      </div>
+
+      <div className="form-floating">
+        <input
+          type="text"
+          className="form-control"
+          id="address2"
+          name="address2"
+          placeholder="Address 2"
+          value={data.address2}
+          onChange={handleChange}
+          //   required
+        />
+        <label htmlFor="address2">Address 2</label>
+      </div>
+
+      <div className="form-floating mt-3">
+        <input
+          type="text"
+          className="form-control"
+          id="city"
+          name="city"
+          placeholder="City"
+          value={data.city}
+          onChange={handleChange}
+          //   required
+        />
+        <label htmlFor="city">City</label>
       </div>
 
       {/* <div className="row my-2">
