@@ -1,13 +1,14 @@
 import React from "react";
 
-function StepOne({ data, handleChange, changeStep }) {
+function StepOne({ data, handleChange, changeStep, maxDate, handlePhones }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     changeStep(1);
-    // if (data.firstName && data.lastName && data.dob) changeStep(1);
+    // if (data.firstName && data.lastName && data.dob && data.weight && data.feet) changeStep(1);
   };
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
+      {/* firstname */}
       <div className="form-floating">
         <input
           type="text"
@@ -20,8 +21,22 @@ function StepOne({ data, handleChange, changeStep }) {
           //   required
         />
         <label htmlFor="firstName">First Name</label>
-        <div className="invalid-feedback">Please enter your first name.</div>
       </div>
+      {/* middleName */}
+      <div className="form-floating mt-3">
+        <input
+          type="text"
+          className="form-control"
+          id="middleName"
+          name="middleName"
+          placeholder="First Name"
+          value={data.middleName}
+          onChange={handleChange}
+          //   required
+        />
+        <label htmlFor="middleName">Middle Name</label>
+      </div>
+      {/* lastName */}
       <div className="form-floating my-3">
         <input
           type="text"
@@ -35,6 +50,7 @@ function StepOne({ data, handleChange, changeStep }) {
         />
         <label htmlFor="lastName">Last Name</label>
       </div>
+      {/* Dob */}
       <div className="row">
         <div className="col-6">
           <p className="text-start ms-1 mt-1">Date of Birth</p>
@@ -45,15 +61,73 @@ function StepOne({ data, handleChange, changeStep }) {
             type="date"
             name="dob"
             id="dob"
-            // max={maxDate}
-            // min={minDate}
+            max={maxDate}
             value={data.dob}
             onChange={handleChange}
             // required
           />
         </div>
+        {/* Sex */}
       </div>
-      <div className="row my-2">
+
+      <div>
+        <span className="text-start ms-1 me-3">Sex:</span>
+        <input
+          type="radio"
+          className="btn-check ms-3"
+          name="sex"
+          id="male"
+          autoComplete="off"
+          onChange={handleChange}
+          value="male"
+          // required
+        />
+        <label className="btn btn-outline-secondary me-2" htmlFor="male">
+          Male
+        </label>
+        <input
+          type="radio"
+          className="btn-check"
+          name="sex"
+          id="female"
+          autoComplete="off"
+          onChange={handleChange}
+          value="female"
+          // required
+        />
+        <label className="btn btn-outline-secondary me-2" htmlFor="female">
+          Female
+        </label>
+        <input
+          type="radio"
+          className="btn-check"
+          name="sex"
+          id="other"
+          autoComplete="off"
+          onChange={handleChange}
+          value="other"
+          // required
+        />
+        <label className="btn btn-outline-secondary me-2" htmlFor="other">
+          Other
+        </label>
+      </div>
+
+      <div>
+        <span>Phone</span>
+        <input
+          className="form-control"
+          type="text"
+          maxLength={12}
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          name="phone"
+          onChange={handlePhones}
+          value={data.phone}
+          required
+        />
+      </div>
+
+      {/* <div className="row my-2">
         <div className="col-6">
           <br />
           <p className="text-start ms-1">Height</p>
@@ -103,7 +177,7 @@ function StepOne({ data, handleChange, changeStep }) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="row my-3">
         <div className="col-6">
           <p className="text-start ms-1">Weight</p>
@@ -127,14 +201,13 @@ function StepOne({ data, handleChange, changeStep }) {
         <div className="col-6 text-center">
           <input
             type="radio"
-            className="btn-check gender"
-            name="gender"
+            className="btn-check"
+            name="insurance"
             id="yes-insurance"
             autoComplete="off"
-            checked={data.gender === "male"}
-            value="male"
-            // required
             onChange={handleChange}
+            value="Yes"
+            // required
           />
           <label
             className="btn btn-outline-secondary me-2"
@@ -144,13 +217,12 @@ function StepOne({ data, handleChange, changeStep }) {
           </label>
           <input
             type="radio"
-            className="btn-check gender"
-            name="gender"
+            className="btn-check"
+            name="insurance"
             id="no-insurance"
             autoComplete="off"
-            checked={data.gender === "female"}
-            value="female"
             onChange={handleChange}
+            value="No"
           />
           <label className="btn btn-outline-secondary" htmlFor="no-insurance">
             No

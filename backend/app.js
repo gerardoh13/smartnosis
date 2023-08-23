@@ -3,8 +3,6 @@
 const express = require("express");
 const cors = require("cors");
 
-// const pdf = require("./models/pdf");
-
 const { NotFoundError } = require("./expressError");
 
 // const { authenticateJWT } = require("./middleware/auth");
@@ -19,10 +17,6 @@ app.use(express.json());
 
 // app.use("/users", usersRoutes);
 app.use("/pdf", pdfRoutes);
-
-app.get("/pdf", function(req, res, next){
-    return "Hello world"
-})
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {

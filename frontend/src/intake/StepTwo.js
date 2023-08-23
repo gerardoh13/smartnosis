@@ -1,9 +1,9 @@
 import React from "react";
 
-function StepThree({ data, handleChange, changeStep }) {
+function StepThree({ data, handleCheckbox, changeStep }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (data.firstName && data.lastName && data.dob) changeStep(1);
+    changeStep(1);
   };
 
   const symptoms = [
@@ -27,12 +27,15 @@ function StepThree({ data, handleChange, changeStep }) {
 
   let checkboxes = symptoms.map((symptom) => {
     return (
-      <div className="form-check mb-3">
+      <div className="form-check mb-3" key={symptom}>
         <input
           className="form-check-input"
           type="checkbox"
           value={symptom}
           id={symptom}
+          onChange={handleCheckbox}
+          checked={data.symptoms.has(symptom)}
+          name="symptoms"
         />
         <label className="form-check-label" htmlFor={symptom}>
           <strong>{symptom}</strong>
@@ -43,9 +46,7 @@ function StepThree({ data, handleChange, changeStep }) {
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
       <h4>Symptoms</h4>
-      <p>
-        What are you experiencing?
-      </p>
+      <p>What are you experiencing?</p>
       {checkboxes}
       <div className="row">
         <button

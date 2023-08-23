@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // import HomeAnon from "../components/HomeAnon";
-import Questionaire from "../questionaire/Questionaire";
+import Intake from "../intake/Intake";
 // import PrivateRoutes from "./PrivateRoutes";
 // import PublicRoutes from "./PublicRoutes";
 import UserContext from "../common/UserContext";
@@ -16,7 +16,7 @@ function NavRoutes({ login, signup }) {
         exact
         path="/"
         element={
-          <Questionaire />
+          <Intake />
           //   currUser ? <Home /> : <HomeAnon />
         }
       />

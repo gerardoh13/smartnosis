@@ -1,6 +1,6 @@
 import React from "react";
 
-function StepTwo({ data, handleChange, changeStep }) {
+function StepTwo({ data, changeStep, handleCheckbox, submit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     changeStep(1);
@@ -10,42 +10,43 @@ function StepTwo({ data, handleChange, changeStep }) {
     "Pneumonia",
     "Bronchitis",
     "Cancer",
-    "Stomach/intestinal ulcers",
+    "Stomach/Intestinal Ulcers",
     "Kidney Stones",
-    "Mental illness",
-    "Blood Clots/phlebitis",
+    "Mental Illness",
+    "Blood Clots/Phlebitis",
     "Hernias",
     "Diabetes",
-    "Heart attack",
-    "Gall stones",
+    "Heart Attack",
+    "Gall Stones",
     "Seizures",
     "Cataracts",
-    "High cholesterol",
+    "High Cholesterol",
     "Strokes",
     "Glaucoma",
-    "Sexually transmitted Diseases",
-    "Asthma/emphysema",
-    "High blood pressure",
+    "Sexually Transmitted Diseases",
+    "Asthma/Emphysema",
+    "High Blood Pressure",
     "Kidney failure",
     "Gout",
     "Arthritis",
-    "Parkinson's disease",
+    "Parkinson's Disease",
     "Migraine headaches",
   ];
 
   let checkboxes = conditions.map((condition) => {
     return (
-      <div className="form-check mb-3">
+      <div className="form-check mb-3" key={condition}>
         <input
           className="form-check-input"
           type="checkbox"
           value={condition}
           id={condition}
+          onChange={handleCheckbox}
+          checked={data.conditions.has(condition)}
+          name="conditions"
         />
         <label className="form-check-label" htmlFor={condition}>
-            <strong>
-            {condition}
-            </strong>
+          <strong>{condition}</strong>
         </label>
       </div>
     );
@@ -64,10 +65,14 @@ function StepTwo({ data, handleChange, changeStep }) {
         >
           Previous
         </button>
-        <button className="btn btn-success mt-3 form-control col">
+        <button
+          className="btn btn-success mt-3 form-control col"
+          onClick={() => submit(data)}
+        >
           Next
         </button>
-      </div>    </form>
+      </div>{" "}
+    </form>
   );
 }
 

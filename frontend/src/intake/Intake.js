@@ -1,61 +1,89 @@
-// import React, { useState, useContext, useEffect } from "react";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import SmartnosisApi from "../api";
 // import UserContext from "../users/UserContext";
 // import { useNavigate } from "react-router-dom";
-import "./Questionaire.css";
+import "./Intake.css";
 
-function Questionaire({ additionalChild }) {
+function Intake({ additionalChild }) {
   const INITIAL_STATE = {
     firstName: "",
     lastName: "",
+    middleName: "",
     feet: "",
-    inches: "",
+    inches: "0",
     weight: "",
     dob: "",
+    insurance: "",
+    phone: "",
+    symptoms: new Set(),
+    conditions: new Set(),
   };
 
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState(INITIAL_STATE);
   //   const { registerInfant } = useContext(UserContext);
-  //   const [maxDate, setMaxDate] = useState("");
-  //   const [minDate, setMinDate] = useState("");
+  const [maxDate, setMaxDate] = useState("");
+  // const [minDate, setMinDate] = useState("");
   //   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     let max = new Date().toISOString().slice(0, -14);
-  //     let event = new Date();
-  //     let twoYearsAgo = parseInt(event.getFullYear()) - 2;
-  //     event.setFullYear(twoYearsAgo);
-  //     let min = event.toISOString().slice(0, -14);
-  //     setMaxDate(max);
-  //     setMinDate(min);
-  //   }, [setMaxDate, setMinDate]);
+  useEffect(() => {
+    let max = new Date().toISOString().slice(0, -14);
+    setMaxDate(max);
+  }, [setMaxDate]);
 
   const changeStep = (n) => {
     setStep((prev) => prev + n);
   };
 
-  //   const submit = async () => {
-  //     await registerInfant({
-  //       firstName: formData.firstName,
-  //       gender: formData.firstName,
-  //       dob: formData.dob,
-  //       publicId: formData.publicId,
-  //     });
-  //     navigate("/");
-  //     console.log(formData);
-  //   };
+  const submit = async (data) => {
+    let dataCopy = { ...data };
+    delete dataCopy.symptoms;
+    delete dataCopy.conditions;
+    dataCopy.symptoms = Array.from(data.symptoms);
+    dataCopy.conditions = Array.from(data.conditions);
+    let res = await SmartnosisApi.generatePDF(dataCopy);
+    const blob = new Blob([res.data], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    setStep(0);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const trimCheck = name === "firstName";
+    const trimCheck =
+      name === "firstName" || name === "lastName" || name === "middleName";
     setFormData((data) => ({
       ...data,
       [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
+    }));
+  };
+
+  const handleCheckbox = (e) => {
+    const { checked, value, name } = e.target;
+    let copy = new Set([...formData[name]]);
+    if (checked) {
+      if (!copy.has(value)) copy.add(value);
+    } else {
+      if (copy.has(value)) copy.delete(value);
+    }
+    setFormData((data) => ({
+      ...data,
+      [name]: copy,
+    }));
+  };
+
+  const handlePhones = (e) => {
+    const { value, name } = e.target;
+    let sanitizedValue = value.replace(/[^0-9-]/g, ""); // Remove all non-numeric characters
+    // Format the value with dashes for a US phone number
+    if (value.length === 3) sanitizedValue += "-"
+    setFormData((data) => ({
+      ...data,
+      [name]: sanitizedValue,
     }));
   };
 
@@ -67,6 +95,8 @@ function Questionaire({ additionalChild }) {
           data={formData}
           handleChange={handleChange}
           changeStep={changeStep}
+          maxDate={maxDate}
+          handlePhones={handlePhones}
         />
       );
       break;
@@ -76,17 +106,20 @@ function Questionaire({ additionalChild }) {
           data={formData}
           handleChange={handleChange}
           changeStep={changeStep}
+          handleCheckbox={handleCheckbox}
         />
       );
       break;
     case 2:
-        currStep = (
-          <StepThree
-            data={formData}
-            setFormData={setFormData}
-            changeStep={changeStep}
-          />
-        );
+      currStep = (
+        <StepThree
+          data={formData}
+          setFormData={setFormData}
+          changeStep={changeStep}
+          handleCheckbox={handleCheckbox}
+          submit={submit}
+        />
+      );
       break;
     case 3:
       //   currStep = (
@@ -142,4 +175,4 @@ function Questionaire({ additionalChild }) {
   );
 }
 
-export default Questionaire;
+export default Intake;
