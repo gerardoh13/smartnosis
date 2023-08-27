@@ -126,14 +126,14 @@ function StepOne({
         <span>Phone</span>
         <input
           className="form-control"
-          type="text"
+          type="tel"
           maxLength={12}
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           name="phone"
           onChange={handlePhones}
           onKeyDown={handleKeydown}
           value={data.phone}
-          required
+          // required
         />
       </div>
 
@@ -179,6 +179,35 @@ function StepOne({
         <label htmlFor="city">City</label>
       </div>
 
+      <div className="row mb-3">
+      <div className="form-floating mt-3 col">
+        <input
+          type="text"
+          className="form-control"
+          id="state"
+          name="state"
+          placeholder="State"
+          value={data.state}
+          onChange={handleChange}
+          //   required
+        />
+        <label htmlFor="state">State</label>
+      </div>
+      <div className="form-floating mt-3 col">
+        <input
+          type="number"
+          className="form-control"
+          id="zip"
+          name="zip"
+          placeholder="Zip Code"
+          value={data.zip}
+          onChange={handleChange}
+          //   required
+        />
+        <label htmlFor="zip">Zip Code</label>
+      </div>
+
+      </div>
       {/* <div className="row my-2">
         <div className="col-6">
           <br />
@@ -230,7 +259,7 @@ function StepOne({
           </div>
         </div>
       </div> */}
-      <div className="row my-3">
+      {/* <div className="row my-3">
         <div className="col-6">
           <p className="text-start ms-1">Weight</p>
         </div>
@@ -242,10 +271,11 @@ function StepOne({
             id="weight"
             value={data.weight}
             onChange={handleChange}
-            // required
+            required
           />
         </div>
-      </div>
+      </div> */}
+
       <div className="row mb-2">
         <div className="col-6">
           <p className="text-start ms-1">Do you have insurance?</p>

@@ -10,15 +10,20 @@ import "./Intake.css";
 
 function Intake({ additionalChild }) {
   const INITIAL_STATE = {
-    firstName: "",
-    lastName: "",
+    firstName: "Gerardo",
+    lastName: "Huerta",
     middleName: "",
-    feet: "",
-    inches: "0",
-    weight: "",
+    // feet: "",
+    // inches: "0",
+    // weight: "",
     dob: "",
+    address1: "1570 W. 1st St.",
+    address2: "Unit 16",
+    city: "Santa Ana",
+    state: "CA",
+    zip: "92703",
     insurance: "",
-    phone: "",
+    phone: "559-797-5961",
     symptoms: new Set(),
     conditions: new Set(),
   };
@@ -41,6 +46,7 @@ function Intake({ additionalChild }) {
 
   const submit = async (data) => {
     let dataCopy = { ...data };
+    dataCopy.date = new Date().toISOString().slice(0, -14)
     delete dataCopy.symptoms;
     delete dataCopy.conditions;
     dataCopy.symptoms = Array.from(data.symptoms);
