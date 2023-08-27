@@ -1,12 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
-function StepThree({ data, handleCheckbox, changeStep }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    changeStep(1);
-  };
-
-  const symptoms = [
+function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
+  const defaultSymptoms = [
     "Abnormal Pain",
     "Anxiety",
     "Asthma",
@@ -24,6 +19,23 @@ function StepThree({ data, handleCheckbox, changeStep }) {
     "Stroke",
     "Urinary Pain",
   ];
+
+  const [symptoms, setSymptoms] = useState(defaultSymptoms);
+  const [otherSymptom, setOtherSymptom] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    changeStep(1);
+  };
+  const addSymptom = () => {
+    setSymptoms((prev) => [...prev, otherSymptom]);
+    setOtherSymptom("");
+    let copy = new Set([...data.symptoms, otherSymptom]);
+    setFormData((data) => ({
+      ...data,
+      symptoms: copy,
+    }));
+  };
 
   let checkboxes = symptoms.map((symptom) => {
     return (
@@ -48,6 +60,22 @@ function StepThree({ data, handleCheckbox, changeStep }) {
       <h4>Symptoms</h4>
       <p>What are you experiencing?</p>
       {checkboxes}
+      <hr />
+      <p>
+        <b>Any Symptoms not listed?</b>
+      </p>
+      <div className="input-group my-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Symptom:"
+          value={otherSymptom}
+          onChange={(e) => setOtherSymptom(e.target.value)}
+        />
+        <button className="btn btn-primary" type="button" onClick={addSymptom}>
+          Add
+        </button>
+      </div>
       <div className="row">
         <button
           className="btn btn-success mt-3 me-2 form-control col"

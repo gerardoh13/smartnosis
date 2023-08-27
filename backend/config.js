@@ -16,11 +16,11 @@ const PORT = +process.env.PORT || 3001;
 
 // const BEAMS_SECRET_KEY = process.env.BEAMS_SECRET_KEY;
 
-// function getDatabaseUri() {
-//   return process.env.NODE_ENV === "test"
-//     ? "smartnosis_test"
-//     : process.env.DATABASE_URL || "smartnosis";
-// }
+function getDatabaseUri() {
+  return process.env.NODE_ENV === "test"
+    ? "smartnosis_test"
+    : process.env.DATABASE_URL || "smartnosis";
+}
 
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
@@ -33,5 +33,5 @@ module.exports = {
 //   BEAMS_INSTANCE_ID,
 //   BEAMS_SECRET_KEY,
 //   REACT_APP_HOST,
-//   getDatabaseUri,
+  getDatabaseUri,
 };

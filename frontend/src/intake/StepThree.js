@@ -1,12 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
-function StepTwo({ data, changeStep, handleCheckbox, submit }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    changeStep(1);
-  };
-
-  const conditions = [
+function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
+  const defaultConditions = [
     "Pneumonia",
     "Bronchitis",
     "Cancer",
@@ -33,6 +28,24 @@ function StepTwo({ data, changeStep, handleCheckbox, submit }) {
     "Migraine headaches",
   ];
 
+  const [conditions, setConditions] = useState(defaultConditions);
+  const [otherCondition, setOtherCondition] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    changeStep(1);
+  };
+
+  const addCondition = () => {
+    setConditions((prev) => [...prev, otherCondition]);
+    setOtherCondition("");
+    let copy = new Set([...data.conditions, otherCondition]);
+    setFormData((data) => ({
+      ...data,
+      conditions: copy,
+    }));
+  };
+
   let checkboxes = conditions.map((condition) => {
     return (
       <div className="form-check mb-3" key={condition}>
@@ -58,6 +71,22 @@ function StepTwo({ data, changeStep, handleCheckbox, submit }) {
         Have you been diagnosed with any of the following (past or present)?
       </p>
       {checkboxes}
+      <hr />
+      <p>
+        <b>Any Conditions not listed?</b>
+      </p>
+      <div className="input-group my-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Condition:"
+          value={otherCondition}
+          onChange={(e) => setOtherCondition(e.target.value)}
+        />
+        <button className="btn btn-primary" type="button" onClick={addCondition}>
+          Add
+        </button>
+      </div>
       <div className="row">
         <button
           className="btn btn-success mt-3 me-2 form-control col"

@@ -8,18 +8,12 @@ import Intake from "../intake/Intake";
 import UserContext from "../common/UserContext";
 
 function NavRoutes({ login, signup }) {
-//   const { currUser } = useContext(UserContext);
+  //   const { currUser } = useContext(UserContext);
 
   return (
     <Routes>
-      <Route
-        exact
-        path="/"
-        element={
-          <Intake />
-          //   currUser ? <Home /> : <HomeAnon />
-        }
-      />
+      <Route exact path="/" element={<Intake />} />
+      <Route exact path="/form" element={<Intake />} />
       {/* <Route element={<PublicRoutes />}>
         <Route exact path="/reset" element={<ResetPwd />} />
       </Route> */}

@@ -7,15 +7,14 @@ function StepOne({
   maxDate,
   handlePhones,
   handleKeydown,
+  complete,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    changeStep(1);
-    // if (data.firstName && data.lastName && data.dob && data.weight && data.feet) changeStep(1);
+    if (complete()) changeStep(1);
   };
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
-      {/* firstname */}
       <div className="form-floating">
         <input
           type="text"
@@ -25,7 +24,7 @@ function StepOne({
           placeholder="First Name"
           value={data.firstName}
           onChange={handleChange}
-          //   required
+          required
         />
         <label htmlFor="firstName">First Name</label>
       </div>
@@ -39,7 +38,6 @@ function StepOne({
           placeholder="First Name"
           value={data.middleName}
           onChange={handleChange}
-          //   required
         />
         <label htmlFor="middleName">Middle Name</label>
       </div>
@@ -53,7 +51,7 @@ function StepOne({
           placeholder="Last Name"
           value={data.lastName}
           onChange={handleChange}
-          //   required
+          required
         />
         <label htmlFor="lastName">Last Name</label>
       </div>
@@ -71,7 +69,7 @@ function StepOne({
             max={maxDate}
             value={data.dob}
             onChange={handleChange}
-            // required
+            required
           />
         </div>
         {/* Sex */}
@@ -87,12 +85,14 @@ function StepOne({
             id="male"
             autoComplete="off"
             onChange={handleChange}
-            value="male"
-            // required
+            checked={data.sex === "Male"}
+            value="Male"
+            required
           />
           <label className="btn btn-outline-secondary me-2" htmlFor="male">
             Male
           </label>
+
           <input
             type="radio"
             className="btn-check"
@@ -100,8 +100,8 @@ function StepOne({
             id="female"
             autoComplete="off"
             onChange={handleChange}
-            value="female"
-            // required
+            checked={data.sex === "Female"}
+            value="Female"
           />
           <label className="btn btn-outline-secondary me-2" htmlFor="female">
             Female
@@ -113,8 +113,8 @@ function StepOne({
             id="other"
             autoComplete="off"
             onChange={handleChange}
-            value="other"
-            // required
+            checked={data.sex === "Other"}
+            value="Other"
           />
           <label className="btn btn-outline-secondary me-2" htmlFor="other">
             Other
@@ -122,8 +122,7 @@ function StepOne({
         </div>
       </div>
 
-      <div className="my-3">
-        <span>Phone</span>
+      <div className="form-floating my-3">
         <input
           className="form-control"
           type="tel"
@@ -133,8 +132,23 @@ function StepOne({
           onChange={handlePhones}
           onKeyDown={handleKeydown}
           value={data.phone}
-          // required
+          required
         />
+        <label htmlFor="phone">Primary Phone</label>
+      </div>
+
+      <div className="form-floating my-3">
+        <input
+          className="form-control"
+          type="tel"
+          maxLength={12}
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          name="phone2"
+          onChange={handlePhones}
+          onKeyDown={handleKeydown}
+          value={data.phone2}
+        />
+        <label htmlFor="phone2">Secondary Phone</label>
       </div>
 
       <div className="form-floating mb-3">
@@ -146,7 +160,7 @@ function StepOne({
           placeholder="Address 1"
           value={data.address1}
           onChange={handleChange}
-          //   required
+          required
         />
         <label htmlFor="address1">Address 1</label>
       </div>
@@ -174,39 +188,42 @@ function StepOne({
           placeholder="City"
           value={data.city}
           onChange={handleChange}
-          //   required
+          required
         />
         <label htmlFor="city">City</label>
       </div>
 
       <div className="row mb-3">
-      <div className="form-floating mt-3 col">
-        <input
-          type="text"
-          className="form-control"
-          id="state"
-          name="state"
-          placeholder="State"
-          value={data.state}
-          onChange={handleChange}
-          //   required
-        />
-        <label htmlFor="state">State</label>
-      </div>
-      <div className="form-floating mt-3 col">
-        <input
-          type="number"
-          className="form-control"
-          id="zip"
-          name="zip"
-          placeholder="Zip Code"
-          value={data.zip}
-          onChange={handleChange}
-          //   required
-        />
-        <label htmlFor="zip">Zip Code</label>
-      </div>
-
+        <div className="form-floating mt-3 col">
+          <input
+            type="text"
+            className="form-control"
+            id="state"
+            name="state"
+            placeholder="State"
+            value={data.state}
+            onChange={handleChange}
+            required
+          />
+          <label className="ms-2" htmlFor="state">
+            State
+          </label>
+        </div>
+        <div className="form-floating mt-3 col">
+          <input
+            type="number"
+            className="form-control"
+            id="zip"
+            name="zip"
+            placeholder="Zip Code"
+            value={data.zip}
+            onChange={handleChange}
+            required
+          />
+          <label className="ms-2" htmlFor="zip">
+            Zip Code
+          </label>
+        </div>
       </div>
       {/* <div className="row my-2">
         <div className="col-6">
@@ -288,8 +305,9 @@ function StepOne({
             id="yes-insurance"
             autoComplete="off"
             onChange={handleChange}
+            checked={data.insurance === "Yes"}
             value="Yes"
-            // required
+            required
           />
           <label
             className="btn btn-outline-secondary me-2"
@@ -304,6 +322,7 @@ function StepOne({
             id="no-insurance"
             autoComplete="off"
             onChange={handleChange}
+            checked={data.insurance === "No"}
             value="No"
           />
           <label className="btn btn-outline-secondary" htmlFor="no-insurance">
@@ -312,7 +331,7 @@ function StepOne({
         </div>
       </div>
       <button className="btn btn-success mt-3 form-control">Next</button>
-    </form>
+      </form>
   );
 }
 

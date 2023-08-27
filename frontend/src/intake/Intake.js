@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
@@ -8,7 +8,7 @@ import SmartnosisApi from "../api";
 // import { useNavigate } from "react-router-dom";
 import "./Intake.css";
 
-function Intake({ additionalChild }) {
+function Intake() {
   const INITIAL_STATE = {
     firstName: "Gerardo",
     lastName: "Huerta",
@@ -16,7 +16,7 @@ function Intake({ additionalChild }) {
     // feet: "",
     // inches: "0",
     // weight: "",
-    dob: "",
+    dob: "1992-08-13",
     address1: "1570 W. 1st St.",
     address2: "Unit 16",
     city: "Santa Ana",
@@ -24,6 +24,7 @@ function Intake({ additionalChild }) {
     zip: "92703",
     insurance: "",
     phone: "559-797-5961",
+    phone2: "",
     symptoms: new Set(),
     conditions: new Set(),
   };
@@ -46,11 +47,12 @@ function Intake({ additionalChild }) {
 
   const submit = async (data) => {
     let dataCopy = { ...data };
-    dataCopy.date = new Date().toISOString().slice(0, -14)
-    delete dataCopy.symptoms;
-    delete dataCopy.conditions;
+    dataCopy.dateSubmitted = new Date().toLocaleDateString()
     dataCopy.symptoms = Array.from(data.symptoms);
     dataCopy.conditions = Array.from(data.conditions);
+    let dobArr = dataCopy.dob.split("-").map((e) => +e.toString())
+    dobArr.push(dobArr.shift())
+    dataCopy.dob = dobArr.join("/")
     let res = await SmartnosisApi.generatePDF(dataCopy);
     const blob = new Blob([res.data], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
@@ -82,35 +84,52 @@ function Intake({ additionalChild }) {
     }));
   };
 
-const handleKeydown = (e) => {
-  let value = formData[e.target.name]
-  if (e.keyCode !== 8) return
-  if (value[value.length - 1] !== "-") return
-  value = e.target.value.slice(0, -1)
-  setFormData((data) => ({
-    ...data,
-    [e.target.name]: value,
-  }));
-}
+  const handleKeydown = (e) => {
+    let value = formData[e.target.name];
+    if (e.keyCode !== 8) return;
+    if (value[value.length - 1] !== "-") return;
+    value = e.target.value.slice(0, -1);
+    setFormData((data) => ({
+      ...data,
+      [e.target.name]: value,
+    }));
+  };
 
   const handlePhones = (e) => {
     const { value, name } = e.target;
-    const sanitizedValue = value.replace(/[^0-9]/g, ''); // Remove all non-numeric characters
+    const sanitizedValue = value.replace(/[^0-9]/g, ""); // Remove all non-numeric characters
 
     // Format the value with dashes for a US phone number
-    const formattedValue = sanitizedValue
-      .replace(/^(\d{0,3})(\d{0,3})(\d{0,4})$/, (_, p1, p2, p3) => {
+    const formattedValue = sanitizedValue.replace(
+      /^(\d{0,3})(\d{0,3})(\d{0,4})$/,
+      (_, p1, p2, p3) => {
         if (p1 && p2) {
           return `${p1}-${p2}-${p3}`;
         } else if (p1) {
           return `${p1}-${p2}`;
         }
         return p1;
-      });
+      }
+    );
     setFormData((data) => ({
       ...data,
       [name]: formattedValue,
     }));
+  };
+
+  let stepOneComplete = () => {
+    return [
+      formData.firstName,
+      formData.lastName,
+      formData.dob,
+      formData.sex,
+      formData.phone,
+      formData.address1,
+      formData.city,
+      formData.state,
+      formData.zip,
+      formData.insurance,
+    ].every(Boolean);
   };
 
   let currStep;
@@ -124,6 +143,7 @@ const handleKeydown = (e) => {
           maxDate={maxDate}
           handlePhones={handlePhones}
           handleKeydown={handleKeydown}
+          complete={stepOneComplete}
         />
       );
       break;
@@ -134,6 +154,7 @@ const handleKeydown = (e) => {
           handleChange={handleChange}
           changeStep={changeStep}
           handleCheckbox={handleCheckbox}
+          setFormData={setFormData}
         />
       );
       break;
@@ -178,22 +199,18 @@ const handleKeydown = (e) => {
           <div className="row">
             <div className="mt-2 text-center">
               <span
-                className={`step ${
-                  formData.firstName && formData.lastName ? "finish" : ""
-                } ${step === 0 ? "active" : ""}`}
+                className={`step ${stepOneComplete() ? "finish" : ""} ${
+                  step === 0 ? "active" : ""
+                }`}
               ></span>
               <span
-                className={`step ${formData.dob ? "finish" : ""} ${
+                className={`step ${step > 0 ? "finish" : ""} ${
                   step === 1 ? "active" : ""
                 }`}
               ></span>
               <span
                 className={`step ${step === 2 ? "active finish" : ""}`}
               ></span>
-
-              {additionalChild ? null : (
-                <span className={`step ${step === 3 ? "active" : ""}`}></span>
-              )}
             </div>
           </div>
         </div>
