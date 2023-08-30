@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "../components/Login";
+import Register from "../components/Register";
 
 // import HomeAnon from "../components/HomeAnon";
 import Intake from "../intake/Intake";
@@ -15,6 +16,7 @@ function NavRoutes({ login, signup }) {
     <Routes>
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/form" element={<Intake />} />
+      <Route exact path="/register" element={<Register />} />
       {/* <Route element={<PublicRoutes />}>
         <Route exact path="/reset" element={<ResetPwd />} />
       </Route> */}

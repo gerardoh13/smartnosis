@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Alerts from "../common/Alerts";
+import { QRCodeSVG } from "qrcode.react";
+import { Link } from "react-router-dom";
 
-function Login({ login, setCurrPage }) {
+function Login({ login }) {
   const INITIAL_STATE = {
     email: "",
     password: "",
@@ -35,6 +36,7 @@ function Login({ login, setCurrPage }) {
         className="rounded mx-auto w60 mt-2"
         alt="smartnosis logo"
       />
+      <QRCodeSVG className="m-auto" value="http://10.0.0.12:3000/form" />
       <div className="card-body">
         <h5 className="card-title">Welcome Back!</h5>
         {errors.length ? <Alerts msgs={errors} /> : null}
@@ -69,6 +71,12 @@ function Login({ login, setCurrPage }) {
           </div>
           <button className="btn btn-primary form-control mb-3">Submit</button>
         </form>
+        <p className="text-center mt-2">
+          Forgot password?
+          <span className="ms-1">
+            <Link to="/reset">Reset password</Link>
+          </span>
+        </p>
       </div>
     </div>
   );

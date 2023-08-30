@@ -26,7 +26,7 @@ function StepOne({
           onChange={handleChange}
           required
         />
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="firstName">First Name:</label>
       </div>
       {/* middleName */}
       <div className="form-floating mt-3">
@@ -39,7 +39,7 @@ function StepOne({
           value={data.middleName}
           onChange={handleChange}
         />
-        <label htmlFor="middleName">Middle Name</label>
+        <label htmlFor="middleName">Middle Name:</label>
       </div>
       {/* lastName */}
       <div className="form-floating my-3">
@@ -58,7 +58,7 @@ function StepOne({
       {/* Dob */}
       <div className="row">
         <div className="col-6">
-          <p className="text-start ms-1 mt-1">Date of Birth</p>
+          <p className="text-start ms-1 mt-1">Date of Birth:</p>
         </div>
         <div className="col-6">
           <input
@@ -76,7 +76,7 @@ function StepOne({
       </div>
 
       <div className="mt-3">
-        <span className="text-start ms-1 me-3">Sex:</span>
+        <span className="text-start ms-1 me-3">Sex</span>
         <div className="text-center">
           <input
             type="radio"
@@ -129,12 +129,14 @@ function StepOne({
           maxLength={12}
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           name="phone"
+          id="phone"
+          placeholder="phone"
           onChange={handlePhones}
           onKeyDown={handleKeydown}
           value={data.phone}
           required
         />
-        <label htmlFor="phone">Primary Phone</label>
+        <label htmlFor="phone">Primary Phone:</label>
       </div>
 
       <div className="form-floating my-3">
@@ -144,11 +146,13 @@ function StepOne({
           maxLength={12}
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           name="phone2"
+          id="phone2"
           onChange={handlePhones}
           onKeyDown={handleKeydown}
           value={data.phone2}
+          placeholder="phone"
         />
-        <label htmlFor="phone2">Secondary Phone</label>
+        <label htmlFor="phone2">Secondary Phone:</label>
       </div>
 
       <div className="form-floating mb-3">
@@ -162,7 +166,7 @@ function StepOne({
           onChange={handleChange}
           required
         />
-        <label htmlFor="address1">Address 1</label>
+        <label htmlFor="address1">Address 1:</label>
       </div>
 
       <div className="form-floating">
@@ -174,9 +178,8 @@ function StepOne({
           placeholder="Address 2"
           value={data.address2}
           onChange={handleChange}
-          //   required
         />
-        <label htmlFor="address2">Address 2</label>
+        <label htmlFor="address2">Address 2:</label>
       </div>
 
       <div className="form-floating mt-3">
@@ -190,7 +193,7 @@ function StepOne({
           onChange={handleChange}
           required
         />
-        <label htmlFor="city">City</label>
+        <label htmlFor="city">City:</label>
       </div>
 
       <div className="row mb-3">
@@ -206,7 +209,7 @@ function StepOne({
             required
           />
           <label className="ms-2" htmlFor="state">
-            State
+            State:
           </label>
         </div>
         <div className="form-floating mt-3 col">
@@ -221,7 +224,7 @@ function StepOne({
             required
           />
           <label className="ms-2" htmlFor="zip">
-            Zip Code
+            Zip Code:
           </label>
         </div>
       </div>
