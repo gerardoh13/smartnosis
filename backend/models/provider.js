@@ -63,7 +63,6 @@ class Provider {
     city,
     state,
     zip,
-    email,
     password,
   }) {
     const duplicateCheck = await db.query(
