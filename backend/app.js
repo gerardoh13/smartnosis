@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(authenticateJWT);
 
-// app.use("/providers", providerRoutes);
+app.use("/providers", providerRoutes);
 app.use("/pdf", pdfRoutes);
 
 /** Handle 404 errors -- this matches everything */

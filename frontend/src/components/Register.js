@@ -51,10 +51,12 @@ function Register({ register }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const trimCheck = name === "firstName" || name === "lastName";
+    // const trimCheck = name === "firstName" || name === "lastName";
     setFormData((data) => ({
       ...data,
-      [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value.trim(),
+      // [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value.trim(),
+      [name]: value,
+
     }));
   };
 

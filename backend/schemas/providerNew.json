@@ -6,10 +6,12 @@
     "orgName": {
       "type": "string",
       "minLength": 2,
-      "maxLength": 20
+      "maxLength": 30
     },
     "npi": {
-      "type": "integer"
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10
     },
     "email": {
       "type": "string",

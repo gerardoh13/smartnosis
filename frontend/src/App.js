@@ -6,35 +6,36 @@ import { useLocalStorage } from "./hooks";
 import Spinner from "./common/Spinner";
 import SmartnosisApi from "./api";
 import { decodeToken } from "react-jwt";
+import ProviderContext from "./common/ProviderContext";
 
 function App() {
   const [token, setToken] = useLocalStorage("smartnosis-token");
-  const [currUser, setCurrUser] = useState(null);
+  const [currProvider, setCurrProvider] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function getCurrUser() {
+    async function getCurrProvider() {
       if (token) {
         try {
           let { email } = decodeToken(token);
           SmartnosisApi.token = token;
-          let user = await SmartnosisApi.getCurrUser(email);
-          setCurrUser(user);
+          let provider = await SmartnosisApi.getCurrProvider(email);
+          setCurrProvider(provider);
         } catch (err) {
           console.log(err);
-          setCurrUser(null);
+          setCurrProvider(null);
         }
       }
     }
     setLoading(true);
-    getCurrUser();
+    getCurrProvider();
     setLoading(false);
-  }, []);
+  }, [token]);
 
   const register = async (data) => {
     try {
-      let userToken = await SmartnosisApi.registerUser(data);
-      setToken(userToken);
+      let providerToken = await SmartnosisApi.registerProvider(data);
+      setToken(providerToken);
       return { success: true };
     } catch (errors) {
       return { success: false, errors };
@@ -44,13 +45,13 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        {/* <UserContext.Provider
+        <ProviderContext.Provider
           value={{
-            currUser,
+            currProvider,
           }}
-        > */}
-          {loading ? <Spinner /> : <NavRoutes signup={register}/>}
-        {/* </UserContext.Provider> */}
+        >
+          {loading ? <Spinner /> : <NavRoutes register={register}/>}
+        </ProviderContext.Provider>
       </BrowserRouter>
     </div>
   );

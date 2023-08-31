@@ -8,6 +8,7 @@ const {
   BadRequestError,
   UnauthorizedError,
 } = require("../expressError");
+const generateUniqueId = require('generate-unique-id');
 
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 
@@ -77,10 +78,12 @@ class Provider {
     }
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+    const uId = generateUniqueId();
 
     const result = await db.query(
       `INSERT INTO providers
-           (name,
+           (id,
+            name,
             npi,
             email,
             phone,
@@ -90,9 +93,10 @@ class Provider {
             state,
             zip,
             password)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
            RETURNING id, email, name AS "orgName"`,
       [
+        uId,
         orgName,
         npi,
         email,
