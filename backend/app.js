@@ -6,7 +6,6 @@ const cors = require("cors");
 const { NotFoundError } = require("./expressError");
 
 const { authenticateJWT } = require("./middleware/auth");
-// const usersRoutes = require("./routes/users");
 const pdfRoutes = require("./routes/pdf");
 const providerRoutes = require("./routes/providers");
 
@@ -16,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(authenticateJWT);
 
-app.use("/providers", providerRoutes);
+// app.use("/providers", providerRoutes);
 app.use("/pdf", pdfRoutes);
 
 /** Handle 404 errors -- this matches everything */

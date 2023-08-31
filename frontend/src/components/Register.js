@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Alerts from "../common/Alerts";
 
-function Register({ signup }) {
+function Register({ register }) {
   const INITIAL_STATE = {
     orgName: "",
     npi: "",
@@ -23,7 +23,7 @@ function Register({ signup }) {
     e.preventDefault();
     if (!confirmPasswords()) return;
     let formattedData = formatData();
-    let response = await signup(formattedData);
+    let response = await register(formattedData);
     if (response.success) {
       setFormData(INITIAL_STATE);
     } else {
@@ -114,14 +114,14 @@ function Register({ signup }) {
             <input
               className="form-control"
               type="text"
-              name="orgName"
-              id="orgName"
-              value={formData.orgName}
-              placeholder="orgName"
+              name="npi"
+              id="npi"
+              value={formData.npi}
+              placeholder="npi"
               required
               onChange={handleChange}
             />
-            <label htmlFor="orgName">NPI:</label>
+            <label htmlFor="npi">NPI:</label>
           </div>
           <div className="form-floating mb-3">
         <input

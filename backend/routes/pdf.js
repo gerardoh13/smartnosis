@@ -1,4 +1,5 @@
 "use strict";
+
 const PDFDocument = require("pdfkit");
 
 const express = require("express");

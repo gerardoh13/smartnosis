@@ -110,5 +110,4 @@ router.get("/:email", ensureCorrectUser, async function (req, res, next) {
   }
 });
 
-
 module.exports = router;

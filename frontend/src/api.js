@@ -34,10 +34,10 @@ class SmartnosisApi {
     return res;
   }
 
-//   static async registerUser(data) {
-//     let res = await this.request("users/register", data, "post");
-//     return res.token;
-//   }
+  static async registerUser(data) {
+    let res = await this.request("providers/register", data, "post");
+    return res.token;
+  }
 
 }
 
