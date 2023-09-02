@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import Dashboard from "../components/Dashboard";
 
 // import HomeAnon from "../components/HomeAnon";
 import Intake from "../intake/Intake";
@@ -14,6 +15,7 @@ function NavRoutes({ login, register }) {
 
   return (
     <Routes>
+      <Route exact path="/" element={<Dashboard />} />
       <Route exact path="/login" element={<Login login={login} />} />
       <Route exact path="/form" element={<Intake />} />
       <Route
