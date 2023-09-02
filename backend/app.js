@@ -8,6 +8,7 @@ const { NotFoundError } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
 const pdfRoutes = require("./routes/pdf");
 const providerRoutes = require("./routes/providers");
+const intakeRoutes = require("./routes/intakes");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(authenticateJWT);
 
 app.use("/providers", providerRoutes);
+app.use("/intakes", intakeRoutes);
 app.use("/pdf", pdfRoutes);
 
 /** Handle 404 errors -- this matches everything */

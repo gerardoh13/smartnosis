@@ -35,13 +35,17 @@ class SmartnosisApi {
 
   static async registerProvider(data) {
     let res = await this.request("providers/register", data, "post");
-    console.log(res);
     return res.token;
   }
   static async getCurrProvider(email) {
     let res = await this.request(`providers/${email}`);
     return res.provider;
   }
+    // ------------------INTAKES---------------------------
+    static async addIntake(data) {
+      let res = await this.request("intakes", data, "post");
+      return res.intake;
+    }
 }
 
 export default SmartnosisApi;

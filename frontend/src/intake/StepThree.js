@@ -33,7 +33,8 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    changeStep(1);
+    // changeStep(1);
+    submit()
   };
 
   const addCondition = () => {
@@ -96,7 +97,6 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
         </button>
         <button
           className="btn btn-success mt-3 form-control col"
-          onClick={() => submit(data)}
         >
           Next
         </button>

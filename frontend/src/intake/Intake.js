@@ -4,12 +4,16 @@ import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import SmartnosisApi from "../api";
+import { useQuery } from "../hooks";
+
 // import UserContext from "../users/UserContext";
 // import { useNavigate } from "react-router-dom";
+// format http://localhost:3000/intake?provider=y9fi2jvh189n9j1y2ma7
 import "./Intake.css";
 
 function Intake() {
   const INITIAL_STATE = {
+    providerId: "",
     firstName: "Gerardo",
     lastName: "Huerta",
     middleName: "",
@@ -17,6 +21,7 @@ function Intake() {
     // inches: "0",
     // weight: "",
     dob: "1992-08-13",
+    sex: "",
     address1: "1570 W. 1st St.",
     address2: "Unit 16",
     city: "Santa Ana",
@@ -31,9 +36,9 @@ function Intake() {
 
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState(INITIAL_STATE);
-  //   const { registerInfant } = useContext(UserContext);
   const [maxDate, setMaxDate] = useState("");
-  // const [minDate, setMinDate] = useState("");
+
+  let query = useQuery();
   //   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,22 +46,50 @@ function Intake() {
     setMaxDate(max);
   }, [setMaxDate]);
 
+  useEffect(() => {
+    let queryProvider = query.get("provider");
+    if (queryProvider) {
+      setFormData((data) => ({
+        ...data,
+        providerId: queryProvider,
+      }));
+    }
+  }, [query]);
+
   const changeStep = (n) => {
     setStep((prev) => prev + n);
   };
 
-  const submit = async (data) => {
-    let dataCopy = { ...data };
-    dataCopy.dateSubmitted = new Date().toLocaleDateString()
-    dataCopy.symptoms = Array.from(data.symptoms);
-    dataCopy.conditions = Array.from(data.conditions);
-    let dobArr = dataCopy.dob.split("-").map((e) => +e.toString())
-    dobArr.push(dobArr.shift())
-    dataCopy.dob = dobArr.join("/")
-    let res = await SmartnosisApi.generatePDF(dataCopy);
-    const blob = new Blob([res.data], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
+  const getSubmittedEpoch = () => {
+    let now = new Date();
+    now.setMinutes(now.getMinutes());
+    now.setMilliseconds(null);
+    now.setSeconds(null);
+    return now.getTime() / 1000;
+  };
+
+  const formatData = () => {
+    let dataCopy = { ...formData };
+    dataCopy.submittedAt = getSubmittedEpoch();
+    dataCopy.symptoms = Array.from(dataCopy.symptoms);
+    dataCopy.conditions = Array.from(dataCopy.conditions);
+    let dobArr = dataCopy.dob.split("-").map((e) => +e.toString());
+    dobArr.push(dobArr.shift());
+    dataCopy.dob = dobArr.join("/");
+    if (!dataCopy.middleName) delete dataCopy.middleName;
+    if (!dataCopy.address2) delete dataCopy.address2;
+    return dataCopy;
+  };
+
+  const submit = async () => {
+    let formattedData = formatData();
+    console.log(formattedData);
+    let response = await SmartnosisApi.addIntake(formattedData)
+    console.log(response)
+    // let res = await SmartnosisApi.generatePDF(formattedData);
+    // const blob = new Blob([res.data], { type: "application/pdf" });
+    // const url = URL.createObjectURL(blob);
+    // window.open(url, "_blank");
     setStep(0);
   };
 

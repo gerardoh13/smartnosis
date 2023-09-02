@@ -17,7 +17,7 @@ function NavRoutes({ login, register }) {
     <Routes>
       <Route exact path="/" element={<Dashboard />} />
       <Route exact path="/login" element={<Login login={login} />} />
-      <Route exact path="/form" element={<Intake />} />
+      <Route  path="/intake" element={<Intake />} />
       <Route
         exact
         path="/register"

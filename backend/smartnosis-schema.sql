@@ -12,3 +12,23 @@ CREATE TABLE providers (
   password TEXT NOT NULL,
   PRIMARY KEY (id)
 );
+CREATE TABLE intakes (
+  id SERIAL PRIMARY KEY,
+  provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  middle_name TEXT,
+  dob TEXT NOT NULL,
+  sex VARCHAR(6) NOT NULL,
+  address1 TEXT NOT NULL,
+  address2 TEXT,
+  city VARCHAR(15) NOT NULL,
+  state VARCHAR(2) NOT NULL,
+  zip INTEGER,
+  insurance TEXT,
+  phone VARCHAR(12) NOT NULL,
+  phone2 VARCHAR(12) NOT NULL,
+  symptoms VARCHAR [],
+  conditions VARCHAR [],
+  submitted_at BIGINT NOT NULL
+);
