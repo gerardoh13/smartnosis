@@ -15,6 +15,10 @@ function StepOne({
   };
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
+      <p>
+        <span className="text-danger">*</span>{" "}
+        <span>Indicates required field</span>
+      </p>
       <div className="form-floating">
         <input
           type="text"
@@ -26,7 +30,9 @@ function StepOne({
           onChange={handleChange}
           required
         />
-        <label htmlFor="firstName">First Name:</label>
+        <label htmlFor="firstName">
+          First Name: <span className="text-danger">*</span>
+        </label>
       </div>
       {/* middleName */}
       <div className="form-floating mt-3">
@@ -53,12 +59,16 @@ function StepOne({
           onChange={handleChange}
           required
         />
-        <label htmlFor="lastName">Last Name</label>
+        <label htmlFor="lastName">
+          Last Name: <span className="text-danger">*</span>
+        </label>
       </div>
       {/* Dob */}
       <div className="row">
         <div className="col-6">
-          <p className="text-start ms-1 mt-1">Date of Birth:</p>
+          <p className="text-start ms-1 mt-1">
+            Date of Birth: <span className="text-danger">*</span>
+          </p>
         </div>
         <div className="col-6">
           <input
@@ -76,7 +86,9 @@ function StepOne({
       </div>
 
       <div className="mt-3">
-        <span className="text-start ms-1 me-3">Sex</span>
+        <span className="text-start ms-1 me-3">
+          Sex <span className="text-danger">*</span>
+        </span>
         <div className="text-center">
           <input
             type="radio"
@@ -136,7 +148,9 @@ function StepOne({
           value={data.phone}
           required
         />
-        <label htmlFor="phone">Primary Phone:</label>
+        <label htmlFor="phone">
+          Primary Phone: <span className="text-danger">*</span>
+        </label>
       </div>
 
       <div className="form-floating my-3">
@@ -166,7 +180,9 @@ function StepOne({
           onChange={handleChange}
           required
         />
-        <label htmlFor="address1">Address 1:</label>
+        <label htmlFor="address1">
+          Address 1: <span className="text-danger">*</span>
+        </label>
       </div>
 
       <div className="form-floating">
@@ -193,7 +209,9 @@ function StepOne({
           onChange={handleChange}
           required
         />
-        <label htmlFor="city">City:</label>
+        <label htmlFor="city">
+          City: <span className="text-danger">*</span>
+        </label>
       </div>
 
       <div className="row mb-3">
@@ -209,7 +227,7 @@ function StepOne({
             required
           />
           <label className="ms-2" htmlFor="state">
-            State:
+            State: <span className="text-danger">*</span>
           </label>
         </div>
         <div className="form-floating mt-3 col">
@@ -224,7 +242,7 @@ function StepOne({
             required
           />
           <label className="ms-2" htmlFor="zip">
-            Zip Code:
+            Zip Code: <span className="text-danger">*</span>
           </label>
         </div>
       </div>
@@ -298,7 +316,9 @@ function StepOne({
 
       <div className="row mb-2">
         <div className="col-6">
-          <p className="text-start ms-1">Do you have insurance?</p>
+          <p className="text-start ms-1">
+            Do you have insurance? <span className="text-danger">*</span>
+          </p>
         </div>
         <div className="col-6 text-center">
           <input
@@ -334,7 +354,7 @@ function StepOne({
         </div>
       </div>
       <button className="btn btn-success mt-3 form-control">Next</button>
-      </form>
+    </form>
   );
 }
 
