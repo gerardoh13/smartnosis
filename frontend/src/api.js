@@ -25,8 +25,14 @@ class SmartnosisApi {
 
   // Individual API routes
 
-  static async generatePDF(data) {
-    let res = await axios.post(`${BASE_URL}/pdf`, data, {
+  // static async generatePDF(data) {
+  //   let res = await axios.post(`${BASE_URL}/pdf`, data, {
+  //     responseType: "arraybuffer", // Treat response as binary data
+  //   });
+  //   return res;
+  // }
+  static async generatePDF(providerId, intakeId) {
+    let res = await axios.get(`${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`, {
       responseType: "arraybuffer", // Treat response as binary data
     });
     return res;
@@ -45,6 +51,11 @@ class SmartnosisApi {
     static async addIntake(data) {
       let res = await this.request("intakes", data, "post");
       return res.intake;
+    }
+
+    static async getByDate(providerId, start, end) {
+      let res = await this.request(`intakes/by-date/${providerId}/${start}/${end}`);
+      return res;
     }
 }
 

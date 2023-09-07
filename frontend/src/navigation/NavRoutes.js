@@ -3,15 +3,13 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import Dashboard from "../components/Dashboard";
-
-// import HomeAnon from "../components/HomeAnon";
 import Intake from "../intake/Intake";
 // import PrivateRoutes from "./PrivateRoutes";
 // import PublicRoutes from "./PublicRoutes";
-import UserContext from "../common/UserContext";
+// import ProviderContext from "../common/ProviderContext";
 
 function NavRoutes({ login, register }) {
-  //   const { currUser } = useContext(UserContext);
+    // const { currProvider } = useContext(ProviderContext);
 
   return (
     <Routes>

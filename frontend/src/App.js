@@ -26,10 +26,10 @@ function App() {
           setCurrProvider(null);
         }
       }
+      setLoading(false);
     }
     setLoading(true);
     getCurrProvider();
-    setLoading(false);
   }, [token]);
 
   const register = async (data) => {

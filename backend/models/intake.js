@@ -52,6 +52,51 @@ class Intake {
 
     return intake;
   }
+
+  static async getByDate(providerId, start, end) {
+    const result = await db.query(
+      `SELECT id,
+              first_name AS "firstName",
+              middle_name AS "middleName",
+              last_name AS "lastName",
+              dob
+      FROM intakes 
+      WHERE provider_id = $1 AND submitted_at > $2 AND submitted_at < $3
+      ORDER BY submitted_at DESC`,
+      [providerId, start, end]
+    );
+    let intakes = result.rows;
+
+    return intakes;
+  }
+
+  static async get(id) {
+    const result = await db.query(
+      `SELECT id,
+              first_name AS "firstName",
+              middle_name AS "middleName",
+              last_name AS "lastName",
+              sex,
+              dob,
+              submitted_at AS "submittedAt",
+              phone,
+              phone2,
+              address1,
+              address2,
+              city,
+              state,
+              zip,
+              insurance,
+              symptoms,
+              conditions
+      FROM intakes 
+      WHERE id = $1`,
+      [id]
+    );
+    let intake = result.rows[0];
+
+    return intake;
+  }
 }
 
 module.exports = Intake;

@@ -8,18 +8,13 @@ const router = new express.Router();
 
 router.post("/", function (req, res, next) {
   try {
-    // const validator = jsonschema.validate(req.body, pdfNewSchema);
-    // if (!validator.valid) {
-    //   const errs = validator.errors.map((e) => e.stack);
-    //   throw new BadRequestError(errs);
-    // }
     const {
       firstName,
       lastName,
       middleName,
       sex,
       dob,
-      dateSubmitted,
+      submittedAt,
       phone,
       phone2,
       address1,
@@ -44,7 +39,7 @@ router.post("/", function (req, res, next) {
 
 
     doc.font('Times-Bold').text('Date Submitted: ', continueStyle)
-    doc.font('Times-Roman').text(`${dateSubmitted}`, underlineAndLineGap)
+    doc.font('Times-Roman').text(`${submittedAt}`, underlineAndLineGap)
 
     doc.font('Times-Bold').text("Patient's name: ", continueStyle)
     doc.font('Times-Roman').text(`${lastName}, ${firstName} ${middleName}`, underlineAndLineGap)

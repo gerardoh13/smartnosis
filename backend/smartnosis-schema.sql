@@ -32,3 +32,7 @@ CREATE TABLE intakes (
   conditions VARCHAR [],
   submitted_at BIGINT NOT NULL
 );
+-- CREATE TABLE providers_intakes (
+--   provider_id INTEGER REFERENCES providers ON DELETE CASCADE,
+--   intake_id INTEGER REFERENCES intakes ON DELETE CASCADE
+-- );
