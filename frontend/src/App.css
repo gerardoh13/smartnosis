@@ -9,3 +9,11 @@
 .w60 {
   width: 60%;
 }
+
+nav {
+  width: 100%;
+}
+
+.navbar {
+  background-color: rgb(20, 102, 135);
+}

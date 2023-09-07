@@ -6,20 +6,19 @@ import Dashboard from "../components/Dashboard";
 import Intake from "../intake/Intake";
 // import PrivateRoutes from "./PrivateRoutes";
 // import PublicRoutes from "./PublicRoutes";
-// import ProviderContext from "../common/ProviderContext";
+import ProviderContext from "../common/ProviderContext";
 
 function NavRoutes({ login, register }) {
-    // const { currProvider } = useContext(ProviderContext);
+    const { currProvider } = useContext(ProviderContext);
 
   return (
     <Routes>
-      <Route exact path="/" element={<Dashboard />} />
-      <Route exact path="/login" element={<Login login={login} />} />
+      <Route exact path="/" element={currProvider ? <Dashboard /> : <Login login={login} /> } />
       <Route  path="/intake" element={<Intake />} />
       <Route
         exact
         path="/register"
-        element={<Register register={register} />}
+        element={ <Register register={register} />}
       />
       {/* <Route element={<PublicRoutes />}>
         <Route exact path="/reset" element={<ResetPwd />} />

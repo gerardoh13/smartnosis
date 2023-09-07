@@ -7,6 +7,7 @@ import Spinner from "./common/Spinner";
 import SmartnosisApi from "./api";
 import { decodeToken } from "react-jwt";
 import ProviderContext from "./common/ProviderContext";
+import Navbar from "./navigation/Navbar";
 
 function App() {
   const [token, setToken] = useLocalStorage("smartnosis-token");
@@ -42,6 +43,21 @@ function App() {
     }
   };
 
+  const logout = async () => {
+    setCurrProvider(null);
+    setToken(null);
+  };
+
+  const login = async (data) => {
+    try {
+      let providerToken = await SmartnosisApi.login(data);
+      setToken(providerToken);
+      return { valid: true };
+    } catch (errors) {
+      console.log(errors)
+      return { valid: false, errors };
+    }
+  };
   return (
     <div className="App">
       <BrowserRouter>
@@ -50,7 +66,8 @@ function App() {
             currProvider,
           }}
         >
-          {loading ? <Spinner /> : <NavRoutes register={register}/>}
+          <Navbar logout={logout} />
+          {loading ? <Spinner /> : <NavRoutes register={register} login={login} />}
         </ProviderContext.Provider>
       </BrowserRouter>
     </div>

@@ -43,6 +43,12 @@ class SmartnosisApi {
     let res = await this.request("providers/register", data, "post");
     return res.token;
   }
+
+  static async login(data) {
+    let res = await this.request("providers/token", data, "post");
+    return res.token;
+  }
+
   static async getCurrProvider(email) {
     let res = await this.request(`providers/${email}`);
     return res.provider;
