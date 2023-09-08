@@ -11,7 +11,8 @@ function StepOne({
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (complete()) changeStep(1);
+    if (complete() && data.insurance === "No") changeStep(1);
+    else if (complete() && data.insurance === "Yes") changeStep(0.5);
   };
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
@@ -19,6 +20,7 @@ function StepOne({
         <span className="text-danger">*</span>{" "}
         <span>Indicates required field</span>
       </p>
+      {/* firstName */}
       <div className="form-floating">
         <input
           type="text"
@@ -82,14 +84,14 @@ function StepOne({
             required
           />
         </div>
-        {/* Sex */}
       </div>
-
+      {/* Sex */}
       <div className="mt-3">
         <span className="text-start ms-1 me-3">
           Sex <span className="text-danger">*</span>
         </span>
         <div className="text-center">
+          {/* Male */}
           <input
             type="radio"
             className="btn-check ms-3"
@@ -104,7 +106,7 @@ function StepOne({
           <label className="btn btn-outline-secondary me-2" htmlFor="male">
             Male
           </label>
-
+          {/* Female */}
           <input
             type="radio"
             className="btn-check"
@@ -118,6 +120,7 @@ function StepOne({
           <label className="btn btn-outline-secondary me-2" htmlFor="female">
             Female
           </label>
+          {/* Other */}
           <input
             type="radio"
             className="btn-check"
@@ -133,7 +136,7 @@ function StepOne({
           </label>
         </div>
       </div>
-
+      {/* Phone1 */}
       <div className="form-floating my-3">
         <input
           className="form-control"
@@ -152,7 +155,7 @@ function StepOne({
           Primary Phone: <span className="text-danger">*</span>
         </label>
       </div>
-
+      {/* Phone2 */}
       <div className="form-floating my-3">
         <input
           className="form-control"
@@ -168,7 +171,7 @@ function StepOne({
         />
         <label htmlFor="phone2">Secondary Phone:</label>
       </div>
-
+      {/* Address1 */}
       <div className="form-floating mb-3">
         <input
           type="text"
@@ -184,7 +187,7 @@ function StepOne({
           Address 1: <span className="text-danger">*</span>
         </label>
       </div>
-
+      {/* Address2 */}
       <div className="form-floating">
         <input
           type="text"
@@ -197,7 +200,7 @@ function StepOne({
         />
         <label htmlFor="address2">Address 2:</label>
       </div>
-
+      {/* City */}
       <div className="form-floating mt-3">
         <input
           type="text"
@@ -213,7 +216,7 @@ function StepOne({
           City: <span className="text-danger">*</span>
         </label>
       </div>
-
+      {/* State */}
       <div className="row mb-3">
         <div className="form-floating mt-3 col">
           <input
@@ -230,6 +233,7 @@ function StepOne({
             State: <span className="text-danger">*</span>
           </label>
         </div>
+        {/* Zip */}
         <div className="form-floating mt-3 col">
           <input
             type="number"
@@ -313,7 +317,7 @@ function StepOne({
           />
         </div>
       </div> */}
-
+      {/* Insurance */}
       <div className="row mb-2">
         <div className="col-6">
           <p className="text-start ms-1">

@@ -27,6 +27,12 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
     e.preventDefault();
     changeStep(1);
   };
+
+  const handlePrevStep = () => {
+    if (data.insurance === "No") changeStep(-1);
+    else if (data.insurance === "Yes") changeStep(-0.5);
+  }
+
   const addSymptom = () => {
     setSymptoms((prev) => [...prev, otherSymptom]);
     setOtherSymptom("");
@@ -79,7 +85,7 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
       <div className="row">
         <button
           className="btn btn-success mt-3 me-2 form-control col"
-          onClick={() => changeStep(-1)}
+          onClick={handlePrevStep}
         >
           Previous
         </button>

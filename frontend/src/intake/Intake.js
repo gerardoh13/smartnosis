@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 
 import StepOne from "./StepOne";
+import StepInsurance from "./StepInsurance";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 import SmartnosisApi from "../api";
 import { useQuery } from "../hooks";
-
+import "./Intake.css";
 // import UserContext from "../users/UserContext";
 // import { useNavigate } from "react-router-dom";
 // format http://localhost:3000/intake?provider=y9fi2jvh189n9j1y2ma7
-import "./Intake.css";
 
 function Intake() {
   const INITIAL_STATE = {
@@ -34,6 +34,19 @@ function Intake() {
     conditions: new Set(),
   };
 
+  const INITIAL_INSURANCE_STATE = {
+    relationship: "",
+    firstName: "",
+    lastName: "",
+    insProvider: "",
+    otherInsProvider: "",
+    insuranceId: "",
+    groupName: "",
+    groupNumber: "",
+    dob: "",
+  };
+
+  const [insuranceData, setInsuranceData] = useState(INITIAL_INSURANCE_STATE);
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [maxDate, setMaxDate] = useState("");
@@ -55,6 +68,24 @@ function Intake() {
       }));
     }
   }, [query]);
+
+  useEffect(() => {
+    if (insuranceData.relationship === "Self") {
+      setInsuranceData((data) => ({
+        ...data,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        dob: formData.dob,
+      }));
+    } else {
+      setInsuranceData((data) => ({
+        ...data,
+        firstName: "",
+        lastName: "",
+        dob: "",
+      }));
+    }
+  }, [insuranceData.relationship]);
 
   const changeStep = (n) => {
     setStep((prev) => prev + n);
@@ -84,22 +115,32 @@ function Intake() {
   const submit = async () => {
     let formattedData = formatData();
     console.log(formattedData);
-    let response = await SmartnosisApi.addIntake(formattedData)
-    console.log(response)
-    // let res = await SmartnosisApi.generatePDF(formattedData);
-    // const blob = new Blob([res.data], { type: "application/pdf" });
-    // const url = URL.createObjectURL(blob);
-    // window.open(url, "_blank");
+    let response = await SmartnosisApi.addIntake(formattedData);
+    console.log(response);
     setStep(0);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e, insurance = false) => {
     const { name, value } = e.target;
     const trimCheck =
       name === "firstName" || name === "lastName" || name === "middleName";
-    setFormData((data) => ({
+    if (insurance) {
+      setInsuranceData((data) => ({
+        ...data,
+        [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
+      }));
+    } else {
+      setFormData((data) => ({
+        ...data,
+        [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
+      }));
+    }
+  };
+
+  const handleSelect = (name, value) => {
+    setInsuranceData((data) => ({
       ...data,
-      [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
+      [name]: value,
     }));
   };
 
@@ -131,7 +172,6 @@ function Intake() {
   const handlePhones = (e) => {
     const { value, name } = e.target;
     const sanitizedValue = value.replace(/[^0-9]/g, ""); // Remove all non-numeric characters
-
     // Format the value with dashes for a US phone number
     const formattedValue = sanitizedValue.replace(
       /^(\d{0,3})(\d{0,3})(\d{0,4})$/,
@@ -150,7 +190,7 @@ function Intake() {
     }));
   };
 
-  let stepOneComplete = () => {
+  const stepOneComplete = () => {
     return [
       formData.firstName,
       formData.lastName,
@@ -162,6 +202,14 @@ function Intake() {
       formData.state,
       formData.zip,
       formData.insurance,
+    ].every(Boolean);
+  };
+
+  const stepInsuranceComplete = () => {
+    return [
+      insuranceData.firstName,
+      insuranceData.lastName,
+      insuranceData.dob,
     ].every(Boolean);
   };
 
@@ -177,6 +225,17 @@ function Intake() {
           handlePhones={handlePhones}
           handleKeydown={handleKeydown}
           complete={stepOneComplete}
+        />
+      );
+      break;
+    case 0.5:
+      currStep = (
+        <StepInsurance
+          data={insuranceData}
+          handleChange={handleChange}
+          changeStep={changeStep}
+          maxDate={maxDate}
+          handleSelect={handleSelect}
         />
       );
       break;
@@ -236,8 +295,17 @@ function Intake() {
                   step === 0 ? "active" : ""
                 }`}
               ></span>
+
+              {formData.insurance === "Yes" ? (
+                <span
+                  className={`step ${stepInsuranceComplete() ? "finish" : ""} ${
+                    step === 0.5 ? "active" : ""
+                  }`}
+                ></span>
+              ) : null}
+
               <span
-                className={`step ${step > 0 ? "finish" : ""} ${
+                className={`step ${step > 0.5 ? "finish" : ""} ${
                   step === 1 ? "active" : ""
                 }`}
               ></span>
