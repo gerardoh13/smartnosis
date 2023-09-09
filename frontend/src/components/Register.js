@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Alerts from "../common/Alerts";
+import { useNavigate } from "react-router-dom";
 
 function Register({ register }) {
   const INITIAL_STATE = {
@@ -18,6 +19,7 @@ function Register({ register }) {
 
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +28,7 @@ function Register({ register }) {
     let response = await register(formattedData);
     if (response.success) {
       setFormData(INITIAL_STATE);
+      navigate("/");
     } else {
       setErrors(response.errors);
     }
@@ -56,7 +59,6 @@ function Register({ register }) {
       ...data,
       // [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value.trim(),
       [name]: value,
-
     }));
   };
 
@@ -94,176 +96,182 @@ function Register({ register }) {
   };
 
   return (
-    <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto">
-      <div className="card-body">
-        <h5 className="card-title">Get started with Smartnosis</h5>
-        {errors.length ? <Alerts msgs={errors} /> : null}
-        <form onSubmit={handleSubmit}>
-          <div className="form-floating my-3">
-            <input
-              className="form-control"
-              type="text"
-              name="orgName"
-              id="orgName"
-              value={formData.orgName}
-              placeholder="orgName"
-              required
-              onChange={handleChange}
-            />
-            <label htmlFor="orgName">Organization Name:</label>
-          </div>
-          <div className="form-floating my-3">
-            <input
-              className="form-control"
-              type="text"
-              name="npi"
-              id="npi"
-              value={formData.npi}
-              placeholder="npi"
-              required
-              onChange={handleChange}
-            />
-            <label htmlFor="npi">NPI:</label>
-          </div>
-          <div className="form-floating mb-3">
-        <input
-          type="text"
-          className="form-control"
-          id="address1"
-          name="address1"
-          placeholder="Address 1"
-          value={formData.address1}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="address1">Address 1:</label>
-      </div>
+    <>
+      <br />
+      <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto">
+        <div className="card-body">
+          <h5 className="card-title">Get started with Smartnosis</h5>
+          {errors.length ? <Alerts msgs={errors} /> : null}
+          <form onSubmit={handleSubmit}>
+            <div className="form-floating my-3">
+              <input
+                className="form-control"
+                type="text"
+                name="orgName"
+                id="orgName"
+                value={formData.orgName}
+                placeholder="orgName"
+                required
+                onChange={handleChange}
+              />
+              <label htmlFor="orgName">Organization Name:</label>
+            </div>
+            <div className="form-floating my-3">
+              <input
+                className="form-control"
+                type="text"
+                name="npi"
+                id="npi"
+                value={formData.npi}
+                placeholder="npi"
+                required
+                onChange={handleChange}
+              />
+              <label htmlFor="npi">NPI:</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="address1"
+                name="address1"
+                placeholder="Address 1"
+                value={formData.address1}
+                onChange={handleChange}
+                required
+              />
+              <label htmlFor="address1">Address 1:</label>
+            </div>
 
-      <div className="form-floating">
-        <input
-          type="text"
-          className="form-control"
-          id="address2"
-          name="address2"
-          placeholder="Address 2"
-          value={formData.address2}
-          onChange={handleChange}
-          //   required
-        />
-        <label htmlFor="address2">Address 2:</label>
-      </div>
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="address2"
+                name="address2"
+                placeholder="Address 2"
+                value={formData.address2}
+                onChange={handleChange}
+                //   required
+              />
+              <label htmlFor="address2">Address 2:</label>
+            </div>
 
-      <div className="form-floating mt-3">
-        <input
-          type="text"
-          className="form-control"
-          id="city"
-          name="city"
-          placeholder="City"
-          value={formData.city}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="city">City:</label>
-      </div>
+            <div className="form-floating mt-3">
+              <input
+                type="text"
+                className="form-control"
+                id="city"
+                name="city"
+                placeholder="City"
+                value={formData.city}
+                onChange={handleChange}
+                required
+              />
+              <label htmlFor="city">City:</label>
+            </div>
 
-      <div className="row mb-3">
-        <div className="form-floating mt-3 col">
-          <input
-            type="text"
-            className="form-control"
-            id="state"
-            name="state"
-            placeholder="State"
-            value={formData.state}
-            onChange={handleChange}
-            required
-          />
-          <label className="ms-2" htmlFor="state">
-            State:
-          </label>
+            <div className="row mb-3">
+              <div className="form-floating mt-3 col">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="state"
+                  name="state"
+                  placeholder="State"
+                  maxLength={2}
+                  value={formData.state}
+                  onChange={handleChange}
+                  required
+                />
+                <label className="ms-2" htmlFor="state">
+                  State:
+                </label>
+              </div>
+              <div className="form-floating mt-3 col">
+                <input
+                  type="tel"
+                  className="form-control"
+                  id="zip"
+                  name="zip"
+                  maxLength={5}
+                  minLength={5}
+                  placeholder="Zip Code"
+                  value={formData.zip}
+                  onChange={handleChange}
+                  required
+                />
+                <label className="ms-2" htmlFor="zip">
+                  Zip Code:
+                </label>
+              </div>
+            </div>
+            <div className="form-floating my-3">
+              <input
+                className="form-control"
+                type="tel"
+                maxLength={12}
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                name="phone"
+                id="phone"
+                placeholder="phone"
+                onChange={handlePhones}
+                onKeyDown={handleKeydown}
+                value={formData.phone}
+                required
+              />
+              <label htmlFor="phone">Primary Phone:</label>
+            </div>
+            <div className="form-floating my-3">
+              <input
+                className="form-control"
+                type="email"
+                name="email"
+                id="email"
+                value={formData.email}
+                placeholder="email"
+                required
+                minLength="6"
+                onChange={handleChange}
+              />
+              <label htmlFor="email">Email:</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                type="password"
+                name="password"
+                id="password"
+                value={formData.password}
+                placeholder="password"
+                autoComplete="current-password"
+                required
+                minLength="5"
+                onChange={handleChange}
+              />
+              <label htmlFor="password">Password:</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                type="password"
+                name="confirmPwd"
+                id="confirmPwd"
+                value={formData.confirmPwd}
+                placeholder="confirm password"
+                autoComplete="confirm-password"
+                required
+                minLength="5"
+                onChange={handleChange}
+              />
+              <label htmlFor="confirmPwd">Confirm Password:</label>
+            </div>
+            <button className="btn btn-primary form-control">Next</button>
+          </form>
         </div>
-        <div className="form-floating mt-3 col">
-          <input
-            type="number"
-            className="form-control"
-            id="zip"
-            name="zip"
-            placeholder="Zip Code"
-            value={formData.zip}
-            onChange={handleChange}
-            required
-          />
-          <label className="ms-2" htmlFor="zip">
-            Zip Code:
-          </label>
-        </div>
       </div>
-      <div className="form-floating my-3">
-        <input
-          className="form-control"
-          type="tel"
-          maxLength={12}
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          name="phone"
-          id="phone"
-          placeholder="phone"
-          onChange={handlePhones}
-          onKeyDown={handleKeydown}
-          value={formData.phone}
-          required
-        />
-        <label htmlFor="phone">Primary Phone:</label>
-      </div>
-          <div className="form-floating my-3">
-            <input
-              className="form-control"
-              type="email"
-              name="email"
-              id="email"
-              value={formData.email}
-              placeholder="email"
-              required
-              minLength="6"
-              onChange={handleChange}
-            />
-            <label htmlFor="email">Email:</label>
-          </div>
-
-          <div className="form-floating mb-3">
-            <input
-              className="form-control"
-              type="password"
-              name="password"
-              id="password"
-              value={formData.password}
-              placeholder="password"
-              autoComplete="current-password"
-              required
-              minLength="5"
-              onChange={handleChange}
-            />
-            <label htmlFor="password">Password:</label>
-          </div>
-          <div className="form-floating mb-3">
-            <input
-              className="form-control"
-              type="password"
-              name="confirmPwd"
-              id="confirmPwd"
-              value={formData.confirmPwd}
-              placeholder="confirm password"
-              autoComplete="confirm-password"
-              required
-              minLength="5"
-              onChange={handleChange}
-            />
-            <label htmlFor="confirmPwd">Confirm Password:</label>
-          </div>
-          <button className="btn btn-primary form-control">Next</button>
-        </form>
-      </div>
-    </div>
+      <br />
+    </>
   );
 }
 

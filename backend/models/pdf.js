@@ -22,14 +22,23 @@ class PDF {
         insurance,
         symptoms,
         conditions,
+
+        insRelationship,
+        insFirstName,
+        insLastName,
+        insDob,
+        insProvider,
+        insuranceId,
+        insGroupName,
+        insGroupNumber,
       } = intake;
 
-      const dateSubmitted = new Date(submittedAt * 1000).toLocaleDateString()
+      const dateSubmitted = new Date(submittedAt * 1000).toLocaleDateString();
       const currSymptoms = symptoms.length ? symptoms.join(", ") : "N/A";
       const currConditions = conditions.length ? conditions.join(", ") : "N/A";
       const doc = new PDFDocument();
 
-      doc.fontSize(16);
+      doc.fontSize(14);
       const continueStyle = { continued: true };
       const underlineAndLineGap = { underline: true, lineGap: 10 };
       const underline = { underline: true };
@@ -38,14 +47,19 @@ class PDF {
       doc.font("Times-Bold").text("Date Submitted: ", continueStyle);
       doc.font("Times-Roman").text(`${dateSubmitted}`, underlineAndLineGap);
 
-      doc.font("Times-Bold").text("Patient's name: ", continueStyle);
+      doc.font("Times-Bold").text("Patient's Name: ", continueStyle);
       doc
         .font("Times-Roman")
-        .text(`${lastName}, ${firstName} ${middleName ? middleName : ""}`, underlineAndLineGap);
+        .text(
+          `${lastName}, ${firstName} ${middleName ? middleName : ""}`,
+          underlineAndLineGap
+        );
 
       doc
         .font("Times-Bold")
-        .text(" Sex: ", { ...noUnderline, ...continueStyle });
+        // .text(" Sex: ", { ...noUnderline, ...continueStyle });
+        .text("Sex: ", continueStyle);
+
       doc
         .font("Times-Roman")
         .text(`${sex}`, { ...underline, ...continueStyle });
@@ -96,6 +110,62 @@ class PDF {
         .font("Times-Bold")
         .text("Does the patient have insurance?: ", continueStyle);
       doc.font("Times-Roman").text(`${insurance}`, underlineAndLineGap);
+
+      if (insurance === "Yes") {
+        doc.font("Times-Bold").text("Relationship to Policy Holder: ", {
+          ...noUnderline,
+          ...continueStyle,
+        });
+        doc.font("Times-Roman").text(`${insRelationship}`, underlineAndLineGap);
+
+        doc.font("Times-Bold").text("Policy Holder's Name: ", continueStyle);
+        doc
+          .font("Times-Roman")
+          .text(`${insLastName}, ${insFirstName}`, underlineAndLineGap);
+
+        doc.font("Times-Bold").text("Date of Birth of Policy Holder: ", {
+          ...noUnderline,
+          ...continueStyle,
+        });
+        doc.font("Times-Roman").text(`${insDob}`, underlineAndLineGap);
+
+        doc
+          .font("Times-Bold")
+          .text("Insurance Provider: ", { ...noUnderline, ...continueStyle });
+        doc
+          .font("Times-Roman")
+          .text(`${insProvider}`, { ...underline, ...continueStyle });
+        if (insuranceId) {
+          doc
+            .font("Times-Bold")
+            .text(" Insurance ID#: ", { ...noUnderline, ...continueStyle });
+          doc.font("Times-Roman").text(`${insuranceId}`, underlineAndLineGap);
+        }
+
+        //
+        if (insGroupName) {
+          doc.font("Times-Bold").text("Group Name: ", continueStyle);
+          doc
+            .font("Times-Roman")
+            .text(
+              `${insGroupName}`,
+              insGroupNumber
+                ? { ...underline, ...continueStyle }
+                : underlineAndLineGap
+            );
+        }
+        if (insGroupNumber) {
+          doc
+            .font("Times-Bold")
+            .text(`${insGroupName ? " " : ""}Group Number: `, {
+              ...noUnderline,
+              ...continueStyle,
+            });
+          doc
+            .font("Times-Roman")
+            .text(`${insGroupNumber}`, underlineAndLineGap);
+        }
+      }
 
       doc.font("Times-Bold").text("Current Symptoms: ", continueStyle);
       doc.font("Times-Roman").text(`${currSymptoms}`, underlineAndLineGap);

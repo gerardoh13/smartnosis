@@ -27,10 +27,19 @@ CREATE TABLE intakes (
   zip INTEGER,
   insurance TEXT,
   phone VARCHAR(12) NOT NULL,
-  phone2 VARCHAR(12) NOT NULL,
+  phone2 VARCHAR(12),
   symptoms VARCHAR [],
   conditions VARCHAR [],
-  submitted_at BIGINT NOT NULL
+  submitted_at BIGINT NOT NULL,
+  --new:
+  ins_relationship TEXT,
+  ins_firstName TEXT,
+  ins_lastName TEXT,
+  ins_dob TEXT,
+  ins_provider TEXT,
+  insurance_id TEXT,
+  ins_group_name TEXT,
+  ins_group_number TEXT
 );
 -- CREATE TABLE providers_intakes (
 --   provider_id INTEGER REFERENCES providers ON DELETE CASCADE,

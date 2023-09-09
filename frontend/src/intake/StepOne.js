@@ -16,7 +16,7 @@ function StepOne({
   };
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
-      <p>
+      <p className="text-center">
         <span className="text-danger">*</span>{" "}
         <span>Indicates required field</span>
       </p>
@@ -224,6 +224,7 @@ function StepOne({
             className="form-control"
             id="state"
             name="state"
+            maxLength={2}
             placeholder="State"
             value={data.state}
             onChange={handleChange}
@@ -236,11 +237,13 @@ function StepOne({
         {/* Zip */}
         <div className="form-floating mt-3 col">
           <input
-            type="number"
+            type="tel"
             className="form-control"
             id="zip"
             name="zip"
             placeholder="Zip Code"
+            maxLength={5}
+            minLength={5}
             value={data.zip}
             onChange={handleChange}
             required

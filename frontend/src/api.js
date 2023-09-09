@@ -8,7 +8,6 @@ class SmartnosisApi {
   static token;
 
   static async request(endpoint, data = {}, method = "get") {
-    // console.debug("API Call:", endpoint, data, method);
 
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${SmartnosisApi.token}` };
@@ -34,6 +33,7 @@ class SmartnosisApi {
   static async generatePDF(providerId, intakeId) {
     let res = await axios.get(`${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`, {
       responseType: "arraybuffer", // Treat response as binary data
+      headers: { Authorization: `Bearer ${SmartnosisApi.token}` }
     });
     return res;
   }
@@ -56,7 +56,7 @@ class SmartnosisApi {
     // ------------------INTAKES---------------------------
     static async addIntake(data) {
       let res = await this.request("intakes", data, "post");
-      return res.intake;
+      return res;
     }
 
     static async getByDate(providerId, start, end) {

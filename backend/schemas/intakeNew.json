@@ -4,8 +4,8 @@
   "type": "object",
   "properties": {
     "providerId": {
-        "type": "string"
-      },
+      "type": "string"
+    },
     "firstName": {
       "type": "string",
       "minLength": 2
@@ -41,7 +41,8 @@
       "maxLength": 2
     },
     "zip": {
-      "type": "integer",
+      "type":"string",
+      "minLength": 5,
       "maxLength": 5
     },
     "insurance": {
@@ -63,6 +64,33 @@
     },
     "submittedAt": {
       "type": "integer"
+    },
+
+    "insRelationship": {
+      "type": "string"
+    },
+    "insFirstName": {
+      "type": "string",
+      "minLength": 2
+    },
+    "insLastName": {
+      "type": "string",
+      "minLength": 2
+    },
+    "insDob": {
+      "type": "string"
+    },
+    "insProvider": {
+      "type": "string"
+    },
+    "insuranceId": {
+      "type": "string"
+    },
+    "insGroupName": {
+      "type": "string"
+    },
+    "insGroupNumber": {
+      "type": "string"
     }
   },
   "additionalProperties": false,

@@ -25,9 +25,21 @@ class Intake {
                             phone2,
                             symptoms,
                             conditions,
-                            submitted_at)
-               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
-               RETURNING id`,
+                            submitted_at,
+
+                            ins_relationship,
+                            ins_firstName,
+                            ins_lastName,
+                            ins_dob,
+                            ins_provider,
+                            insurance_id,
+                            ins_group_name,
+                            ins_group_number
+                            )
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 
+              $11, $12, $13, $14, $15, $16, $17, $18, $19, $20,
+              $21, $22, $23, $24, $25)
+              RETURNING id`,
       [
         data.providerId,
         data.firstName,
@@ -46,6 +58,15 @@ class Intake {
         data.symptoms,
         data.conditions,
         data.submittedAt,
+
+        data.insRelationship,
+        data.insFirstName,
+        data.insLastName,
+        data.insDob,
+        data.insProvider,
+        data.insuranceId,
+        data.insGroupName,
+        data.insGroupNumber,
       ]
     );
     let intake = result.rows[0];
@@ -88,7 +109,16 @@ class Intake {
               zip,
               insurance,
               symptoms,
-              conditions
+              conditions,
+
+              ins_relationship AS "insRelationship",
+              ins_firstName AS "insFirstName",
+              ins_lastName AS "insLastName",
+              ins_dob AS "insDob",
+              ins_provider AS "insProvider",
+              insurance_id AS "insuranceId",
+              ins_group_name AS "insGroupName",
+              ins_group_number AS "insGroupNumber"
       FROM intakes 
       WHERE id = $1`,
       [id]

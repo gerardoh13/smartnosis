@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import ProviderContext from "../common/ProviderContext";
-// import NavDropdown from "react-bootstrap/NavDropdown";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import QrCodeModal from "../common/QrCodeModal";
@@ -24,15 +23,16 @@ function Navigation({ logout }) {
             to={`/intake?provider=${currProvider.id}`}
             eventKey={1}
             as={NavLink}
+            className="ms-2 ms-md-0"
           >
             Intake Form
           </Nav.Link>
-          <button className="nav-link" onClick={() => setShowQrModal(true)}>
+          <button
+            className="nav-link text-start ms-2 ms-md-0"
+            onClick={() => setShowQrModal(true)}
+          >
             QR Code
           </button>
-          {/* <Nav.Link to="/profile" eventKey={3} as={NavLink}>
-              {currChild.firstName}
-            </Nav.Link> */}
         </>
       ) : null}
     </>
@@ -55,7 +55,7 @@ function Navigation({ logout }) {
               onClick={logout}
               eventKey={6}
               as={NavLink}
-              className="me-4"
+              className="me-4 ms-2"
             >
               Logout
             </Nav.Link>

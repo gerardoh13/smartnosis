@@ -80,7 +80,6 @@ router.post("/new-password", async function (req, res, next) {
 
 router.post("/register", async function (req, res, next) {
   try {
-    if (req.body.zip) req.body.zip = +req.body.zip
     const validator = jsonschema.validate(req.body, providerNewSchema);
     if (!validator.valid) {
       const errs = validator.errors.map((e) => e.stack);

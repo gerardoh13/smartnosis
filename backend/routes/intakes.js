@@ -13,9 +13,8 @@ const { BadRequestError, UnauthorizedError } = require("../expressError");
 
 const router = new express.Router();
 
-router.post("/", ensureLoggedIn, async function (req, res, next) {
+router.post("/", async function (req, res, next) {
   try {
-    if (req.body.zip) req.body.zip = +req.body.zip;
     const validator = jsonschema.validate(req.body, intakeNewSchema);
     if (!validator.valid) {
       const errs = validator.errors.map((e) => e.stack);
@@ -30,8 +29,8 @@ router.post("/", ensureLoggedIn, async function (req, res, next) {
 
 router.get(
   "/generate-pdf/:providerId/:intakeId",
-  // ensureLoggedIn,
-  // ensureCorrectProvider,
+  ensureLoggedIn,
+  ensureCorrectProvider,
   async function (req, res, next) {
     const { intakeId } = req.params;
     try {

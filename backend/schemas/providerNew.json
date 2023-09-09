@@ -37,7 +37,8 @@
       "maxLength": 2
     },
     "zip": {
-      "type": "integer",
+      "type": "string",
+      "minLength": 5,
       "maxLength": 5
     },
     "password": {

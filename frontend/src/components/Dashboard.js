@@ -52,7 +52,7 @@ function PatientsTable() {
   };
 
   return (
-    <div className="card col-4 my-auto">
+    <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto">
       <h5 className="card-title mt-3 ms-2">Intake Forms</h5>
 
       <table className="table table-striped bg-light">

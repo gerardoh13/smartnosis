@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 import StepOne from "./StepOne";
 import StepInsurance from "./StepInsurance";
@@ -7,52 +7,52 @@ import StepThree from "./StepThree";
 import SmartnosisApi from "../api";
 import { useQuery } from "../hooks";
 import "./Intake.css";
-// import UserContext from "../users/UserContext";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ProviderContext from "../common/ProviderContext";
 // format http://localhost:3000/intake?provider=y9fi2jvh189n9j1y2ma7
 
 function Intake() {
   const INITIAL_STATE = {
     providerId: "",
-    firstName: "Gerardo",
-    lastName: "Huerta",
+    firstName: "",
+    lastName: "",
     middleName: "",
     // feet: "",
     // inches: "0",
     // weight: "",
-    dob: "1992-08-13",
+    dob: "",
     sex: "",
-    address1: "1570 W. 1st St.",
-    address2: "Unit 16",
-    city: "Santa Ana",
-    state: "CA",
-    zip: "92703",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zip: "",
     insurance: "",
-    phone: "559-797-5961",
+    phone: "",
     phone2: "",
     symptoms: new Set(),
     conditions: new Set(),
   };
 
   const INITIAL_INSURANCE_STATE = {
-    relationship: "",
-    firstName: "",
-    lastName: "",
+    insRelationship: "",
+    insFirstName: "",
+    insLastName: "",
+    insDob: "",
     insProvider: "",
-    otherInsProvider: "",
+    insOtherInsProvider: "",
     insuranceId: "",
-    groupName: "",
-    groupNumber: "",
-    dob: "",
+    insGroupName: "",
+    insGroupNumber: "",
   };
 
   const [insuranceData, setInsuranceData] = useState(INITIAL_INSURANCE_STATE);
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [maxDate, setMaxDate] = useState("");
-
+  const navigate = useNavigate();
   let query = useQuery();
-  //   const navigate = useNavigate();
+  const { currProvider } = useContext(ProviderContext);
 
   useEffect(() => {
     let max = new Date().toISOString().slice(0, -14);
@@ -70,22 +70,22 @@ function Intake() {
   }, [query]);
 
   useEffect(() => {
-    if (insuranceData.relationship === "Self") {
+    if (insuranceData.insRelationship === "Self") {
       setInsuranceData((data) => ({
         ...data,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        dob: formData.dob,
+        insFirstName: formData.firstName,
+        insLastName: formData.lastName,
+        insDob: formData.dob,
       }));
     } else {
       setInsuranceData((data) => ({
         ...data,
-        firstName: "",
-        lastName: "",
-        dob: "",
+        insFirstName: "",
+        insLastName: "",
+        insDob: "",
       }));
     }
-  }, [insuranceData.relationship]);
+  }, [insuranceData.insRelationship]);
 
   const changeStep = (n) => {
     setStep((prev) => prev + n);
@@ -104,20 +104,31 @@ function Intake() {
     dataCopy.submittedAt = getSubmittedEpoch();
     dataCopy.symptoms = Array.from(dataCopy.symptoms);
     dataCopy.conditions = Array.from(dataCopy.conditions);
-    let dobArr = dataCopy.dob.split("-").map((e) => +e.toString());
-    dobArr.push(dobArr.shift());
-    dataCopy.dob = dobArr.join("/");
-    if (!dataCopy.middleName) delete dataCopy.middleName;
-    if (!dataCopy.address2) delete dataCopy.address2;
+    dataCopy.dob = formatDob(dataCopy.dob);
+    if (dataCopy.insurance === "Yes") {
+      let insDataCopy = { ...insuranceData };
+      insDataCopy.insDob = formatDob(insDataCopy.insDob);
+      dataCopy = { ...dataCopy, ...insDataCopy };
+    }
+    for (let key in dataCopy) {
+      // if (key === "email") dataCopy[key] = dataCopy[key].toLowerCase();
+      if (!dataCopy[key]) delete dataCopy[key];
+      // else dataCopy[key] = dataCopy[key].trimEnd();
+    }
     return dataCopy;
+  };
+
+  const formatDob = (dob) => {
+    let dobArr = dob.split("-").map((e) => +e.toString());
+    dobArr.push(dobArr.shift());
+    return dobArr.join("/");
   };
 
   const submit = async () => {
     let formattedData = formatData();
-    console.log(formattedData);
-    let response = await SmartnosisApi.addIntake(formattedData);
-    console.log(response);
-    setStep(0);
+    await SmartnosisApi.addIntake(formattedData);
+    if (currProvider) navigate("/");
+    else changeStep(1);
   };
 
   const handleChange = (e, insurance = false) => {
@@ -207,9 +218,9 @@ function Intake() {
 
   const stepInsuranceComplete = () => {
     return [
-      insuranceData.firstName,
-      insuranceData.lastName,
-      insuranceData.dob,
+      insuranceData.insFirstName,
+      insuranceData.insLastName,
+      insuranceData.insDob,
     ].every(Boolean);
   };
 
@@ -262,13 +273,12 @@ function Intake() {
       );
       break;
     case 3:
-      //   currStep = (
-      //     <StepThree
-      //       data={formData}
-      //       setFormData={setFormData}
-      //       changeStep={changeStep}
-      //     />
-      //   );
+      currStep = (
+        <>
+          <p className="text-center">Your intake form has been submitted!</p>
+          <p className="text-center">You can now close this tab</p>
+        </>
+      );
       <h1>Step 3</h1>;
       break;
     default:
@@ -310,12 +320,15 @@ function Intake() {
                 }`}
               ></span>
               <span
-                className={`step ${step === 2 ? "active finish" : ""}`}
+                className={`step ${step > 1 ? "finish" : ""} ${
+                  step === 2 ? "active" : ""
+                }`}
               ></span>
             </div>
           </div>
         </div>
       </div>
+      <br />
     </>
   );
 }

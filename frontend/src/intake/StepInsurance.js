@@ -15,26 +15,26 @@ function StepInsurance({
   };
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
-      <p>
+      <p className="text-center">
         <span className="text-danger">*</span>{" "}
         <span>Indicates required field</span>
       </p>
-      {/* relationship */}
-      <div className="row">
+      {/* insRelationship */}
+      <div className="row mb-3">
         <div className="col">
           <p className="text-start ms-1 mt-1">
-            Primary Insurance Policy Holder:{" "}
+            Relationship to Policy Holder:{" "}
             <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col text-center">
-          <Dropdown onSelect={(val) => handleSelect("relationship", val)}>
+          <Dropdown onSelect={(val) => handleSelect("insRelationship", val)}>
             <Dropdown.Toggle
               className="form-control"
               variant="secondary"
               id="dropdown-basic"
             >
-              {data.relationship ? data.relationship : "Select"}
+              {data.insRelationship ? data.insRelationship : "Select"}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -47,66 +47,66 @@ function StepInsurance({
           </Dropdown>
         </div>
       </div>
-      {/* firstName */}
+      {/* insFirstName */}
       <div className="form-floating">
         <input
           type="text"
           className="form-control"
-          id="firstName"
-          name="firstName"
+          id="insFirstName"
+          name="insFirstName"
           placeholder="First Name"
-          value={data.firstName}
-          disabled={data.relationship === "Self"}
+          value={data.insFirstName}
+          disabled={data.insRelationship === "Self"}
           onChange={(e) => handleChange(e, true)}
           required
         />
-        <label htmlFor="firstName">
-          First Name of Primary Insured: <span className="text-danger">*</span>
+        <label htmlFor="insFirstName">
+          First Name of Policy Holder: <span className="text-danger">*</span>
         </label>
       </div>
-      {/* lastName */}
+      {/* insLastName */}
       <div className="form-floating my-3">
         <input
           type="text"
           className="form-control"
-          id="lastName"
-          name="lastName"
+          id="insLastName"
+          name="insLastName"
           placeholder="Last Name"
-          value={data.lastName}
-          disabled={data.relationship === "Self"}
+          value={data.insLastName}
+          disabled={data.insRelationship === "Self"}
           onChange={(e) => handleChange(e, true)}
           required
         />
         <label htmlFor="lastName">
-          Last Name of Primary Insured: <span className="text-danger">*</span>
+          Last Name of Policy Holder: <span className="text-danger">*</span>
         </label>
       </div>
-      {/* Dob */}
+      {/* insDob */}
       <div className="row">
         <div className="col-6">
           <p className="text-start ms-1 mt-1">
-            Birthdate of Primary Insured: <span className="text-danger">*</span>
+            Birthdate of Policy Holder: <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col-6">
           <input
             className="form-control"
             type="date"
-            name="dob"
-            id="dob"
+            name="insDob"
+            id="insDob"
             max={maxDate}
-            value={data.dob}
+            value={data.insDob}
             onChange={(e) => handleChange(e, true)}
-            disabled={data.relationship === "Self"}
+            disabled={data.insRelationship === "Self"}
             required
           />
         </div>
       </div>
       {/* insProvider */}
-      <div className="row mt-3">
+      <div className="row my-3">
         <div className="col">
           <p className="text-start ms-1 mt-1">
-            Primary Insurance Policy Holder:{" "}
+            Insurance Provider:{" "}
             <span className="text-danger">*</span>
           </p>
         </div>
@@ -117,7 +117,7 @@ function StepInsurance({
               variant="secondary"
               id="dropdown-basic"
             >
-              {data.insProvider ? data.insProvider : "Insurance Provider"}
+              {data.insProvider ? data.insProvider : "Select Provider"}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -140,20 +140,20 @@ function StepInsurance({
           </Dropdown>
         </div>
       </div>
-      {/* otherInsProvider */}
+      {/* insOtherInsProvider */}
       {data.insProvider === "Other" ? (
         <>
           <div className="form-floating mb-3">
             <input
               type="text"
               className="form-control"
-              id="otherInsProvider"
-              name="otherInsProvider"
+              id="insOtherInsProvider"
+              name="insOtherInsProvider"
               placeholder="Insurance ID"
-              value={data.otherInsProvider}
+              value={data.insOtherInsProvider}
               onChange={(e) => handleChange(e, true)}
             />
-            <label htmlFor="otherInsProvider">Insurance Provider:</label>
+            <label htmlFor="insOtherInsProvider">Insurance Provider:</label>
           </div>
           <hr />
         </>
@@ -171,32 +171,33 @@ function StepInsurance({
         />
         <label htmlFor="insuranceId">Insurance ID#:</label>
       </div>
-      {/* Group Name */}
+      {/* insGroupNamee */}
       <div className="form-floating my-3">
         <input
           type="text"
           className="form-control"
-          id="groupName"
-          name="groupName"
+          id="insGroupName"
+          name="insGroupName"
           placeholder="Group Name"
-          value={data.groupName}
+          value={data.insGroupName}
           onChange={(e) => handleChange(e, true)}
         />
-        <label htmlFor="groupName">Group Name:</label>
+        <label htmlFor="insGroupName">Group Name:</label>
       </div>
-      {/* Group Number */}
+      {/* insGroupNumber */}
       <div className="form-floating my-3">
         <input
           type="text"
           className="form-control"
-          id="groupNumber"
-          name="groupNumber"
+          id="insGroupNumber"
+          name="insGroupNumber"
           placeholder="Group Number"
-          value={data.groupNumber}
+          value={data.insGroupNumber}
           onChange={(e) => handleChange(e, true)}
         />
-        <label htmlFor="groupNumber">Group Number:</label>
+        <label htmlFor="insGroupNumber">Group Number:</label>
       </div>
+      <input type="file"/>
       <div className="row">
         <button
           className="btn btn-success mt-3 me-2 form-control col"
