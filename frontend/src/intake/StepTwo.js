@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
   const defaultSymptoms = [
@@ -22,6 +22,10 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
 
   const [symptoms, setSymptoms] = useState(defaultSymptoms);
   const [otherSymptom, setOtherSymptom] = useState("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();

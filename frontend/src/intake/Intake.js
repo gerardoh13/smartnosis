@@ -14,21 +14,21 @@ import ProviderContext from "../common/ProviderContext";
 function Intake() {
   const INITIAL_STATE = {
     providerId: "",
-    firstName: "",
-    lastName: "",
+    firstName: "Gerardo",
+    lastName: "Huerta",
     middleName: "",
     // feet: "",
     // inches: "0",
     // weight: "",
     dob: "",
-    sex: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: "",
-    insurance: "",
-    phone: "",
+    sex: "Male",
+    address1: "1570 W. 1st St.",
+    address2: "Unit 16",
+    city: "Santa Ana",
+    state: "CA",
+    zip: "92703",
+    insurance: "Yes",
+    phone: "559-797-5961",
     phone2: "",
     symptoms: new Set(),
     conditions: new Set(),
@@ -108,6 +108,10 @@ function Intake() {
     if (dataCopy.insurance === "Yes") {
       let insDataCopy = { ...insuranceData };
       insDataCopy.insDob = formatDob(insDataCopy.insDob);
+      if (insDataCopy.insProvider === "Other") {
+        insDataCopy.insProvider = insDataCopy.insOtherInsProvider
+        delete insDataCopy.insOtherInsProvider
+       } 
       dataCopy = { ...dataCopy, ...insDataCopy };
     }
     for (let key in dataCopy) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
   const defaultConditions = [
@@ -30,6 +30,10 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
 
   const [conditions, setConditions] = useState(defaultConditions);
   const [otherCondition, setOtherCondition] = useState("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();

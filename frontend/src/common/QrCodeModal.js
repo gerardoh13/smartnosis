@@ -6,7 +6,7 @@ function QRCode({ show, setShow, providerId }) {
   const BASE_URL =
     process.env.REACT_APP_BASE_URL ||
     // "http://" + window.location.hostname + ":3000";
-    "http://192.168.1.125:3000";
+    "http://192.168.247.135:3000";
 
   return (
     <Modal show={show} centered>

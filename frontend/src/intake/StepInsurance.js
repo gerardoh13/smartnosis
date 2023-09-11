@@ -106,8 +106,7 @@ function StepInsurance({
       <div className="row my-3">
         <div className="col">
           <p className="text-start ms-1 mt-1">
-            Insurance Provider:{" "}
-            <span className="text-danger">*</span>
+            Insurance Provider: <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col text-center">
@@ -150,10 +149,13 @@ function StepInsurance({
               id="insOtherInsProvider"
               name="insOtherInsProvider"
               placeholder="Insurance ID"
+              required={data.insProvider === "Other"}
               value={data.insOtherInsProvider}
               onChange={(e) => handleChange(e, true)}
             />
-            <label htmlFor="insOtherInsProvider">Insurance Provider:</label>
+            <label htmlFor="insOtherInsProvider">
+              Insurance Provider: <span className="text-danger">*</span>
+            </label>
           </div>
           <hr />
         </>
@@ -197,7 +199,7 @@ function StepInsurance({
         />
         <label htmlFor="insGroupNumber">Group Number:</label>
       </div>
-      <input type="file"/>
+      <input type="file" />
       <div className="row">
         <button
           className="btn btn-success mt-3 me-2 form-control col"
