@@ -7,11 +7,11 @@ function StepInsurance({
   changeStep,
   maxDate,
   handleSelect,
+  complete
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (complete()) changeStep(0.5);
-    changeStep(0.5);
+    if (complete()) changeStep(0.5);
   };
   return (
     <form onSubmit={handleSubmit} className="needs-validation">

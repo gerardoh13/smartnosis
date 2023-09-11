@@ -225,6 +225,7 @@ function Intake() {
       insuranceData.insFirstName,
       insuranceData.insLastName,
       insuranceData.insDob,
+      insuranceData.insProvider
     ].every(Boolean);
   };
 
@@ -251,6 +252,7 @@ function Intake() {
           changeStep={changeStep}
           maxDate={maxDate}
           handleSelect={handleSelect}
+          complete={stepInsuranceComplete}
         />
       );
       break;

@@ -22,10 +22,12 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
 
   const [symptoms, setSymptoms] = useState(defaultSymptoms);
   const [otherSymptom, setOtherSymptom] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchRes, setSearchRes] = useState([]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +37,7 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
   const handlePrevStep = () => {
     if (data.insurance === "No") changeStep(-1);
     else if (data.insurance === "Yes") changeStep(-0.5);
-  }
+  };
 
   const addSymptom = () => {
     setSymptoms((prev) => [...prev, otherSymptom]);
@@ -46,6 +48,18 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
       symptoms: copy,
     }));
   };
+
+  const handleChange = (e) => {
+    let { value } = e.target;
+    setSearchTerm(value);
+    if (value.length) {
+      let res = defaultSymptoms.filter((s) => s.startsWith(value));
+      setSearchRes(res);
+    } else setSearchRes([]);
+  };
+  let results = searchRes.map((s) => {
+    return <li key={s}>{s}</li>;
+  });
 
   let checkboxes = symptoms.map((symptom) => {
     return (
@@ -69,6 +83,19 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
     <form onSubmit={handleSubmit} className="needs-validation">
       <h4>Symptoms</h4>
       <p>What are you experiencing?</p>
+      <div className="form-floating my-3">
+        <input
+          type="text"
+          className="form-control"
+          id="insFirstName"
+          name="insFirstName"
+          placeholder="First Name"
+          value={searchTerm}
+          onChange={handleChange}
+        />
+        <label htmlFor="insFirstName">Search Symptoms:</label>
+      </div>
+      <ul>{searchRes.length ? results : null}</ul>
       {checkboxes}
       <hr />
       <p>
