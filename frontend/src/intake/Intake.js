@@ -248,6 +248,7 @@ function Intake() {
       currStep = (
         <StepInsurance
           data={insuranceData}
+          setData={setInsuranceData}
           handleChange={handleChange}
           changeStep={changeStep}
           maxDate={maxDate}

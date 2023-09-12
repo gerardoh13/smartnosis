@@ -1,6 +1,6 @@
 import React from "react";
 
-function ImageUpload({ uploadSuccess }) {
+function ImageUpload({ uploadSuccess, setUrl, formKey }) {
   //   https://cloudinary.com/documentation/upload_widget_reference
 
     const cloudName = "dolnu62zm";
@@ -10,28 +10,21 @@ function ImageUpload({ uploadSuccess }) {
       {
         cloudName: cloudName, 
         uploadPreset: uploadPreset,
+        folder: "Smartnosis",
         cropping: true,
         sources: ["local", "camera"],
         multiple: false,
         context: { alt: "user_uploaded" },
-        clientAllowedFormats: ["jpg"],
-        maxImageFileSize: 4000000,
+        clientAllowedFormats: ["jpg", "HEIF"],
+        maxImageFileSize: 5000000,
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          uploadSuccess(error, result);
+          uploadSuccess(error, result, setUrl, formKey);
           myWidget.close();
         }
       }
     );
-
-    // document.getElementById("upload_widget").addEventListener(
-    //   "click",
-    //   function () {
-    //     myWidget.open();
-    //   },
-    //   false
-    // );
 
   return (
     <>

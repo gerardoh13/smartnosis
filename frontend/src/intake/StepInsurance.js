@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import ImageUpload from "../common/ImageUpload";
+import "./Intake.css";
 
 function StepInsurance({
   data,
+  setData,
   handleChange,
   changeStep,
   maxDate,
   handleSelect,
-  complete
+  complete,
 }) {
+  const [insFront, setInsFront] = useState("https://www.southcarolinablues.com/web/public/resources/5eeaceda-e778-4a3a-9ce1-a261ab33d97f/blog_01_05_hc101_idcard_img.jpg?MOD=AJPERES&CACHEID=ROOTWORKSPACE.Z18_J8HC1841O8UG50QSGO8C690083-5eeaceda-e778-4a3a-9ce1-a261ab33d97f-om2m.c3");
+  const [insBack, setInsBack] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (complete()) changeStep(0.5);
   };
+
+  const uploadSuccess = (error, result, setUrl, formKey) => {
+    if (!error && result && result.event === "success") {
+      setUrl(result.info.secure_url);
+      setData((data) => ({
+        ...data,
+        [formKey]: result.info.public_id,
+      }));
+    } else console.log(error);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
       <p className="text-center">
@@ -199,7 +216,29 @@ function StepInsurance({
         />
         <label htmlFor="insGroupNumber">Group Number:</label>
       </div>
-      <input type="file" />
+      <div>
+        <hr />
+        {insFront ? (
+          <div className="text-center mb-3">
+            <img className="img75" src={insFront} alt="front of insurance card" />
+          </div>
+        ) : null}
+        <span className="me-3">Upload front of insurance card</span>
+        <ImageUpload
+          uploadSuccess={uploadSuccess}
+          setUrl={setInsFront}
+          formKey="insFrontPublicId"
+        />
+      </div>
+      <div className="my-3">
+        <hr />
+        <span className="me-3">Upload back of insurance card</span>
+        <ImageUpload
+          uploadSuccess={uploadSuccess}
+          setUrl={setInsBack}
+          formKey="insBackPublicId"
+        />
+      </div>
       <div className="row">
         <button
           className="btn btn-success mt-3 me-2 form-control col"

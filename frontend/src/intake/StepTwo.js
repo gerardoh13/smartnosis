@@ -57,28 +57,30 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
       setSearchRes(res);
     } else setSearchRes([]);
   };
-  let results = searchRes.map((s) => {
-    return <li key={s}>{s}</li>;
-  });
 
-  let checkboxes = symptoms.map((symptom) => {
+  const createCheckbox = (el) => {
     return (
-      <div className="form-check mb-3" key={symptom}>
+      <div className="form-check mb-3" key={el}>
         <input
           className="form-check-input"
           type="checkbox"
-          value={symptom}
-          id={symptom}
+          value={el}
+          id={el}
           onChange={handleCheckbox}
-          checked={data.symptoms.has(symptom)}
+          checked={data.symptoms.has(el)}
           name="symptoms"
         />
-        <label className="form-check-label" htmlFor={symptom}>
-          <strong>{symptom}</strong>
+        <label className="form-check-label" htmlFor={el}>
+          <strong>{el}</strong>
         </label>
       </div>
     );
-  });
+  };
+
+  let results = searchRes.map((symptom) => createCheckbox(symptom));
+
+  let checkboxes = symptoms.map((symptom) => createCheckbox(symptom));
+
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
       <h4>Symptoms</h4>
@@ -95,7 +97,14 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
         />
         <label htmlFor="insFirstName">Search Symptoms:</label>
       </div>
-      <ul>{searchRes.length ? results : null}</ul>
+      <ul>
+        {searchRes.length ? (
+          <>
+            {results}
+            <hr />
+          </>
+        ) : null}
+      </ul>
       {checkboxes}
       <hr />
       <p>
