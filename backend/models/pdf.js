@@ -1,6 +1,7 @@
 "use strict";
 
 const PDFDocument = require("pdfkit");
+const axios = require("axios");
 
 class PDF {
   static async generate(intake, res) {
@@ -38,11 +39,22 @@ class PDF {
       const currConditions = conditions.length ? conditions.join(", ") : "N/A";
       const doc = new PDFDocument();
 
+      const imageUrl =
+        "https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/Smartnosis/t8dgvkushglaskymivnz.jpg";
+
+      let response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+      let imageBuffer = response.data;
+      const imageWidth = doc.page.width / 3;
+      // const imageHeight = imageWidth * 2;
+      // const borderWidth = 2; // Border width in points
+      // const x = 200; // X-coordinate of the image
+      // const y = 100; // Y-coordinate of the image
+
       doc.fontSize(14);
       const continueStyle = { continued: true };
       const underlineAndLineGap = { underline: true, lineGap: 10 };
-      const underline = { underline: true };
-      const noUnderline = { underline: false };
+      const underlineAndContinue = { underline: true, continued: true };
+      const noUnderlineAndContinue = { underline: false, continued: true };
 
       doc.font("Times-Bold").text("Date Submitted: ", continueStyle);
       doc.font("Times-Roman").text(`${dateSubmitted}`, underlineAndLineGap);
@@ -55,32 +67,22 @@ class PDF {
           underlineAndLineGap
         );
 
-      doc
-        .font("Times-Bold")
-        // .text(" Sex: ", { ...noUnderline, ...continueStyle });
-        .text("Sex: ", continueStyle);
+      doc.font("Times-Bold").text("Sex: ", continueStyle);
 
-      doc
-        .font("Times-Roman")
-        .text(`${sex}`, { ...underline, ...continueStyle });
+      doc.font("Times-Roman").text(`${sex}`, underlineAndContinue);
 
-      doc
-        .font("Times-Bold")
-        .text(" Date of Birth: ", { ...noUnderline, ...continueStyle });
+      doc.font("Times-Bold").text(" Date of Birth: ", noUnderlineAndContinue);
       doc.font("Times-Roman").text(`${dob}`, underlineAndLineGap);
       //
       doc.font("Times-Bold").text("Primary Phone: ", continueStyle);
       doc
         .font("Times-Roman")
-        .text(
-          `${phone}`,
-          phone2 ? { ...underline, ...continueStyle } : underlineAndLineGap
-        );
+        .text(`${phone}`, phone2 ? underlineAndContinue : underlineAndLineGap);
 
       if (phone2) {
         doc
           .font("Times-Bold")
-          .text("  Secondary Phone: ", { ...noUnderline, ...continueStyle });
+          .text("  Secondary Phone: ", noUnderlineAndContinue);
         doc.font("Times-Roman").text(`${phone2}`, underlineAndLineGap);
       }
       //
@@ -90,20 +92,12 @@ class PDF {
         .text(`${address1} ${address2}`, underlineAndLineGap);
 
       doc.font("Times-Bold").text("City: ", continueStyle);
-      doc
-        .font("Times-Roman")
-        .text(`${city}`, { ...underline, ...continueStyle });
+      doc.font("Times-Roman").text(`${city}`, underlineAndContinue);
 
-      doc
-        .font("Times-Bold")
-        .text("  State: ", { ...noUnderline, ...continueStyle });
-      doc
-        .font("Times-Roman")
-        .text(`${state}`, { ...underline, ...continueStyle });
+      doc.font("Times-Bold").text("  State: ", noUnderlineAndContinue);
+      doc.font("Times-Roman").text(`${state}`, underlineAndContinue);
 
-      doc
-        .font("Times-Bold")
-        .text("  Zip Code: ", { ...noUnderline, ...continueStyle });
+      doc.font("Times-Bold").text("  Zip Code: ", noUnderlineAndContinue);
       doc.font("Times-Roman").text(`${zip}`, underlineAndLineGap);
 
       doc
@@ -112,10 +106,9 @@ class PDF {
       doc.font("Times-Roman").text(`${insurance}`, underlineAndLineGap);
 
       if (insurance === "Yes") {
-        doc.font("Times-Bold").text("Relationship to Policy Holder: ", {
-          ...noUnderline,
-          ...continueStyle,
-        });
+        doc
+          .font("Times-Bold")
+          .text("Relationship to Policy Holder: ", noUnderlineAndContinue);
         doc.font("Times-Roman").text(`${insRelationship}`, underlineAndLineGap);
 
         doc.font("Times-Bold").text("Policy Holder's Name: ", continueStyle);
@@ -123,22 +116,24 @@ class PDF {
           .font("Times-Roman")
           .text(`${insLastName}, ${insFirstName}`, underlineAndLineGap);
 
-        doc.font("Times-Bold").text("Date of Birth of Policy Holder: ", {
-          ...noUnderline,
-          ...continueStyle,
-        });
+        doc
+          .font("Times-Bold")
+          .text("Date of Birth of Policy Holder: ", noUnderlineAndContinue);
         doc.font("Times-Roman").text(`${insDob}`, underlineAndLineGap);
 
         doc
           .font("Times-Bold")
-          .text("Insurance Provider: ", { ...noUnderline, ...continueStyle });
+          .text("Insurance Provider: ", noUnderlineAndContinue);
         doc
           .font("Times-Roman")
-          .text(`${insProvider}`, { ...underline, ...continueStyle });
+          .text(
+            `${insProvider}`,
+            insuranceId ? underlineAndContinue : underlineAndLineGap
+          );
         if (insuranceId) {
           doc
             .font("Times-Bold")
-            .text(" Insurance ID#: ", { ...noUnderline, ...continueStyle });
+            .text(" Insurance ID#: ", noUnderlineAndContinue);
           doc.font("Times-Roman").text(`${insuranceId}`, underlineAndLineGap);
         }
 
@@ -149,30 +144,43 @@ class PDF {
             .font("Times-Roman")
             .text(
               `${insGroupName}`,
-              insGroupNumber
-                ? { ...underline, ...continueStyle }
-                : underlineAndLineGap
+              insGroupNumber ? underlineAndContinue : underlineAndLineGap
             );
         }
         if (insGroupNumber) {
           doc
             .font("Times-Bold")
-            .text(`${insGroupName ? " " : ""}Group Number: `, {
-              ...noUnderline,
-              ...continueStyle,
-            });
+            .text(
+              `${insGroupName ? " " : ""}Group Number: `,
+              noUnderlineAndContinue
+            );
           doc
             .font("Times-Roman")
             .text(`${insGroupNumber}`, underlineAndLineGap);
         }
+        //   doc.image(imageBuffer, {
+        //     width: imageWidth,
+        //     height: imageHeight,
+        //     lineBreak: true
+        //   });
+        //   doc.lineWidth(borderWidth);
+        //   doc.rect(x, y, imageWidth, imageHeight).stroke();
       }
 
       doc.font("Times-Bold").text("Current Symptoms: ", continueStyle);
       doc.font("Times-Roman").text(`${currSymptoms}`, underlineAndLineGap);
 
       doc.font("Times-Bold").text("Prexisting Conditions: ", continueStyle);
-      doc.font("Times-Roman").text(`${currConditions}`, underlineAndLineGap);
+      doc
+        .font("Times-Roman")
+        .text(`${currConditions}`, underlineAndLineGap);
 
+      if (imageBuffer) {
+        doc.text("Front of Insurance Card").image(imageBuffer, {
+          width: imageWidth,
+          lineBreak: true,
+        });
+      }
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader("Content-Disposition", 'inline; filename="generated.pdf"');
       doc.pipe(res);

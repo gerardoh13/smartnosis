@@ -12,7 +12,7 @@ function StepInsurance({
   handleSelect,
   complete,
 }) {
-  const [insFront, setInsFront] = useState("https://www.southcarolinablues.com/web/public/resources/5eeaceda-e778-4a3a-9ce1-a261ab33d97f/blog_01_05_hc101_idcard_img.jpg?MOD=AJPERES&CACHEID=ROOTWORKSPACE.Z18_J8HC1841O8UG50QSGO8C690083-5eeaceda-e778-4a3a-9ce1-a261ab33d97f-om2m.c3");
+  const [insFront, setInsFront] = useState("");
   const [insBack, setInsBack] = useState("");
 
   const handleSubmit = (e) => {
@@ -220,23 +220,36 @@ function StepInsurance({
         <hr />
         {insFront ? (
           <div className="text-center mb-3">
-            <img className="img75" src={insFront} alt="front of insurance card" />
+            <img
+              className="img75"
+              src={insFront}
+              alt="front of insurance card"
+            />
           </div>
         ) : null}
         <span className="me-3">Upload front of insurance card</span>
         <ImageUpload
           uploadSuccess={uploadSuccess}
           setUrl={setInsFront}
-          formKey="insFrontPublicId"
+          formKey="insFrontPId"
         />
       </div>
       <div className="my-3">
         <hr />
+        {insBack ? (
+          <div className="text-center mb-3">
+            <img
+              className="img75"
+              src={insBack}
+              alt="front of insurance card"
+            />
+          </div>
+        ) : null}
         <span className="me-3">Upload back of insurance card</span>
         <ImageUpload
           uploadSuccess={uploadSuccess}
           setUrl={setInsBack}
-          formKey="insBackPublicId"
+          formKey="insBackPId"
         />
       </div>
       <div className="row">

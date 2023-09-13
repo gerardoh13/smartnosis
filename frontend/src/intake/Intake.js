@@ -44,6 +44,8 @@ function Intake() {
     insuranceId: "",
     insGroupName: "",
     insGroupNumber: "",
+    insFrontPId: "",
+    insBackPId: ""
   };
 
   const [insuranceData, setInsuranceData] = useState(INITIAL_INSURANCE_STATE);

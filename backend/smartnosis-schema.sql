@@ -39,7 +39,9 @@ CREATE TABLE intakes (
   ins_provider TEXT,
   insurance_id TEXT,
   ins_group_name TEXT,
-  ins_group_number TEXT
+  ins_group_number TEXT,
+  ins_front_pid TEXT,
+  ins_back_pid TEXT
 );
 -- CREATE TABLE providers_intakes (
 --   provider_id INTEGER REFERENCES providers ON DELETE CASCADE,

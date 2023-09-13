@@ -91,6 +91,12 @@
     },
     "insGroupNumber": {
       "type": "string"
+    },
+    "insFrontPId": {
+      "type": "string"
+    },
+    "insBackPId": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
