@@ -42,6 +42,7 @@ function PatientsTable() {
           p.firstName
         }`}</td>
         <td>{p.dob}</td>
+        <td>{formatTime(p.submittedAt)}</td>
         <td>
           <button className="btn btn-success" onClick={() => generatePdf(p.id)}>
             PDF
@@ -51,23 +52,39 @@ function PatientsTable() {
     ));
   };
 
-  return (
-    <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto">
-      <h5 className="card-title mt-3 ms-2">Intake Forms</h5>
+  const formatTime = (epoch) => {
+    return new Date(epoch * 1000).toLocaleTimeString();
+  };
 
-      <table className="table table-striped bg-light">
+  return (
+    // <div className="card col-lg-4 col-md-8 mt-4">
+          <div className="card">
+      <div className="row my-4">
+        <div className="col-3">
+          <h5 className="card-title ms-2 text-center">Intakes</h5>
+        </div>
+        <div className="col-8 m-auto">
+          <div className="input-group">
+            <span className="input-group-text">
+              <i className="bi bi-search"></i>
+            </span>
+            <input type="text" className="form-control" />
+            <button className="btn btn-danger input-group-text">
+              <i className="bi bi-x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <table className="table table-striped bg-light text-center">
         <thead>
           <tr>
-            <th className="wThird" scope="col">
-              Name
-            </th>
-            <th className="wThird" scope="col">
-              Date of Birth
-            </th>
-            <th></th>
+            <th scope="col">Name</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Time Submitted</th>
+            <th />
           </tr>
         </thead>
-        <tbody>{createRows(intakes.slice(0, 3))}</tbody>
+        <tbody>{createRows(intakes)}</tbody>
       </table>
     </div>
   );

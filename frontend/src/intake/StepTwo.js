@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createCheckbox } from "./commonFuncs";
 
 function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
   const defaultSymptoms = [
@@ -53,33 +54,25 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
     let { value } = e.target;
     setSearchTerm(value);
     if (value.length) {
-      let res = defaultSymptoms.filter((s) => s.startsWith(value));
+      let res = defaultSymptoms.filter((s) => {
+        if (
+          s.startsWith(value) ||
+          s.startsWith(value.charAt(0).toUpperCase() + value.slice(1))
+        )
+          return true;
+        else return false;
+      });
       setSearchRes(res);
     } else setSearchRes([]);
   };
 
-  const createCheckbox = (el) => {
-    return (
-      <div className="form-check mb-3" key={el}>
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value={el}
-          id={el}
-          onChange={handleCheckbox}
-          checked={data.symptoms.has(el)}
-          name="symptoms"
-        />
-        <label className="form-check-label" htmlFor={el}>
-          <strong>{el}</strong>
-        </label>
-      </div>
-    );
-  };
+  let results = searchRes.map((symptom) =>
+    createCheckbox(symptom, handleCheckbox, data)
+  );
 
-  let results = searchRes.map((symptom) => createCheckbox(symptom));
-
-  let checkboxes = symptoms.map((symptom) => createCheckbox(symptom));
+  let checkboxes = symptoms.map((symptom) =>
+    createCheckbox(symptom, handleCheckbox, data)
+  );
 
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
@@ -89,13 +82,12 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
         <input
           type="text"
           className="form-control"
-          id="insFirstName"
-          name="insFirstName"
-          placeholder="First Name"
+          id="searchSymptoms"
+          placeholder="Search Symptoms:"
           value={searchTerm}
           onChange={handleChange}
         />
-        <label htmlFor="insFirstName">Search Symptoms:</label>
+        <label htmlFor="searchSymptoms">Search Symptoms:</label>
       </div>
       <ul>
         {searchRes.length ? (

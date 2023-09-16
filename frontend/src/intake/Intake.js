@@ -295,7 +295,8 @@ function Intake() {
 
   return (
     <>
-      <div className="card my-4 col-lg-6 col-md-5 col-sm-10 col-11">
+      {/* <div className="card my-4 col-lg-6 col-md-8 col-sm-10 col-11"> */}
+      <div className="card">
         <img
           src="smartnosis-logo.jpg"
           className="rounded mx-auto w60 mt-2"
@@ -304,7 +305,8 @@ function Intake() {
         <h2 className="my-3 text-center">Patient Intake Form</h2>
       </div>
 
-      <div className="card col-lg-6 col-md-5 col-sm-10 col-11">
+      {/* <div className="card col-lg-6 col-md-8 col-sm-10 col-11"> */}
+      <div className="card mt-3">
         <div className="card-body">
           {currStep}
           <div className="row">

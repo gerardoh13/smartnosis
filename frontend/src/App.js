@@ -8,12 +8,22 @@ import SmartnosisApi from "./api";
 import { decodeToken } from "react-jwt";
 import ProviderContext from "./common/ProviderContext";
 import Navbar from "./navigation/Navbar";
+import Toolbar from "@mui/material/Toolbar";
+import SideBar from "./navigation/SideBar";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import ResponsiveAppBar from "./navigation/ResponsiveAppBar";
 
 function App() {
   const [token, setToken] = useLocalStorage("smartnosis-token");
   const [currProvider, setCurrProvider] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [open, setOpen] = useState(true);
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
   useEffect(() => {
     async function getCurrProvider() {
       if (token) {
@@ -54,7 +64,7 @@ function App() {
       setToken(providerToken);
       return { valid: true };
     } catch (errors) {
-      console.log(errors)
+      console.log(errors);
       return { valid: false, errors };
     }
   };
@@ -66,8 +76,40 @@ function App() {
             currProvider,
           }}
         >
-          <Navbar logout={logout} />
-          {loading ? <Spinner /> : <NavRoutes register={register} login={login} />}
+          <Box sx={{ display: "flex" }}>
+            <CssBaseline />
+            {/* <Navbar logout={logout} /> */}
+            <ResponsiveAppBar toggleDrawer={toggleDrawer} open={open} />
+            {currProvider ? (
+              <SideBar toggleDrawer={toggleDrawer} open={open} />
+            ) : null}
+
+            <Box
+              component="main"
+              sx={{
+                backgroundColor: (theme) =>
+                  theme.palette.mode === "light"
+                    ? theme.palette.grey[100]
+                    : theme.palette.grey[900],
+                flexGrow: 1,
+                height: "100vh",
+                overflow: "auto",
+              }}
+            >
+              <Toolbar />
+              <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                <Grid container spacing={3} >
+                  <Grid item xs={12} md={8} lg={9}>
+                    {loading ? (
+                      <Spinner />
+                    ) : (
+                      <NavRoutes register={register} login={login} />
+                    )}
+                  </Grid>
+                </Grid>
+              </Container>
+            </Box>
+          </Box>
         </ProviderContext.Provider>
       </BrowserRouter>
     </div>

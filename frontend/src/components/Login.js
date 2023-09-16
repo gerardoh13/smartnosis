@@ -35,7 +35,6 @@ function Login({ login }) {
         className="rounded mx-auto w60 mt-2"
         alt="smartnosis logo"
       />
-      {/* <QRCodeSVG className="m-auto" value="http://10.0.0.12:3000/form" /> */}
       <div className="card-body">
         <h5 className="card-title">Welcome Back!</h5>
         {errors.length ? <Alerts msgs={errors} /> : null}

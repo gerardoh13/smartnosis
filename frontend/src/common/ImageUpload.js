@@ -32,7 +32,7 @@ function ImageUpload({ uploadSuccess, setUrl, formKey }) {
       setCloudinaryWidget(myWidget);
       widgetRef.current = myWidget;
     }
-  }, [cloudinaryWidget]);
+  }, [cloudinaryWidget, formKey, setUrl, uploadSuccess]);
 
   const openWidget = () => {
     // Access the widget instance from the ref and open it

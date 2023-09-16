@@ -80,6 +80,7 @@ class Intake {
               first_name AS "firstName",
               middle_name AS "middleName",
               last_name AS "lastName",
+              submitted_at AS "submittedAt",
               dob
       FROM intakes 
       WHERE provider_id = $1 AND submitted_at > $2 AND submitted_at < $3

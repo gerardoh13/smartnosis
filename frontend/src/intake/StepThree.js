@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createCheckbox } from "./commonFuncs";
 
 function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
   const defaultConditions = [
@@ -30,15 +31,16 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
 
   const [conditions, setConditions] = useState(defaultConditions);
   const [otherCondition, setOtherCondition] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchRes, setSearchRes] = useState([]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // changeStep(1);
-    submit()
+    submit();
   };
 
   const addCondition = () => {
@@ -51,30 +53,55 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
     }));
   };
 
-  let checkboxes = conditions.map((condition) => {
-    return (
-      <div className="form-check mb-3" key={condition}>
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value={condition}
-          id={condition}
-          onChange={handleCheckbox}
-          checked={data.conditions.has(condition)}
-          name="conditions"
-        />
-        <label className="form-check-label" htmlFor={condition}>
-          <strong>{condition}</strong>
-        </label>
-      </div>
-    );
-  });
+  const handleChange = (e) => {
+    let { value } = e.target;
+    setSearchTerm(value);
+    if (value.length) {
+      let res = defaultConditions.filter((c) => {
+        if (
+          c.startsWith(value) ||
+          c.startsWith(value.charAt(0).toUpperCase() + value.slice(1))
+        )
+          return true;
+        else return false;
+      });
+      setSearchRes(res);
+    } else setSearchRes([]);
+  };
+
+  let results = searchRes.map((symptom) =>
+    createCheckbox(symptom, handleCheckbox, data)
+  );
+
+  let checkboxes = conditions.map((symptom) =>
+    createCheckbox(symptom, handleCheckbox, data)
+  );
+
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
       <h4>Medical History</h4>
       <p>
         Have you been diagnosed with any of the following (past or present)?
       </p>
+      <div className="form-floating my-3">
+        <input
+          type="text"
+          className="form-control"
+          id="searchConditions"
+          placeholder="Search Conditions:"
+          value={searchTerm}
+          onChange={handleChange}
+        />
+        <label htmlFor="searchConditions">Search Conditions:</label>
+      </div>
+      <ul>
+        {searchRes.length ? (
+          <>
+            {results}
+            <hr />
+          </>
+        ) : null}
+      </ul>
       {checkboxes}
       <hr />
       <p>
@@ -88,7 +115,11 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
           value={otherCondition}
           onChange={(e) => setOtherCondition(e.target.value)}
         />
-        <button className="btn btn-primary" type="button" onClick={addCondition}>
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={addCondition}
+        >
           Add
         </button>
       </div>
@@ -99,11 +130,7 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
         >
           Previous
         </button>
-        <button
-          className="btn btn-success mt-3 form-control col"
-        >
-          Next
-        </button>
+        <button className="btn btn-success mt-3 form-control col">Next</button>
       </div>{" "}
     </form>
   );
