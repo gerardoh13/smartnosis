@@ -29,7 +29,8 @@ function Login({ login }) {
   };
 
   return (
-    <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto">
+    // <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto">
+          <div className="card col-8 m-auto">
       <img
         src="smartnosis-logo.jpg"
         className="rounded mx-auto w60 mt-2"

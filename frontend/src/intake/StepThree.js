@@ -82,6 +82,7 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
       <h4>Medical History</h4>
       <p>
         Have you been diagnosed with any of the following (past or present)?
+        
       </p>
       <div className="form-floating my-3">
         <input

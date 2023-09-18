@@ -98,7 +98,8 @@ function Register({ register }) {
   return (
     <>
       <br />
-      <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto">
+      {/* <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto"> */}
+      <div className="card">
         <div className="card-body">
           <h5 className="card-title">Get started with Smartnosis</h5>
           {errors.length ? <Alerts msgs={errors} /> : null}

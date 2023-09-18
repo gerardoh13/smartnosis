@@ -32,6 +32,8 @@ class PDF {
         insuranceId,
         insGroupName,
         insGroupNumber,
+        insFrontPId,
+        insBackPId,
       } = intake;
 
       const dateSubmitted = new Date(submittedAt * 1000).toLocaleDateString();
@@ -39,25 +41,28 @@ class PDF {
       const currConditions = conditions.length ? conditions.join(", ") : "N/A";
       const doc = new PDFDocument();
 
-      const imageUrl =
-        "https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/Smartnosis/t8dgvkushglaskymivnz.jpg";
+      let imageUrl;
+      let imageBuffer;
+      let imageWidth;
+      if (insFrontPId) {
+        imageUrl = `https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${insFrontPId}.jpg`;
+        let response = await axios.get(imageUrl, {
+          responseType: "arraybuffer",
+        });
+        imageBuffer = response.data;
+        imageWidth = doc.page.width / 3;
+      }
 
-      let response = await axios.get(imageUrl, { responseType: "arraybuffer" });
-      let imageBuffer = response.data;
-      const imageWidth = doc.page.width / 3;
       // const imageHeight = imageWidth * 2;
       // const borderWidth = 2; // Border width in points
       // const x = 200; // X-coordinate of the image
       // const y = 100; // Y-coordinate of the image
 
-      doc.fontSize(14);
       const continueStyle = { continued: true };
       const underlineAndLineGap = { underline: true, lineGap: 10 };
       const underlineAndContinue = { underline: true, continued: true };
       const noUnderlineAndContinue = { underline: false, continued: true };
-
-      doc.font("Times-Bold").text("Date Submitted: ", continueStyle);
-      doc.font("Times-Roman").text(`${dateSubmitted}`, underlineAndLineGap);
+      doc.fontSize(16);
 
       doc.font("Times-Bold").text("Patient's Name: ", continueStyle);
       doc
@@ -66,6 +71,10 @@ class PDF {
           `${lastName}, ${firstName} ${middleName ? middleName : ""}`,
           underlineAndLineGap
         );
+      doc.fontSize(14);
+
+      doc.font("Times-Bold").text("Date Submitted: ", continueStyle);
+      doc.font("Times-Roman").text(`${dateSubmitted}`, underlineAndLineGap);
 
       doc.font("Times-Bold").text("Sex: ", continueStyle);
 
@@ -158,22 +167,13 @@ class PDF {
             .font("Times-Roman")
             .text(`${insGroupNumber}`, underlineAndLineGap);
         }
-        //   doc.image(imageBuffer, {
-        //     width: imageWidth,
-        //     height: imageHeight,
-        //     lineBreak: true
-        //   });
-        //   doc.lineWidth(borderWidth);
-        //   doc.rect(x, y, imageWidth, imageHeight).stroke();
       }
 
       doc.font("Times-Bold").text("Current Symptoms: ", continueStyle);
       doc.font("Times-Roman").text(`${currSymptoms}`, underlineAndLineGap);
 
       doc.font("Times-Bold").text("Prexisting Conditions: ", continueStyle);
-      doc
-        .font("Times-Roman")
-        .text(`${currConditions}`, underlineAndLineGap);
+      doc.font("Times-Roman").text(`${currConditions}`, underlineAndLineGap);
 
       if (imageBuffer) {
         doc.text("Front of Insurance Card").image(imageBuffer, {

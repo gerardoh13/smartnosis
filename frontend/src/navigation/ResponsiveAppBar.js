@@ -8,15 +8,13 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import QrCodeModal from "../common/QrCodeModal";
 import ProviderContext from "../common/ProviderContext";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 
-const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const drawerWidth = 240;
 
@@ -38,25 +36,27 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-function ResponsiveAppBar({ toggleDrawer, open }) {
-  const [anchorElNav, setAnchorElNav] = useState(null);
+function ResponsiveAppBar({ toggleDrawer, open, logout }) {
+//   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
 
   const { currProvider } = useContext(ProviderContext);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+//   const handleOpenNavMenu = (event) => {
+//     setAnchorElNav(event.currentTarget);
+//   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+//   const handleCloseNavMenu = () => {
+//     setAnchorElNav(null);
+//   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (e) => {
+    let {innerText} = e.target
+    if (innerText === "Logout") logout()
     setAnchorElUser(null);
   };
 
@@ -90,7 +90,6 @@ function ResponsiveAppBar({ toggleDrawer, open }) {
 
   return (
     <AppBar position="absolute" open={open}>
-      {/* <Container maxWidth="xl"> */}
       <Toolbar
         sx={{
           pr: "24px", // keep right padding when drawer closed
@@ -161,13 +160,12 @@ function ResponsiveAppBar({ toggleDrawer, open }) {
           >
             {settings.map((setting) => (
               <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
+                <Typography textAlign="center" >{setting}</Typography>
               </MenuItem>
             ))}
           </Menu>
         </Box>
       </Toolbar>
-      {/* </Container> */}
     </AppBar>
   );
 }

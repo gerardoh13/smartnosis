@@ -34,11 +34,13 @@ class Intake {
                             ins_provider,
                             insurance_id,
                             ins_group_name,
-                            ins_group_number
+                            ins_group_number,
+                            ins_front_pid,
+                            ins_back_pid
                             )
               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 
               $11, $12, $13, $14, $15, $16, $17, $18, $19, $20,
-              $21, $22, $23, $24, $25)
+              $21, $22, $23, $24, $25, $26, $27)
               RETURNING id`,
       [
         data.providerId,
@@ -67,6 +69,8 @@ class Intake {
         data.insuranceId,
         data.insGroupName,
         data.insGroupNumber,
+        data.insFrontPId,
+        data.insBackPId
       ]
     );
     let intake = result.rows[0];
@@ -119,7 +123,9 @@ class Intake {
               ins_provider AS "insProvider",
               insurance_id AS "insuranceId",
               ins_group_name AS "insGroupName",
-              ins_group_number AS "insGroupNumber"
+              ins_group_number AS "insGroupNumber",
+              ins_front_pid AS "insFrontPId",
+              ins_back_pid AS "insBackPId"
       FROM intakes 
       WHERE id = $1`,
       [id]

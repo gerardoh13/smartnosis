@@ -7,7 +7,7 @@ import Spinner from "./common/Spinner";
 import SmartnosisApi from "./api";
 import { decodeToken } from "react-jwt";
 import ProviderContext from "./common/ProviderContext";
-import Navbar from "./navigation/Navbar";
+// import Navbar from "./navigation/Navbar";
 import Toolbar from "@mui/material/Toolbar";
 import SideBar from "./navigation/SideBar";
 import Box from "@mui/material/Box";
@@ -79,9 +79,15 @@ function App() {
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
             {/* <Navbar logout={logout} /> */}
-            <ResponsiveAppBar toggleDrawer={toggleDrawer} open={open} />
             {currProvider ? (
+              <>
               <SideBar toggleDrawer={toggleDrawer} open={open} />
+              <ResponsiveAppBar
+              toggleDrawer={toggleDrawer}
+              open={open}
+              logout={logout}
+            />
+              </>
             ) : null}
 
             <Box
@@ -98,7 +104,12 @@ function App() {
             >
               <Toolbar />
               <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                <Grid container spacing={3} >
+                <Grid
+                  container
+                  spacing={3}
+                  alignItems="center"
+                  justifyContent="center"
+                >
                   <Grid item xs={12} md={8} lg={9}>
                     {loading ? (
                       <Spinner />
