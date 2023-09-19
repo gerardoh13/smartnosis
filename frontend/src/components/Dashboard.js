@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
+import Grid from "@mui/material/Grid";
 
 function PatientsTable() {
   const [intakes, setIntakes] = useState([]);
@@ -57,36 +58,76 @@ function PatientsTable() {
   };
 
   return (
-    // <div className="card col-lg-4 col-md-8 mt-4">
-          <div className="card">
-      <div className="row my-4">
-        <div className="col-3">
-          <h5 className="card-title ms-2 text-center">Intakes</h5>
+    <>
+      <Grid item xs={12} md={8} lg={8}>
+        <div className="card">
+          <div className="row my-4">
+            <div className="col-3">
+              <h5 className="card-title ms-2 text-center">Intakes</h5>
+            </div>
+            <div className="col-8 m-auto">
+              <div className="input-group">
+                <span className="input-group-text">
+                  <i className="bi bi-search"></i>
+                </span>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Intakes.."
+                />
+                <button className="btn btn-danger input-group-text">
+                  <i className="bi bi-x"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <table className="table table-striped bg-light text-center">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Time Submitted</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>{createRows(intakes)}</tbody>
+          </table>
         </div>
-        <div className="col-8 m-auto">
-          <div className="input-group">
-            <span className="input-group-text">
-              <i className="bi bi-search"></i>
-            </span>
-            <input type="text" className="form-control" />
-            <button className="btn btn-danger input-group-text">
-              <i className="bi bi-x"></i>
-            </button>
+      </Grid>
+      <Grid item xs={12} md={8} lg={4}>
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">Send Intake Form</h5>
+            <div className="row my-3">
+              <div className="col-6">Date:</div>
+              <div className="col-6">
+                <input type="date" />
+              </div>
+            </div>
+            <div className="row my-3">
+              <div className="col-6">Time:</div>
+              <div className="col-6">
+                <input type="time" />
+              </div>
+            </div>
+            <div className="input-group">
+              <span className="input-group-text">
+                <i class="bi bi-envelope"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Patient email"
+              />
+              <button className="btn btn-primary input-group-text">
+                Send
+                <i class="bi bi-send ms-2"></i>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <table className="table table-striped bg-light text-center">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Date of Birth</th>
-            <th scope="col">Time Submitted</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>{createRows(intakes)}</tbody>
-      </table>
-    </div>
+      </Grid>
+    </>
   );
 }
 

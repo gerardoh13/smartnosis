@@ -107,16 +107,16 @@ function App() {
                 <Grid
                   container
                   spacing={3}
-                  alignItems="center"
+                  // alignItems="center"
                   justifyContent="center"
                 >
-                  <Grid item xs={12} md={8} lg={9}>
+                  {/* <Grid item xs={12} md={8} lg={9}> */}
                     {loading ? (
                       <Spinner />
                     ) : (
                       <NavRoutes register={register} login={login} />
                     )}
-                  </Grid>
+                  {/* </Grid> */}
                 </Grid>
               </Container>
             </Box>
