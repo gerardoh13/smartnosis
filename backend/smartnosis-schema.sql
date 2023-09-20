@@ -26,6 +26,9 @@ CREATE TABLE intakes (
   state VARCHAR(2) NOT NULL,
   zip INTEGER,
   insurance TEXT,
+  --new:
+  email TEXT CHECK (position('@' IN email) > 1),
+  --
   phone VARCHAR(12) NOT NULL,
   phone2 VARCHAR(12),
   symptoms VARCHAR [],
@@ -41,7 +44,8 @@ CREATE TABLE intakes (
   ins_group_name TEXT,
   ins_group_number TEXT,
   ins_front_pid TEXT,
-  ins_back_pid TEXT
+  ins_back_pid TEXT,
+  appt_at BIGINT
 );
 -- CREATE TABLE providers_intakes (
 --   provider_id INTEGER REFERENCES providers ON DELETE CASCADE,

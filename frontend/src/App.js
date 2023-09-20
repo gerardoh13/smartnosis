@@ -110,13 +110,11 @@ function App() {
                   // alignItems="center"
                   justifyContent="center"
                 >
-                  {/* <Grid item xs={12} md={8} lg={9}> */}
                     {loading ? (
                       <Spinner />
                     ) : (
                       <NavRoutes register={register} login={login} />
                     )}
-                  {/* </Grid> */}
                 </Grid>
               </Container>
             </Box>

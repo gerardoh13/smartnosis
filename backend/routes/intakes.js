@@ -27,6 +27,20 @@ router.post("/", async function (req, res, next) {
   }
 });
 
+router.post("/appointment", async function (req, res, next) {
+  try {
+    // const validator = jsonschema.validate(req.body, intakeNewSchema);
+    // if (!validator.valid) {
+    //   const errs = validator.errors.map((e) => e.stack);
+    //   throw new BadRequestError(errs);
+    // }
+    const intake = await Intake.addAppt(req.body);
+    return res.status(201).json({ intake });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 router.get(
   "/generate-pdf/:providerId/:intakeId",
   ensureLoggedIn,

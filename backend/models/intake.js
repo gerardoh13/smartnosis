@@ -70,7 +70,34 @@ class Intake {
         data.insGroupName,
         data.insGroupNumber,
         data.insFrontPId,
-        data.insBackPId
+        data.insBackPId,
+      ]
+    );
+    let intake = result.rows[0];
+
+    return intake;
+  }
+
+  static async addAppt(data) {
+    const result = await db.query(
+      `INSERT INTO intakes (provider_id,
+                              first_name,
+                              last_name,
+                              middle_name,
+                              email,
+                              phone,
+                              appt_at
+                              )
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                RETURNING id`,
+      [
+        data.providerId,
+        data.firstName,
+        data.lastName,
+        data.middleName,
+        data.email,
+        data.phone,
+        data.apptAt,
       ]
     );
     let intake = result.rows[0];
@@ -131,6 +158,36 @@ class Intake {
       [id]
     );
     let intake = result.rows[0];
+
+    return intake;
+  }
+
+  static async update(id, data) {
+    const { setCols, values } = sqlForPartialUpdate(data, {
+      firstName: "first_name",
+      middleName: "middle_name",
+      lastName: "last_name",
+      insRelationship: "ins_relationship",
+      insFirstName: "ins_firstName",
+      insLastName: "ins_lastName",
+      insDob: "ins_dob",
+      insProvider: "ins_provider",
+      insuranceId: "insurance_id",
+      insGroupName: "ins_group_name",
+      insGroupNumber: "ins_group_number",
+      insFrontPId: "ins_front_pid",
+      insBackPId: "ins_back_pid",
+    });
+    const idVarIdx = "$" + (values.length + 1);
+
+    const querySql = `UPDATE intakes
+                      SET ${setCols} 
+                      WHERE id = ${idVarIdx} 
+                      RETURNING id`;
+    const result = await db.query(querySql, [...values, id]);
+    const intake = result.rows[0];
+
+    if (!intake) throw new NotFoundError(`No intake: ${id}`);
 
     return intake;
   }
