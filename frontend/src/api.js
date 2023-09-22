@@ -59,6 +59,11 @@ class SmartnosisApi {
       return res;
     }
 
+    static async addAppt(data) {
+      let res = await this.request("intakes/appointment", data, "post");
+      return res;
+    }
+
     static async getByDate(providerId, start, end) {
       let res = await this.request(`intakes/by-date/${providerId}/${start}/${end}`);
       return res;

@@ -3,10 +3,10 @@ const { transporter } = require("../services");
 const { REACT_APP_HOST } = require("../config");
 
 class Email {
-  static async sendIntake(email, provider, appointment) {
+  static async sendIntake(provider, appointment) {
     let info = await transporter.sendMail({
       from: '"Smartnosis Team" <donotreply@smartnosis.com>', // sender address
-      to: email, // list of receivers
+      to: appointment.email, // list of receivers
       subject: `${provider.name} Intake Form`, // Subject line
       html: `<div style="text-align: center;">
       <h3>Hi ${appointment.firstName},</h3>

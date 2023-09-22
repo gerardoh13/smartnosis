@@ -44,16 +44,15 @@ CREATE TABLE intakes (
   ins_group_name TEXT,
   ins_group_number TEXT,
   ins_front_pid TEXT,
-  ins_back_pid TEXT,
-  appt_at BIGINT
+  ins_back_pid TEXT
 );
 CREATE TABLE appointments (
   id VARCHAR(20) NOT NULL,
-  provider_id INTEGER REFERENCES providers ON DELETE CASCADE,
+  provider_id TEXT REFERENCES providers ON DELETE CASCADE,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  middle_name TEXT,
+  appt_at BIGINT,
   email TEXT CHECK (position('@' IN email) > 1),
-  phone VARCHAR(12),
+  -- phone VARCHAR(12),
   PRIMARY KEY (id)
 );

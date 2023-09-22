@@ -9,7 +9,7 @@ import { useQuery } from "../hooks";
 import "./Intake.css";
 import { useNavigate } from "react-router-dom";
 import ProviderContext from "../common/ProviderContext";
-// format http://localhost:3000/intake?provider=y9fi2jvh189n9j1y2ma7
+import Grid from "@mui/material/Grid";
 
 function Intake() {
   const INITIAL_STATE = {
@@ -17,9 +17,6 @@ function Intake() {
     firstName: "Gerardo",
     lastName: "Huerta",
     middleName: "",
-    // feet: "",
-    // inches: "0",
-    // weight: "",
     dob: "",
     sex: "Male",
     address1: "1570 W. 1st St.",
@@ -45,7 +42,7 @@ function Intake() {
     insGroupName: "",
     insGroupNumber: "",
     insFrontPId: "",
-    insBackPId: ""
+    insBackPId: "",
   };
 
   const [insuranceData, setInsuranceData] = useState(INITIAL_INSURANCE_STATE);
@@ -63,12 +60,14 @@ function Intake() {
 
   useEffect(() => {
     let queryProvider = query.get("provider");
+    let queryAppt = query.get("appointment");
     if (queryProvider) {
       setFormData((data) => ({
         ...data,
         providerId: queryProvider,
       }));
     }
+    if (queryAppt) console.log(queryAppt)
   }, [query]);
 
   useEffect(() => {
@@ -111,9 +110,9 @@ function Intake() {
       let insDataCopy = { ...insuranceData };
       insDataCopy.insDob = formatDob(insDataCopy.insDob);
       if (insDataCopy.insProvider === "Other") {
-        insDataCopy.insProvider = insDataCopy.insOtherInsProvider
-        delete insDataCopy.insOtherInsProvider
-       } 
+        insDataCopy.insProvider = insDataCopy.insOtherInsProvider;
+        delete insDataCopy.insOtherInsProvider;
+      }
       dataCopy = { ...dataCopy, ...insDataCopy };
     }
     for (let key in dataCopy) {
@@ -227,7 +226,7 @@ function Intake() {
       insuranceData.insFirstName,
       insuranceData.insLastName,
       insuranceData.insDob,
-      insuranceData.insProvider
+      insuranceData.insProvider,
     ].every(Boolean);
   };
 
@@ -294,8 +293,8 @@ function Intake() {
   }
 
   return (
-    <>
-      {/* <div className="card my-4 col-lg-6 col-md-8 col-sm-10 col-11"> */}
+    <Grid item xs={12} md={8} lg={10}>
+      {/* <ScheduleForm /> */}
       <div className="card">
         <img
           src="smartnosis-logo.jpg"
@@ -305,7 +304,6 @@ function Intake() {
         <h2 className="my-3 text-center">Patient Intake Form</h2>
       </div>
 
-      {/* <div className="card col-lg-6 col-md-8 col-sm-10 col-11"> */}
       <div className="card mt-3">
         <div className="card-body">
           {currStep}
@@ -340,7 +338,7 @@ function Intake() {
         </div>
       </div>
       <br />
-    </>
+    </Grid>
   );
 }
 
