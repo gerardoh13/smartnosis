@@ -34,8 +34,9 @@ router.post("/appointment", async function (req, res, next) {
     //   const errs = validator.errors.map((e) => e.stack);
     //   throw new BadRequestError(errs);
     // }
-    const intake = await Intake.addAppt(req.body);
-    return res.status(201).json({ intake });
+    const appointment = await Intake.addAppt(req.body);
+    await Email.sendIntake(email, sentByName, appointment);
+    return res.status(201).json({ appointment });
   } catch (err) {
     return next(err);
   }

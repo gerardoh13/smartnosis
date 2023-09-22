@@ -27,7 +27,7 @@ CREATE TABLE intakes (
   zip INTEGER,
   insurance TEXT,
   --new:
-  email TEXT CHECK (position('@' IN email) > 1),
+  -- email TEXT CHECK (position('@' IN email) > 1),
   --
   phone VARCHAR(12) NOT NULL,
   phone2 VARCHAR(12),
@@ -47,7 +47,13 @@ CREATE TABLE intakes (
   ins_back_pid TEXT,
   appt_at BIGINT
 );
--- CREATE TABLE providers_intakes (
---   provider_id INTEGER REFERENCES providers ON DELETE CASCADE,
---   intake_id INTEGER REFERENCES intakes ON DELETE CASCADE
--- );
+CREATE TABLE appointments (
+  id VARCHAR(20) NOT NULL,
+  provider_id INTEGER REFERENCES providers ON DELETE CASCADE,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  middle_name TEXT,
+  email TEXT CHECK (position('@' IN email) > 1),
+  phone VARCHAR(12),
+  PRIMARY KEY (id)
+);

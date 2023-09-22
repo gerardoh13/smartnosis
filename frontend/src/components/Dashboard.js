@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
 import Grid from "@mui/material/Grid";
+import ScheduleForm from "./ScheduleForm";
 
 function PatientsTable() {
   const [intakes, setIntakes] = useState([]);
@@ -19,6 +20,7 @@ function PatientsTable() {
       setIntakes(res.intakes);
     };
     getActivity();
+    console.log(currProvider)
   }, [currProvider.id]);
 
   const getMidnights = () => {
@@ -95,37 +97,7 @@ function PatientsTable() {
         </div>
       </Grid>
       <Grid item xs={12} md={8} lg={4}>
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">Send Intake Form</h5>
-            <div className="row my-3">
-              <div className="col-6">Date:</div>
-              <div className="col-6">
-                <input type="date" />
-              </div>
-            </div>
-            <div className="row my-3">
-              <div className="col-6">Time:</div>
-              <div className="col-6">
-                <input type="time" />
-              </div>
-            </div>
-            <div className="input-group">
-              <span className="input-group-text">
-                <i class="bi bi-envelope"></i>
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Patient email"
-              />
-              <button className="btn btn-primary input-group-text">
-                Send
-                <i class="bi bi-send ms-2"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+        <ScheduleForm />
       </Grid>
     </>
   );

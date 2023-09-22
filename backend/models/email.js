@@ -3,17 +3,15 @@ const { transporter } = require("../services");
 const { REACT_APP_HOST } = require("../config");
 
 class Email {
-  static async sendInvite(email, sentBy, infantName) {
+  static async sendIntake(email, provider, appointment) {
     let info = await transporter.sendMail({
       from: '"Smartnosis Team" <donotreply@smartnosis.com>', // sender address
       to: email, // list of receivers
-      subject: "Get Started With Bably", // Subject line
-      //   text: "Hello from bably team!", // plain text body
+      subject: `${provider.name} Intake Form`, // Subject line
       html: `<div style="text-align: center;">
-      <h2>${sentBy} has invited you to join Bably</h2>
-      <p>${sentBy} has shared access to ${infantName} profile</p>
-      <p>follow the link below to create an account</p>
-      <a href=${REACT_APP_HOST}>create an account</a>
+      <h3>Hi ${appointment.firstName},</h3>
+      <p>Please follow the link below and complete the intake form prior to your visit</p>
+      <a href=${REACT_APP_HOST}/intake?provider=${provider.id}&appointment=${appointment.id}>Intake Form</a>
       </div>`, // html body
     });
     console.log("Message sent: %s", info.messageId);
