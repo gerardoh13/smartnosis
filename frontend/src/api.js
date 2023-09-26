@@ -8,7 +8,6 @@ class SmartnosisApi {
   static token;
 
   static async request(endpoint, data = {}, method = "get") {
-
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${SmartnosisApi.token}` };
     const params = method === "get" ? data : {};
@@ -31,10 +30,13 @@ class SmartnosisApi {
   //   return res;
   // }
   static async generatePDF(providerId, intakeId) {
-    let res = await axios.get(`${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`, {
-      responseType: "arraybuffer", // Treat response as binary data
-      headers: { Authorization: `Bearer ${SmartnosisApi.token}` }
-    });
+    let res = await axios.get(
+      `${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`,
+      {
+        responseType: "arraybuffer", // Treat response as binary data
+        headers: { Authorization: `Bearer ${SmartnosisApi.token}` },
+      }
+    );
     return res;
   }
   // ------------------PROVIDERS---------------------------
@@ -53,21 +55,27 @@ class SmartnosisApi {
     let res = await this.request(`providers/${email}`);
     return res.provider;
   }
-    // ------------------INTAKES---------------------------
-    static async addIntake(data) {
-      let res = await this.request("intakes", data, "post");
-      return res;
-    }
+  // ------------------INTAKES---------------------------
+  static async addIntake(data) {
+    let res = await this.request("intakes", data, "post");
+    return res;
+  }
 
-    static async addAppt(data) {
-      let res = await this.request("intakes/appointment", data, "post");
-      return res;
-    }
+  static async addAppt(data) {
+    let res = await this.request("intakes/appointment", data, "post");
+    return res;
+  }
 
-    static async getByDate(providerId, start, end) {
-      let res = await this.request(`intakes/by-date/${providerId}/${start}/${end}`);
-      return res;
-    }
+  static async getAppt(providerId, apptId) {
+    let res = await this.request(`intakes/appointment/${providerId}/${apptId}`);
+    return res;
+  }
+  static async getByDate(providerId, start, end) {
+    let res = await this.request(
+      `intakes/by-date/${providerId}/${start}/${end}`
+    );
+    return res;
+  }
 }
 
 export default SmartnosisApi;

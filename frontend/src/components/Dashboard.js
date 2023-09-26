@@ -20,8 +20,7 @@ function PatientsTable() {
       setIntakes(res.intakes);
     };
     getActivity();
-    console.log(currProvider)
-  }, [currProvider.id]);
+  }, [currProvider]);
 
   const getMidnights = () => {
     let midnight = new Date();

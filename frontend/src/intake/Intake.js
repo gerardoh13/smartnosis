@@ -61,13 +61,20 @@ function Intake() {
   useEffect(() => {
     let queryProvider = query.get("provider");
     let queryAppt = query.get("appointment");
+    async function getAppt() {
+      let appt = await SmartnosisApi.getAppt(queryProvider, queryAppt);
+      console.log(appt);
+    }
+    // should always have a queryProvider
     if (queryProvider) {
       setFormData((data) => ({
         ...data,
         providerId: queryProvider,
       }));
     }
-    if (queryAppt) console.log(queryAppt)
+    if (queryAppt) {
+      getAppt();
+    }
   }, [query]);
 
   useEffect(() => {

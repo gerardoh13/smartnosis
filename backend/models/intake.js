@@ -102,8 +102,22 @@ class Intake {
       ]
     );
     let appointment = result.rows[0];
-
     return appointment;
+  }
+
+  static async getAppt(id) {
+    const result = await db.query(
+      `SELECT provider_id AS "providerId",
+              first_name AS "firstName",
+              last_name AS "lastName",
+              email,
+              appt_at
+      FROM appointments 
+      WHERE id = $1`,
+      [id]
+    );
+    let appt = result.rows[0];
+    return appt;
   }
 
   static async getByDate(providerId, start, end) {
@@ -159,7 +173,6 @@ class Intake {
       [id]
     );
     let intake = result.rows[0];
-
     return intake;
   }
 

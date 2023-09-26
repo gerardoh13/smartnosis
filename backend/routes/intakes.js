@@ -30,8 +30,8 @@ router.post("/", async function (req, res, next) {
 
 router.post("/appointment", async function (req, res, next) {
   try {
-    const provider = {...req.body.provider};
-    delete req.body.provider
+    const provider = { ...req.body.provider };
+    delete req.body.provider;
     // const validator = jsonschema.validate(req.body, intakeNewSchema);
     // if (!validator.valid) {
     //   const errs = validator.errors.map((e) => e.stack);
@@ -40,6 +40,16 @@ router.post("/appointment", async function (req, res, next) {
     const appointment = await Intake.addAppt(req.body);
     await Email.sendIntake(provider, appointment);
     return res.status(201).json({ appointment });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get("/appointment/:providerId/:apptId", async function (req, res, next) {
+  const { apptId } = req.params;
+  try {
+    const appt = await Intake.getAppt(apptId);
+    return res.status(201).json({ appt });
   } catch (err) {
     return next(err);
   }
