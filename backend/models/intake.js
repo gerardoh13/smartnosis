@@ -111,7 +111,7 @@ class Intake {
               first_name AS "firstName",
               last_name AS "lastName",
               email,
-              appt_at
+              appt_at AS "apptAt"
       FROM appointments 
       WHERE id = $1`,
       [id]

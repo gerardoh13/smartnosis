@@ -53,6 +53,7 @@ CREATE TABLE appointments (
   last_name TEXT NOT NULL,
   appt_at BIGINT,
   email TEXT CHECK (position('@' IN email) > 1),
+  intake_done BOOLEAN NOT NULL DEFAULT FALSE,
   -- phone VARCHAR(12),
   PRIMARY KEY (id)
 );

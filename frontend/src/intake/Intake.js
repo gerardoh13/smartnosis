@@ -14,18 +14,18 @@ import Grid from "@mui/material/Grid";
 function Intake() {
   const INITIAL_STATE = {
     providerId: "",
-    firstName: "Gerardo",
-    lastName: "Huerta",
+    firstName: "",
+    lastName: "",
     middleName: "",
     dob: "",
-    sex: "Male",
-    address1: "1570 W. 1st St.",
-    address2: "Unit 16",
-    city: "Santa Ana",
-    state: "CA",
-    zip: "92703",
-    insurance: "Yes",
-    phone: "559-797-5961",
+    sex: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zip: "",
+    insurance: "",
+    phone: "",
     phone2: "",
     symptoms: new Set(),
     conditions: new Set(),
@@ -49,6 +49,8 @@ function Intake() {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [maxDate, setMaxDate] = useState("");
+  const [apptAt, setApptAt] = useState("");
+
   const navigate = useNavigate();
   let query = useQuery();
   const { currProvider } = useContext(ProviderContext);
@@ -63,7 +65,12 @@ function Intake() {
     let queryAppt = query.get("appointment");
     async function getAppt() {
       let appt = await SmartnosisApi.getAppt(queryProvider, queryAppt);
-      console.log(appt);
+      setApptAt(appt.apptAt);
+      setFormData((data) => ({
+        ...data,
+        firstName: appt.firstName,
+        lastName: appt.lastName,
+      }));
     }
     // should always have a queryProvider
     if (queryProvider) {
@@ -123,9 +130,7 @@ function Intake() {
       dataCopy = { ...dataCopy, ...insDataCopy };
     }
     for (let key in dataCopy) {
-      // if (key === "email") dataCopy[key] = dataCopy[key].toLowerCase();
       if (!dataCopy[key]) delete dataCopy[key];
-      // else dataCopy[key] = dataCopy[key].trimEnd();
     }
     return dataCopy;
   };
@@ -301,7 +306,6 @@ function Intake() {
 
   return (
     <Grid item xs={12} md={8} lg={10}>
-      {/* <ScheduleForm /> */}
       <div className="card">
         <img
           src="smartnosis-logo.jpg"
@@ -309,6 +313,18 @@ function Intake() {
           alt="smartnosis logo"
         />
         <h2 className="my-3 text-center">Patient Intake Form</h2>
+        {apptAt ? (
+          <>
+            <hr />
+            <p className="text-center">
+              <span>Appointment on </span>
+              <span>
+                {new Date(apptAt * 1000).toLocaleDateString()} {" at "}
+              </span>
+              <span>{new Date(apptAt * 1000).toLocaleTimeString()}</span>
+            </p>
+          </>
+        ) : null}
       </div>
 
       <div className="card mt-3">
