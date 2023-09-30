@@ -41,7 +41,8 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function SideBar({ toggleDrawer, open }) {
+export default function SideBar({ toggleDrawer, open, setTool }) {
+  
   return (
     <>
       <Drawer variant="permanent" open={open}>
@@ -51,6 +52,7 @@ export default function SideBar({ toggleDrawer, open }) {
             alignItems: "center",
             justifyContent: "flex-end",
             px: [1],
+            // background: "blue"
           }}
         >
           <IconButton onClick={toggleDrawer}>
@@ -59,9 +61,9 @@ export default function SideBar({ toggleDrawer, open }) {
         </Toolbar>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          {["Submitted Date", "Appointment Date"].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => setTool(text)}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>

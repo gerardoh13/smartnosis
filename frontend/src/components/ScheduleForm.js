@@ -19,7 +19,6 @@ function ScheduleForm() {
     data.provider = { id: currProvider.id, name: currProvider.name };
     data.apptAt = new Date(data.apptAt).getTime() / 1000
     await SmartnosisApi.addAppt(data);
-    // console.log(data);
   };
 
   const handleChange = (e) => {

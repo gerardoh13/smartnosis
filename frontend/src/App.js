@@ -21,6 +21,8 @@ function App() {
   const [currProvider, setCurrProvider] = useState(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(true);
+  const [tool, setTool] = useState("Submitted Date");
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -81,12 +83,16 @@ function App() {
             {/* <Navbar logout={logout} /> */}
             {currProvider ? (
               <>
-              <SideBar toggleDrawer={toggleDrawer} open={open} />
-              <ResponsiveAppBar
-              toggleDrawer={toggleDrawer}
-              open={open}
-              logout={logout}
-            />
+                <SideBar
+                  toggleDrawer={toggleDrawer}
+                  open={open}
+                  setTool={setTool}
+                />
+                <ResponsiveAppBar
+                  toggleDrawer={toggleDrawer}
+                  open={open}
+                  logout={logout}
+                />
               </>
             ) : null}
 
@@ -110,11 +116,11 @@ function App() {
                   // alignItems="center"
                   justifyContent="center"
                 >
-                    {loading ? (
-                      <Spinner />
-                    ) : (
-                      <NavRoutes register={register} login={login} />
-                    )}
+                  {loading ? (
+                    <Spinner />
+                  ) : (
+                    <NavRoutes register={register} login={login} tool={tool} />
+                  )}
                 </Grid>
               </Container>
             </Box>
