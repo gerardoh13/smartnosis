@@ -13,7 +13,8 @@ function PatientsTable() {
       const res = await SmartnosisApi.getByDate(
         currProvider.id,
         lastMidnight,
-        nextMidnight
+        nextMidnight,
+        "intakes"
       );
       setIntakes(res.intakes);
     };

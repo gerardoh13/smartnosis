@@ -13,7 +13,8 @@ function ApptsByDate() {
       const res = await SmartnosisApi.getByDate(
         currProvider.id,
         lastMidnight,
-        nextMidnight
+        nextMidnight,
+        "appointments"
       );
       setIntakes(res.intakes);
     };
@@ -29,24 +30,18 @@ function ApptsByDate() {
     return { lastMidnight, nextMidnight };
   };
 
-  const generatePdf = async (intakeId) => {
-    let res = await SmartnosisApi.generatePDF(currProvider.id, intakeId);
-    const blob = new Blob([res.data], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
-  };
+
   const createRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id}>
         <td>{`${p.lastName}, ${p.middleName ? p.middleName[0] + "." : ""} ${
           p.firstName
         }`}</td>
-        <td>{p.dob}</td>
-        <td>{formatTime(p.submittedAt)}</td>
+        <td>{formatTime(p.apptAt)}</td>
         <td>
-          <button className="btn btn-success" onClick={() => generatePdf(p.id)}>
+          {/* <button className="btn btn-success" onClick={() => generatePdf(p.id)}>
             PDF
-          </button>
+          </button> */}
         </td>
       </tr>
     ));
@@ -82,8 +77,8 @@ function ApptsByDate() {
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Date of Birth</th>
-            <th scope="col">Time Submitted</th>
+            {/* <th scope="col">Date of Birth</th> */}
+            <th scope="col">Time</th>
             <th />
           </tr>
         </thead>

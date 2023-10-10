@@ -5,7 +5,7 @@ const { NotFoundError } = require("../expressError");
 const { sqlForPartialUpdate } = require("../helpers/sql");
 const generateUniqueId = require("generate-unique-id");
 
-/** Related functions for feeds. */
+/** Related functions for intakes. */
 
 class Intake {
   static async add(data) {
@@ -77,47 +77,6 @@ class Intake {
     let intake = result.rows[0];
 
     return intake;
-  }
-
-  static async addAppt(data) {
-    const uId = generateUniqueId();
-    const result = await db.query(
-      `INSERT INTO appointments (id,
-                                provider_id,
-                                first_name,
-                                last_name,
-                                email,
-                                appt_at
-                                )
-                VALUES ($1, $2, $3, $4, $5, $6)
-                RETURNING id, first_name AS "firstName", email`,
-      [
-        uId,
-        data.providerId,
-        data.firstName,
-        data.lastName,
-        data.email,
-        // data.phone,
-        data.apptAt,
-      ]
-    );
-    let appointment = result.rows[0];
-    return appointment;
-  }
-
-  static async getAppt(id) {
-    const result = await db.query(
-      `SELECT provider_id AS "providerId",
-              first_name AS "firstName",
-              last_name AS "lastName",
-              email,
-              appt_at AS "apptAt"
-      FROM appointments 
-      WHERE id = $1`,
-      [id]
-    );
-    let appt = result.rows[0];
-    return appt;
   }
 
   static async getByDate(providerId, start, end) {

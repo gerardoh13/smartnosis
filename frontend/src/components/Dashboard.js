@@ -6,11 +6,10 @@ import IntakesByDate from "./IntakesByDate";
 import ApptsByDate from "./ApptsByDate";
 
 function Dashboard({ tool }) {
-  const currView = tool === "" ? <IntakesByDate/> : <ApptsByDate/>
+  const currView = tool === "Intakes" ? <IntakesByDate/> : <ApptsByDate/>
   return (
     <>
       <Grid item xs={12} md={8} lg={8}>
-        {/* <IntakesByDate /> */}
         {currView}
       </Grid>
       <Grid item xs={12} md={8} lg={4}>

@@ -9,6 +9,7 @@ const { authenticateJWT } = require("./middleware/auth");
 const pdfRoutes = require("./routes/pdf");
 const providerRoutes = require("./routes/providers");
 const intakeRoutes = require("./routes/intakes");
+const apptRoutes = require("./routes/appointments");
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(authenticateJWT);
 
 app.use("/providers", providerRoutes);
 app.use("/intakes", intakeRoutes);
+app.use("/appointments", apptRoutes);
+
 app.use("/pdf", pdfRoutes);
 
 /** Handle 404 errors -- this matches everything */

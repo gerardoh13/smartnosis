@@ -42,7 +42,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideBar({ toggleDrawer, open, setTool }) {
-  
+
   return (
     <>
       <Drawer variant="permanent" open={open}>
@@ -61,7 +61,7 @@ export default function SideBar({ toggleDrawer, open, setTool }) {
         </Toolbar>
         <Divider />
         <List>
-          {["Submitted Date", "Appointment Date"].map((text, index) => (
+          {["Intakes", "Appointment"].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton onClick={() => setTool(text)}>
                 <ListItemIcon>
