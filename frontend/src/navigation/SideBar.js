@@ -52,16 +52,16 @@ export default function SideBar({ toggleDrawer, open, setTool }) {
             alignItems: "center",
             justifyContent: "flex-end",
             px: [1],
-            // background: "blue"
+            background: "#1976d2"
           }}
         >
-          <IconButton onClick={toggleDrawer}>
+          <IconButton onClick={toggleDrawer} className="text-light">
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
         <Divider />
         <List>
-          {["Intakes", "Appointment"].map((text, index) => (
+          {["Intakes", "Appointments"].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton onClick={() => setTool(text)}>
                 <ListItemIcon>

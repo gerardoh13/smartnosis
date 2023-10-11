@@ -67,11 +67,11 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
   };
 
   let results = searchRes.map((symptom) =>
-    createCheckbox(symptom, handleCheckbox, data)
+    createCheckbox(symptom, handleCheckbox, data, "symptoms")
   );
 
   let checkboxes = symptoms.map((symptom) =>
-    createCheckbox(symptom, handleCheckbox, data)
+    createCheckbox(symptom, handleCheckbox, data, "symptoms")
   );
 
   return (

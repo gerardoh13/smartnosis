@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
 
-function PatientsTable() {
+function IntakesByDate({ generatePdf }) {
   const [intakes, setIntakes] = useState([]);
 
   const { currProvider } = useContext(ProviderContext);
@@ -30,12 +30,13 @@ function PatientsTable() {
     return { lastMidnight, nextMidnight };
   };
 
-  const generatePdf = async (intakeId) => {
-    let res = await SmartnosisApi.generatePDF(currProvider.id, intakeId);
-    const blob = new Blob([res.data], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
-  };
+  //   const generatePdf = async (intakeId) => {
+  //     let res = await SmartnosisApi.generatePDF(currProvider.id, intakeId);
+  //     const blob = new Blob([res.data], { type: "application/pdf" });
+  //     const url = URL.createObjectURL(blob);
+  //     window.open(url, "_blank");
+  //   };
+
   const createRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id}>
@@ -94,4 +95,4 @@ function PatientsTable() {
   );
 }
 
-export default PatientsTable;
+export default IntakesByDate;

@@ -70,11 +70,11 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
   };
 
   let results = searchRes.map((symptom) =>
-    createCheckbox(symptom, handleCheckbox, data)
+    createCheckbox(symptom, handleCheckbox, data, "conditions")
   );
 
   let checkboxes = conditions.map((symptom) =>
-    createCheckbox(symptom, handleCheckbox, data)
+    createCheckbox(symptom, handleCheckbox, data, "conditions")
   );
 
   return (

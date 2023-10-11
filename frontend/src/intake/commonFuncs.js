@@ -1,4 +1,4 @@
-const createCheckbox = (el, handleCheckbox, data) => {
+const createCheckbox = (el, func, data, type) => {
     return (
       <div className="form-check mb-3" key={el}>
         <input
@@ -6,9 +6,9 @@ const createCheckbox = (el, handleCheckbox, data) => {
           type="checkbox"
           value={el}
           id={el}
-          onChange={handleCheckbox}
-          checked={data.symptoms.has(el)}
-          name="symptoms"
+          onChange={func}
+          checked={type === "symptoms" ? data.symptoms.has(el) : data.conditions.has(el)}
+          name={type}
         />
         <label className="form-check-label" htmlFor={el}>
           <strong>{el}</strong>

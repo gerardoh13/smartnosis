@@ -54,6 +54,7 @@ CREATE TABLE appointments (
   appt_at BIGINT,
   email TEXT CHECK (position('@' IN email) > 1),
   complete BOOLEAN NOT NULL DEFAULT FALSE,
+  intake_id INTEGER REFERENCES intakes ON DELETE CASCADE,
   -- phone VARCHAR(12),
   PRIMARY KEY (id)
 );

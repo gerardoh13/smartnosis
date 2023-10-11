@@ -116,6 +116,7 @@ function Intake() {
 
   const formatData = () => {
     let dataCopy = { ...formData };
+    let apptId = query.get("appointment");
     dataCopy.submittedAt = getSubmittedEpoch();
     dataCopy.symptoms = Array.from(dataCopy.symptoms);
     dataCopy.conditions = Array.from(dataCopy.conditions);
@@ -132,6 +133,7 @@ function Intake() {
     for (let key in dataCopy) {
       if (!dataCopy[key]) delete dataCopy[key];
     }
+    if (apptId) dataCopy.apptId = apptId;
     return dataCopy;
   };
 
@@ -143,6 +145,7 @@ function Intake() {
 
   const submit = async () => {
     let formattedData = formatData();
+    console.log(formattedData)
     await SmartnosisApi.addIntake(formattedData);
     if (currProvider) navigate("/");
     else changeStep(1);
@@ -174,6 +177,7 @@ function Intake() {
 
   const handleCheckbox = (e) => {
     const { checked, value, name } = e.target;
+    
     let copy = new Set([...formData[name]]);
     if (checked) {
       if (!copy.has(value)) copy.add(value);

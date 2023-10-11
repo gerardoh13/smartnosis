@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
 
-function ApptsByDate() {
+function ApptsByDate({ generatePdf }) {
   const [intakes, setIntakes] = useState([]);
 
   const { currProvider } = useContext(ProviderContext);
@@ -30,7 +30,6 @@ function ApptsByDate() {
     return { lastMidnight, nextMidnight };
   };
 
-
   const createRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id}>
@@ -38,11 +37,18 @@ function ApptsByDate() {
           p.firstName
         }`}</td>
         <td>{formatTime(p.apptAt)}</td>
-        <td>
-          {/* <button className="btn btn-success" onClick={() => generatePdf(p.id)}>
-            PDF
-          </button> */}
-        </td>
+        {p.complete ? (
+          <td>
+            <button
+              className="btn btn-success"
+              onClick={() => generatePdf(p.intakeId)}
+            >
+              PDF
+            </button>
+          </td>
+        ) : (
+          <td className="text-danger">Incomplete</td>
+        )}
       </tr>
     ));
   };
@@ -77,8 +83,7 @@ function ApptsByDate() {
         <thead>
           <tr>
             <th scope="col">Name</th>
-            {/* <th scope="col">Date of Birth</th> */}
-            <th scope="col">Time</th>
+            <th scope="col">Appointment Time</th>
             <th />
           </tr>
         </thead>

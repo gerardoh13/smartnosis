@@ -6,7 +6,8 @@ const jsonschema = require("jsonschema");
 
 const Intake = require("../models/intake");
 const PDF = require("../models/pdf");
-const Email = require("../models/email");
+const Appointment = require("../models/appointment");
+// const Email = require("../models/email");
 const express = require("express");
 const { ensureLoggedIn, ensureCorrectProvider } = require("../middleware/auth");
 const intakeNewSchema = require("../schemas/intakeNew.json");
@@ -16,12 +17,20 @@ const router = new express.Router();
 
 router.post("/", async function (req, res, next) {
   try {
+    let apptId
+    if (req.body.apptId) {
+      apptId = req.body.apptId
+      delete req.body.apptId;
+    }
     const validator = jsonschema.validate(req.body, intakeNewSchema);
     if (!validator.valid) {
       const errs = validator.errors.map((e) => e.stack);
       throw new BadRequestError(errs);
     }
     const intake = await Intake.add(req.body);
+    if (apptId) {
+      Appointment.markComplete(apptId, intake.id);
+    }
     return res.status(201).json({ intake });
   } catch (err) {
     return next(err);
