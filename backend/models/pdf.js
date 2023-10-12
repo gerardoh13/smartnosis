@@ -62,7 +62,7 @@ class PDF {
       const underlineAndLineGap = { underline: true, lineGap: 10 };
       const underlineAndContinue = { underline: true, continued: true };
       const noUnderlineAndContinue = { underline: false, continued: true };
-      doc.fontSize(16);
+      doc.fontSize(18);
 
       doc.font("Times-Bold").text("Patient's Name: ", continueStyle);
       doc
@@ -98,7 +98,7 @@ class PDF {
       doc.font("Times-Bold").text("Street Address: ", continueStyle);
       doc
         .font("Times-Roman")
-        .text(`${address1} ${address2}`, underlineAndLineGap);
+        .text(`${address1} ${address2 ? address2 : ""}`, underlineAndLineGap);
 
       doc.font("Times-Bold").text("City: ", continueStyle);
       doc.font("Times-Roman").text(`${city}`, underlineAndContinue);
