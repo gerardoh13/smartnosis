@@ -10,15 +10,18 @@ function ScheduleForm() {
     firstName: "",
     lastName: "",
     email: "",
-    apptAt: ""
+    apptAt: "",
   };
   const [formData, setFormData] = useState(INITIAL_STATE);
 
   const submit = async () => {
     let data = { ...formData };
     data.provider = { id: currProvider.id, name: currProvider.name };
-    data.apptAt = new Date(data.apptAt).getTime() / 1000
-    await SmartnosisApi.addAppt(data);
+    data.apptAt = new Date(data.apptAt).getTime() / 1000;
+    let newAppt = await SmartnosisApi.addAppt(data);
+    if (newAppt.id) {
+      setFormData(INITIAL_STATE);
+    }
   };
 
   const handleChange = (e) => {
@@ -37,11 +40,12 @@ function ScheduleForm() {
         <div className="row my-3">
           <div className="col-4">Appointment:</div>
           <div className="col-8">
-            <input type="datetime-local" 
-            className="form-control" 
-            value={formData.apptAt}
-            onChange={handleChange}
-            name="apptAt"
+            <input
+              type="datetime-local"
+              className="form-control"
+              value={formData.apptAt}
+              onChange={handleChange}
+              name="apptAt"
             />
           </div>
         </div>
@@ -61,19 +65,7 @@ function ScheduleForm() {
             First Name: <span className="text-danger">*</span>
           </label>
         </div>
-        {/* middleName */}
-        {/* <div className="form-floating mt-3">
-        <input
-          type="text"
-          className="form-control"
-          id="middleName"
-          name="middleName"
-          placeholder="First Name"
-          value={formData.middleName}
-          onChange={handleChange}
-        />
-        <label htmlFor="middleName">Middle Name:</label>
-      </div> */}
+
         {/* lastName */}
         <div className="form-floating my-3">
           <input

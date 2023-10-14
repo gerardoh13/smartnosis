@@ -1,15 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
+import DatePicker from "./DatePicker";
 
 function IntakesByDate({ generatePdf }) {
   const [intakes, setIntakes] = useState([]);
-
+  const [currDate, setCurrDate] = useState(new Date());
   const { currProvider } = useContext(ProviderContext);
 
   useEffect(() => {
     const getActivity = async () => {
-      const { lastMidnight, nextMidnight } = getMidnights();
+      const { lastMidnight, nextMidnight } = getMidnights(currDate);
       const res = await SmartnosisApi.getByDate(
         currProvider.id,
         lastMidnight,
@@ -19,23 +20,16 @@ function IntakesByDate({ generatePdf }) {
       setIntakes(res.intakes);
     };
     getActivity();
-  }, [currProvider]);
+  }, [currProvider, currDate]);
 
-  const getMidnights = () => {
-    let midnight = new Date();
+  const getMidnights = (date) => {
+    let midnight = new Date(date);
     midnight.setHours(0, 0, 0, 0);
     let lastMidnight = midnight.getTime() / 1000;
     midnight.setDate(midnight.getDate() + 1);
     let nextMidnight = midnight.getTime() / 1000;
     return { lastMidnight, nextMidnight };
   };
-
-  //   const generatePdf = async (intakeId) => {
-  //     let res = await SmartnosisApi.generatePDF(currProvider.id, intakeId);
-  //     const blob = new Blob([res.data], { type: "application/pdf" });
-  //     const url = URL.createObjectURL(blob);
-  //     window.open(url, "_blank");
-  //   };
 
   const createRows = (arr) => {
     return arr.map((p) => (
@@ -80,6 +74,7 @@ function IntakesByDate({ generatePdf }) {
           </div>
         </div>
       </div>
+      <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
       <table className="table table-striped bg-light text-center">
         <thead>
           <tr>

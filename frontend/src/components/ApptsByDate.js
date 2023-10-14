@@ -6,7 +6,6 @@ import DatePicker from "./DatePicker";
 function ApptsByDate({ generatePdf }) {
   const [intakes, setIntakes] = useState([]);
   const [currDate, setCurrDate] = useState(new Date());
-
   const { currProvider } = useContext(ProviderContext);
 
   useEffect(() => {
@@ -82,9 +81,7 @@ function ApptsByDate({ generatePdf }) {
           </div>
         </div>
       </div>
-
-<DatePicker currDate={currDate} setCurrDate={setCurrDate}/>
-
+      <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
       <table className="table table-striped bg-light text-center">
         <thead>
           <tr>

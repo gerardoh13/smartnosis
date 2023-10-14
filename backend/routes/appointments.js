@@ -5,7 +5,6 @@
 const jsonschema = require("jsonschema");
 
 const Appointment = require("../models/appointment");
-// const PDF = require("../models/pdf");
 const Email = require("../models/email");
 const express = require("express");
 const { ensureLoggedIn, ensureCorrectProvider } = require("../middleware/auth");
