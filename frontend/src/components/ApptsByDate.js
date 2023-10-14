@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import DatePicker from "./DatePicker";
 
 function ApptsByDate({ generatePdf }) {
   const [intakes, setIntakes] = useState([]);
@@ -25,21 +24,12 @@ function ApptsByDate({ generatePdf }) {
   }, [currProvider, currDate]);
 
   const getMidnights = (date) => {
-    // let midnight = new Date();
-    let midnight = date;
+    let midnight = new Date(date);
     midnight.setHours(0, 0, 0, 0);
     let lastMidnight = midnight.getTime() / 1000;
     midnight.setDate(midnight.getDate() + 1);
     let nextMidnight = midnight.getTime() / 1000;
-    console.log(lastMidnight)
     return { lastMidnight, nextMidnight };
-  };
-
-  const changeDate = (day) => {
-    let newDate = new Date(currDate);
-    let delta = (newDate.getDate() - 1) + day
-    newDate.setDate(delta)
-    setCurrDate(newDate)
   };
 
   const createRows = (arr) => {
@@ -69,11 +59,12 @@ function ApptsByDate({ generatePdf }) {
     return new Date(epoch * 1000).toLocaleTimeString();
   };
 
+  const getCalendarVal = () => {};
   return (
     <div className="card">
       <div className="row my-4">
         <div className="col-3">
-          <h5 className="card-title ms-2 text-center">Appointments</h5>
+          <p className="card-title ms-2 text-center">Appointments</p>
         </div>
         <div className="col-8 m-auto">
           <div className="input-group">
@@ -92,23 +83,7 @@ function ApptsByDate({ generatePdf }) {
         </div>
       </div>
 
-      <div className="row mb-4 text-center">
-        <p>{currDate.toDateString()}</p>
-        <p>{currDate.toLocaleString()}</p>
-        <div className="col">
-          <button className="btn btn-secondary" onClick={() => changeDate(-1)}>
-            <ChevronLeftIcon />
-          </button>
-        </div>
-        <div className="col">
-          <input type="date" />
-        </div>
-        <div className="col">
-          <button className="btn btn-secondary" onClick={() => changeDate(1)}>
-            <ChevronRightIcon />
-          </button>
-        </div>
-      </div>
+<DatePicker currDate={currDate} setCurrDate={setCurrDate}/>
 
       <table className="table table-striped bg-light text-center">
         <thead>

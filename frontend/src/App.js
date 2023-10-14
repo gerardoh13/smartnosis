@@ -7,14 +7,14 @@ import Spinner from "./common/Spinner";
 import SmartnosisApi from "./api";
 import { decodeToken } from "react-jwt";
 import ProviderContext from "./common/ProviderContext";
-// import Navbar from "./navigation/Navbar";
 import Toolbar from "@mui/material/Toolbar";
 import SideBar from "./navigation/SideBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import ResponsiveAppBar from "./navigation/ResponsiveAppBar";
+import AppBar from "./navigation/AppBar";
+import Footer from "./common/Footer";
 
 function App() {
   const [token, setToken] = useLocalStorage("smartnosis-token");
@@ -80,7 +80,6 @@ function App() {
         >
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            {/* <Navbar logout={logout} /> */}
             {currProvider ? (
               <>
                 <SideBar
@@ -88,7 +87,7 @@ function App() {
                   open={open}
                   setTool={setTool}
                 />
-                <ResponsiveAppBar
+                <AppBar
                   toggleDrawer={toggleDrawer}
                   open={open}
                   logout={logout}
@@ -113,7 +112,6 @@ function App() {
                 <Grid
                   container
                   spacing={3}
-                  // alignItems="center"
                   justifyContent="center"
                 >
                   {loading ? (
@@ -122,6 +120,7 @@ function App() {
                     <NavRoutes register={register} login={login} tool={tool} />
                   )}
                 </Grid>
+                <Footer sx={{ pt: 4 }} />
               </Container>
             </Box>
           </Box>
