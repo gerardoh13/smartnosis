@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import ProviderContext from "../common/ProviderContext";
 import SmartnosisApi from "../api";
 
-function ScheduleForm() {
+function Temp() {
   const { currProvider } = useContext(ProviderContext);
 
   const INITIAL_STATE = {
@@ -32,23 +32,10 @@ function ScheduleForm() {
       [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
     }));
   };
-
   return (
     <div className="card">
       <div className="card-body">
-        <h5 className="card-title">Send Intake Form</h5>
-        <div className="row my-3">
-          <div className="col-4">Appointment:</div>
-          <div className="col-8">
-            <input
-              type="datetime-local"
-              className="form-control"
-              value={formData.apptAt}
-              onChange={handleChange}
-              name="apptAt"
-            />
-          </div>
-        </div>
+        <h5 className="card-title">Smartnosis SMS Opt-in Form</h5>
         {/* firstName */}
         <div className="form-floating">
           <input
@@ -84,45 +71,33 @@ function ScheduleForm() {
         </div>
         {/* phone */}
         <div className="input-group">
-        <span className="input-group-text">
-          <i class="bi bi-phone"></i>
-        </span>
-        <input
-          type="tel"
-          className="form-control"
-          placeholder="Patient's phone"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          maxLength={12}
-          name="phone"
-          // onChange={handlePhones}
-          // onKeyDown={handleKeydown}
-        />
-        <button className="btn btn-primary input-group-text">
-          Send
-          <i className="bi bi-chat-left-dots-fill ms-2"></i>
-        </button>
-      </div>
-        {/* email */}
-        <div className="input-group my-3">
           <span className="input-group-text">
-            <i className="bi bi-envelope"></i>
+            <i class="bi bi-phone"></i>
           </span>
           <input
-            type="email"
+            type="tel"
             className="form-control"
-            placeholder="Patient's email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
+            placeholder="Phone number"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            maxLength={12}
+            name="phone"
+            // onChange={handlePhones}
+            // onKeyDown={handleKeydown}
           />
-          <button className="btn btn-primary input-group-text" onClick={submit}>
-            Send
-            <i className="bi bi-send ms-2"></i>
-          </button>
         </div>
+        <p className="mt-3">Opt-in to receiving SMS messages with a link to complete your intake form prior to your scheduled appointment</p>
+        <div className="my-3">
+        <input type="checkbox" />
+        <span className="ms-2">
+          I agree to receive transactional SMS messages from Smartnosis, LLC and
+          accept the data privacy statement
+        </span>
+        </div>
+        {/* email */}
+        <button className="btn btn-primary mt-3">Submit</button>
       </div>
     </div>
   );
 }
 
-export default ScheduleForm;
+export default Temp;
