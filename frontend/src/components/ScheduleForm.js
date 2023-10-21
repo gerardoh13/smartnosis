@@ -33,6 +33,38 @@ function ScheduleForm() {
     }));
   };
 
+  const handleKeydown = (e) => {
+    let value = formData[e.target.name];
+    if (e.keyCode !== 8) return;
+    if (value[value.length - 1] !== "-") return;
+    value = e.target.value.slice(0, -1);
+    setFormData((data) => ({
+      ...data,
+      [e.target.name]: value,
+    }));
+  };
+
+  const handlePhones = (e) => {
+    const { value, name } = e.target;
+    const sanitizedValue = value.replace(/[^0-9]/g, ""); // Remove all non-numeric characters
+    // Format the value with dashes for a US phone number
+    const formattedValue = sanitizedValue.replace(
+      /^(\d{0,3})(\d{0,3})(\d{0,4})$/,
+      (_, p1, p2, p3) => {
+        if (p1 && p2) {
+          return `${p1}-${p2}-${p3}`;
+        } else if (p1) {
+          return `${p1}-${p2}`;
+        }
+        return p1;
+      }
+    );
+    setFormData((data) => ({
+      ...data,
+      [name]: formattedValue,
+    }));
+  };
+
   return (
     <div className="card">
       <div className="card-body">
@@ -94,8 +126,8 @@ function ScheduleForm() {
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           maxLength={12}
           name="phone"
-          // onChange={handlePhones}
-          // onKeyDown={handleKeydown}
+          onChange={handlePhones}
+          onKeyDown={handleKeydown}
         />
         <button className="btn btn-primary input-group-text">
           Send
