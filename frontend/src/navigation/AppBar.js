@@ -16,7 +16,7 @@ import { NavLink } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",

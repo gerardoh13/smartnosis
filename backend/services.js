@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const client = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+const smsClient = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
 // client.messages
 //   .create({
@@ -36,4 +36,4 @@ const client = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 //   secretKey: BEAMS_SECRET_KEY,
 // });
 
-module.exports = { transporter };
+module.exports = { transporter, smsClient };

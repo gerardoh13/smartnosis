@@ -4,7 +4,7 @@ import Link from "@mui/material/Link";
 
 function Footer() {
   return (
-    <Typography variant="body2" color="text.secondary" align="right" position="absolute" bottom="10px">
+    <Typography variant="body2" color="text.secondary" className="text-center fixed-bottom">
       {"Powered by "}
       <Link color="inherit" href="https://smartnosismd.com/">
         {"Smartnosis LLC."}

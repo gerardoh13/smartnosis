@@ -12,21 +12,21 @@ class Appointment {
     const uId = generateUniqueId();
     const result = await db.query(
       `INSERT INTO appointments (id,
-                                    provider_id,
-                                    first_name,
-                                    last_name,
-                                    email,
-                                    appt_at
-                                    )
-                    VALUES ($1, $2, $3, $4, $5, $6)
-                    RETURNING id, first_name AS "firstName", email`,
+                                  provider_id,
+                                  first_name,
+                                  last_name,
+                                  email,
+                                  phone,
+                                  appt_at)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7)
+                    RETURNING id, first_name AS "firstName", email, phone`,
       [
         uId,
         data.providerId,
         data.firstName,
         data.lastName,
         data.email,
-        // data.phone,
+        data.phone,
         data.apptAt,
       ]
     );
@@ -40,6 +40,7 @@ class Appointment {
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
+                  phone,
                   appt_at AS "apptAt"
           FROM appointments 
           WHERE id = $1`,

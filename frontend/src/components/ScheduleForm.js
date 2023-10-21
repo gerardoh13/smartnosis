@@ -10,20 +10,42 @@ function ScheduleForm() {
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
     apptAt: "",
   };
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const [sendBy, setSendBy] = useState("email");
 
-  const submit = async () => {
+  const submit = async (type) => {
     let data = { ...formData };
     data.provider = { id: currProvider.id, name: currProvider.name };
     data.apptAt = new Date(data.apptAt).getTime() / 1000;
-    let newAppt = await SmartnosisApi.addAppt(data);
+    let newAppt;
+    if (type === "email") {
+      delete data.phone;
+      newAppt = await SmartnosisApi.emailAppt(data);
+    } else if (type === "sms") {
+      delete data.email;
+      console.log(data.phone)
+      data.phone = validatePhone(data.phone);
+      if (data.phone) newAppt = await SmartnosisApi.textAppt(data);
+      else console.log("invalid number");
+    }
+    console.log(newAppt);
     if (newAppt.id) {
       setFormData(INITIAL_STATE);
     }
   };
 
+  const validatePhone = (phone) => {
+    if (phone.lenght > 12) return;
+    phone = phone.replaceAll("-", "");
+    console.log(phone)
+    for (let i = 0; i < phone.length; i++) {
+      if (isNaN(phone[i])) return;
+    }
+    return phone;
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     const trimCheck = name === "firstName" || name === "lastName";
@@ -114,28 +136,69 @@ function ScheduleForm() {
             Last Name: <span className="text-danger">*</span>
           </label>
         </div>
+        {/* radio btns */}
+
+        <div className="my-3 text-center">
+          <input
+            type="radio"
+            className="btn-check method"
+            name="method"
+            // autoComplete="off"
+            id="emailRadioBtn"
+            value="email"
+            checked={sendBy === "email"}
+            onChange={(e) => setSendBy(e.target.value)}
+          />
+          <label
+            className="btn btn-outline-secondary radioLabel me-2"
+            htmlFor="emailRadioBtn"
+          >
+            Email
+          </label>
+
+          <input
+            type="radio"
+            className="btn-check method"
+            name="method"
+            id="smsRadioBtn"
+            value="sms"
+            checked={sendBy === "sms"}
+            onChange={(e) => setSendBy(e.target.value)}
+          />
+          <label
+            className="btn btn-outline-secondary radioLabel"
+            htmlFor="smsRadioBtn"
+          >
+            SMS
+          </label>
+        </div>
+
         {/* phone */}
-        <div className="input-group">
-        <span className="input-group-text">
-          <i class="bi bi-phone"></i>
-        </span>
-        <input
-          type="tel"
-          className="form-control"
-          placeholder="Patient's phone"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          maxLength={12}
-          name="phone"
-          onChange={handlePhones}
-          onKeyDown={handleKeydown}
-        />
-        <button className="btn btn-primary input-group-text">
-          Send
-          <i className="bi bi-chat-left-dots-fill ms-2"></i>
-        </button>
-      </div>
+        <div className={`input-group ${sendBy === "email" ? "d-none" : ""}`}>
+          <span className="input-group-text">
+            <i className="bi bi-phone"></i>
+          </span>
+          <input
+            className="form-control"
+            type="tel"
+            maxLength={12}
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            name="phone"
+            placeholder="Patient's phone"
+            onChange={handlePhones}
+            onKeyDown={handleKeydown}
+            value={formData.phone}
+          />
+          <button
+            className="btn btn-primary input-group-text"
+            onClick={() => submit("sms")}
+          >
+            Send
+            <i className="bi bi-chat-left-dots-fill ms-2"></i>
+          </button>
+        </div>
         {/* email */}
-        <div className="input-group my-3">
+        <div className={`input-group ${sendBy === "sms" ? "d-none" : ""}`}>
           <span className="input-group-text">
             <i className="bi bi-envelope"></i>
           </span>
@@ -147,7 +210,10 @@ function ScheduleForm() {
             value={formData.email}
             onChange={handleChange}
           />
-          <button className="btn btn-primary input-group-text" onClick={submit}>
+          <button
+            className="btn btn-primary input-group-text"
+            onClick={() => submit("email")}
+          >
             Send
             <i className="bi bi-send ms-2"></i>
           </button>
