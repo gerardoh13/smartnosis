@@ -21,7 +21,7 @@ function App() {
   const [currProvider, setCurrProvider] = useState(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(true);
-  const [tool, setTool] = useState("Submitted Date");
+  const [currView, setCurrView] = useState("Appointments");
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -85,7 +85,7 @@ function App() {
                 <SideBar
                   toggleDrawer={toggleDrawer}
                   open={open}
-                  setTool={setTool}
+                  setCurrView={setCurrView}
                 />
                 <AppBar
                   toggleDrawer={toggleDrawer}
@@ -117,7 +117,7 @@ function App() {
                   {loading ? (
                     <Spinner />
                   ) : (
-                    <NavRoutes register={register} login={login} tool={tool} />
+                    <NavRoutes register={register} login={login} currView={currView} />
                   )}
                 </Grid>
                 <Footer sx={{ pt: 4 }} />

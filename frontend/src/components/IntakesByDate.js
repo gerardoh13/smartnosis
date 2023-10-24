@@ -44,7 +44,7 @@ function IntakesByDate({ generatePdf }) {
     <div className="card">
       <div className="row my-4">
         <div className="col-3">
-          <h5 className="card-title ms-2 text-center">Intakes</h5>
+        <p className="card-title ms-2 text-center">Intakes</p>
         </div>
         <div className="col-8 m-auto">
           <div className="input-group">

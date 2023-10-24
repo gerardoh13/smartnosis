@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -10,10 +10,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import QrCodeModal from "../common/QrCodeModal";
-import ProviderContext from "../common/ProviderContext";
-import { NavLink } from "react-router-dom";
-import Nav from "react-bootstrap/Nav";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const drawerWidth = 200;
@@ -37,56 +33,17 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 function ResponsiveAppBar({ toggleDrawer, open, logout }) {
-//   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [showQrModal, setShowQrModal] = useState(false);
 
-  const { currProvider } = useContext(ProviderContext);
-
-//   const handleOpenNavMenu = (event) => {
-//     setAnchorElNav(event.currentTarget);
-//   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-//   const handleCloseNavMenu = () => {
-//     setAnchorElNav(null);
-//   };
-
   const handleCloseUserMenu = (e) => {
-    let {innerText} = e.target
-    if (innerText === "Logout") logout()
+    let { innerText } = e.target;
+    if (innerText === "Logout") logout();
     setAnchorElUser(null);
   };
-
-  const loggedIn = (
-    <>
-      {currProvider ? (
-        <>
-          <QrCodeModal
-            show={showQrModal}
-            setShow={setShowQrModal}
-            providerId={currProvider.id}
-          />
-          <Nav.Link
-            to={`/intake?provider=${currProvider.id}`}
-            eventKey={1}
-            as={NavLink}
-            className="mx-3"
-          >
-            Intake Form
-          </Nav.Link>
-          <button
-            className="nav-link text-start ms-2 ms-md-0"
-            onClick={() => setShowQrModal(true)}
-          >
-            QR Code
-          </button>
-        </>
-      ) : null}
-    </>
-  );
 
   return (
     <AppBar position="absolute" open={open}>
@@ -124,18 +81,7 @@ function ResponsiveAppBar({ toggleDrawer, open, logout }) {
         >
           Smartnosis
         </Typography>
-        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-          {/* {pages.map((page) => (
-            <Button
-              key={page}
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              {page}
-            </Button>
-          ))} */}
-          {currProvider ? loggedIn : null}
-        </Box>
+
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -160,7 +106,7 @@ function ResponsiveAppBar({ toggleDrawer, open, logout }) {
           >
             {settings.map((setting) => (
               <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center" >{setting}</Typography>
+                <Typography textAlign="center">{setting}</Typography>
               </MenuItem>
             ))}
           </Menu>

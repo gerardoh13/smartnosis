@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import MuiDrawer from "@mui/material/Drawer";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,8 +10,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import IconButton from "@mui/material/IconButton";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
+import Nav from "react-bootstrap/Nav";
+import ProviderContext from "../common/ProviderContext";
+import QrCodeModal from "../common/QrCodeModal";
 
 const drawerWidth = 200;
 
@@ -41,51 +45,77 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function SideBar({ toggleDrawer, open, setTool }) {
+export default function SideBar({ toggleDrawer, open, setCurrView }) {
+  const { currProvider } = useContext(ProviderContext);
+  const [showQrModal, setShowQrModal] = useState(false);
 
   return (
     <>
-      <Drawer variant="permanent" open={open}>
-        <Toolbar
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            px: [1],
-            background: "#1976d2"
-          }}
-        >
-          <IconButton onClick={toggleDrawer} className="text-light">
-            <ChevronLeftIcon />
-          </IconButton>
-        </Toolbar>
-        <Divider />
-        <List>
-          {["Intakes", "Appointments"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton onClick={() => setTool(text)}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+      {currProvider ? (
+        <>
+          <QrCodeModal
+            show={showQrModal}
+            setShow={setShowQrModal}
+            providerId={currProvider.id}
+          />
+          <Drawer variant="permanent" open={open}>
+            <Toolbar
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                px: [1],
+                background: "#1976d2",
+              }}
+            >
+              <IconButton onClick={toggleDrawer} className="text-light">
+                <ChevronLeftIcon />
+              </IconButton>
+            </Toolbar>
+            <Divider />
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton onClick={() => setCurrView("Appointments")}>
+                  <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Appointments"} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={() => setCurrView("Intakes")}>
+                  <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Intakes"} />
+                </ListItemButton>
+              </ListItem>
+            </List>
+            <Divider />
+            <List>
+              <ListItem disablePadding>
+                <Nav.Link
+                  to={`/intake?provider=${currProvider.id}`}
+                  as={ListItemButton}
+                >
+                  <ListItemIcon>
+                    <FormatListNumberedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Intake Form"} />
+                </Nav.Link>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={() => setShowQrModal(true)}>
+                  <ListItemIcon>
+                    <QrCodeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"QR Code"} />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Drawer>
+        </>
+      ) : null}
     </>
   );
 }

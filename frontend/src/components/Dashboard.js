@@ -7,7 +7,7 @@ import IntakesByDate from "./IntakesByDate";
 import ApptsByDate from "./ApptsByDate";
 import ProviderContext from "../common/ProviderContext";
 
-function Dashboard({ tool }) {
+function Dashboard({ currView }) {
   const INITIAL_STATE = {
     firstName: "",
     lastName: "",
@@ -27,24 +27,32 @@ function Dashboard({ tool }) {
   };
 
   const clearModal = () => {
-    setShowApptModal(false)
-    setCurrAppt(INITIAL_STATE)
-  }
-  const currView =
-    tool === "Intakes" ? (
+    setShowApptModal(false);
+    setCurrAppt(INITIAL_STATE);
+  };
+  const featured =
+    currView === "Intakes" ? (
       <IntakesByDate generatePdf={generatePdf} />
     ) : (
-      <ApptsByDate generatePdf={generatePdf} setShow={setShowApptModal}setCurrAppt={setCurrAppt}/>
+      <ApptsByDate
+        generatePdf={generatePdf}
+        setShow={setShowApptModal}
+        setCurrAppt={setCurrAppt}
+      />
     );
 
   return (
     <>
       <Grid item xs={12} md={8} lg={7}>
-        {currView}
+        {featured}
       </Grid>
       <Grid item xs={12} md={8} lg={5}>
         <ScheduleForm />
-        <ApptModal show={showApptModal} clearModal={clearModal} appt={currAppt}/>
+        <ApptModal
+          show={showApptModal}
+          clearModal={clearModal}
+          appt={currAppt}
+        />
       </Grid>
     </>
   );
