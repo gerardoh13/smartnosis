@@ -17,4 +17,16 @@ const createCheckbox = (el, func, data, type) => {
     );
   };
 
-export { createCheckbox };
+  const getMidnights = (date) => {
+    let midnight = new Date(date);
+    midnight.setHours(0, 0, 0, 0);
+    let lastMidnight = midnight.getTime() / 1000;
+    midnight.setDate(midnight.getDate() + 1);
+    let nextMidnight = midnight.getTime() / 1000;
+    return { lastMidnight, nextMidnight };
+  };
+
+  const formatTime = (epoch) => {
+    return new Date(epoch * 1000).toLocaleTimeString();
+  };
+export { createCheckbox, getMidnights, formatTime };

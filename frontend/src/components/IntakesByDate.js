@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
 import DatePicker from "./DatePicker";
+import { getMidnights, formatTime } from "../intake/commonFuncs";
 
 function IntakesByDate({ generatePdf }) {
   const [intakes, setIntakes] = useState([]);
@@ -22,15 +23,6 @@ function IntakesByDate({ generatePdf }) {
     getActivity();
   }, [currProvider, currDate]);
 
-  const getMidnights = (date) => {
-    let midnight = new Date(date);
-    midnight.setHours(0, 0, 0, 0);
-    let lastMidnight = midnight.getTime() / 1000;
-    midnight.setDate(midnight.getDate() + 1);
-    let nextMidnight = midnight.getTime() / 1000;
-    return { lastMidnight, nextMidnight };
-  };
-
   const createRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id}>
@@ -46,10 +38,6 @@ function IntakesByDate({ generatePdf }) {
         </td>
       </tr>
     ));
-  };
-
-  const formatTime = (epoch) => {
-    return new Date(epoch * 1000).toLocaleTimeString();
   };
 
   return (

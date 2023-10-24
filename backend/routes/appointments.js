@@ -24,7 +24,8 @@ router.post("/email", async function (req, res, next) {
     //   throw new BadRequestError(errs);
     // }
     const appointment = await Appointment.addAppt(req.body);
-    await Email.sendIntake(provider, appointment);
+    if (appointment.firstName !== "Test") await Email.sendIntake(provider, appointment);
+    // await Email.sendIntake(provider, appointment);
     return res.status(201).json({ appointment });
   } catch (err) {
     return next(err);

@@ -2,8 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
 import DatePicker from "./DatePicker";
+import { getMidnights, formatTime } from "../intake/commonFuncs";
 
-function ApptsByDate({ generatePdf }) {
+function ApptsByDate({ generatePdf, setShow, setCurrAppt }) {
   const [intakes, setIntakes] = useState([]);
   const [currDate, setCurrDate] = useState(new Date());
   const { currProvider } = useContext(ProviderContext);
@@ -22,22 +23,21 @@ function ApptsByDate({ generatePdf }) {
     getActivity();
   }, [currProvider, currDate]);
 
-  const getMidnights = (date) => {
-    let midnight = new Date(date);
-    midnight.setHours(0, 0, 0, 0);
-    let lastMidnight = midnight.getTime() / 1000;
-    midnight.setDate(midnight.getDate() + 1);
-    let nextMidnight = midnight.getTime() / 1000;
-    return { lastMidnight, nextMidnight };
+  const handleClick = (appt) => {
+    setShow(true)
+    setCurrAppt(appt)
+    console.log(appt);
   };
-
   const createRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id}>
-        <td>{`${p.lastName}, ${p.middleName ? p.middleName[0] + "." : ""} ${
-          p.firstName
-        }`}</td>
-        <td>{formatTime(p.apptAt)}</td>
+        <td>
+          <span>{`${p.lastName}, ${p.firstName}`}</span>
+          <button className="btn btn-light ms-2" onClick={() => handleClick(p)}>
+            <i className="bi bi-three-dots-vertical"></i>
+          </button>
+        </td>
+        <td className="align-middle">{formatTime(p.apptAt)}</td>
         {p.complete ? (
           <td>
             <button
@@ -48,17 +48,12 @@ function ApptsByDate({ generatePdf }) {
             </button>
           </td>
         ) : (
-          <td className="text-danger">Incomplete</td>
+          <td className="text-danger align-middle">Incomplete</td>
         )}
       </tr>
     ));
   };
 
-  const formatTime = (epoch) => {
-    return new Date(epoch * 1000).toLocaleTimeString();
-  };
-
-  const getCalendarVal = () => {};
   return (
     <div className="card">
       <div className="row my-4">

@@ -17,6 +17,11 @@ function ScheduleForm() {
   const [sendBy, setSendBy] = useState("email");
 
   const submit = async (type) => {
+    let myForm = document.getElementById("sendIntakeForm");
+    if (!myForm.checkValidity()) {
+      myForm.reportValidity();
+      return;
+    }
     let data = { ...formData };
     data.provider = { id: currProvider.id, name: currProvider.name };
     data.apptAt = new Date(data.apptAt).getTime() / 1000;
@@ -40,7 +45,7 @@ function ScheduleForm() {
   const validatePhone = (phone) => {
     if (phone.lenght > 12) return;
     phone = phone.replaceAll("-", "");
-    console.log(phone)
+    console.log(phone);
     for (let i = 0; i < phone.length; i++) {
       if (isNaN(phone[i])) return;
     }
@@ -91,133 +96,138 @@ function ScheduleForm() {
     <div className="card">
       <div className="card-body">
         <h5 className="card-title">Send Intake Form</h5>
-        <div className="row my-3">
-          <div className="col-4">Appointment:</div>
-          <div className="col-8">
-            <input
-              type="datetime-local"
-              className="form-control"
-              value={formData.apptAt}
-              onChange={handleChange}
-              name="apptAt"
-            />
+        <form id="sendIntakeForm">
+          <div className="row my-3">
+            <div className="col-4">Appointment:</div>
+            <div className="col-8">
+              <input
+                type="datetime-local"
+                className="form-control"
+                value={formData.apptAt}
+                onChange={handleChange}
+                name="apptAt"
+                required
+              />
+            </div>
           </div>
-        </div>
-        {/* firstName */}
-        <div className="form-floating">
-          <input
-            type="text"
-            className="form-control"
-            id="firstName"
-            name="firstName"
-            placeholder="First Name"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="firstName">
-            First Name: <span className="text-danger">*</span>
-          </label>
-        </div>
+          {/* firstName */}
+          <div className="form-floating">
+            <input
+              type="text"
+              className="form-control"
+              id="firstName"
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+            <label htmlFor="firstName">
+              First Name: <span className="text-danger">*</span>
+            </label>
+          </div>
 
-        {/* lastName */}
-        <div className="form-floating my-3">
-          <input
-            type="text"
-            className="form-control"
-            id="lastName"
-            name="lastName"
-            placeholder="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="lastName">
-            Last Name: <span className="text-danger">*</span>
-          </label>
-        </div>
-        {/* radio btns */}
+          {/* lastName */}
+          <div className="form-floating my-3">
+            <input
+              type="text"
+              className="form-control"
+              id="lastName"
+              name="lastName"
+              placeholder="Last Name"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+            <label htmlFor="lastName">
+              Last Name: <span className="text-danger">*</span>
+            </label>
+          </div>
+          {/* radio btns */}
 
-        <div className="my-3 text-center">
-          <input
-            type="radio"
-            className="btn-check method"
-            name="method"
-            // autoComplete="off"
-            id="emailRadioBtn"
-            value="email"
-            checked={sendBy === "email"}
-            onChange={(e) => setSendBy(e.target.value)}
-          />
-          <label
-            className="btn btn-outline-secondary radioLabel me-2"
-            htmlFor="emailRadioBtn"
-          >
-            Email
-          </label>
+          <div className="my-3 text-center">
+            <input
+              type="radio"
+              className="btn-check method"
+              name="method"
+              // autoComplete="off"
+              id="emailRadioBtn"
+              value="email"
+              checked={sendBy === "email"}
+              onChange={(e) => setSendBy(e.target.value)}
+            />
+            <label
+              className="btn btn-outline-secondary radioLabel me-2"
+              htmlFor="emailRadioBtn"
+            >
+              Email
+            </label>
 
-          <input
-            type="radio"
-            className="btn-check method"
-            name="method"
-            id="smsRadioBtn"
-            value="sms"
-            checked={sendBy === "sms"}
-            onChange={(e) => setSendBy(e.target.value)}
-          />
-          <label
-            className="btn btn-outline-secondary radioLabel"
-            htmlFor="smsRadioBtn"
-          >
-            SMS
-          </label>
-        </div>
+            <input
+              type="radio"
+              className="btn-check method"
+              name="method"
+              id="smsRadioBtn"
+              value="sms"
+              checked={sendBy === "sms"}
+              onChange={(e) => setSendBy(e.target.value)}
+            />
+            <label
+              className="btn btn-outline-secondary radioLabel"
+              htmlFor="smsRadioBtn"
+            >
+              SMS
+            </label>
+          </div>
 
-        {/* phone */}
-        <div className={`input-group ${sendBy === "email" ? "d-none" : ""}`}>
-          <span className="input-group-text">
-            <i className="bi bi-phone"></i>
-          </span>
-          <input
-            className="form-control"
-            type="tel"
-            maxLength={12}
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-            name="phone"
-            placeholder="Patient's phone"
-            onChange={handlePhones}
-            onKeyDown={handleKeydown}
-            value={formData.phone}
-          />
-          <button
-            className="btn btn-primary input-group-text"
-            onClick={() => submit("sms")}
-          >
-            Send
-            <i className="bi bi-chat-left-dots-fill ms-2"></i>
-          </button>
-        </div>
-        {/* email */}
-        <div className={`input-group ${sendBy === "sms" ? "d-none" : ""}`}>
-          <span className="input-group-text">
-            <i className="bi bi-envelope"></i>
-          </span>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Patient's email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <button
-            className="btn btn-primary input-group-text"
-            onClick={() => submit("email")}
-          >
-            Send
-            <i className="bi bi-send ms-2"></i>
-          </button>
-        </div>
+          {/* phone */}
+          <div className={`input-group ${sendBy === "email" ? "d-none" : ""}`}>
+            <span className="input-group-text">
+              <i className="bi bi-phone"></i>
+            </span>
+            <input
+              className="form-control"
+              type="tel"
+              maxLength={12}
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              name="phone"
+              placeholder="Patient's phone"
+              onChange={handlePhones}
+              onKeyDown={handleKeydown}
+              value={formData.phone}
+            />
+            <button
+              className="btn btn-primary input-group-text"
+              type="button"
+              onClick={() => submit("sms")}
+            >
+              Send
+              <i className="bi bi-chat-left-dots-fill ms-2"></i>
+            </button>
+          </div>
+          {/* email */}
+          <div className={`input-group ${sendBy === "sms" ? "d-none" : ""}`}>
+            <span className="input-group-text">
+              <i className="bi bi-envelope"></i>
+            </span>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Patient's email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <button
+              className="btn btn-primary input-group-text"
+              type="button"
+              onClick={() => submit("email")}
+            >
+              Send
+              <i className="bi bi-send ms-2"></i>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

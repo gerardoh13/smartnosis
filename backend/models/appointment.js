@@ -41,7 +41,8 @@ class Appointment {
                   last_name AS "lastName",
                   email,
                   phone,
-                  appt_at AS "apptAt"
+                  appt_at AS "apptAt",
+                  complete
           FROM appointments 
           WHERE id = $1`,
       [id]
@@ -71,7 +72,9 @@ class Appointment {
                   last_name AS "lastName",
                   appt_at AS "apptAt",
                   complete,
-                  intake_id AS "intakeId"
+                  intake_id AS "intakeId",
+                  email,
+                  phone
           FROM appointments 
           WHERE provider_id = $1 AND appt_at > $2 AND appt_at < $3
           ORDER BY appt_at`,

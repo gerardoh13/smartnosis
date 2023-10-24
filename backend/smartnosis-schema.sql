@@ -51,7 +51,7 @@ CREATE TABLE appointments (
   provider_id TEXT REFERENCES providers ON DELETE CASCADE,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  appt_at BIGINT,
+  appt_at BIGINT NOT NULL,
   email TEXT CHECK (position('@' IN email) > 1),
   complete BOOLEAN NOT NULL DEFAULT FALSE,
   intake_id INTEGER REFERENCES intakes ON DELETE CASCADE,
