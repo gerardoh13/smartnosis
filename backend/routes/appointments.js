@@ -23,9 +23,14 @@ router.post("/email", async function (req, res, next) {
     //   const errs = validator.errors.map((e) => e.stack);
     //   throw new BadRequestError(errs);
     // }
-    const appointment = await Appointment.addAppt(req.body);
-    if (appointment.firstName !== "Test") await Email.sendIntake(provider, appointment);
-    // await Email.sendIntake(provider, appointment);
+    let appointment;
+    if (req.body.apptId) {
+      const id = req.body.apptId;
+      delete req.body.apptId;
+      delete req.body.providerId
+      appointment = await Appointment.updateAppt(id, req.body);
+    } else appointment = await Appointment.addAppt(req.body);
+    await Email.sendIntake(provider, appointment);
     return res.status(201).json({ appointment });
   } catch (err) {
     return next(err);
@@ -41,7 +46,13 @@ router.post("/sms", async function (req, res, next) {
     //   const errs = validator.errors.map((e) => e.stack);
     //   throw new BadRequestError(errs);
     // }
-    const appointment = await Appointment.addAppt(req.body);
+    let appointment;
+    if (req.body.apptId) {
+      const id = req.body.apptId;
+      delete req.body.apptId;
+      delete req.body.providerId
+      appointment = await Appointment.updateAppt(id, req.body);
+    } else appointment = await Appointment.addAppt(req.body);
     await SMS.sendIntake(provider, appointment);
     return res.status(201).json({ appointment });
   } catch (err) {

@@ -52,6 +52,7 @@ function Dashboard({ currView }) {
           show={showApptModal}
           clearModal={clearModal}
           appt={currAppt}
+          provider={currProvider}
         />
       </Grid>
     </>

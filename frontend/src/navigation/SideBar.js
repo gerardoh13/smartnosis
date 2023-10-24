@@ -16,7 +16,7 @@ import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import Nav from "react-bootstrap/Nav";
 import ProviderContext from "../common/ProviderContext";
 import QrCodeModal from "../common/QrCodeModal";
-
+import EventIcon from '@mui/icons-material/Event';
 const drawerWidth = 200;
 
 const Drawer = styled(MuiDrawer, {
@@ -77,7 +77,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
               <ListItem disablePadding>
                 <ListItemButton onClick={() => setCurrView("Appointments")}>
                   <ListItemIcon>
-                    <InboxIcon />
+                    <EventIcon />
                   </ListItemIcon>
                   <ListItemText primary={"Appointments"} />
                 </ListItemButton>

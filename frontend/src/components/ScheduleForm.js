@@ -1,6 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import ProviderContext from "../common/ProviderContext";
 import SmartnosisApi from "../api";
+import { validatePhone } from "../intake/commonFuncs";
 
 function ScheduleForm() {
   const { currProvider } = useContext(ProviderContext);
@@ -27,11 +28,11 @@ function ScheduleForm() {
     data.apptAt = new Date(data.apptAt).getTime() / 1000;
     let newAppt;
     if (type === "email") {
+      data.email = data.email.toLowerCase()
       delete data.phone;
       newAppt = await SmartnosisApi.emailAppt(data);
     } else if (type === "sms") {
       delete data.email;
-      console.log(data.phone)
       data.phone = validatePhone(data.phone);
       if (data.phone) newAppt = await SmartnosisApi.textAppt(data);
       else console.log("invalid number");
@@ -42,15 +43,6 @@ function ScheduleForm() {
     }
   };
 
-  const validatePhone = (phone) => {
-    if (phone.lenght > 12) return;
-    phone = phone.replaceAll("-", "");
-    console.log(phone);
-    for (let i = 0; i < phone.length; i++) {
-      if (isNaN(phone[i])) return;
-    }
-    return phone;
-  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     const trimCheck = name === "firstName" || name === "lastName";
@@ -150,7 +142,6 @@ function ScheduleForm() {
               type="radio"
               className="btn-check method"
               name="method"
-              // autoComplete="off"
               id="emailRadioBtn"
               value="email"
               checked={sendBy === "email"}

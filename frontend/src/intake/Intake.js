@@ -50,6 +50,8 @@ function Intake() {
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [maxDate, setMaxDate] = useState("");
   const [apptAt, setApptAt] = useState("");
+  const [providerName, setProviderName] = useState("");
+  const [complete, setComplete] = useState(false);
 
   const navigate = useNavigate();
   let query = useQuery();
@@ -66,19 +68,22 @@ function Intake() {
     async function getAppt() {
       let appt = await SmartnosisApi.getAppt(queryProvider, queryAppt);
       setApptAt(appt.apptAt);
+      setProviderName(appt.providerName);
+      setComplete(appt.complete);
       setFormData((data) => ({
         ...data,
         firstName: appt.firstName,
         lastName: appt.lastName,
+        phone: `${appt.phone.slice(0, 3)}-${appt.phone.slice(
+          3,
+          6
+        )}-${appt.phone.slice(6)}`,
       }));
     }
-    // should always have a queryProvider
-    if (queryProvider) {
-      setFormData((data) => ({
-        ...data,
-        providerId: queryProvider,
-      }));
-    }
+    setFormData((data) => ({
+      ...data,
+      providerId: queryProvider,
+    }));
     if (queryAppt) {
       getAppt();
     }
@@ -145,7 +150,6 @@ function Intake() {
 
   const submit = async () => {
     let formattedData = formatData();
-    console.log(formattedData)
     await SmartnosisApi.addIntake(formattedData);
     if (currProvider) navigate("/");
     else changeStep(1);
@@ -177,7 +181,7 @@ function Intake() {
 
   const handleCheckbox = (e) => {
     const { checked, value, name } = e.target;
-    
+
     let copy = new Set([...formData[name]]);
     if (checked) {
       if (!copy.has(value)) copy.add(value);
@@ -299,8 +303,10 @@ function Intake() {
     case 3:
       currStep = (
         <>
-          <p className="text-center">Your intake form has been submitted!</p>
-          <p className="text-center">You can now close this tab</p>
+          <div className="text-center">
+            <p>Your intake form has been submitted!</p>
+            <p>You can now close this window</p>
+          </div>
         </>
       );
       <h1>Step 3</h1>;
@@ -326,6 +332,10 @@ function Intake() {
                 {new Date(apptAt * 1000).toLocaleDateString()} {" at "}
               </span>
               <span>{new Date(apptAt * 1000).toLocaleTimeString()}</span>
+              <span>
+                {" with "}
+                {providerName}
+              </span>
             </p>
           </>
         ) : null}
@@ -333,11 +343,18 @@ function Intake() {
 
       <div className="card mt-3">
         <div className="card-body">
-          {currStep}
+          {complete ? (
+            <div className="text-center">
+              <p>Your intake form has already been submitted!</p>
+              <p>If you need to make changes, contact your health care provider.</p>
+            </div>
+          ) : (
+            currStep
+          )}
           <div className="row">
             <div className="mt-2 text-center">
               <span
-                className={`step ${stepOneComplete() ? "finish" : ""} ${
+                className={`step ${stepOneComplete() || complete ? "finish" : ""} ${
                   step === 0 ? "active" : ""
                 }`}
               ></span>
@@ -351,12 +368,12 @@ function Intake() {
               ) : null}
 
               <span
-                className={`step ${step > 0.5 ? "finish" : ""} ${
+                className={`step ${step > 0.5 || complete ? "finish" : ""} ${
                   step === 1 ? "active" : ""
                 }`}
               ></span>
               <span
-                className={`step ${step > 1 ? "finish" : ""} ${
+                className={`step ${step > 1 || complete ? "finish" : ""} ${
                   step === 2 ? "active" : ""
                 }`}
               ></span>

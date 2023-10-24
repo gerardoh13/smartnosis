@@ -19,7 +19,7 @@ class Appointment {
                                   phone,
                                   appt_at)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
-                    RETURNING id, first_name AS "firstName", email, phone`,
+                    RETURNING id, first_name AS "firstName", email, phone, appt_at AS "apptAt"`,
       [
         uId,
         data.providerId,
@@ -30,24 +30,45 @@ class Appointment {
         data.apptAt,
       ]
     );
-    let appointment = result.rows[0];
+    const appointment = result.rows[0];
+    return appointment;
+  }
+
+  static async updateAppt(id, data) {
+    const { setCols, values } = sqlForPartialUpdate(data, {
+      firstName: "first_name",
+      lastName: "last_name",
+      apptAt: "appt_at",
+    });
+    const idVarIdx = "$" + (values.length + 1);
+    const querySql = `UPDATE appointments
+                      SET ${setCols} 
+                      WHERE id = ${idVarIdx} 
+                      RETURNING id, first_name AS "firstName", email, phone, appt_at AS "apptAt"`;
+
+    const result = await db.query(querySql, [...values, id]);
+    const appointment = result.rows[0];
+    if (!appointment) throw new NotFoundError(`No appointment: ${apptId}`);
     return appointment;
   }
 
   static async getAppt(id) {
     const result = await db.query(
-      `SELECT provider_id AS "providerId",
-                  first_name AS "firstName",
-                  last_name AS "lastName",
-                  email,
-                  phone,
-                  appt_at AS "apptAt",
-                  complete
-          FROM appointments 
-          WHERE id = $1`,
+      `SELECT a.provider_id AS "providerId",
+                  a.first_name AS "firstName",
+                  a.last_name AS "lastName",
+                  a.email,
+                  a.phone,
+                  a.appt_at AS "apptAt",
+                  a.complete,
+                  p.name as "providerName"
+          FROM appointments a
+          JOIN providers p ON a.provider_id = p.id
+          WHERE a.id = $1`,
       [id]
     );
-    let appt = result.rows[0];
+    const appt = result.rows[0];
+    if (!appt) throw new NotFoundError(`No appointment: ${id}`);
     return appt;
   }
 

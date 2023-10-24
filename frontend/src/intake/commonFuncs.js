@@ -29,4 +29,15 @@ const createCheckbox = (el, func, data, type) => {
   const formatTime = (epoch) => {
     return new Date(epoch * 1000).toLocaleTimeString();
   };
-export { createCheckbox, getMidnights, formatTime };
+  
+  const validatePhone = (phone) => {
+    if (phone.lenght > 12) return;
+    phone = phone.replaceAll("-", "");
+    console.log(phone);
+    for (let i = 0; i < phone.length; i++) {
+      if (isNaN(phone[i])) return;
+    }
+    return phone;
+  };
+
+export { createCheckbox, getMidnights, formatTime, validatePhone };
