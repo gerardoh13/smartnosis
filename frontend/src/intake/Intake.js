@@ -74,10 +74,10 @@ function Intake() {
         ...data,
         firstName: appt.firstName,
         lastName: appt.lastName,
-        phone: `${appt.phone.slice(0, 3)}-${appt.phone.slice(
+        phone: appt.phone ? `${appt.phone.slice(0, 3)}-${appt.phone.slice(
           3,
           6
-        )}-${appt.phone.slice(6)}`,
+        )}-${appt.phone.slice(6)}` : "",
       }));
     }
     setFormData((data) => ({

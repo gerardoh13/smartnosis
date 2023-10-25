@@ -3,10 +3,10 @@ import Modal from "react-bootstrap/Modal";
 import { QRCodeSVG } from "qrcode.react";
 
 function QRCode({ show, setShow, providerId }) {
-  const BASE_URL =
-    process.env.REACT_APP_BASE_URL ||
-    // "http://" + window.location.hostname + ":3000";
-    "http://10.0.0.14:3000";
+  const BASE_URL = "https://" + window.location.hostname;
+  // process.env.REACT_APP_BASE_URL ||
+  // "http://" + window.location.hostname + ":3000";
+  // "http://10.0.0.14:3000";
 
   return (
     <Modal show={show} centered>
