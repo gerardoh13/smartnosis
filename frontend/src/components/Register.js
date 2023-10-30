@@ -54,10 +54,8 @@ function Register({ register }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // const trimCheck = name === "firstName" || name === "lastName";
     setFormData((data) => ({
       ...data,
-      // [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value.trim(),
       [name]: value,
     }));
   };
@@ -98,7 +96,6 @@ function Register({ register }) {
   return (
     <>
       <br />
-      {/* <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto"> */}
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Get started with Smartnosis</h5>
@@ -115,7 +112,9 @@ function Register({ register }) {
                 required
                 onChange={handleChange}
               />
-              <label htmlFor="orgName">Organization Name:</label>
+              <label htmlFor="orgName">
+                Organization Name: <span className="text-danger">*</span>
+              </label>
             </div>
             <div className="form-floating my-3">
               <input
@@ -128,7 +127,7 @@ function Register({ register }) {
                 required
                 onChange={handleChange}
               />
-              <label htmlFor="npi">NPI:</label>
+              <label htmlFor="npi">NPI: <span className="text-danger">*</span></label>
             </div>
             <div className="form-floating mb-3">
               <input
@@ -141,7 +140,9 @@ function Register({ register }) {
                 onChange={handleChange}
                 required
               />
-              <label htmlFor="address1">Address 1:</label>
+              <label htmlFor="address1">
+                Address 1:<span className="text-danger">*</span>
+              </label>
             </div>
 
             <div className="form-floating">
@@ -153,7 +154,6 @@ function Register({ register }) {
                 placeholder="Address 2"
                 value={formData.address2}
                 onChange={handleChange}
-                //   required
               />
               <label htmlFor="address2">Address 2:</label>
             </div>
@@ -186,7 +186,7 @@ function Register({ register }) {
                   required
                 />
                 <label className="ms-2" htmlFor="state">
-                  State:
+                  State:<span className="text-danger">*</span>
                 </label>
               </div>
               <div className="form-floating mt-3 col">
@@ -203,7 +203,7 @@ function Register({ register }) {
                   required
                 />
                 <label className="ms-2" htmlFor="zip">
-                  Zip Code:
+                  Zip Code: <span className="text-danger">*</span>
                 </label>
               </div>
             </div>
@@ -221,7 +221,9 @@ function Register({ register }) {
                 value={formData.phone}
                 required
               />
-              <label htmlFor="phone">Primary Phone:</label>
+              <label htmlFor="phone">
+                Phone: <span className="text-danger">*</span>
+              </label>
             </div>
             <div className="form-floating my-3">
               <input
@@ -235,7 +237,9 @@ function Register({ register }) {
                 minLength="6"
                 onChange={handleChange}
               />
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">
+                Email: <span className="text-danger">*</span>
+              </label>
             </div>
             <div className="form-floating mb-3">
               <input
@@ -250,7 +254,9 @@ function Register({ register }) {
                 minLength="5"
                 onChange={handleChange}
               />
-              <label htmlFor="password">Password:</label>
+              <label htmlFor="password">
+                Password: <span className="text-danger">*</span>
+              </label>
             </div>
             <div className="form-floating mb-3">
               <input
@@ -265,7 +271,9 @@ function Register({ register }) {
                 minLength="5"
                 onChange={handleChange}
               />
-              <label htmlFor="confirmPwd">Confirm Password:</label>
+              <label htmlFor="confirmPwd">
+                Confirm Password: <span className="text-danger">*</span>
+              </label>
             </div>
             <button className="btn btn-primary form-control">Next</button>
           </form>

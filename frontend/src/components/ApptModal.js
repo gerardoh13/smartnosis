@@ -15,7 +15,8 @@ function ApptModal({ show, clearModal, appt, provider }) {
     phone: "",
     apptAt: "",
   };
-  const [rescheduling, setRescheduling] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [newDateTime, setNewDateTime] = useState(false);
   const [formData, setFormData] = useState(INITIAL_STATE);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ function ApptModal({ show, clearModal, appt, provider }) {
   };
 
   const dismiss = () => {
-    setRescheduling(false);
+    setEditing(false);
     clearModal();
   };
 
@@ -111,34 +112,72 @@ function ApptModal({ show, clearModal, appt, provider }) {
         ></button>
       </Modal.Header>
       <Modal.Body className="text-center">
-        {rescheduling ? (
-          <div className="row">
-            <div className="col-7">
-              {/* <input
-                type="datetime-local"
-                value={dateVal}
-                onChange={(e) => setDateVal(e.target.value)}
-              /> */}
+        {editing ? (
+          <form className="text-start">
+            {/* firstName */}
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="firstName"
+                name="firstName"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+              <label htmlFor="firstName">
+                First Name: <span className="text-danger">*</span>
+              </label>
             </div>
-            <div className="col-5 float-end">
-              <button
-                className="btn btn-success me-1"
-                onClick={() => setRescheduling(true)}
-              >
-                <CheckCircleOutlineIcon />
-              </button>
-              <button
-                className="btn btn-info"
-                onClick={() => setRescheduling(false)}
-              >
-                <UndoIcon />
-              </button>
+            <div className="form-floating my-3">
+              <input
+                type="text"
+                className="form-control"
+                id="lastName"
+                name="lastName"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+              <label htmlFor="lastName">
+                Last Name: <span className="text-danger">*</span>
+              </label>
             </div>
-          </div>
+            <label htmlFor="dateTime">
+                Date and Time: <span className="text-danger">*</span>
+              </label>
+            <input
+              className="form-control"
+              id="dateTime"
+              type="datetime-local"
+              value={formData.apptAt}
+              onChange={handleChange}
+              />
+            <div className="my-3 row">
+              <div className="col">
+                <button
+                  className="btn btn-success form-control"
+                  onClick={() => setEditing(true)}
+                >
+                  Save Changes
+                </button>
+              </div>
+              <div className="col">
+                <button
+                  className="btn btn-secondary form-control"
+                  onClick={() => setEditing(false)}
+                >
+                  Go Back
+                </button>
+              </div>
+            </div>
+          </form>
         ) : (
           <>
             <div className="row">
-              <div className="col-8">
+              <div className="col-8 text-start text-nowrap">
                 <p>
                   <b>Date and Time: </b>
                   {new Date(appt.apptAt * 1000).toLocaleString()}
@@ -146,10 +185,10 @@ function ApptModal({ show, clearModal, appt, provider }) {
               </div>
               <div className="col-4">
                 <button
-                  className="btn btn-warning float-end"
-                  onClick={() => setRescheduling(true)}
+                  className="btn btn-secondary form-control"
+                  onClick={() => setEditing(true)}
                 >
-                  Reschedule
+                  Edit
                 </button>
               </div>
             </div>
@@ -200,6 +239,7 @@ function ApptModal({ show, clearModal, appt, provider }) {
                 <i className="bi bi-send ms-2"></i>
               </button>
             </div>
+            <button className="btn btn-danger my-3">Cancel Appointment</button>
           </>
         )}
       </Modal.Body>

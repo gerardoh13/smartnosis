@@ -97,7 +97,7 @@ class Appointment {
                   email,
                   phone
           FROM appointments 
-          WHERE provider_id = $1 AND appt_at > $2 AND appt_at < $3
+          WHERE provider_id = $1 AND appt_at >= $2 AND appt_at < $3
           ORDER BY appt_at`,
       [providerId, start, end]
     );

@@ -33,6 +33,7 @@ function App() {
           let { email } = decodeToken(token);
           SmartnosisApi.token = token;
           let provider = await SmartnosisApi.getCurrProvider(email);
+          console.log(provider)
           setCurrProvider(provider);
         } catch (err) {
           console.log(err);
@@ -91,6 +92,7 @@ function App() {
                   toggleDrawer={toggleDrawer}
                   open={open}
                   logout={logout}
+                  orgName={currProvider.name}
                 />
               </>
             ) : null}

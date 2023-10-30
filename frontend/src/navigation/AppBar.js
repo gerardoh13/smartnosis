@@ -32,7 +32,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-function ResponsiveAppBar({ toggleDrawer, open, logout }) {
+function ResponsiveAppBar({ toggleDrawer, open, logout, orgName }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -79,7 +79,7 @@ function ResponsiveAppBar({ toggleDrawer, open, logout }) {
             textDecoration: "none",
           }}
         >
-          Smartnosis
+          {orgName ? orgName : "Smartnosis"}
         </Typography>
 
         <Box sx={{ flexGrow: 0 }}>
