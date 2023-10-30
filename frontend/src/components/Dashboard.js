@@ -6,6 +6,7 @@ import ApptModal from "./ApptModal";
 import IntakesByDate from "./IntakesByDate";
 import ApptsByDate from "./ApptsByDate";
 import ProviderContext from "../common/ProviderContext";
+import { getMidnights } from "../intake/commonFuncs";
 
 function Dashboard({ currView }) {
   const INITIAL_STATE = {
@@ -18,6 +19,8 @@ function Dashboard({ currView }) {
   const { currProvider } = useContext(ProviderContext);
   const [showApptModal, setShowApptModal] = useState(false);
   const [currAppt, setCurrAppt] = useState(INITIAL_STATE);
+  const [currDate, setCurrDate] = useState(new Date());
+  const [reload, setReload] = useState(false);
 
   const generatePdf = async (intakeId) => {
     let res = await SmartnosisApi.generatePDF(currProvider.id, intakeId);
@@ -26,18 +29,39 @@ function Dashboard({ currView }) {
     window.open(url, "_blank");
   };
 
+  const getActivity = async (type) => {
+    const { lastMidnight, nextMidnight } = getMidnights(currDate);
+    const res = await SmartnosisApi.getByDate(
+      currProvider.id,
+      lastMidnight,
+      nextMidnight,
+      type
+    );
+    return res.intakes;
+  };
+
   const clearModal = () => {
     setShowApptModal(false);
     setCurrAppt(INITIAL_STATE);
   };
   const featured =
     currView === "Intakes" ? (
-      <IntakesByDate generatePdf={generatePdf} />
+      <IntakesByDate
+        generatePdf={generatePdf}
+        getActivity={getActivity}
+        currDate={currDate}
+        setCurrDate={setCurrDate}
+      />
     ) : (
       <ApptsByDate
         generatePdf={generatePdf}
+        getActivity={getActivity}
         setShow={setShowApptModal}
         setCurrAppt={setCurrAppt}
+        currDate={currDate}
+        setCurrDate={setCurrDate}
+        setReload={setReload}
+        reload={reload}
       />
     );
 
@@ -47,7 +71,7 @@ function Dashboard({ currView }) {
         {featured}
       </Grid>
       <Grid item xs={12} md={8} lg={5}>
-        <ScheduleForm />
+        <ScheduleForm currDate={currDate} setReload={setReload} />
         <ApptModal
           show={showApptModal}
           clearModal={clearModal}

@@ -40,4 +40,10 @@ const createCheckbox = (el, func, data, type) => {
     return phone;
   };
 
-export { createCheckbox, getMidnights, formatTime, validatePhone };
+  const deleteNulls = (data) => {
+    for (let key in data) {
+      if (!data[key]) delete data[key];
+    }
+  }
+
+export { createCheckbox, getMidnights, formatTime, validatePhone, deleteNulls };

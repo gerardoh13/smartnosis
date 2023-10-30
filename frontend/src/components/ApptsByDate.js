@@ -1,32 +1,32 @@
 import React, { useContext, useState, useEffect } from "react";
-import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
 import DatePicker from "./DatePicker";
-import { getMidnights, formatTime } from "../intake/commonFuncs";
+import { formatTime } from "../intake/commonFuncs";
 
-function ApptsByDate({ generatePdf, setShow, setCurrAppt }) {
-  const [intakes, setIntakes] = useState([]);
-  const [currDate, setCurrDate] = useState(new Date());
+function ApptsByDate({
+  generatePdf,
+  setShow,
+  setCurrAppt,
+  currDate,
+  setCurrDate,
+  getActivity,
+  reload,
+  setReload
+}) {
+  const [appts, setAppts] = useState([]);
   const { currProvider } = useContext(ProviderContext);
 
   useEffect(() => {
-    const getActivity = async () => {
-      const { lastMidnight, nextMidnight } = getMidnights(currDate);
-      const res = await SmartnosisApi.getByDate(
-        currProvider.id,
-        lastMidnight,
-        nextMidnight,
-        "appointments"
-      );
-      setIntakes(res.intakes);
+    const fetchData = async () => {
+      setAppts(await getActivity("appointments"));
+      if (reload) setReload(false)
     };
-    getActivity();
-  }, [currProvider, currDate]);
+    fetchData();
+  }, [currProvider, currDate, getActivity, reload, setReload]);
 
   const handleClick = (appt) => {
-    setShow(true)
-    setCurrAppt(appt)
-    console.log(appt);
+    setShow(true);
+    setCurrAppt(appt);
   };
   const createRows = (arr) => {
     return arr.map((p) => (
@@ -77,15 +77,15 @@ function ApptsByDate({ generatePdf, setShow, setCurrAppt }) {
         </div>
       </div>
       <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
-      <table className="table table-striped bg-light text-center">
+      <table className="table table-striped bg-light">
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Appointment Time</th>
+            <th scope="col">Time</th>
             <th />
           </tr>
         </thead>
-        <tbody>{createRows(intakes)}</tbody>
+        <tbody>{createRows(appts)}</tbody>
       </table>
     </div>
   );

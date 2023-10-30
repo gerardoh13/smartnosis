@@ -34,7 +34,9 @@ class Appointment {
     return appointment;
   }
 
-  static async updateAppt(id, data) {
+  static async updateAppt(data) {
+    const id = data.apptId;
+    delete data.apptId;
     const { setCols, values } = sqlForPartialUpdate(data, {
       firstName: "first_name",
       lastName: "last_name",

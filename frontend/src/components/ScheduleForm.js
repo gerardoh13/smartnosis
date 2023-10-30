@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import ProviderContext from "../common/ProviderContext";
 import SmartnosisApi from "../api";
-import { validatePhone } from "../intake/commonFuncs";
+import { validatePhone, deleteNulls } from "../intake/commonFuncs";
 import IntakeSentToast from "../common/IntakeSentToast";
 
-function ScheduleForm() {
+function ScheduleForm({ currDate, setReload }) {
   const { currProvider } = useContext(ProviderContext);
 
   const INITIAL_STATE = {
@@ -20,6 +20,12 @@ function ScheduleForm() {
   const [showToast, setShowToast] = useState(false);
   const [recipient, setRecipient] = useState({ name: "", sentTo: "" });
 
+  const reloadData = (epoch) => {
+    let date = new Date(epoch * 1000);
+    if (date.toLocaleDateString() === currDate.toLocaleDateString())
+      setReload(true);
+  };
+
   const submit = async (type) => {
     let myForm = document.getElementById("sendIntakeForm");
     if (!myForm.checkValidity()) {
@@ -33,13 +39,16 @@ function ScheduleForm() {
     if (type === "email") {
       data.email = data.email.toLowerCase();
       delete data.phone;
-      appt = await SmartnosisApi.emailAppt(data);
     } else if (type === "sms") {
       delete data.email;
       data.phone = validatePhone(data.phone);
-      if (data.phone) appt = await SmartnosisApi.textAppt(data);
-      else console.log("invalid number");
+      if (!data.phone) {
+        console.log("invalid number");
+        return;
+      }
     }
+    deleteNulls(data);
+    appt = await SmartnosisApi.addAppt(data);
     if (appt.id) {
       setFormData(INITIAL_STATE);
       setRecipient({
@@ -47,6 +56,7 @@ function ScheduleForm() {
         sentTo: appt.email ? appt.email : appt.phone,
       });
       setShowToast(true);
+      reloadData(data.apptAt);
     }
   };
 
@@ -102,7 +112,7 @@ function ScheduleForm() {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Send Intake Form</h5>
-          <form id="sendIntakeForm">
+          <form id="sendIntakeForm" onSubmit={(e) => e.preventDefault()}>
             <div className="row my-3">
               <div className="col-4">Appointment:</div>
               <div className="col-8">

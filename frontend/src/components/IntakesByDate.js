@@ -1,27 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
-import SmartnosisApi from "../api";
 import ProviderContext from "../common/ProviderContext";
 import DatePicker from "./DatePicker";
-import { getMidnights, formatTime } from "../intake/commonFuncs";
+import { formatTime } from "../intake/commonFuncs";
 
-function IntakesByDate({ generatePdf }) {
+function IntakesByDate({ generatePdf, getActivity, currDate, setCurrDate }) {
   const [intakes, setIntakes] = useState([]);
-  const [currDate, setCurrDate] = useState(new Date());
+  // const [currDate, setCurrDate] = useState(new Date());
   const { currProvider } = useContext(ProviderContext);
 
   useEffect(() => {
-    const getActivity = async () => {
-      const { lastMidnight, nextMidnight } = getMidnights(currDate);
-      const res = await SmartnosisApi.getByDate(
-        currProvider.id,
-        lastMidnight,
-        nextMidnight,
-        "intakes"
-      );
-      setIntakes(res.intakes);
+    const fetchData = async () => {
+      setIntakes(await getActivity("intakes"));
     };
-    getActivity();
-  }, [currProvider, currDate]);
+    fetchData();
+  }, [currProvider, currDate, getActivity]);
 
   const createRows = (arr) => {
     return arr.map((p) => (
@@ -44,7 +36,7 @@ function IntakesByDate({ generatePdf }) {
     <div className="card">
       <div className="row my-4">
         <div className="col-3">
-        <p className="card-title ms-2 text-center">Intakes</p>
+          <p className="card-title ms-2 text-center">Intakes</p>
         </div>
         <div className="col-8 m-auto">
           <div className="input-group">
@@ -66,7 +58,9 @@ function IntakesByDate({ generatePdf }) {
       <table className="table table-striped bg-light text-center">
         <thead>
           <tr>
-            <th scope="col">Name</th>
+            <th scope="col" className="text-start">
+              Name
+            </th>
             <th scope="col">Date of Birth</th>
             <th scope="col">Time Submitted</th>
             <th />

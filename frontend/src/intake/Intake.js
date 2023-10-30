@@ -10,6 +10,7 @@ import "./Intake.css";
 import { useNavigate } from "react-router-dom";
 import ProviderContext from "../common/ProviderContext";
 import Grid from "@mui/material/Grid";
+import { deleteNulls } from "./commonFuncs";
 
 function Intake() {
   const INITIAL_STATE = {
@@ -74,10 +75,12 @@ function Intake() {
         ...data,
         firstName: appt.firstName,
         lastName: appt.lastName,
-        phone: appt.phone ? `${appt.phone.slice(0, 3)}-${appt.phone.slice(
-          3,
-          6
-        )}-${appt.phone.slice(6)}` : "",
+        phone: appt.phone
+          ? `${appt.phone.slice(0, 3)}-${appt.phone.slice(
+              3,
+              6
+            )}-${appt.phone.slice(6)}`
+          : "",
       }));
     }
     setFormData((data) => ({
@@ -135,9 +138,7 @@ function Intake() {
       }
       dataCopy = { ...dataCopy, ...insDataCopy };
     }
-    for (let key in dataCopy) {
-      if (!dataCopy[key]) delete dataCopy[key];
-    }
+    deleteNulls(dataCopy);
     if (apptId) dataCopy.apptId = apptId;
     return dataCopy;
   };
@@ -346,7 +347,9 @@ function Intake() {
           {complete ? (
             <div className="text-center">
               <p>Your intake form has already been submitted!</p>
-              <p>If you need to make changes, contact your health care provider.</p>
+              <p>
+                If you need to make changes, contact your health care provider.
+              </p>
             </div>
           ) : (
             currStep
@@ -354,9 +357,9 @@ function Intake() {
           <div className="row">
             <div className="mt-2 text-center">
               <span
-                className={`step ${stepOneComplete() || complete ? "finish" : ""} ${
-                  step === 0 ? "active" : ""
-                }`}
+                className={`step ${
+                  stepOneComplete() || complete ? "finish" : ""
+                } ${step === 0 ? "active" : ""}`}
               ></span>
 
               {formData.insurance === "Yes" ? (

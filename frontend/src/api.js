@@ -61,13 +61,13 @@ class SmartnosisApi {
     return res;
   }
 
-  static async emailAppt(data) {
-    let res = await this.request("appointments/email", data, "post");
+  static async addAppt(data) {
+    let res = await this.request("appointments", data, "post");
     return res.appointment;
   }
 
-  static async textAppt(data) {
-    let res = await this.request("appointments/sms", data, "post");
+  static async updateAppt(data) {
+    let res = await this.request("appointments", data, "patch");
     return res.appointment;
   }
   
