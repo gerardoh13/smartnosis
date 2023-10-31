@@ -37,6 +37,20 @@ class SmartnosisApi {
     let res = await this.request(`providers/${email}`);
     return res.provider;
   }
+
+  static async resetPwd(token, data) {
+    let res = await this.request(
+      `providers/new-password?token=${token}`,
+      data,
+      "post"
+    );
+    return res;
+  }
+
+  static async requestPwdReset(data) {
+    let res = await this.request("providers/reset", data, "post");
+    return res;
+  }
   // ------------------INTAKES---------------------------
   static async addIntake(data) {
     let res = await this.request("intakes", data, "post");
@@ -71,7 +85,7 @@ class SmartnosisApi {
       return res.appt;
     } catch (e) {
       console.log(e);
-      return e[0]
+      return e[0];
     }
   }
 

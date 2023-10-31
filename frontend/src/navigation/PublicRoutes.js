@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import UserContext from "../users/UserContext";
+import ProviderContext from "../common/ProviderContext";
 import { Outlet, Navigate } from "react-router-dom";
 
 function PublicRoutes() {
-  const { currUser } = useContext(UserContext);
+  const { currProver } = useContext(ProviderContext);
 
-  if (currUser) {
+  if (currProver) {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;

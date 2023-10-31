@@ -4,8 +4,9 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import Dashboard from "../components/Dashboard";
 import Intake from "../intake/Intake";
+import ResetPwd from "../components/ResetPwd";
 // import PrivateRoutes from "./PrivateRoutes";
-// import PublicRoutes from "./PublicRoutes";
+import PublicRoutes from "./PublicRoutes";
 import ProviderContext from "../common/ProviderContext";
 
 function NavRoutes({ login, register, currView }) {
@@ -26,9 +27,9 @@ function NavRoutes({ login, register, currView }) {
         path="/register"
         element={<Register register={register} />}
       />
-      {/* <Route element={<PublicRoutes />}>
+      <Route element={<PublicRoutes />}>
         <Route exact path="/reset" element={<ResetPwd />} />
-      </Route> */}
+      </Route>
       {/* <Route element={<PrivateRoutes />}>
         <Route exact path="/calendar" element={<Calendar />} />
       </Route> */}

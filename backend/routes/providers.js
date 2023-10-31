@@ -6,7 +6,7 @@ const jsonschema = require("jsonschema");
 
 const Provider = require("../models/provider");
 // const Intake = require("../models/intake");
-// const Email = require("../models/email");
+const Email = require("../models/email");
 const express = require("express");
 const { ensureCorrectUser, ensureLoggedIn } = require("../middleware/auth");
 const { createToken, createPwdResetToken } = require("../helpers/tokens");
@@ -42,17 +42,17 @@ router.post("/token", async function (req, res, next) {
   }
 });
 
-// router.post("/reset", async function (req, res, next) {
-//   try {
-//     const { email } = req.body;
-//     const provider = await Provider.getWithPassword(email);
-//     const token = createPwdResetToken(provider);
-//     await Email.sendPwdReset(email, token);
-//     return res.json({ emailSent: true });
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
+router.post("/reset", async function (req, res, next) {
+  try {
+    const { email } = req.body;
+    const provider = await Provider.getWithPassword(email);
+    const token = createPwdResetToken(provider);
+    await Email.sendPwdReset(email, token);
+    return res.json({ emailSent: true });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 router.post("/new-password", async function (req, res, next) {
   try {

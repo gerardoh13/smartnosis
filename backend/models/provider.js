@@ -192,7 +192,7 @@ class Provider {
                       SET ${setCols} 
                       WHERE email = ${emailVarIdx} 
                       RETURNING id,
-                                first_name AS "firstName",
+                                name AS "firstName",
                                 email`;
     const result = await db.query(querySql, [...values, email]);
     const provider = result.rows[0];
