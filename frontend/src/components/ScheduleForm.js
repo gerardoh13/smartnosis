@@ -19,6 +19,7 @@ function ScheduleForm({ currDate, setReload }) {
   const [sendBy, setSendBy] = useState("email");
   const [showToast, setShowToast] = useState(false);
   const [recipient, setRecipient] = useState({ name: "", sentTo: "" });
+  const [toastMsg, setToastMsg] = useState("");
 
   const reloadData = (epoch) => {
     let date = new Date(epoch * 1000);
@@ -108,6 +109,8 @@ function ScheduleForm({ currDate, setReload }) {
         setShow={setShowToast}
         recipient={recipient}
         setRecipient={setRecipient}
+        msg={toastMsg}
+        setMsg={setToastMsg}
       />
       <div className="card">
         <div className="card-body">

@@ -46,7 +46,7 @@ function ResponsiveAppBar({ toggleDrawer, open, logout, orgName }) {
   };
 
   return (
-    <AppBar position="absolute" open={open}>
+    <AppBar position="absolute" open={open} sx={{zIndex: "1020"}}>
       <Toolbar
         sx={{
           pr: "24px", // keep right padding when drawer closed

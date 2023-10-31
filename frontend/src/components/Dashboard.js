@@ -7,6 +7,7 @@ import IntakesByDate from "./IntakesByDate";
 import ApptsByDate from "./ApptsByDate";
 import ProviderContext from "../common/ProviderContext";
 import { getMidnights } from "../intake/commonFuncs";
+import SearchBar from "../common/SearchBar";
 
 function Dashboard({ currView }) {
   const INITIAL_STATE = {
@@ -17,7 +18,7 @@ function Dashboard({ currView }) {
     apptAt: "",
   };
   const { currProvider } = useContext(ProviderContext);
-  const [showApptModal, setShowApptModal] = useState(false);
+  const [showApptModal, setShowModal] = useState(false);
   const [currAppt, setCurrAppt] = useState(INITIAL_STATE);
   const [currDate, setCurrDate] = useState(new Date());
   const [reload, setReload] = useState(false);
@@ -41,7 +42,7 @@ function Dashboard({ currView }) {
   };
 
   const clearModal = () => {
-    setShowApptModal(false);
+    setShowModal(false);
     setCurrAppt(INITIAL_STATE);
   };
   const featured =
@@ -56,7 +57,7 @@ function Dashboard({ currView }) {
       <ApptsByDate
         generatePdf={generatePdf}
         getActivity={getActivity}
-        setShow={setShowApptModal}
+        setShow={setShowModal}
         setCurrAppt={setCurrAppt}
         currDate={currDate}
         setCurrDate={setCurrDate}
@@ -68,6 +69,7 @@ function Dashboard({ currView }) {
   return (
     <>
       <Grid item xs={12} md={8} lg={7}>
+        <SearchBar />
         {featured}
       </Grid>
       <Grid item xs={12} md={8} lg={5}>
@@ -77,6 +79,8 @@ function Dashboard({ currView }) {
           clearModal={clearModal}
           appt={currAppt}
           provider={currProvider}
+          currDate={currDate}
+          setReload={setReload}
         />
       </Grid>
     </>

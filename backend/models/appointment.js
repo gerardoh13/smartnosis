@@ -107,6 +107,32 @@ class Appointment {
 
     return appointments;
   }
+
+  static async delete(id) {
+    const result = await db.query(
+      `DELETE
+           FROM appointments
+           WHERE id = $1
+           RETURNING id`,
+      [id]
+    );
+    const appt = result.rows[0];
+
+    if (!appt) throw new NotFoundError(`No appointment: ${id}`);
+  }
+
+  static async search(query, providerId) {
+    console.log(query)
+    const result = await db.query(
+    `SELECT *
+    FROM appointments
+    WHERE first_name ILIKE $1 OR last_name ILIKE $1 AND provider_id = $2`,
+      [`%${query}%`, providerId]
+    );
+    const results = result.rows;
+
+    return results;
+  }
 }
 
 module.exports = Appointment;

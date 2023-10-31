@@ -17,6 +17,7 @@ import Nav from "react-bootstrap/Nav";
 import ProviderContext from "../common/ProviderContext";
 import QrCodeModal from "../common/QrCodeModal";
 import EventIcon from "@mui/icons-material/Event";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const drawerWidth = 200;
 
@@ -59,7 +60,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
             setShow={setShowQrModal}
             providerId={currProvider.id}
           />
-          <Drawer variant="permanent" open={open}>
+          <Drawer variant="permanent" open={open} sx={{zIndex: "1020"}}>
             <Toolbar
               sx={{
                 display: "flex",
@@ -94,6 +95,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
             </List>
             <Divider />
             <List>
+              {/* Link to Intake */}
               <ListItem disablePadding>
                 <Nav.Link
                   to={`/intake?provider=${currProvider.id}`}
@@ -102,17 +104,27 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
                   <ListItemIcon>
                     <FormatListNumberedIcon />
                   </ListItemIcon>
-                  <ListItemText primary={"Intake Form"} />
+                  <ListItemText primary="Intake Form" />
                 </Nav.Link>
               </ListItem>
+              {/* QR Code */}
               <ListItem disablePadding>
                 <ListItemButton onClick={() => setShowQrModal(true)}>
                   <ListItemIcon>
                     <QrCodeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={"QR Code"} />
+                  <ListItemText primary="QR Code" />
                 </ListItemButton>
               </ListItem>
+              {/* QR Code */}
+              {/* <ListItem disablePadding>
+                <ListItemButton onClick={() => setShowQrModal(true)}>
+                  <ListItemIcon>
+                    <RefreshIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Refresh" />
+                </ListItemButton>
+              </ListItem> */}
             </List>
           </Drawer>
         </>

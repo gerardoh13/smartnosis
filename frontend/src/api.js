@@ -21,24 +21,6 @@ class SmartnosisApi {
     }
   }
 
-  // Individual API routes
-
-  // static async generatePDF(data) {
-  //   let res = await axios.post(`${BASE_URL}/pdf`, data, {
-  //     responseType: "arraybuffer", // Treat response as binary data
-  //   });
-  //   return res;
-  // }
-  static async generatePDF(providerId, intakeId) {
-    let res = await axios.get(
-      `${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`,
-      {
-        responseType: "arraybuffer", // Treat response as binary data
-        headers: { Authorization: `Bearer ${SmartnosisApi.token}` },
-      }
-    );
-    return res;
-  }
   // ------------------PROVIDERS---------------------------
 
   static async registerProvider(data) {
@@ -61,6 +43,18 @@ class SmartnosisApi {
     return res;
   }
 
+  static async generatePDF(providerId, intakeId) {
+    let res = await axios.get(
+      `${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`,
+      {
+        responseType: "arraybuffer", // Treat response as binary data
+        headers: { Authorization: `Bearer ${SmartnosisApi.token}` },
+      }
+    );
+    return res;
+  }
+  // ------------------APPTS---------------------------
+
   static async addAppt(data) {
     let res = await this.request("appointments", data, "post");
     return res.appointment;
@@ -70,16 +64,36 @@ class SmartnosisApi {
     let res = await this.request("appointments", data, "patch");
     return res.appointment;
   }
-  
+
   static async getAppt(providerId, apptId) {
-    let res = await this.request(`appointments/${providerId}/${apptId}`);
-    return res.appt;
+    try {
+      let res = await this.request(`appointments/${providerId}/${apptId}`);
+      return res.appt;
+    } catch (e) {
+      console.log(e);
+      return e[0]
+    }
   }
 
   static async getByDate(providerId, start, end, type) {
-
     let res = await this.request(
       `${type}/by-date/${providerId}/${start}/${end}`
+    );
+    return res;
+  }
+
+  static async searchAppts(query, providerId) {
+    let res = await this.request(
+      `appointments/search/${providerId}?query=${query}`
+    );
+    return res.results;
+  }
+
+  static async deleteAppt(apptId, providerId) {
+    let res = await this.request(
+      `appointments/${apptId}/${providerId}`,
+      {},
+      "delete"
     );
     return res;
   }

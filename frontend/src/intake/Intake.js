@@ -53,6 +53,7 @@ function Intake() {
   const [apptAt, setApptAt] = useState("");
   const [providerName, setProviderName] = useState("");
   const [complete, setComplete] = useState(false);
+  const [apptCancelled, setApptCancelled] = useState(false);
 
   const navigate = useNavigate();
   let query = useQuery();
@@ -68,6 +69,10 @@ function Intake() {
     let queryAppt = query.get("appointment");
     async function getAppt() {
       let appt = await SmartnosisApi.getAppt(queryProvider, queryAppt);
+      if (typeof appt === "string") {
+        setApptCancelled(true);
+        return;
+      }
       setApptAt(appt.apptAt);
       setProviderName(appt.providerName);
       setComplete(appt.complete);
@@ -350,6 +355,11 @@ function Intake() {
               <p>
                 If you need to make changes, contact your health care provider.
               </p>
+            </div>
+          ) : apptCancelled ? (
+            <div className="text-center">
+              <p>This link has expired.</p>
+              <p>Please contact your health care provider.</p>
             </div>
           ) : (
             currStep

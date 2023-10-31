@@ -14,50 +14,6 @@ const { BadRequestError, UnauthorizedError } = require("../expressError");
 
 const router = new express.Router();
 
-// router.post("/email", async function (req, res, next) {
-//   try {
-//     const provider = { ...req.body.provider };
-//     delete req.body.provider;
-//     // const validator = jsonschema.validate(req.body, intakeNewSchema);
-//     // if (!validator.valid) {
-//     //   const errs = validator.errors.map((e) => e.stack);
-//     //   throw new BadRequestError(errs);
-//     // }
-//     let appointment;
-//     if (req.body.apptId) {
-//       const id = req.body.apptId;
-//       delete req.body.apptId;
-//       appointment = await Appointment.updateAppt(id, req.body);
-//     } else appointment = await Appointment.addAppt(req.body);
-//     await Email.sendIntake(provider, appointment);
-//     return res.status(201).json({ appointment });
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
-
-// router.post("/sms", async function (req, res, next) {
-//   try {
-//     const provider = { ...req.body.provider };
-//     delete req.body.provider;
-//     // const validator = jsonschema.validate(req.body, intakeNewSchema);
-//     // if (!validator.valid) {
-//     //   const errs = validator.errors.map((e) => e.stack);
-//     //   throw new BadRequestError(errs);
-//     // }
-//     let appointment;
-//     if (req.body.apptId) {
-//       const id = req.body.apptId;
-//       delete req.body.apptId;
-//       appointment = await Appointment.updateAppt(id, req.body);
-//     } else appointment = await Appointment.addAppt(req.body);
-//     await SMS.sendIntake(provider, appointment);
-//     return res.status(201).json({ appointment });
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
-
 async function emailIntake(provider, appointment) {
   await Email.sendIntake(provider, appointment);
 }
@@ -103,6 +59,32 @@ router.patch("/", async function (req, res, next) {
     return next(err);
   }
 });
+
+router.delete("/:apptId/:providerId", async function (req, res, next) {
+  const { apptId } = req.params;
+  try {
+    await Appointment.delete(apptId);
+    return res.status(200).json({ deleted: apptId });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get(
+  "/search/:providerId",
+  ensureCorrectProvider,
+  async function (req, res, next) {
+    const { providerId } = req.params;
+    const { query } = req.query;
+    console.log(providerId, query)
+    try {
+      const results = await Appointment.search(query, providerId);
+      return res.status(200).json({ results });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
 
 router.get("/:providerId/:apptId", async function (req, res, next) {
   const { apptId } = req.params;

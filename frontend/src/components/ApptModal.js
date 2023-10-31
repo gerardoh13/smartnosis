@@ -4,7 +4,7 @@ import SmartnosisApi from "../api";
 import { validatePhone, deleteNulls } from "../intake/commonFuncs";
 import IntakeSentToast from "../common/IntakeSentToast";
 
-function ApptModal({ show, clearModal, appt, provider }) {
+function ApptModal({ show, clearModal, appt, provider, setReload, currDate }) {
   const INITIAL_STATE = {
     apptId: "",
     firstName: "",
@@ -14,9 +14,12 @@ function ApptModal({ show, clearModal, appt, provider }) {
     apptAt: "",
   };
   const [editing, setEditing] = useState(false);
+  const [ogDate, setOgDate] = useState("");
+  const [deleting, setDeleting] = useState(false);
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [showToast, setShowToast] = useState(false);
   const [recipient, setRecipient] = useState({ name: "", sentTo: "" });
+  const [toastMsg, setToastMsg] = useState("");
 
   useEffect(() => {
     setFormData({
@@ -30,11 +33,19 @@ function ApptModal({ show, clearModal, appt, provider }) {
         .replace(" ", "T")
         .slice(0, -3),
     });
+    setOgDate(appt.apptAt)
   }, [appt, show]);
 
-  const dismiss = () => {
+  const dismissModal = () => {
     setEditing(false);
+    setDeleting(false);
     clearModal();
+  };
+
+  const reloadData = (epoch) => {
+    let date = new Date(epoch * 1000);
+    if (date.toLocaleDateString() === currDate.toLocaleDateString())
+      setReload(true);
   };
 
   const submit = async (type) => {
@@ -42,7 +53,7 @@ function ApptModal({ show, clearModal, appt, provider }) {
     data.provider = { id: provider.id, name: provider.name };
     data.apptAt = new Date(data.apptAt).getTime() / 1000;
     let newAppt;
-    if (type) data.sendTo = type
+    if (type) data.sendTo = type;
     if (type === "email") {
       data.email = data.email.toLowerCase();
       delete data.phone;
@@ -58,13 +69,29 @@ function ApptModal({ show, clearModal, appt, provider }) {
     newAppt = await SmartnosisApi.updateAppt(data);
     if (newAppt.id) {
       setFormData(INITIAL_STATE);
+      handleToasts(newAppt, type);
+      dismissModal();
+      reloadData(ogDate);
+    }
+  };
+
+  const deleteAppt = async () => {
+    await SmartnosisApi.deleteAppt(formData.apptId);
+    setToastMsg(`Deleted appointment for ${formData.firstName}`);
+    setFormData(INITIAL_STATE);
+    setShowToast(true);
+    dismissModal();
+    reloadData(appt.apptAt);
+  };
+
+  const handleToasts = (appt, type) => {
+    if (type)
       setRecipient({
         name: appt.firstName,
-        sentTo: type === "email" ? data.email : data.phone,
+        sentTo: type === "email" ? appt.email : appt.phone,
       });
-      setShowToast(true);
-      dismiss();
-    }
+    else setToastMsg(`Updated appointment for ${appt.firstName}`);
+    setShowToast(true);
   };
 
   const handleKeydown = (e) => {
@@ -115,6 +142,8 @@ function ApptModal({ show, clearModal, appt, provider }) {
         setShow={setShowToast}
         recipient={recipient}
         setRecipient={setRecipient}
+        msg={toastMsg}
+        setMsg={setToastMsg}
       />
       <Modal show={show} centered>
         <Modal.Header>
@@ -124,11 +153,11 @@ function ApptModal({ show, clearModal, appt, provider }) {
           <button
             className="btn-close"
             aria-label="Close"
-            onClick={dismiss}
+            onClick={dismissModal}
           ></button>
         </Modal.Header>
         <Modal.Body className="text-center">
-          {editing ? (
+          {editing && !deleting ? (
             <form
               className="text-start"
               onSubmit={(e) => {
@@ -189,16 +218,37 @@ function ApptModal({ show, clearModal, appt, provider }) {
                   </button>
                 </div>
                 <div className="col">
-                  <button
-                    className="btn btn-success form-control"
-                    onClick={() => setEditing(true)}
-                  >
+                  <button className="btn btn-success form-control">
                     Save Changes
                   </button>
                 </div>
               </div>
             </form>
-          ) : (
+          ) : !editing && deleting ? (
+            <>
+              <p>Are you sure you want to cancel this appointment?</p>
+              <p>Access to this intake form link will be disabled.</p>
+              <div className="my-3 row">
+                <div className="col">
+                  <button
+                    type="button"
+                    className="btn btn-secondary form-control"
+                    onClick={() => setDeleting(false)}
+                  >
+                    Go Back
+                  </button>
+                </div>
+                <div className="col">
+                  <button
+                    className="btn btn-danger form-control"
+                    onClick={deleteAppt}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : !editing && !deleting ? (
             <>
               <div className="row">
                 <div className="col-8 text-start text-nowrap">
@@ -263,11 +313,14 @@ function ApptModal({ show, clearModal, appt, provider }) {
                   <i className="bi bi-send ms-2"></i>
                 </button>
               </div>
-              <button className="btn btn-danger my-3">
+              <button
+                className="btn btn-danger my-3"
+                onClick={() => setDeleting(true)}
+              >
                 Cancel Appointment
               </button>
             </>
-          )}
+          ) : null}
         </Modal.Body>
       </Modal>
     </>

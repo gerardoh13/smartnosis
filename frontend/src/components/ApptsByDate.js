@@ -11,15 +11,16 @@ function ApptsByDate({
   setCurrDate,
   getActivity,
   reload,
-  setReload
+  setReload,
 }) {
   const [appts, setAppts] = useState([]);
   const { currProvider } = useContext(ProviderContext);
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("fetching appts");
       setAppts(await getActivity("appointments"));
-      if (reload) setReload(false)
+      if (reload) setReload(false);
     };
     fetchData();
   }, [currProvider, currDate, getActivity, reload, setReload]);
@@ -56,39 +57,31 @@ function ApptsByDate({
 
   return (
     <div className="card">
-      <div className="row my-4">
-        <div className="col-3">
-          <p className="card-title ms-2 text-center">Appointments</p>
-        </div>
-        <div className="col-8 m-auto">
-          <div className="input-group">
-            <span className="input-group-text">
-              <i className="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search Intakes.."
-            />
-            <button className="btn btn-danger input-group-text">
-              <i className="bi bi-x"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+            <h3 className="card-title ms-3 my-3">Appointments</h3>
       <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
-      <table className="table table-striped bg-light">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Time</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>{createRows(appts)}</tbody>
-      </table>
+      <hr />
+      {appts.length ? (
+        <table className="table table-striped bg-light">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Time</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>{createRows(appts)}</tbody>
+        </table>
+      ) : (
+        <p className="text-center">Scheduled appointments will appear here</p>
+      )}
     </div>
   );
 }
 
-export default ApptsByDate;
+export default React.memo(ApptsByDate, (prevProps, nextProps) => {
+  return (
+    prevProps.setCurrAppt === nextProps.setCurrAppt &&
+    prevProps.reload === nextProps.reload &&
+    prevProps.currDate === nextProps.currDate
+  );
+});
