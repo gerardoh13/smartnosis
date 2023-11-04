@@ -14,6 +14,8 @@ function Login({ login }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
+    let data = { ...formData };
+    data.email = data.email.toLowerCase();
     let response = await login(formData);
     if (response.valid) {
       setFormData(INITIAL_STATE);
@@ -29,8 +31,7 @@ function Login({ login }) {
   };
 
   return (
-    // <div className="card col-lg-4 col-md-5 col-sm-6 col-11 my-auto">
-          <div className="card col-8 m-auto">
+    <div className="card col-8 m-auto">
       <img
         src="smartnosis-logo.jpg"
         className="rounded mx-auto w60 mt-2"

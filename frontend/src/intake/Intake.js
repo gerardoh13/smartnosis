@@ -12,7 +12,7 @@ import ProviderContext from "../common/ProviderContext";
 import Grid from "@mui/material/Grid";
 import { deleteNulls } from "./commonFuncs";
 
-function Intake() {
+function Intake({ setCurrView }) {
   const INITIAL_STATE = {
     providerId: "",
     firstName: "",
@@ -67,6 +67,7 @@ function Intake() {
   useEffect(() => {
     let queryProvider = query.get("provider");
     let queryAppt = query.get("appointment");
+    if (!queryProvider && !currProvider) navigate("/404");
     async function getAppt() {
       let appt = await SmartnosisApi.getAppt(queryProvider, queryAppt);
       if (typeof appt === "string") {
@@ -90,12 +91,12 @@ function Intake() {
     }
     setFormData((data) => ({
       ...data,
-      providerId: queryProvider,
+      providerId: currProvider ? currProvider.id : queryProvider,
     }));
     if (queryAppt) {
       getAppt();
     }
-  }, [query]);
+  }, [query, currProvider, navigate]);
 
   useEffect(() => {
     if (insuranceData.insRelationship === "Self") {
@@ -113,7 +114,7 @@ function Intake() {
         insDob: "",
       }));
     }
-  }, [insuranceData.insRelationship]);
+  }, [insuranceData.insRelationship, formData]);
 
   const changeStep = (n) => {
     setStep((prev) => prev + n);
@@ -157,7 +158,7 @@ function Intake() {
   const submit = async () => {
     let formattedData = formatData();
     await SmartnosisApi.addIntake(formattedData);
-    if (currProvider) navigate("/");
+    if (currProvider) setCurrView("Intakes");
     else changeStep(1);
   };
 

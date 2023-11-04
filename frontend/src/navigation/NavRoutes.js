@@ -9,7 +9,7 @@ import ResetPwd from "../components/ResetPwd";
 import PublicRoutes from "./PublicRoutes";
 import ProviderContext from "../common/ProviderContext";
 
-function NavRoutes({ login, register, currView }) {
+function NavRoutes({ login, register, currView, setCurrView }) {
   const { currProvider } = useContext(ProviderContext);
 
   return (
@@ -18,7 +18,11 @@ function NavRoutes({ login, register, currView }) {
         exact
         path="/"
         element={
-          currProvider ? <Dashboard currView={currView} /> : <Login login={login} />
+          currProvider ? (
+            <Dashboard currView={currView} setCurrView={setCurrView} />
+          ) : (
+            <Login login={login} />
+          )
         }
       />
       <Route path="/intake" element={<Intake />} />

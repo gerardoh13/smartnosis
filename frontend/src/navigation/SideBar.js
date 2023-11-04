@@ -13,11 +13,11 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import IconButton from "@mui/material/IconButton";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
-import Nav from "react-bootstrap/Nav";
+// import Nav from "react-bootstrap/Nav";
 import ProviderContext from "../common/ProviderContext";
 import QrCodeModal from "../common/QrCodeModal";
 import EventIcon from "@mui/icons-material/Event";
-import RefreshIcon from "@mui/icons-material/Refresh";
+// import RefreshIcon from "@mui/icons-material/Refresh";
 
 const drawerWidth = 200;
 
@@ -60,7 +60,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
             setShow={setShowQrModal}
             providerId={currProvider.id}
           />
-          <Drawer variant="permanent" open={open} sx={{zIndex: "1020"}}>
+          <Drawer variant="permanent" open={open} sx={{ zIndex: "1020" }}>
             <Toolbar
               sx={{
                 display: "flex",
@@ -76,14 +76,16 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
             </Toolbar>
             <Divider />
             <List>
+              {/* toggle appointment view */}
               <ListItem disablePadding>
-                <ListItemButton onClick={() => setCurrView("Appointments")}>
+                <ListItemButton onClick={() => setCurrView("Appts")}>
                   <ListItemIcon>
                     <EventIcon />
                   </ListItemIcon>
                   <ListItemText primary={"Appointments"} />
                 </ListItemButton>
               </ListItem>
+              {/* toggle intake view */}
               <ListItem disablePadding>
                 <ListItemButton onClick={() => setCurrView("Intakes")}>
                   <ListItemIcon>
@@ -95,17 +97,14 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
             </List>
             <Divider />
             <List>
-              {/* Link to Intake */}
+              {/* toggle intake */}
               <ListItem disablePadding>
-                <Nav.Link
-                  to={`/intake?provider=${currProvider.id}`}
-                  as={ListItemButton}
-                >
+                <ListItemButton onClick={() => setCurrView("Form")}>
                   <ListItemIcon>
                     <FormatListNumberedIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Intake Form" />
-                </Nav.Link>
+                  <ListItemText primary={"Intake Form"} />
+                </ListItemButton>
               </ListItem>
               {/* QR Code */}
               <ListItem disablePadding>

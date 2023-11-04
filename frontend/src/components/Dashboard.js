@@ -8,8 +8,9 @@ import ApptsByDate from "./ApptsByDate";
 import ProviderContext from "../common/ProviderContext";
 import { getMidnights } from "../intake/commonFuncs";
 import SearchBar from "../common/SearchBar";
+import Intake from "../intake/Intake";
 
-function Dashboard({ currView }) {
+function Dashboard({ currView, setCurrView }) {
   const INITIAL_STATE = {
     firstName: "",
     lastName: "",
@@ -53,7 +54,7 @@ function Dashboard({ currView }) {
         currDate={currDate}
         setCurrDate={setCurrDate}
       />
-    ) : (
+    ) : currView === "Appts" ? (
       <ApptsByDate
         generatePdf={generatePdf}
         getActivity={getActivity}
@@ -64,25 +65,31 @@ function Dashboard({ currView }) {
         setReload={setReload}
         reload={reload}
       />
-    );
+    ) : null;
 
   return (
     <>
-      <Grid item xs={12} md={8} lg={7}>
-        <SearchBar />
-        {featured}
-      </Grid>
-      <Grid item xs={12} md={8} lg={5}>
-        <ScheduleForm currDate={currDate} setReload={setReload} />
-        <ApptModal
-          show={showApptModal}
-          clearModal={clearModal}
-          appt={currAppt}
-          provider={currProvider}
-          currDate={currDate}
-          setReload={setReload}
-        />
-      </Grid>
+      {currView === "Form" ? (
+        <Intake setCurrView={setCurrView}/>
+      ) : (
+        <>
+          <Grid item xs={12} md={8} lg={7}>
+            <SearchBar />
+            {featured}
+          </Grid>
+          <Grid item xs={12} md={8} lg={5}>
+            <ScheduleForm currDate={currDate} setReload={setReload} />
+            <ApptModal
+              show={showApptModal}
+              clearModal={clearModal}
+              appt={currAppt}
+              provider={currProvider}
+              currDate={currDate}
+              setReload={setReload}
+            />
+          </Grid>
+        </>
+      )}
     </>
   );
 }
