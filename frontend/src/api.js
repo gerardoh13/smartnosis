@@ -96,11 +96,11 @@ class SmartnosisApi {
     return res;
   }
 
-  static async searchAppts(query, providerId) {
+  static async search(query, providerId) {
     let res = await this.request(
-      `appointments/search/${providerId}?query=${query}`
+      `providers/search/${providerId}?query=${query}`
     );
-    return res.results;
+    return res;
   }
 
   static async deleteAppt(apptId, providerId) {

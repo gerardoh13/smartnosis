@@ -135,6 +135,23 @@ class Intake {
     return intake;
   }
 
+  static async search(query, providerId) {
+    const result = await db.query(
+    `SELECT id,
+              first_name AS "firstName",
+              middle_name AS "middleName",
+              last_name AS "lastName",
+              submitted_at AS "submittedAt",
+              dob
+      FROM intakes 
+    WHERE first_name ILIKE $1 OR last_name ILIKE $1 AND provider_id = $2`,
+      [`%${query}%`, providerId]
+    );
+    const intakes = result.rows;
+
+    return intakes;
+  }
+
   // static async update(id, data) {
   //   const { setCols, values } = sqlForPartialUpdate(data, {
   //     firstName: "first_name",

@@ -122,16 +122,22 @@ class Appointment {
   }
 
   static async search(query, providerId) {
-    console.log(query)
     const result = await db.query(
-    `SELECT *
+    `SELECT id,
+            first_name AS "firstName",
+            last_name AS "lastName",
+            appt_at AS "apptAt",
+            complete,
+            intake_id AS "intakeId",
+            email,
+            phone
     FROM appointments
     WHERE first_name ILIKE $1 OR last_name ILIKE $1 AND provider_id = $2`,
       [`%${query}%`, providerId]
     );
-    const results = result.rows;
+    const appointments = result.rows;
 
-    return results;
+    return appointments;
   }
 }
 

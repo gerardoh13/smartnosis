@@ -9,6 +9,7 @@ import ProviderContext from "../common/ProviderContext";
 import { getMidnights } from "../intake/commonFuncs";
 import SearchBar from "../common/SearchBar";
 import Intake from "../intake/Intake";
+import Results from "./Results";
 
 function Dashboard({ currView, setCurrView }) {
   const INITIAL_STATE = {
@@ -23,7 +24,7 @@ function Dashboard({ currView, setCurrView }) {
   const [currAppt, setCurrAppt] = useState(INITIAL_STATE);
   const [currDate, setCurrDate] = useState(new Date());
   const [reload, setReload] = useState(false);
-
+  
   const generatePdf = async (intakeId) => {
     let res = await SmartnosisApi.generatePDF(currProvider.id, intakeId);
     const blob = new Blob([res.data], { type: "application/pdf" });
@@ -65,16 +66,18 @@ function Dashboard({ currView, setCurrView }) {
         setReload={setReload}
         reload={reload}
       />
+    ) : currView === "Results" ? (
+      <Results />
     ) : null;
 
   return (
     <>
       {currView === "Form" ? (
-        <Intake setCurrView={setCurrView}/>
+        <Intake setCurrView={setCurrView} />
       ) : (
         <>
           <Grid item xs={12} md={8} lg={7}>
-            <SearchBar />
+            <SearchBar setCurrView={setCurrView} />
             {featured}
           </Grid>
           <Grid item xs={12} md={8} lg={5}>

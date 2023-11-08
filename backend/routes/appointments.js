@@ -70,22 +70,6 @@ router.delete("/:apptId/:providerId", async function (req, res, next) {
   }
 });
 
-router.get(
-  "/search/:providerId",
-  ensureCorrectProvider,
-  async function (req, res, next) {
-    const { providerId } = req.params;
-    const { query } = req.query;
-    console.log(providerId, query)
-    try {
-      const results = await Appointment.search(query, providerId);
-      return res.status(200).json({ results });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-
 router.get("/:providerId/:apptId", async function (req, res, next) {
   const { apptId } = req.params;
   try {

@@ -2,24 +2,60 @@ import React, { useState, useContext } from "react";
 import SmartnosisApi from "../api";
 import ProviderContext from "./ProviderContext";
 
-function SearchBar() {
+function SearchBar({ setCurrView }) {
   const { currProvider } = useContext(ProviderContext);
 
   const [query, setQuery] = useState("");
 
   const search = async (e) => {
     e.preventDefault();
-    const res = await SmartnosisApi.searchAppts(query, currProvider.id);
+    const res = await SmartnosisApi.search(query, currProvider.id);
+    setCurrView("Results");
     console.log(res);
   };
   return (
     <div className="card mb-3">
+      <div className="card-body">
       <form onSubmit={search}>
-        <div className="row my-4">
-          <div className="col-3">
-            <p className="card-title ms-2 text-center">Search</p>
+        <div className="row my-1">
+          <div className="col-4">
+              <input
+                type="radio"
+                className="btn-check method"
+                name="method"
+                id="emailRadioBtn"
+                value="email"
+                // checked={sendBy === "email"}
+                // onChange={(e) => setSendBy(e.target.value)}
+              />
+              <label
+                className="btn btn-outline-secondary radioLabel me-2"
+                htmlFor="emailRadioBtn"
+              >
+                <small>
+                Intakes
+                </small>
+              </label>
+
+              <input
+                type="radio"
+                className="btn-check method"
+                name="method"
+                id="smsRadioBtn"
+                value="sms"
+                // checked={sendBy === "sms"}
+                // onChange={(e) => setSendBy(e.target.value)}
+              />
+              <label
+                className="btn btn-outline-secondary radioLabel"
+                htmlFor="smsRadioBtn"
+              >
+                <small>
+                  Appointments
+                </small>
+              </label>
           </div>
-          <div className="col-8 m-auto">
+          <div className="col-8">
             <div className="input-group">
               <input
                 type="text"
@@ -31,7 +67,7 @@ function SearchBar() {
               />
               <button
                 className="btn btn-info input-group-text"
-                // disabled={!query}
+                disabled={!query}
               >
                 <i className="bi bi-search"></i>
               </button>
@@ -39,6 +75,8 @@ function SearchBar() {
           </div>
         </div>
       </form>
+      </div>
+      
     </div>
   );
 }
