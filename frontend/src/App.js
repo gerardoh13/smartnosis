@@ -30,9 +30,10 @@ function App() {
     async function getCurrProvider() {
       if (token) {
         try {
-          let { email } = decodeToken(token);
+          let { email, id } = decodeToken(token);
+          console.log(email, id)
           SmartnosisApi.token = token;
-          let provider = await SmartnosisApi.getCurrProvider(email);
+          let provider = await SmartnosisApi.getCurrProvider(id);
           setCurrProvider(provider);
         } catch (err) {
           console.log(err);

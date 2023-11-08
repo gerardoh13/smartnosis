@@ -33,8 +33,8 @@ class SmartnosisApi {
     return res.token;
   }
 
-  static async getCurrProvider(email) {
-    let res = await this.request(`providers/${email}`);
+  static async getCurrProvider(id) {
+    let res = await this.request(`providers/${id}`);
     return res.provider;
   }
 

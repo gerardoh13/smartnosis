@@ -59,8 +59,8 @@ router.get(
   async function (req, res, next) {
     const { providerId, start, end } = req.params;
     try {
-      const intakes = await Intake.getByDate(providerId, start, end);
-      return res.json({ intakes });
+      const data = await Intake.getByDate(providerId, start, end);
+      return res.json({ data });
     } catch (err) {
       return next(err);
     }

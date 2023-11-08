@@ -47,19 +47,6 @@ function ensureLoggedIn(req, res, next) {
  *  If not, raises Unauthorized.
  */
 
-function ensureCorrectUser(req, res, next) {
-  try {
-    const user = res.locals.user;
-    if (!(user && user.email === req.params.email)) {
-      throw new UnauthorizedError();
-    }
-    return next();
-  } catch (err) {
-    console.log("ERR", err);
-    return next(err);
-  }
-}
-
 function ensureCorrectProvider(req, res, next) {
   try {
     const user = res.locals.user;
@@ -76,6 +63,5 @@ function ensureCorrectProvider(req, res, next) {
 module.exports = {
   authenticateJWT,
   ensureLoggedIn,
-  ensureCorrectUser,
   ensureCorrectProvider,
 };

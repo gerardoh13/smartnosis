@@ -31,14 +31,14 @@ function ApptsByDate({
   };
   const createRows = (arr) => {
     return arr.map((p) => (
-      <tr key={p.id}>
+      <tr key={p.id} className="align-middle">
+        <td>{`${p.lastName}, ${p.firstName}`}</td>
         <td>
-          <span>{`${p.lastName}, ${p.firstName}`}</span>
           <button className="btn btn-light ms-2" onClick={() => handleClick(p)}>
             <i className="bi bi-three-dots-vertical"></i>
           </button>
         </td>
-        <td className="align-middle">{formatTime(p.apptAt)}</td>
+        <td>{formatTime(p.apptAt)}</td>
         {p.complete ? (
           <td>
             <button
@@ -49,7 +49,7 @@ function ApptsByDate({
             </button>
           </td>
         ) : (
-          <td className="text-danger align-middle">Incomplete</td>
+          <td className="text-danger">Incomplete</td>
         )}
       </tr>
     ));
@@ -57,7 +57,8 @@ function ApptsByDate({
 
   return (
     <div className="card">
-            <h3 className="card-title ms-3 my-3">Appointments</h3>
+      <div className="card-body">
+      <h3 className="card-title mb-3">Appointments</h3>
       <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
       <hr />
       {appts.length ? (
@@ -65,6 +66,7 @@ function ApptsByDate({
           <thead>
             <tr>
               <th scope="col">Name</th>
+              <th />
               <th scope="col">Time</th>
               <th />
             </tr>
@@ -74,6 +76,7 @@ function ApptsByDate({
       ) : (
         <p className="text-center">Scheduled appointments will appear here</p>
       )}
+    </div>
     </div>
   );
 }

@@ -137,7 +137,7 @@ class Provider {
    * Throws NotFoundError if providers not found.
    **/
 
-  static async get(email) {
+  static async get(id) {
     const providerRes = await db.query(
       `SELECT id,
               name,
@@ -150,13 +150,13 @@ class Provider {
               state,
               zip
         FROM providers
-        WHERE email = $1`,
-      [email]
+        WHERE id = $1`,
+      [id]
     );
 
     const provider = providerRes.rows[0];
 
-    if (!provider) throw new NotFoundError(`No provider: ${email}`);
+    if (!provider) throw new NotFoundError(`No provider: ${id}`);
 
     return provider;
   }

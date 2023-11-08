@@ -16,7 +16,7 @@ function IntakesByDate({ generatePdf, getActivity, currDate, setCurrDate }) {
 
   const createRows = (arr) => {
     return arr.map((p) => (
-      <tr key={p.id}>
+      <tr key={p.id} className="align-middle">
         <td>{`${p.lastName}, ${p.middleName ? p.middleName[0] + "." : ""} ${
           p.firstName
         }`}</td>
@@ -33,26 +33,26 @@ function IntakesByDate({ generatePdf, getActivity, currDate, setCurrDate }) {
 
   return (
     <div className="card">
-      <h3 className="card-title ms-3 my-3">Intakes</h3>
-      <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
-      <hr />
-      {intakes.length ? (
-        <table className="table table-striped bg-light text-center">
-          <thead>
-            <tr>
-              <th scope="col" className="text-start">
-                Name
-              </th>
-              <th scope="col">Date of Birth</th>
-              <th scope="col">Time Submitted</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>{createRows(intakes)}</tbody>
-        </table>
-      ) : (
-        <p className="text-center">Completed intakes will appear here</p>
-      )}
+      <div className="card-body">
+        <h3 className="card-title mb-3">Intakes</h3>
+        <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
+        <hr />
+        {intakes.length ? (
+          <table className="table table-striped bg-light">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Submitted</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>{createRows(intakes)}</tbody>
+          </table>
+        ) : (
+          <p className="text-center">Completed intakes will appear here</p>
+        )}
+      </div>
     </div>
   );
 }

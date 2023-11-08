@@ -7,7 +7,7 @@ const jsonschema = require("jsonschema");
 const Provider = require("../models/provider");
 const Email = require("../models/email");
 const express = require("express");
-const { ensureCorrectProvider, ensureCorrectUser } = require("../middleware/auth");
+const { ensureCorrectProvider } = require("../middleware/auth");
 const { createToken, createPwdResetToken } = require("../helpers/tokens");
 const providerAuthSchema = require("../schemas/providerAuth.json");
 const providerNewSchema = require("../schemas/providerNew.json");
@@ -101,12 +101,11 @@ router.get(
   async function (req, res, next) {
     const { providerId } = req.params;
     const { query } = req.query;
-    console.log(providerId, query);
     try {
-      let result = {};
-      result.appts = await Appointment.search(query, providerId);
-      result.intakes = await Intake.search(query, providerId);
-      return res.status(200).json({ result });
+      let data = {};
+      data.appts = await Appointment.search(query, providerId);
+      data.intakes = await Intake.search(query, providerId);
+      return res.status(200).json({ data });
     } catch (err) {
       return next(err);
     }
@@ -115,15 +114,14 @@ router.get(
 
 /** GET /[email] => { provider }
  *
- * Returns { id, email, firstName, infants }
- *   where infants is {  }
+ * Returns { id, email, firstName }
  *
  * Authorization required: same provider-as-:email
  **/
 
-router.get("/:email", ensureCorrectProvider, async function (req, res, next) {
+router.get("/:providerId", ensureCorrectProvider, async function (req, res, next) {
   try {
-    const provider = await Provider.get(req.params.email);
+    const provider = await Provider.get(req.params.providerId);
     return res.json({ provider });
   } catch (err) {
     return next(err);

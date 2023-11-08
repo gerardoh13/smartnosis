@@ -24,7 +24,10 @@ function Dashboard({ currView, setCurrView }) {
   const [currAppt, setCurrAppt] = useState(INITIAL_STATE);
   const [currDate, setCurrDate] = useState(new Date());
   const [reload, setReload] = useState(false);
-  
+  const [searchRes, setSearchRes] = useState({});
+  const [query, setQuery] = useState("");
+  const [lastView, setLastView] = useState("");
+
   const generatePdf = async (intakeId) => {
     let res = await SmartnosisApi.generatePDF(currProvider.id, intakeId);
     const blob = new Blob([res.data], { type: "application/pdf" });
@@ -40,7 +43,7 @@ function Dashboard({ currView, setCurrView }) {
       nextMidnight,
       type
     );
-    return res.intakes;
+    return res.data;
   };
 
   const clearModal = () => {
@@ -67,7 +70,15 @@ function Dashboard({ currView, setCurrView }) {
         reload={reload}
       />
     ) : currView === "Results" ? (
-      <Results />
+      <Results
+        searchRes={searchRes}
+        generatePdf={generatePdf}
+        setShow={setShowModal}
+        setCurrAppt={setCurrAppt}
+        setCurrView={setCurrView}
+        setQuery={setQuery}
+        lastView={lastView}
+      />
     ) : null;
 
   return (
@@ -77,7 +88,14 @@ function Dashboard({ currView, setCurrView }) {
       ) : (
         <>
           <Grid item xs={12} md={8} lg={7}>
-            <SearchBar setCurrView={setCurrView} />
+            <SearchBar
+              setCurrView={setCurrView}
+              setSearchRes={setSearchRes}
+              query={query}
+              setQuery={setQuery}
+              setLastView={setLastView}
+              currView={currView}
+            />
             {featured}
           </Grid>
           <Grid item xs={12} md={8} lg={5}>
