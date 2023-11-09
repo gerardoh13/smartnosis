@@ -87,7 +87,7 @@ function Dashboard({ currView, setCurrView }) {
         <Intake setCurrView={setCurrView} />
       ) : (
         <>
-          <Grid item xs={12} md={8} lg={7}>
+          <Grid item xs={12} md={8} lg={7} >
             <SearchBar
               setCurrView={setCurrView}
               setSearchRes={setSearchRes}

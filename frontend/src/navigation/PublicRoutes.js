@@ -3,9 +3,8 @@ import ProviderContext from "../common/ProviderContext";
 import { Outlet, Navigate } from "react-router-dom";
 
 function PublicRoutes() {
-  const { currProver } = useContext(ProviderContext);
-
-  if (currProver) {
+  const { currProvider } = useContext(ProviderContext);
+  if (currProvider) {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;

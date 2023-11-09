@@ -22,17 +22,21 @@ function Results({
   const createApptRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id} className="align-middle">
-        <td>{`${p.lastName}, ${p.firstName}`}</td>
+        <td className="small">{`${p.lastName}, ${p.firstName}`}</td>
         <td>
-          <button className="btn btn-light ms-2" onClick={() => handleClick(p)}>
+          <button className="btn btn-light ms-2 btn-sm" onClick={() => handleClick(p)}>
             <i className="bi bi-three-dots-vertical"></i>
           </button>
         </td>
-        <td>{formatTime(p.apptAt)}</td>
+        <td className="small">
+          <small>{new Date(p.apptAt * 1000).toLocaleDateString()}</small>
+          <br />
+          <small>{formatTime(p.apptAt)}</small>
+        </td>
         {p.complete ? (
           <td>
             <button
-              className="btn btn-success"
+              className="btn btn-success btn-sm"
               onClick={() => generatePdf(p.intakeId)}
             >
               PDF
@@ -48,13 +52,17 @@ function Results({
   const createIntakeRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id} className="align-middle">
-        <td>{`${p.lastName}, ${p.middleName ? p.middleName[0] + "." : ""} ${
+        <td className="small">{`${p.lastName}, ${p.middleName ? p.middleName[0] + "." : ""} ${
           p.firstName
         }`}</td>
-        <td>{p.dob}</td>
-        <td>{formatTime(p.submittedAt)}</td>
+        <td className="small">{p.dob}</td>
+        <td className="small">
+          <small>{new Date(p.submittedAt * 1000).toLocaleDateString()}</small>
+          <br />
+          <small>{formatTime(p.submittedAt)}</small>
+        </td>
         <td>
-          <button className="btn btn-success" onClick={() => generatePdf(p.id)}>
+          <button className="btn btn-success btn-sm" onClick={() => generatePdf(p.id)}>
             PDF
           </button>
         </td>
@@ -71,7 +79,7 @@ function Results({
             <thead>
               <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Date of Birth</th>
+                <th scope="col">DOB</th>
                 <th scope="col">Submitted</th>
                 <th />
               </tr>
@@ -89,7 +97,7 @@ function Results({
               <tr>
                 <th scope="col">Name</th>
                 <th />
-                <th scope="col">Time</th>
+                <th scope="col">Date/Time</th>
                 <th />
               </tr>
             </thead>

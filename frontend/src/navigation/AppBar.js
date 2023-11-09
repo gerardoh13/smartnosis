@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 const drawerWidth = 200;
 
 const AppBar = styled(MuiAppBar, {
@@ -74,7 +74,6 @@ function ResponsiveAppBar({ toggleDrawer, open, logout, orgName }) {
             display: { xs: "flex", md: "flex" },
             fontFamily: "monospace",
             fontWeight: 700,
-            //   letterSpacing: ".3rem",
             color: "inherit",
             textDecoration: "none",
           }}

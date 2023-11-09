@@ -8,14 +8,14 @@ function SearchBar({
   query,
   setQuery,
   setLastView,
-  currView
+  currView,
 }) {
   const { currProvider } = useContext(ProviderContext);
 
   const search = async (e) => {
     e.preventDefault();
     const res = await SmartnosisApi.search(query, currProvider.id);
-    setLastView(currView);
+    if (currView !== "Results") setLastView(currView);
     setCurrView("Results");
     setSearchRes(res.data);
   };

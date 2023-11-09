@@ -30,8 +30,7 @@ function App() {
     async function getCurrProvider() {
       if (token) {
         try {
-          let { email, id } = decodeToken(token);
-          console.log(email, id)
+          let { id } = decodeToken(token);
           SmartnosisApi.token = token;
           let provider = await SmartnosisApi.getCurrProvider(id);
           setCurrProvider(provider);
@@ -99,27 +98,35 @@ function App() {
 
             <Box
               component="main"
-              sx={{
-                backgroundColor: (theme) =>
-                  theme.palette.mode === "light"
-                    ? theme.palette.grey[100]
-                    : theme.palette.grey[900],
-                flexGrow: 1,
-                minHeight: "100vh",
-                overflow: "auto",
-              }}
+              sx={[
+                {
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === "light"
+                      ? theme.palette.grey[100]
+                      : theme.palette.grey[900],
+                  flexGrow: 1,
+                  minHeight: "100vh",
+                  overflow: "auto",
+                },
+                !currProvider && {
+                  display: "flex",
+                  justifyContent: "center", // Center vertically
+                  flexDirection: "column",
+                },
+              ]}
             >
-              <Toolbar />
+              {currProvider ? <Toolbar /> : null}
               <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                <Grid
-                  container
-                  spacing={3}
-                  justifyContent="center"
-                >
+                <Grid container spacing={3} justifyContent="center">
                   {loading ? (
                     <Spinner />
                   ) : (
-                    <NavRoutes register={register} login={login} currView={currView} setCurrView={setCurrView}/>
+                    <NavRoutes
+                      register={register}
+                      login={login}
+                      currView={currView}
+                      setCurrView={setCurrView}
+                    />
                   )}
                 </Grid>
                 <Footer sx={{ pt: 4 }} />

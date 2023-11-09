@@ -26,14 +26,16 @@ function NavRoutes({ login, register, currView, setCurrView }) {
         }
       />
       <Route path="/intake" element={<Intake />} />
-      <Route
+
+      <Route element={<PublicRoutes />}>
+        <Route exact path="/reset" element={<ResetPwd />} />
+        <Route
         exact
         path="/register"
         element={<Register register={register} />}
       />
-      <Route element={<PublicRoutes />}>
-        <Route exact path="/reset" element={<ResetPwd />} />
       </Route>
+
       {/* <Route element={<PrivateRoutes />}>
         <Route exact path="/calendar" element={<Calendar />} />
       </Route> */}

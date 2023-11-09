@@ -117,7 +117,7 @@ function ScheduleForm({ currDate, setReload }) {
           <h5 className="card-title">Send Intake Form</h5>
           <form id="sendIntakeForm" onSubmit={(e) => e.preventDefault()}>
             <div className="row my-3">
-              <div className="col-4">Appointment:</div>
+              <div className="col-4">Date/Time:</div>
               <div className="col-8">
                 <input
                   type="datetime-local"

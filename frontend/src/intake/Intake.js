@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import ProviderContext from "../common/ProviderContext";
 import Grid from "@mui/material/Grid";
 import { deleteNulls } from "./commonFuncs";
+import DisclaimerModal from "../components/DisclaimerModal";
 
 function Intake({ setCurrView }) {
   const INITIAL_STATE = {
@@ -54,20 +55,21 @@ function Intake({ setCurrView }) {
   const [providerName, setProviderName] = useState("");
   const [complete, setComplete] = useState(false);
   const [apptCancelled, setApptCancelled] = useState(false);
+  const [agreeDisclaimer, setAgreeDisclaimer] = useState(false);
 
   const navigate = useNavigate();
   let query = useQuery();
   const { currProvider } = useContext(ProviderContext);
 
   useEffect(() => {
-    let max = new Date().toISOString().slice(0, -14);
-    setMaxDate(max);
-  }, [setMaxDate]);
-
-  useEffect(() => {
     let queryProvider = query.get("provider");
     let queryAppt = query.get("appointment");
     if (!queryProvider && !currProvider) navigate("/404");
+    if (queryProvider && currProvider) navigate("/");
+    if (!queryProvider && currProvider) setAgreeDisclaimer(true);
+
+    let max = new Date().toISOString().slice(0, -14);
+    setMaxDate(max);
     async function getAppt() {
       let appt = await SmartnosisApi.getAppt(queryProvider, queryAppt);
       if (typeof appt === "string") {
@@ -93,10 +95,11 @@ function Intake({ setCurrView }) {
       ...data,
       providerId: currProvider ? currProvider.id : queryProvider,
     }));
+
     if (queryAppt) {
       getAppt();
     }
-  }, [query, currProvider, navigate]);
+  }, [query, currProvider, navigate, setMaxDate]);
 
   useEffect(() => {
     if (insuranceData.insRelationship === "Self") {
@@ -321,8 +324,8 @@ function Intake({ setCurrView }) {
     default:
   }
 
-  return (
-    <Grid item xs={12} md={8} lg={10}>
+  const content = (
+    <>
       <div className="card">
         <img
           src="smartnosis-logo.jpg"
@@ -396,6 +399,16 @@ function Intake({ setCurrView }) {
         </div>
       </div>
       <br />
+    </>
+  );
+
+  return (
+    <Grid item xs={12} md={8} lg={10}>
+      <DisclaimerModal
+        show={!agreeDisclaimer}
+        setAgreeDisclaimer={setAgreeDisclaimer}
+      />
+      {agreeDisclaimer ? content : null}
     </Grid>
   );
 }
