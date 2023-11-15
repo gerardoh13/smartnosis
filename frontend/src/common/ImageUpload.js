@@ -40,11 +40,9 @@ function ImageUpload({ uploadSuccess, setUrl, formKey }) {
   };
 
   return (
-    <>
-      <button className="btn btn-primary" type="button" onClick={openWidget}>
-        Upload
-      </button>
-    </>
+    <button className="btn btn-primary" type="button" onClick={openWidget}>
+      Upload
+    </button>
   );
 }
 

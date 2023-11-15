@@ -112,6 +112,7 @@ function App() {
                   display: "flex",
                   justifyContent: "center", // Center vertically
                   flexDirection: "column",
+                  backgroundImage: "url(smartnosisbg.jpg)",
                 },
               ]}
             >
