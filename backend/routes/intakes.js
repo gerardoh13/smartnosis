@@ -17,9 +17,9 @@ const router = new express.Router();
 
 router.post("/", async function (req, res, next) {
   try {
-    let apptId
+    let apptId;
     if (req.body.apptId) {
-      apptId = req.body.apptId
+      apptId = req.body.apptId;
       delete req.body.apptId;
     }
     const validator = jsonschema.validate(req.body, intakeNewSchema);
@@ -36,6 +36,21 @@ router.post("/", async function (req, res, next) {
     return next(err);
   }
 });
+
+router.get(
+  "/:providerId/:intakeId",
+  ensureLoggedIn,
+  ensureCorrectProvider,
+  async function (req, res, next) {
+    const { intakeId } = req.params;
+    try {
+      const intake = await Intake.get(intakeId);
+      return res.json({ intake });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
 
 router.get(
   "/generate-pdf/:providerId/:intakeId",

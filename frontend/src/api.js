@@ -57,6 +57,11 @@ class SmartnosisApi {
     return res;
   }
 
+  static async getIntake(providerId, intakeId) {
+    let res = await this.request(`intakes/${providerId}/${intakeId}`);
+    return res.intake;
+  }
+
   static async generatePDF(providerId, intakeId) {
     let res = await axios.get(
       `${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`,

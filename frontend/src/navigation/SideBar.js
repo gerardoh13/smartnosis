@@ -134,7 +134,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
       >
         {contents}
       </Drawer>
-      <MuiDrawer
+      {/* <MuiDrawer
         open={open}
         sx={{
           zIndex: "1020",
@@ -142,7 +142,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
         }}
       >
         {contents}
-      </MuiDrawer>
+      </MuiDrawer> */}
     </>
   );
 }
