@@ -19,12 +19,29 @@ function PDF() {
 
   useEffect(() => {
     async function getIntake() {
-      let res = await SmartnosisApi.getIntake(currProvider.id, 1);
+      let res = await SmartnosisApi.getIntake(currProvider.id, 7);
       console.log(res);
       setIntake(res);
     }
     getIntake();
   }, []);
+
+  const calculateAge = (date) => {
+    const birthDate = new Date(date);
+    const currentDate = new Date();
+    // Calculate the difference in years
+    let age = currentDate.getFullYear() - birthDate.getFullYear();
+    // Adjust the age if the birthday hasn't occurred yet this year
+    if (
+      currentDate.getMonth() < birthDate.getMonth() ||
+      (currentDate.getMonth() === birthDate.getMonth() &&
+        currentDate.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
 
   Font.register({
     family: "Oswald",
@@ -37,58 +54,46 @@ function PDF() {
       paddingBottom: 65,
       paddingHorizontal: 35,
     },
-    title: {
-      fontSize: 24,
-      textAlign: "center",
-      fontFamily: "Oswald",
-    },
-    author: {
-      fontSize: 12,
-      textAlign: "center",
-      marginBottom: 40,
-    },
-    subtitle: {
-      fontSize: 18,
-      margin: 12,
-      fontFamily: "Oswald",
-    },
-    text: {
-      margin: 12,
-      fontSize: 14,
-      textAlign: "justify",
-      fontFamily: "Times-Roman",
-    },
     sect: {
       marginBottom: 1,
       marginTop: 10,
       fontSize: 14,
       textAlign: "justify",
       fontFamily: "Times-Roman",
-      textDecoration: "underline",
+      // textDecoration: "underline",
     },
-    reg: {
-      margin: 1,
+    text: {
+      margin: 2,
       fontSize: 14,
       textAlign: "justify",
-      textDecoration: "underline",
       fontFamily: "Times-Roman",
     },
-    top: {
-      margin: 1,
-      fontSize: 12,
-      textAlign: "right",
+    bulletPoint: {
+      margin: 2,
+      fontSize: 14,
+      textAlign: "justify",
       fontFamily: "Times-Roman",
+      marginLeft: 10,
     },
     image: {
-      // marginVertical: 15,
       marginHorizontal: 200,
       width: "25%",
     },
-    header: {
-      fontSize: 12,
-      marginBottom: 20,
+    imgRow: {
+      flexDirection: "row",
+      justifyContent: "space-between", // Align images with space between them
+      marginTop: 10,
+    },
+    imageContainer: {
+      width: "50%", // Set the width to half of the page
+    },
+    insCardImg: {
+      width: "100%",
+    },
+    imgDescription: {
       textAlign: "center",
-      color: "grey",
+      marginTop: 5,
+      fontSize: 12,
     },
     pageNumber: {
       position: "absolute",
@@ -99,6 +104,34 @@ function PDF() {
       textAlign: "center",
       color: "grey",
     },
+    inlineUnderline: {
+      textDecoration: "underline",
+    },
+    inlineBold: {
+      fontFamily: "Times-Bold",
+    },
+    textRow: {
+      flexDirection: "row",
+      fontSize: 12,
+      marginLeft: 280,
+      fontFamily: "Times-Roman",
+      marginBottom: 10,
+      marginTop: 10,
+      border: "2px solid #b3e5fc", // Border color and width
+      borderRadius: 10, // Border radius for rounded corners
+      padding: 10, // Padding inside the container
+    },
+    columnLeft: {
+      flexDirection: "column",
+      textAlign: "right",
+      width: "50%",
+      marginRight: 5,
+    },
+    columnRight: {
+      flexDirection: "column",
+      width: "50%",
+      textDecoration: "underline",
+    },
   });
 
   return !intake ? null : (
@@ -108,68 +141,130 @@ function PDF() {
           <Page style={styles.body}>
             <Image style={styles.image} src="/smartnosis-logo.jpg" />
 
-            <Text style={styles.top}>
-              Date: {new Date(intake.submittedAt * 1000).toLocaleDateString()}
-            </Text>
-            <Text style={styles.top}>Insurance: {intake.insurance}</Text>
-            <Text style={styles.top}>Primary Phone: {intake.phone}</Text>
-            <Text style={styles.top}>Patient Email:</Text>
-            <Text style={styles.top}>Patient Address: {intake.address1}</Text>
+            <View style={styles.textRow}>
+              <View style={styles.columnLeft}>
+                <Text>Date:</Text>
+                <Text>Insurance:</Text>
+                <Text>Primary Phone:</Text>
+                <Text>Patient Email:</Text>
+                <Text>Patient Address:</Text>
+              </View>
+              <View style={styles.columnRight}>
+                <Text>
+                  {new Date(intake.submittedAt * 1000).toLocaleDateString()}
+                </Text>
+                <Text>{intake.insurance}</Text>
+                <Text>{intake.phone}</Text>
+                <Text>{intake.insurance}</Text>
+                <Text>{intake.address1}</Text>
+                {intake.address2 ? <Text> {intake.address2}</Text> : null}
+                <Text>
+                  {" "}
+                  {intake.city}, {intake.state} {intake.zip}
+                </Text>
+              </View>
+            </View>
+
             <Text style={styles.sect}>
-              Patient Name:
-              {` ${intake.firstName} ${
-                intake.middleName ? intake.middleName + " " : ""
-              }${intake.lastName}`}
+              <Text style={styles.inlineUnderline}>Patient Name:</Text>
+              <Text style={styles.inlineBold}>
+                {` ${intake.firstName} ${
+                  intake.middleName ? intake.middleName + " " : ""
+                }${intake.lastName}`}
+              </Text>
             </Text>
-            <Text style={styles.reg}>D.O.B: {intake.dob}</Text>
-            <Text style={styles.reg}>Sex: {intake.sex}</Text>
-            <Text style={styles.sect}>Reason for Visit:</Text>
+            <Text style={styles.text}>
+              <Text style={styles.inlineUnderline}>D.O.B:</Text>
+              <Text style={styles.inlineBold}>
+                {" "}
+                {intake.dob}, {calculateAge(intake.dob)}{" "}
+                {calculateAge(intake.dob) > 1 && calculateAge(intake.dob) !== 0
+                  ? "years"
+                  : "year"}{" "}
+                old
+              </Text>
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.inlineUnderline}>Sex:</Text>
+              <Text style={styles.inlineBold}> {intake.sex}</Text>
+            </Text>
+
+            <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
+              Reason for Visit:
+            </Text>
             {intake.symptoms.length
               ? intake.symptoms.map((s) => (
-                  <Text style={styles.reg} key={s}>
-                    * {s}
+                  <Text style={styles.bulletPoint} key={s}>
+                    • {s}
                   </Text>
                 ))
               : null}
-            <Text style={styles.sect}>Patient Health History:</Text>
+            <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
+              Patient Health History:
+            </Text>
             {intake.conditions.length
               ? intake.conditions.map((s) => (
-                  <Text style={styles.reg} key={s}>
-                    * {s}
+                  <Text style={styles.bulletPoint} key={s}>
+                    • {s}
                   </Text>
                 ))
               : null}
-            {/* <Text style={styles.title}>Don Quijote de la Mancha</Text>
-          <Text style={styles.author}>Miguel de Cervantes</Text> */}
-            {/* <Image style={styles.image} src="/images/quijote1.jpg" /> */}
-            {/* <Text style={styles.subtitle}>
-            Capítulo I: Que trata de la condición y ejercicio del famoso hidalgo
-            D. Quijote de la Mancha
-          </Text> */}
-            {/* <Text style={styles.text}>
-              En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no
-              ha mucho tiempo que vivía un hidalgo de los de lanza en astillero,
-              adarga antigua, rocín flaco y galgo corredor. Una olla de algo más
-              vaca que carnero, salpicón las más noches, duelos y quebrantos los
-              sábados, lentejas los viernes, algún palomino de añadidura los
-              domingos, consumían las tres partes de su hacienda. El resto della
-              concluían sayo de velarte, calzas de velludo para las fiestas con
-              sus pantuflos de lo mismo, los días de entre semana se honraba con
-              su vellori de lo más fino. Tenía en su casa una ama que pasaba de
-              los cuarenta, y una sobrina que no llegaba a los veinte, y un mozo
-              de campo y plaza, que así ensillaba el rocín como tomaba la
-              podadera. Frisaba la edad de nuestro hidalgo con los cincuenta
-              años, era de complexión recia, seco de carnes, enjuto de rostro;
-              gran madrugador y amigo de la caza. Quieren decir que tenía el
-              sobrenombre de Quijada o Quesada (que en esto hay alguna
-              diferencia en los autores que deste caso escriben), aunque por
-              conjeturas verosímiles se deja entender que se llama Quijana; pero
-              esto importa poco a nuestro cuento; basta que en la narración dél
-              no se salga un punto de la verdad
-            </Text> */}
-            {/* <Text style={styles.header} fixed>
-              Powered by Smartnosis
-            </Text> */}
+
+            {intake.insurance === "Yes" ? (
+              <>
+                <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
+                  Insurance Provider:
+                </Text>
+                <Text style={styles.bulletPoint}>
+                  • Provider: {intake.insProvider}
+                </Text>
+                <Text style={styles.bulletPoint}>
+                  • Relationship to Insured: {intake.insRelationship}
+                </Text>
+                {intake.insuranceId ? (
+                  <Text style={styles.bulletPoint}>
+                    • Insurance Id: {intake.insuranceId}
+                  </Text>
+                ) : null}
+                {intake.insGroupNumber ? (
+                  <Text style={styles.bulletPoint}>
+                    • Group Number: {intake.insGroupNumber}
+                  </Text>
+                ) : null}
+                {intake.insGroupName ? (
+                  <Text style={styles.bulletPoint}>
+                    • Group Name: {intake.insGroupName}
+                  </Text>
+                ) : null}
+                {intake.insBackPId || intake.insFrontPId ? (
+                  <View style={styles.imgRow}>
+                    {intake.insFrontPId ? (
+                      <View style={styles.imageContainer}>
+                        <Text style={styles.imgDescription}>
+                          Front of Insurance Card
+                        </Text>
+                        <Image
+                          style={styles.insCardImg}
+                          src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insFrontPId}.jpg`}
+                        />
+                      </View>
+                    ) : null}
+                    {intake.insBackPId ? (
+                      <View style={styles.imageContainer}>
+                        <Text style={styles.imgDescription}>
+                          Back of Insurance Card
+                        </Text>
+                        <Image
+                          style={styles.insCardImg}
+                          src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insBackPId}.jpg`}
+                        />
+                      </View>
+                    ) : null}
+                  </View>
+                ) : null}
+              </>
+            ) : null}
+
             <Text
               style={styles.pageNumber}
               render={({ pageNumber, totalPages }) =>
