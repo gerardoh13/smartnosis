@@ -47,8 +47,13 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideBar({ toggleDrawer, open, setCurrView }) {
-  const { currProvider } = useContext(ProviderContext);
+  const { currProvider, isXsScreen } = useContext(ProviderContext);
   const [showQrModal, setShowQrModal] = useState(false);
+
+  const handleClick = (view) => {
+    setCurrView(view);
+    if (isXsScreen) toggleDrawer();
+  };
 
   const contents = (
     <>
@@ -70,7 +75,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
       <List>
         {/* toggle appointment view */}
         <ListItem disablePadding>
-          <ListItemButton onClick={() => setCurrView("Appts")}>
+          <ListItemButton onClick={() => handleClick("Appts")}>
             <ListItemIcon>
               <EventIcon />
             </ListItemIcon>
@@ -79,7 +84,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
         </ListItem>
         {/* toggle intake view */}
         <ListItem disablePadding>
-          <ListItemButton onClick={() => setCurrView("Intakes")}>
+          <ListItemButton onClick={() => handleClick("Intakes")}>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
@@ -91,7 +96,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
       <List>
         {/* toggle intake */}
         <ListItem disablePadding>
-          <ListItemButton onClick={() => setCurrView("Form")}>
+          <ListItemButton onClick={() => handleClick("Form")}>
             <ListItemIcon>
               <FormatListNumberedIcon />
             </ListItemIcon>
@@ -127,22 +132,26 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
         setShow={setShowQrModal}
         providerId={currProvider.id}
       />
-      <Drawer
-        variant="permanent"
-        open={open}
-        sx={{ zIndex: "1020", display: { xs: "none", sm: "block" } }}
-      >
-        {contents}
-      </Drawer>
-      {/* <MuiDrawer
-        open={open}
-        sx={{
-          zIndex: "1020",
-          display: { xs: "block", sm: "none" },
-        }}
-      >
-        {contents}
-      </MuiDrawer> */}
+      {!isXsScreen ? (
+        <Drawer
+          variant="permanent"
+          open={open}
+          sx={{
+            zIndex: "1020",
+          }}
+        >
+          {contents}
+        </Drawer>
+      ) : (
+        <MuiDrawer
+          open={open}
+          sx={{
+            zIndex: "1020",
+          }}
+        >
+          {contents}
+        </MuiDrawer>
+      )}
     </>
   );
 }

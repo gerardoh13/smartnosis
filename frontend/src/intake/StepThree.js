@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createCheckbox } from "./commonFuncs";
+import { createCheckbox } from "../common/commonFuncs";
 
 function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
   const defaultConditions = [

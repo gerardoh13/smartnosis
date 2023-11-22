@@ -10,7 +10,7 @@ import "./Intake.css";
 import { useNavigate } from "react-router-dom";
 import ProviderContext from "../common/ProviderContext";
 import Grid from "@mui/material/Grid";
-import { deleteNulls } from "./commonFuncs";
+import { deleteNulls } from "../common/commonFuncs";
 import DisclaimerModal from "../components/DisclaimerModal";
 
 function Intake({ setCurrView }) {

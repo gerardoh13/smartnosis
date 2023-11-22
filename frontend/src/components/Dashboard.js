@@ -6,10 +6,13 @@ import ApptModal from "./ApptModal";
 import IntakesByDate from "./IntakesByDate";
 import ApptsByDate from "./ApptsByDate";
 import ProviderContext from "../common/ProviderContext";
-import { getMidnights } from "../intake/commonFuncs";
+import { getMidnights } from "../common/commonFuncs";
 import SearchBar from "../common/SearchBar";
 import Intake from "../intake/Intake";
 import Results from "./Results";
+import PdfModal from "./PdfModal";
+import PDF from "./Pdf";
+import { pdf } from "@react-pdf/renderer";
 
 function Dashboard({ currView, setCurrView }) {
   const INITIAL_STATE = {
@@ -19,7 +22,7 @@ function Dashboard({ currView, setCurrView }) {
     phone: "",
     apptAt: "",
   };
-  const { currProvider } = useContext(ProviderContext);
+  const { currProvider, isXsScreen } = useContext(ProviderContext);
   const [showApptModal, setShowModal] = useState(false);
   const [currAppt, setCurrAppt] = useState(INITIAL_STATE);
   const [currDate, setCurrDate] = useState(new Date());
@@ -27,12 +30,25 @@ function Dashboard({ currView, setCurrView }) {
   const [searchRes, setSearchRes] = useState({});
   const [query, setQuery] = useState("");
   const [lastView, setLastView] = useState("");
+  const [showPdfModal, setShowPdfModal] = useState(false);
+  const [intakeData, setIntakeData] = useState("");
 
   const generatePdf = async (intakeId) => {
-    let res = await SmartnosisApi.generatePDF(currProvider.id, intakeId);
-    const blob = new Blob([res.data], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
+    let res = await SmartnosisApi.getIntake(currProvider.id, intakeId);
+    if (isXsScreen) {
+      const MyDoc = <PDF intake={res} />;
+      const blob = await pdf(MyDoc).toBlob();
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+    } else {
+      setIntakeData(res);
+      setShowPdfModal(true);
+    }
+  };
+
+  const dismissPdfModal = () => {
+    setShowPdfModal(false);
+    setIntakeData(null);
   };
 
   const getActivity = async (type) => {
@@ -83,11 +99,16 @@ function Dashboard({ currView, setCurrView }) {
 
   return (
     <>
+      <PdfModal
+        show={showPdfModal}
+        intake={intakeData}
+        dismiss={dismissPdfModal}
+      />
       {currView === "Form" ? (
         <Intake setCurrView={setCurrView} />
       ) : (
         <>
-          <Grid item xs={12} md={8} lg={7} >
+          <Grid item xs={12} md={8} lg={7}>
             <SearchBar
               setCurrView={setCurrView}
               setSearchRes={setSearchRes}

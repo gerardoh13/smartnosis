@@ -8,7 +8,6 @@ import ResetPwd from "../components/ResetPwd";
 // import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import ProviderContext from "../common/ProviderContext";
-import Pdf from "../components/Pdf";
 
 function NavRoutes({ login, register, currView, setCurrView }) {
   const { currProvider } = useContext(ProviderContext);
@@ -27,7 +26,6 @@ function NavRoutes({ login, register, currView, setCurrView }) {
         }
       />
       <Route path="/intake" element={<Intake />} />
-      <Route path="/pdf" element={<Pdf />} />
 
       <Route element={<PublicRoutes />}>
         <Route path="/reset" element={<ResetPwd />} />

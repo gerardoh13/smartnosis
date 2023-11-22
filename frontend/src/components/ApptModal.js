@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import SmartnosisApi from "../api";
-import { validatePhone, deleteNulls } from "../intake/commonFuncs";
+import { validatePhone, deleteNulls } from "../common/commonFuncs";
 import IntakeSentToast from "../common/IntakeSentToast";
+import { formatTime } from "../common/commonFuncs";
 
 function ApptModal({ show, clearModal, appt, provider, setReload, currDate }) {
   const INITIAL_STATE = {
@@ -252,10 +253,10 @@ function ApptModal({ show, clearModal, appt, provider, setReload, currDate }) {
             <>
               <div className="row">
                 <div className="col-8 text-start text-nowrap">
-                  <p>
-                    <b>Date and Time: </b>
-                    {new Date(appt.apptAt * 1000).toLocaleString()}
-                  </p>
+                    <b>Date: </b>
+                    {new Date(appt.apptAt * 1000).toLocaleDateString()}
+                    <b> Time: </b>
+                    {formatTime(appt.apptAt)}
                 </div>
                 <div className="col-4">
                   <button

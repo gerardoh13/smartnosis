@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import ProviderContext from "../common/ProviderContext";
 import DatePicker from "./DatePicker";
-import { formatTime } from "../intake/commonFuncs";
+import { formatTime } from "../common/commonFuncs";
 
 function IntakesByDate({ generatePdf, getActivity, currDate, setCurrDate }) {
   const [intakes, setIntakes] = useState([]);
@@ -34,11 +34,11 @@ function IntakesByDate({ generatePdf, getActivity, currDate, setCurrDate }) {
   return (
     <div className="card">
       <div className="card-body">
-        <h3 className="card-title mb-3">Intakes</h3>
+        <h4 className="card-title ms-2 mb-3">Intakes</h4>
         <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
         <hr />
         {intakes.length ? (
-          <table className="table table-striped bg-light">
+          <table className="table table-striped table-sm bg-light">
             <thead>
               <tr>
                 <th scope="col">Name</th>

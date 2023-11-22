@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import ProviderContext from "../common/ProviderContext";
 import SmartnosisApi from "../api";
-import { validatePhone, deleteNulls } from "../intake/commonFuncs";
+import { validatePhone, deleteNulls } from "../common/commonFuncs";
 import IntakeSentToast from "../common/IntakeSentToast";
 
 function ScheduleForm({ currDate, setReload }) {
@@ -112,9 +112,9 @@ function ScheduleForm({ currDate, setReload }) {
         msg={toastMsg}
         setMsg={setToastMsg}
       />
-      <div className="card">
+      <div className="card mb-4 mb-sm-0">
         <div className="card-body">
-          <h5 className="card-title">Send Intake Form</h5>
+          <h4 className="card-title">Send Intake Form</h4>
           <form id="sendIntakeForm" onSubmit={(e) => e.preventDefault()}>
             <div className="row my-3">
               <div className="col-4">Date/Time:</div>

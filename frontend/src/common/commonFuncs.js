@@ -29,7 +29,7 @@ const getMidnights = (date) => {
 };
 
 const formatTime = (epoch) => {
-  return new Date(epoch * 1000).toLocaleTimeString();
+  return new Date(epoch * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 };
 
 const validatePhone = (phone) => {

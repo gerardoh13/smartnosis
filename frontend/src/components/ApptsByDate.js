@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import ProviderContext from "../common/ProviderContext";
 import DatePicker from "./DatePicker";
-import { formatTime } from "../intake/commonFuncs";
+import { formatTime } from "../common/commonFuncs";
 
 function ApptsByDate({
   generatePdf,
@@ -39,18 +39,18 @@ function ApptsByDate({
           </button>
         </td>
         <td>{formatTime(p.apptAt)}</td>
-        {p.complete ? (
-          <td>
+        <td>
+          {p.complete ? (
             <button
               className="btn btn-success"
               onClick={() => generatePdf(p.intakeId)}
             >
               PDF
             </button>
-          </td>
-        ) : (
-          <td className="text-danger">Incomplete</td>
-        )}
+          ) : (
+            <span className="badge bg-danger">Incomplete</span>
+          )}
+        </td>
       </tr>
     ));
   };
@@ -58,25 +58,25 @@ function ApptsByDate({
   return (
     <div className="card">
       <div className="card-body">
-      <h3 className="card-title mb-3">Appointments</h3>
-      <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
-      <hr />
-      {appts.length ? (
-        <table className="table table-striped bg-light">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th />
-              <th scope="col">Time</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>{createRows(appts)}</tbody>
-        </table>
-      ) : (
-        <p className="text-center">Scheduled appointments will appear here</p>
-      )}
-    </div>
+        <h4 className="card-title ms-2 mb-3">Appointments</h4>
+        <DatePicker currDate={currDate} setCurrDate={setCurrDate} />
+        <hr />
+        {appts.length ? (
+          <table className="table table-striped table-sm bg-light">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col" />
+                <th scope="col">Time</th>
+                <th scope="col" />
+              </tr>
+            </thead>
+            <tbody>{createRows(appts)}</tbody>
+          </table>
+        ) : (
+          <p className="text-center">Scheduled appointments will appear here</p>
+        )}
+      </div>
     </div>
   );
 }

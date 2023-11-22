@@ -20,12 +20,10 @@ function App() {
   const [token, setToken] = useLocalStorage("smartnosis-token");
   const [currProvider, setCurrProvider] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(window.innerWidth >= 576);
   const [currView, setCurrView] = useState("Appts");
+  const [isXsScreen, setIsXsScreen] = useState(window.innerWidth <= 576);
 
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
   useEffect(() => {
     async function getCurrProvider() {
       if (token) {
@@ -44,6 +42,20 @@ function App() {
     setLoading(true);
     getCurrProvider();
   }, [token]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsXsScreen(window.innerWidth <= 576);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
   const register = async (data) => {
     try {
@@ -76,6 +88,7 @@ function App() {
         <ProviderContext.Provider
           value={{
             currProvider,
+            isXsScreen,
           }}
         >
           <Box sx={{ display: "flex" }}>

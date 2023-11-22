@@ -1,5 +1,5 @@
 import React from "react";
-import { formatTime } from "../intake/commonFuncs";
+import { formatTime } from "../common/commonFuncs";
 
 function Results({
   searchRes,
@@ -22,16 +22,19 @@ function Results({
   const createApptRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id} className="align-middle">
-        <td className="small">{`${p.lastName}, ${p.firstName}`}</td>
+        <td>{`${p.lastName}, ${p.firstName}`}</td>
         <td>
-          <button className="btn btn-light ms-2 btn-sm" onClick={() => handleClick(p)}>
+          <button
+            className="btn btn-light ms-2 btn-sm"
+            onClick={() => handleClick(p)}
+          >
             <i className="bi bi-three-dots-vertical"></i>
           </button>
         </td>
-        <td className="small">
-          <small>{new Date(p.apptAt * 1000).toLocaleDateString()}</small>
+        <td>
+          {new Date(p.apptAt * 1000).toLocaleDateString()}
           <br />
-          <small>{formatTime(p.apptAt)}</small>
+          {formatTime(p.apptAt)}
         </td>
         {p.complete ? (
           <td>
@@ -52,17 +55,20 @@ function Results({
   const createIntakeRows = (arr) => {
     return arr.map((p) => (
       <tr key={p.id} className="align-middle">
-        <td className="small">{`${p.lastName}, ${p.middleName ? p.middleName[0] + "." : ""} ${
+        <td>{`${p.lastName}, ${p.middleName ? p.middleName[0] + "." : ""} ${
           p.firstName
         }`}</td>
-        <td className="small">{p.dob}</td>
-        <td className="small">
-          <small>{new Date(p.submittedAt * 1000).toLocaleDateString()}</small>
+        <td>{p.dob}</td>
+        <td>
+          {new Date(p.submittedAt * 1000).toLocaleDateString()}
           <br />
-          <small>{formatTime(p.submittedAt)}</small>
+          {formatTime(p.submittedAt)}
         </td>
         <td>
-          <button className="btn btn-success btn-sm" onClick={() => generatePdf(p.id)}>
+          <button
+            className="btn btn-success btn-sm"
+            onClick={() => generatePdf(p.id)}
+          >
             PDF
           </button>
         </td>
@@ -75,7 +81,7 @@ function Results({
       {searchRes.intakes.length ? (
         <>
           <h5 className="text-center">Intakes</h5>
-          <table className="table table-striped bg-light">
+          <table className="table table-striped table-sm bg-light">
             <thead>
               <tr>
                 <th scope="col">Name</th>

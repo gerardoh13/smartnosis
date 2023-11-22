@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import ProviderContext from "../common/ProviderContext";
-import SmartnosisApi from "../api";
+import React from "react";
 import {
   Page,
   Text,
@@ -9,23 +7,9 @@ import {
   StyleSheet,
   Image,
   Font,
-  PDFViewer,
 } from "@react-pdf/renderer";
-import Grid from "@mui/material/Grid";
 
-function PDF() {
-  const { currProvider } = useContext(ProviderContext);
-  const [intake, setIntake] = useState(null);
-
-  useEffect(() => {
-    async function getIntake() {
-      let res = await SmartnosisApi.getIntake(currProvider.id, 7);
-      console.log(res);
-      setIntake(res);
-    }
-    getIntake();
-  }, []);
-
+function PDF({ intake }) {
   const calculateAge = (date) => {
     const birthDate = new Date(date);
     const currentDate = new Date();
@@ -60,7 +44,6 @@ function PDF() {
       fontSize: 14,
       textAlign: "justify",
       fontFamily: "Times-Roman",
-      // textDecoration: "underline",
     },
     text: {
       margin: 2,
@@ -134,149 +117,145 @@ function PDF() {
     },
   });
 
-  return !intake ? null : (
-    <Grid item xs={12} md={8} lg={10} height={"85vh"}>
-      <PDFViewer width={"100%"} height={"100%"}>
-        <Document>
-          <Page style={styles.body}>
-            <Image style={styles.image} src="/smartnosis-logo.jpg" />
+  return (
+    <Document>
+      <Page style={styles.body}>
+        <Image style={styles.image} src="/smartnosis-logo.jpg" />
 
-            <View style={styles.textRow}>
-              <View style={styles.columnLeft}>
-                <Text>Date:</Text>
-                <Text>Insurance:</Text>
-                <Text>Primary Phone:</Text>
-                <Text>Patient Email:</Text>
-                <Text>Patient Address:</Text>
-              </View>
-              <View style={styles.columnRight}>
-                <Text>
-                  {new Date(intake.submittedAt * 1000).toLocaleDateString()}
-                </Text>
-                <Text>{intake.insurance}</Text>
-                <Text>{intake.phone}</Text>
-                <Text>{intake.insurance}</Text>
-                <Text>{intake.address1}</Text>
-                {intake.address2 ? <Text> {intake.address2}</Text> : null}
-                <Text>
-                  {" "}
-                  {intake.city}, {intake.state} {intake.zip}
-                </Text>
-              </View>
-            </View>
+        <View style={styles.textRow}>
+          <View style={styles.columnLeft}>
+            <Text>Date:</Text>
+            <Text>Insurance:</Text>
+            <Text>Primary Phone:</Text>
+            <Text>Patient Email:</Text>
+            <Text>Patient Address:</Text>
+          </View>
+          <View style={styles.columnRight}>
+            <Text>
+              {new Date(intake.submittedAt * 1000).toLocaleDateString()}
+            </Text>
+            <Text>{intake.insurance}</Text>
+            <Text>{intake.phone}</Text>
+            <Text>{intake.insurance}</Text>
+            <Text>{intake.address1}</Text>
+            {intake.address2 ? <Text> {intake.address2}</Text> : null}
+            <Text>
+              {" "}
+              {intake.city}, {intake.state} {intake.zip}
+            </Text>
+          </View>
+        </View>
 
-            <Text style={styles.sect}>
-              <Text style={styles.inlineUnderline}>Patient Name:</Text>
-              <Text style={styles.inlineBold}>
-                {` ${intake.firstName} ${
-                  intake.middleName ? intake.middleName + " " : ""
-                }${intake.lastName}`}
+        <Text style={styles.sect}>
+          <Text style={styles.inlineUnderline}>Patient Name:</Text>
+          <Text style={styles.inlineBold}>
+            {` ${intake.firstName} ${
+              intake.middleName ? intake.middleName + " " : ""
+            }${intake.lastName}`}
+          </Text>
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.inlineUnderline}>D.O.B:</Text>
+          <Text style={styles.inlineBold}>
+            {" "}
+            {intake.dob}, {calculateAge(intake.dob)}{" "}
+            {calculateAge(intake.dob) > 1 && calculateAge(intake.dob) !== 0
+              ? "years"
+              : "year"}{" "}
+            old
+          </Text>
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.inlineUnderline}>Sex:</Text>
+          <Text style={styles.inlineBold}> {intake.sex}</Text>
+        </Text>
+
+        <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
+          Reason for Visit:
+        </Text>
+        {intake.symptoms.length
+          ? intake.symptoms.map((s) => (
+              <Text style={styles.bulletPoint} key={s}>
+                • {s}
               </Text>
-            </Text>
-            <Text style={styles.text}>
-              <Text style={styles.inlineUnderline}>D.O.B:</Text>
-              <Text style={styles.inlineBold}>
-                {" "}
-                {intake.dob}, {calculateAge(intake.dob)}{" "}
-                {calculateAge(intake.dob) > 1 && calculateAge(intake.dob) !== 0
-                  ? "years"
-                  : "year"}{" "}
-                old
+            ))
+          : null}
+        <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
+          Patient Health History:
+        </Text>
+        {intake.conditions.length
+          ? intake.conditions.map((s) => (
+              <Text style={styles.bulletPoint} key={s}>
+                • {s}
               </Text>
-            </Text>
-            <Text style={styles.text}>
-              <Text style={styles.inlineUnderline}>Sex:</Text>
-              <Text style={styles.inlineBold}> {intake.sex}</Text>
-            </Text>
+            ))
+          : null}
 
+        {intake.insurance === "Yes" ? (
+          <>
             <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
-              Reason for Visit:
+              Insurance Provider:
             </Text>
-            {intake.symptoms.length
-              ? intake.symptoms.map((s) => (
-                  <Text style={styles.bulletPoint} key={s}>
-                    • {s}
-                  </Text>
-                ))
-              : null}
-            <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
-              Patient Health History:
+            <Text style={styles.bulletPoint}>
+              • Provider: {intake.insProvider}
             </Text>
-            {intake.conditions.length
-              ? intake.conditions.map((s) => (
-                  <Text style={styles.bulletPoint} key={s}>
-                    • {s}
-                  </Text>
-                ))
-              : null}
-
-            {intake.insurance === "Yes" ? (
-              <>
-                <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
-                  Insurance Provider:
-                </Text>
-                <Text style={styles.bulletPoint}>
-                  • Provider: {intake.insProvider}
-                </Text>
-                <Text style={styles.bulletPoint}>
-                  • Relationship to Insured: {intake.insRelationship}
-                </Text>
-                {intake.insuranceId ? (
-                  <Text style={styles.bulletPoint}>
-                    • Insurance Id: {intake.insuranceId}
-                  </Text>
-                ) : null}
-                {intake.insGroupNumber ? (
-                  <Text style={styles.bulletPoint}>
-                    • Group Number: {intake.insGroupNumber}
-                  </Text>
-                ) : null}
-                {intake.insGroupName ? (
-                  <Text style={styles.bulletPoint}>
-                    • Group Name: {intake.insGroupName}
-                  </Text>
-                ) : null}
-                {intake.insBackPId || intake.insFrontPId ? (
-                  <View style={styles.imgRow}>
-                    {intake.insFrontPId ? (
-                      <View style={styles.imageContainer}>
-                        <Text style={styles.imgDescription}>
-                          Front of Insurance Card
-                        </Text>
-                        <Image
-                          style={styles.insCardImg}
-                          src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insFrontPId}.jpg`}
-                        />
-                      </View>
-                    ) : null}
-                    {intake.insBackPId ? (
-                      <View style={styles.imageContainer}>
-                        <Text style={styles.imgDescription}>
-                          Back of Insurance Card
-                        </Text>
-                        <Image
-                          style={styles.insCardImg}
-                          src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insBackPId}.jpg`}
-                        />
-                      </View>
-                    ) : null}
+            <Text style={styles.bulletPoint}>
+              • Relationship to Insured: {intake.insRelationship}
+            </Text>
+            {intake.insuranceId ? (
+              <Text style={styles.bulletPoint}>
+                • Insurance Id: {intake.insuranceId}
+              </Text>
+            ) : null}
+            {intake.insGroupNumber ? (
+              <Text style={styles.bulletPoint}>
+                • Group Number: {intake.insGroupNumber}
+              </Text>
+            ) : null}
+            {intake.insGroupName ? (
+              <Text style={styles.bulletPoint}>
+                • Group Name: {intake.insGroupName}
+              </Text>
+            ) : null}
+            {intake.insBackPId || intake.insFrontPId ? (
+              <View style={styles.imgRow}>
+                {intake.insFrontPId ? (
+                  <View style={styles.imageContainer}>
+                    <Text style={styles.imgDescription}>
+                      Front of Insurance Card
+                    </Text>
+                    <Image
+                      style={styles.insCardImg}
+                      src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insFrontPId}.jpg`}
+                    />
                   </View>
                 ) : null}
-              </>
+                {intake.insBackPId ? (
+                  <View style={styles.imageContainer}>
+                    <Text style={styles.imgDescription}>
+                      Back of Insurance Card
+                    </Text>
+                    <Image
+                      style={styles.insCardImg}
+                      src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insBackPId}.jpg`}
+                    />
+                  </View>
+                ) : null}
+              </View>
             ) : null}
+          </>
+        ) : null}
 
-            <Text
-              style={styles.pageNumber}
-              render={({ pageNumber, totalPages }) =>
-                `Powered by Smartnosis
-                ${pageNumber} / ${totalPages}`
-              }
-              fixed
-            />
-          </Page>
-        </Document>
-      </PDFViewer>
-    </Grid>
+        <Text
+          style={styles.pageNumber}
+          render={({ pageNumber, totalPages }) =>
+            `Powered by Smartnosis
+      ${pageNumber} / ${totalPages}`
+          }
+          fixed
+        />
+      </Page>
+    </Document>
   );
 }
 export default PDF;
