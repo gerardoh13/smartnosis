@@ -45,7 +45,7 @@ function StepInsurance({
           </p>
         </div>
         <div className="col text-center">
-          <Dropdown onSelect={(val) => handleSelect("insRelationship", val)}>
+          <Dropdown onSelect={(val) => handleSelect("insRelationship", val, "insurance")}>
             <Dropdown.Toggle
               className="form-control"
               variant="secondary"
@@ -74,7 +74,7 @@ function StepInsurance({
           placeholder="First Name"
           value={data.insFirstName}
           disabled={data.insRelationship === "Self"}
-          onChange={(e) => handleChange(e, true)}
+          onChange={(e) => handleChange(e, "insurance")}
           required
         />
         <label htmlFor="insFirstName">
@@ -156,21 +156,21 @@ function StepInsurance({
           </Dropdown>
         </div>
       </div>
-      {/* insOtherInsProvider */}
+      {/* insOtherProvider */}
       {data.insProvider === "Other" ? (
         <>
           <div className="form-floating mb-3">
             <input
               type="text"
               className="form-control"
-              id="insOtherInsProvider"
-              name="insOtherInsProvider"
+              id="insOtherProvider"
+              name="insOtherProvider"
               placeholder="Insurance ID"
               required={data.insProvider === "Other"}
-              value={data.insOtherInsProvider}
+              value={data.insOtherProvider}
               onChange={(e) => handleChange(e, true)}
             />
-            <label htmlFor="insOtherInsProvider">
+            <label htmlFor="insOtherProvider">
               Insurance Provider: <span className="text-danger">*</span>
             </label>
           </div>

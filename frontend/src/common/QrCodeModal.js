@@ -3,9 +3,10 @@ import Modal from "react-bootstrap/Modal";
 import { QRCodeSVG } from "qrcode.react";
 
 function QRCode({ show, setShow, providerId }) {
+  const devhost = "10.98.23.201"
   const BASE_URL =
     window.location.hostname === "localhost"
-      ? "http://" + "10.0.0.10" + ":3000"
+      ? "http://" + devhost + ":3000"
       : "https://" + window.location.hostname;
   // window.location.hostname === "localhost" ? "http://" + window.location.hostname + ":3000" : "https://" + window.location.hostname
   //   const BASE_URL = "https://" + window.location.hostname;

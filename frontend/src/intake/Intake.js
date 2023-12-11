@@ -4,6 +4,7 @@ import StepOne from "./StepOne";
 import StepInsurance from "./StepInsurance";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import StepFour from "./StepFour";
 import SmartnosisApi from "../api";
 import { useQuery } from "../hooks";
 import "./Intake.css";
@@ -29,8 +30,7 @@ function Intake({ setCurrView }) {
     insurance: "",
     phone: "",
     phone2: "",
-    symptoms: new Set(),
-    conditions: new Set(),
+    email: "",
   };
 
   const INITIAL_INSURANCE_STATE = {
@@ -39,7 +39,7 @@ function Intake({ setCurrView }) {
     insLastName: "",
     insDob: "",
     insProvider: "",
-    insOtherInsProvider: "",
+    insOtherProvider: "",
     insuranceId: "",
     insGroupName: "",
     insGroupNumber: "",
@@ -47,9 +47,20 @@ function Intake({ setCurrView }) {
     insBackPId: "",
   };
 
-  const [insuranceData, setInsuranceData] = useState(INITIAL_INSURANCE_STATE);
-  const [step, setStep] = useState(0);
+  const INITIAL_MED_HISTORY = {
+    tobaccoUse: "",
+    alcoholUse: "",
+    drugUse: "",
+    otherDrugUse: "",
+    otherTobaccoUse: "",
+    symptoms: new Set(),
+    conditions: new Set(),
+  };
+
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const [insuranceData, setInsuranceData] = useState(INITIAL_INSURANCE_STATE);
+  const [medHistory, setMedHistory] = useState(INITIAL_MED_HISTORY);
+  const [step, setStep] = useState(0);
   const [maxDate, setMaxDate] = useState("");
   const [apptAt, setApptAt] = useState("");
   const [providerName, setProviderName] = useState("");
@@ -131,24 +142,35 @@ function Intake({ setCurrView }) {
     return now.getTime() / 1000;
   };
 
+  const formatInsData = () => {
+    let insDataCopy = { ...insuranceData };
+    insDataCopy.insDob = formatDob(insDataCopy.insDob);
+    if (insDataCopy.insProvider === "Other") {
+      insDataCopy.insProvider = insDataCopy.insOtherProvider;
+      delete insDataCopy.insOtherProvider;
+    }
+    return insDataCopy;
+  };
+
+  const formatMedHistory = () => {
+    let medHistoryCopy = { ...medHistory };
+    medHistoryCopy.symptoms = Array.from(medHistoryCopy.symptoms);
+    medHistoryCopy.conditions = Array.from(medHistoryCopy.conditions);
+    if (medHistoryCopy.tobaccoUse === "Other")
+      medHistoryCopy.tobaccoUse = medHistoryCopy.otherTobaccoUse;
+    if (medHistoryCopy.drugUse === "Other")
+      medHistoryCopy.drugUse = medHistoryCopy.otherDrugUse;
+    return medHistoryCopy;
+  };
   const formatData = () => {
     let dataCopy = { ...formData };
-    let apptId = query.get("appointment");
     dataCopy.submittedAt = getSubmittedEpoch();
-    dataCopy.symptoms = Array.from(dataCopy.symptoms);
-    dataCopy.conditions = Array.from(dataCopy.conditions);
     dataCopy.dob = formatDob(dataCopy.dob);
-    if (dataCopy.insurance === "Yes") {
-      let insDataCopy = { ...insuranceData };
-      insDataCopy.insDob = formatDob(insDataCopy.insDob);
-      if (insDataCopy.insProvider === "Other") {
-        insDataCopy.insProvider = insDataCopy.insOtherInsProvider;
-        delete insDataCopy.insOtherInsProvider;
-      }
-      dataCopy = { ...dataCopy, ...insDataCopy };
-    }
+    dataCopy = { ...dataCopy, ...formatMedHistory(dataCopy) };
+    if (dataCopy.insurance === "Yes")
+      dataCopy = { ...dataCopy, ...formatInsData(dataCopy) };
     deleteNulls(dataCopy);
-    if (apptId) dataCopy.apptId = apptId;
+    if (query.get("appointment")) dataCopy.apptId = query.get("appointment");
     return dataCopy;
   };
 
@@ -161,29 +183,33 @@ function Intake({ setCurrView }) {
   const submit = async () => {
     let formattedData = formatData();
     await SmartnosisApi.addIntake(formattedData);
+    setFormData(INITIAL_STATE);
+    setMedHistory(INITIAL_MED_HISTORY);
+    setInsuranceData(INITIAL_INSURANCE_STATE);
     if (currProvider) setCurrView("Intakes");
     else changeStep(1);
   };
 
-  const handleChange = (e, insurance = false) => {
+  const handleChange = (e, type) => {
     const { name, value } = e.target;
     const trimCheck =
       name === "firstName" || name === "lastName" || name === "middleName";
-    if (insurance) {
-      setInsuranceData((data) => ({
-        ...data,
-        [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
-      }));
-    } else {
-      setFormData((data) => ({
-        ...data,
-        [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
-      }));
-    }
+    //
+    const func =
+      type === "insurance"
+        ? setInsuranceData
+        : type === "medHistory"
+        ? setMedHistory
+        : setFormData;
+    func((data) => ({
+      ...data,
+      [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
+    }));
   };
 
-  const handleSelect = (name, value) => {
-    setInsuranceData((data) => ({
+  const handleSelect = (name, value, type) => {
+    const func = type === "medHistory" ? setMedHistory : setInsuranceData;
+    func((data) => ({
       ...data,
       [name]: value,
     }));
@@ -191,14 +217,13 @@ function Intake({ setCurrView }) {
 
   const handleCheckbox = (e) => {
     const { checked, value, name } = e.target;
-
-    let copy = new Set([...formData[name]]);
+    let copy = new Set([...medHistory[name]]);
     if (checked) {
       if (!copy.has(value)) copy.add(value);
     } else {
       if (copy.has(value)) copy.delete(value);
     }
-    setFormData((data) => ({
+    setMedHistory((data) => ({
       ...data,
       [name]: copy,
     }));
@@ -242,6 +267,7 @@ function Intake({ setCurrView }) {
       formData.lastName,
       formData.dob,
       formData.sex,
+      formData.email,
       formData.phone,
       formData.address1,
       formData.city,
@@ -258,6 +284,18 @@ function Intake({ setCurrView }) {
       insuranceData.insDob,
       insuranceData.insProvider,
     ].every(Boolean);
+  };
+
+  const stepFourComplete = () => {
+    let fields = [
+      medHistory.alcoholUse,
+      medHistory.drugUse,
+      medHistory.tobaccoUse,
+    ];
+    if (medHistory.tobaccoUse === "Other")
+      fields.push(medHistory.otherTobaccoUse);
+    if (medHistory.drugUse === "Other") fields.push(medHistory.otherDrugUse);
+    return fields.every(Boolean);
   };
 
   let currStep;
@@ -291,26 +329,38 @@ function Intake({ setCurrView }) {
     case 1:
       currStep = (
         <StepTwo
-          data={formData}
+          data={medHistory}
           handleChange={handleChange}
           changeStep={changeStep}
           handleCheckbox={handleCheckbox}
           setFormData={setFormData}
+          hasInsurnace={formData.insurance === "Yes"}
         />
       );
       break;
     case 2:
       currStep = (
         <StepThree
-          data={formData}
+          data={medHistory}
           setFormData={setFormData}
           changeStep={changeStep}
           handleCheckbox={handleCheckbox}
-          submit={submit}
         />
       );
       break;
     case 3:
+      currStep = (
+        <StepFour
+          data={medHistory}
+          handleChange={handleChange}
+          changeStep={changeStep}
+          complete={stepFourComplete}
+          handleSelect={handleSelect}
+          submit={submit}
+        />
+      );
+      break;
+    case 4:
       currStep = (
         <>
           <div className="text-center">
@@ -319,7 +369,6 @@ function Intake({ setCurrView }) {
           </div>
         </>
       );
-      <h1>Step 3</h1>;
       break;
     default:
   }
@@ -375,7 +424,6 @@ function Intake({ setCurrView }) {
                   stepOneComplete() || complete ? "finish" : ""
                 } ${step === 0 ? "active" : ""}`}
               ></span>
-
               {formData.insurance === "Yes" ? (
                 <span
                   className={`step ${stepInsuranceComplete() ? "finish" : ""} ${
@@ -383,7 +431,6 @@ function Intake({ setCurrView }) {
                   }`}
                 ></span>
               ) : null}
-
               <span
                 className={`step ${step > 0.5 || complete ? "finish" : ""} ${
                   step === 1 ? "active" : ""
@@ -393,6 +440,11 @@ function Intake({ setCurrView }) {
                 className={`step ${step > 1 || complete ? "finish" : ""} ${
                   step === 2 ? "active" : ""
                 }`}
+              ></span>
+              <span
+                className={`step ${
+                  stepFourComplete() || complete ? "finish" : ""
+                } ${step === 3 ? "active" : ""}`}
               ></span>
             </div>
           </div>

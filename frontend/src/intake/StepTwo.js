@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { createCheckbox } from "../common/commonFuncs";
 
-function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
+function StepThree({
+  data,
+  handleCheckbox,
+  changeStep,
+  setFormData,
+  hasInsurnace,
+}) {
   const defaultSymptoms = [
     "Abnormal Pain",
     "Anxiety",
@@ -36,8 +42,8 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
   };
 
   const handlePrevStep = () => {
-    if (data.insurance === "No") changeStep(-1);
-    else if (data.insurance === "Yes") changeStep(-0.5);
+    if (hasInsurnace) changeStep(-0.5);
+    else changeStep(-1);
   };
 
   const addSymptom = () => {
@@ -114,15 +120,20 @@ function StepThree({ data, handleCheckbox, changeStep, setFormData }) {
           Add
         </button>
       </div>
-      <div className="row">
-        <button
-          className="btn btn-success mt-3 me-2 form-control col"
-          onClick={handlePrevStep}
-        >
-          Previous
-        </button>
-        <button className="btn btn-success mt-3 form-control col">Next</button>
-      </div>{" "}
+      <div className="row mt-4">
+        <div className="col">
+          <button
+            className="btn btn-success form-control"
+            type="button"
+            onClick={handlePrevStep}
+          >
+            Previous
+          </button>
+        </div>
+        <div className="col">
+          <button className="btn btn-success form-control">Next</button>
+        </div>
+      </div>
     </form>
   );
 }

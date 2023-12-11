@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createCheckbox } from "../common/commonFuncs";
 
-function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
+function StepTwo({ data, changeStep, handleCheckbox, setFormData }) {
   const defaultConditions = [
     "Pneumonia",
     "Bronchitis",
@@ -40,7 +40,7 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    submit();
+    changeStep(1);
   };
 
   const addCondition = () => {
@@ -82,7 +82,6 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
       <h4>Medical History</h4>
       <p>
         Have you been diagnosed with any of the following (past or present)?
-        
       </p>
       <div className="form-floating my-3">
         <input
@@ -124,15 +123,21 @@ function StepTwo({ data, changeStep, handleCheckbox, submit, setFormData }) {
           Add
         </button>
       </div>
-      <div className="row">
-        <button
-          className="btn btn-success mt-3 me-2 form-control col"
-          onClick={() => changeStep(-1)}
-        >
-          Previous
-        </button>
-        <button className="btn btn-success mt-3 form-control col">Next</button>
-      </div>{" "}
+      <div className="row mt-4">
+        <div className="col">
+          <button
+            className="btn btn-success form-control"
+            onClick={() => changeStep(-1)}
+          >
+            Previous
+          </button>
+        </div>
+        <div className="col">
+          <button className="btn btn-success form-control">
+            Next
+          </button>
+        </div>
+      </div>
     </form>
   );
 }

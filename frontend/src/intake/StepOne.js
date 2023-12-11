@@ -136,6 +136,22 @@ function StepOne({
           </label>
         </div>
       </div>
+      {/* Email */}
+      <div className="form-floating my-3">
+        <input
+          className="form-control"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="email"
+          onChange={handleChange}
+          value={data.email}
+          required
+        />
+        <label htmlFor="email">
+          Email: <span className="text-danger">*</span>
+        </label>
+      </div>
       {/* Phone1 */}
       <div className="form-floating my-3">
         <input
