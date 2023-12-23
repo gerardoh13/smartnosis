@@ -8,11 +8,6 @@
       "minLength": 2,
       "maxLength": 30
     },
-    "npi": {
-      "type": "string",
-      "minLength": 10,
-      "maxLength": 10
-    },
     "email": {
       "type": "string",
       "minLength": 6,
@@ -41,22 +36,27 @@
       "minLength": 5,
       "maxLength": 5
     },
-    "password": {
+    "hcpsCount": {
       "type": "string",
-      "minLength": 5,
-      "maxLength": 20
+      "minLength": 1,
+      "maxLength": 3
+    },
+    "staffCount": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 3
     }
   },
   "additionalProperties": false,
   "required": [
     "orgName",
-    "npi",
     "email",
     "phone",
     "address1",
     "city",
     "state",
     "zip",
-    "password"
+    "hcpsCount",
+    "staffCount"
   ]
 }

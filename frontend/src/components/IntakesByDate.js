@@ -5,14 +5,14 @@ import { formatTime } from "../common/commonFuncs";
 
 function IntakesByDate({ generatePdf, getActivity, currDate, setCurrDate }) {
   const [intakes, setIntakes] = useState([]);
-  const { currProvider } = useContext(ProviderContext);
+  const { currUser } = useContext(ProviderContext);
 
   useEffect(() => {
     const fetchData = async () => {
       setIntakes(await getActivity("intakes"));
     };
     fetchData();
-  }, [currProvider, currDate, getActivity]);
+  }, [currUser, currDate, getActivity]);
 
   const createRows = (arr) => {
     return arr.map((p) => (

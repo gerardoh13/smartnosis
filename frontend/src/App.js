@@ -18,29 +18,30 @@ import Footer from "./common/Footer";
 
 function App() {
   const [token, setToken] = useLocalStorage("smartnosis-token");
-  const [currProvider, setCurrProvider] = useState(null);
+  const [currUser, setCurrUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(window.innerWidth >= 576);
   const [currView, setCurrView] = useState("Appts");
   const [isXsScreen, setIsXsScreen] = useState(window.innerWidth <= 576);
 
   useEffect(() => {
-    async function getCurrProvider() {
+    async function getCurrUser() {
       if (token) {
         try {
-          let { id } = decodeToken(token);
+          let { id, role, providerId } = decodeToken(token);
           SmartnosisApi.token = token;
-          let provider = await SmartnosisApi.getCurrProvider(id);
-          setCurrProvider(provider);
+          let user = await SmartnosisApi.getCurrUser(providerId, id, role);
+          console.log(user);
+          setCurrUser(user);
         } catch (err) {
           console.log(err);
-          setCurrProvider(null);
+          setCurrUser(null);
         }
       }
       setLoading(false);
     }
     setLoading(true);
-    getCurrProvider();
+    getCurrUser();
   }, [token]);
 
   useEffect(() => {
@@ -57,18 +58,20 @@ function App() {
     setOpen(!open);
   };
 
-  const register = async (data) => {
+  const registerUser = async (data) => {
     try {
-      let providerToken = await SmartnosisApi.registerProvider(data);
-      setToken(providerToken);
+      let userToken = await SmartnosisApi.registerUser(data);
+      setToken(userToken);
       return { success: true };
     } catch (errors) {
+      console.log(errors)
       return { success: false, errors };
+
     }
   };
 
   const logout = async () => {
-    setCurrProvider(null);
+    setCurrUser(null);
     setToken(null);
   };
 
@@ -87,13 +90,13 @@ function App() {
       <BrowserRouter>
         <ProviderContext.Provider
           value={{
-            currProvider,
+            currUser,
             isXsScreen,
           }}
         >
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            {currProvider ? (
+            {currUser ? (
               <>
                 <SideBar
                   toggleDrawer={toggleDrawer}
@@ -104,7 +107,8 @@ function App() {
                   toggleDrawer={toggleDrawer}
                   open={open}
                   logout={logout}
-                  orgName={currProvider.name}
+                  orgName={currUser.provider.name}
+                  firstName={currUser.firstName}
                 />
               </>
             ) : null}
@@ -121,7 +125,7 @@ function App() {
                   minHeight: "100vh",
                   overflow: "auto",
                 },
-                !currProvider && {
+                !currUser && {
                   display: "flex",
                   justifyContent: "center", // Center vertically
                   flexDirection: "column",
@@ -129,14 +133,14 @@ function App() {
                 },
               ]}
             >
-              {currProvider ? <Toolbar /> : null}
+              {currUser ? <Toolbar /> : null}
               <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                 <Grid container spacing={3} justifyContent="center">
                   {loading ? (
                     <Spinner />
                   ) : (
                     <NavRoutes
-                      register={register}
+                      registerUser={registerUser}
                       login={login}
                       currView={currView}
                       setCurrView={setCurrView}

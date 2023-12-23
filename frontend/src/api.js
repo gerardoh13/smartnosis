@@ -25,6 +25,12 @@ class SmartnosisApi {
 
   static async registerProvider(data) {
     let res = await this.request("providers/register", data, "post");
+    return res.provider;
+  }
+
+  static async registerUser(data) {
+    const route = data.role === "hcp" ? "hcps" : "staff"
+    let res = await this.request(`${route}/register`, data, "post");
     return res.token;
   }
 
@@ -33,16 +39,16 @@ class SmartnosisApi {
     return res.token;
   }
 
-  static async getCurrProvider(id) {
-    let res = await this.request(`providers/${id}`);
-    return res.provider;
+  static async getCurrUser(providerId, id, role) {
+    let res = await this.request(`providers/${providerId}/${id}/${role}`);
+    return res.user;
   }
 
   static async resetPwd(token, data) {
     let res = await this.request(
       `providers/new-password?token=${token}`,
       data,
-      "post"
+      "post",
     );
     return res;
   }
@@ -62,16 +68,16 @@ class SmartnosisApi {
     return res.intake;
   }
 
-  static async generatePDF(providerId, intakeId) {
-    let res = await axios.get(
-      `${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`,
-      {
-        responseType: "arraybuffer", // Treat response as binary data
-        headers: { Authorization: `Bearer ${SmartnosisApi.token}` },
-      }
-    );
-    return res;
-  }
+  // static async generatePDF(providerId, intakeId) {
+  //   let res = await axios.get(
+  //     `${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`,
+  //     {
+  //       responseType: "arraybuffer", // Treat response as binary data
+  //       headers: { Authorization: `Bearer ${SmartnosisApi.token}` },
+  //     }
+  //   );
+  //   return res;
+  // }
   // ------------------APPTS---------------------------
 
   static async addAppt(data) {

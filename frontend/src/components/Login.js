@@ -81,6 +81,12 @@ function Login({ login }) {
               <Link to="/reset">Reset password</Link>
             </span>
           </p>
+          <p className="text-center mt-2">
+            New to Smartnosis?
+            <span className="ms-1">
+              <Link to="/register">Register</Link>
+            </span>
+          </p>
         </div>
       </div>
     </Grid>

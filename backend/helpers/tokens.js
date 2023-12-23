@@ -3,18 +3,20 @@ const { SECRET_KEY } = require("../config");
 
 /** return signed JWT from provider data. */
 
-function createToken(provider) {
+function createToken(user) {
   let payload = {
-    email: provider.email,
-    id: provider.id
+    email: user.email,
+    id: user.id,
+    providerId: user.providerId,
+    role: user.role
   };
   return jwt.sign(payload, SECRET_KEY);
 }
 
-function createPwdResetToken(provider) {
+function createPwdResetToken(user) {
   let payload = {
-    email: provider.email,
+    email: user.email,
   };
-  return jwt.sign(payload, provider.password);
+  return jwt.sign(payload, user.password);
 }
 module.exports = { createToken, createPwdResetToken };

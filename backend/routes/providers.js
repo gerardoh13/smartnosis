@@ -15,6 +15,7 @@ const { BadRequestError } = require("../expressError");
 const jwt = require("jsonwebtoken");
 const Intake = require("../models/intake");
 const Appointment = require("../models/appointment");
+const Hcp = require("../models/hcp");
 
 const router = new express.Router();
 
@@ -87,9 +88,9 @@ router.post("/register", async function (req, res, next) {
       throw new BadRequestError(errs);
     }
 
-    const newProvider = await Provider.register({ ...req.body });
-    const token = createToken(newProvider);
-    return res.status(201).json({ token });
+    const provider = await Provider.register({ ...req.body });
+    // const token = createToken(newProvider);
+    return res.status(201).json({ provider });
   } catch (err) {
     return next(err);
   }
@@ -119,13 +120,21 @@ router.get(
  * Authorization required: same provider-as-:email
  **/
 
-router.get("/:providerId", ensureCorrectProvider, async function (req, res, next) {
-  try {
-    const provider = await Provider.get(req.params.providerId);
-    return res.json({ provider });
-  } catch (err) {
-    return next(err);
+router.get(
+  "/:providerId/:userId/:role",
+  ensureCorrectProvider,
+  async function (req, res, next) {
+    try {
+      let user;
+      if (req.params.role === "hcp") user = await Hcp.get(req.params.userId);
+      // else user = await Provider.get(req.params.providerId);
+      const provider = await Provider.get(user.providerId);
+      user.provider = provider;
+      return res.json({ user });
+    } catch (err) {
+      return next(err);
+    }
   }
-});
+);
 
 module.exports = router;

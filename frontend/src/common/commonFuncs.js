@@ -35,7 +35,6 @@ const formatTime = (epoch) => {
 const validatePhone = (phone) => {
   if (phone.lenght > 12) return;
   phone = phone.replaceAll("-", "");
-  console.log(phone);
   for (let i = 0; i < phone.length; i++) {
     if (isNaN(phone[i])) return;
   }

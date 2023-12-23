@@ -1,0 +1,98 @@
+import React from "react";
+import RegisterHcp from "./RegisterHcp";
+import RegisterStaff from "./registerStaff";
+import Alerts from "../common/Alerts";
+
+function RegisterAdmin({
+  data,
+  submit,
+  handleChange,
+  changeStep,
+  confirmPasswords,
+  errors
+}) {
+  //   const [errors, setErrors] = useState([]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!confirmPasswords()) return;
+    submit();
+  };
+
+  const adminForm =
+    data.role === "hcp" ? (
+      <RegisterHcp
+        data={data}
+        submit={submit}
+        handleChange={handleChange}
+        firstUser
+      />
+    ) : (
+      <RegisterStaff
+        data={data}
+        submit={submit}
+        handleChange={handleChange}
+        firstUser
+      />
+    );
+  return (
+    <>
+      {errors.length ? <Alerts msgs={errors} /> : null}
+      <div className="mt-3">
+        <span className="text-start ms-1 me-3">
+          Your Role <span className="text-danger">*</span>
+        </span>
+        <div className="text-center">
+          {/* Hcp */}
+          <input
+            type="radio"
+            className="btn-check ms-3"
+            name="role"
+            id="hcp"
+            autoComplete="off"
+            onChange={handleChange}
+            checked={data.role === "hcp"}
+            value="hcp"
+            required
+          />
+          <label className="btn btn-outline-secondary me-2" htmlFor="hcp">
+            HCP
+          </label>
+          {/* Non-HCP */}
+          <input
+            type="radio"
+            className="btn-check"
+            name="role"
+            id="staff"
+            autoComplete="off"
+            onChange={handleChange}
+            checked={data.role === "staff"}
+            value="staff"
+          />
+          <label className="btn btn-outline-secondary me-2" htmlFor="staff">
+            Non-HCP
+          </label>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit}>
+        {adminForm}
+        <div className="row mt-4">
+          <div className="col">
+            <button
+              type="button"
+              className="btn btn-primary form-control"
+              onClick={() => changeStep(-1)}
+            >
+              Previous
+            </button>
+          </div>
+          <div className="col">
+            <button className="btn btn-primary form-control">Sumbit</button>
+          </div>
+        </div>
+      </form>
+    </>
+  );
+}
+
+export default RegisterAdmin;

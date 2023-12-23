@@ -47,7 +47,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideBar({ toggleDrawer, open, setCurrView }) {
-  const { currProvider, isXsScreen } = useContext(ProviderContext);
+  const { currUser, isXsScreen } = useContext(ProviderContext);
   const [showQrModal, setShowQrModal] = useState(false);
 
   const handleClick = (view) => {
@@ -130,7 +130,7 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
       <QrCodeModal
         show={showQrModal}
         setShow={setShowQrModal}
-        providerId={currProvider.id}
+        providerId={currUser.id}
       />
       {!isXsScreen ? (
         <Drawer

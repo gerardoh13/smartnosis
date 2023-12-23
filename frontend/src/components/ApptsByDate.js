@@ -14,7 +14,7 @@ function ApptsByDate({
   setReload,
 }) {
   const [appts, setAppts] = useState([]);
-  const { currProvider } = useContext(ProviderContext);
+  const { currUser } = useContext(ProviderContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +23,7 @@ function ApptsByDate({
       if (reload) setReload(false);
     };
     fetchData();
-  }, [currProvider, currDate, getActivity, reload, setReload]);
+  }, [currUser, currDate, getActivity, reload, setReload]);
 
   const handleClick = (appt) => {
     setShow(true);

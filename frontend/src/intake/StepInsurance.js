@@ -91,10 +91,10 @@ function StepInsurance({
           placeholder="Last Name"
           value={data.insLastName}
           disabled={data.insRelationship === "Self"}
-          onChange={(e) => handleChange(e, true)}
+          onChange={(e) => handleChange(e, "insurance")}
           required
         />
-        <label htmlFor="lastName">
+        <label htmlFor="insLastName">
           Last Name of Policy Holder: <span className="text-danger">*</span>
         </label>
       </div>
@@ -113,7 +113,7 @@ function StepInsurance({
             id="insDob"
             max={maxDate}
             value={data.insDob}
-            onChange={(e) => handleChange(e, true)}
+            onChange={(e) => handleChange(e, "insurance")}
             disabled={data.insRelationship === "Self"}
             required
           />
@@ -168,7 +168,7 @@ function StepInsurance({
               placeholder="Insurance ID"
               required={data.insProvider === "Other"}
               value={data.insOtherProvider}
-              onChange={(e) => handleChange(e, true)}
+              onChange={(e) => handleChange(e, "insurance")}
             />
             <label htmlFor="insOtherProvider">
               Insurance Provider: <span className="text-danger">*</span>
@@ -186,7 +186,7 @@ function StepInsurance({
           name="insuranceId"
           placeholder="Insurance ID"
           value={data.insuranceId}
-          onChange={(e) => handleChange(e, true)}
+          onChange={(e) => handleChange(e, "insurance")}
         />
         <label htmlFor="insuranceId">Insurance ID#:</label>
       </div>
@@ -199,7 +199,7 @@ function StepInsurance({
           name="insGroupName"
           placeholder="Group Name"
           value={data.insGroupName}
-          onChange={(e) => handleChange(e, true)}
+          onChange={(e) => handleChange(e, "insurance")}
         />
         <label htmlFor="insGroupName">Group Name:</label>
       </div>
@@ -212,7 +212,7 @@ function StepInsurance({
           name="insGroupNumber"
           placeholder="Group Number"
           value={data.insGroupNumber}
-          onChange={(e) => handleChange(e, true)}
+          onChange={(e) => handleChange(e, "insurance")}
         />
         <label htmlFor="insGroupNumber">Group Number:</label>
       </div>

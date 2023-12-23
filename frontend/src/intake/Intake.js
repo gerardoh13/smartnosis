@@ -70,14 +70,14 @@ function Intake({ setCurrView }) {
 
   const navigate = useNavigate();
   let query = useQuery();
-  const { currProvider } = useContext(ProviderContext);
+  const { currUser } = useContext(ProviderContext);
 
   useEffect(() => {
     let queryProvider = query.get("provider");
     let queryAppt = query.get("appointment");
-    if (!queryProvider && !currProvider) navigate("/404");
-    if (queryProvider && currProvider) navigate("/");
-    if (!queryProvider && currProvider) setAgreeDisclaimer(true);
+    if (!queryProvider && !currUser) navigate("/404");
+    if (queryProvider && currUser) navigate("/");
+    if (!queryProvider && currUser) setAgreeDisclaimer(true);
 
     let max = new Date().toISOString().slice(0, -14);
     setMaxDate(max);
@@ -104,13 +104,13 @@ function Intake({ setCurrView }) {
     }
     setFormData((data) => ({
       ...data,
-      providerId: currProvider ? currProvider.id : queryProvider,
+      providerId: currUser ? currUser.providerId : queryProvider,
     }));
 
     if (queryAppt) {
       getAppt();
     }
-  }, [query, currProvider, navigate, setMaxDate]);
+  }, [query, currUser, navigate, setMaxDate]);
 
   useEffect(() => {
     if (insuranceData.insRelationship === "Self") {
@@ -128,7 +128,12 @@ function Intake({ setCurrView }) {
         insDob: "",
       }));
     }
-  }, [insuranceData.insRelationship, formData]);
+  }, [
+    insuranceData.insRelationship,
+    formData.firstName,
+    formData.lastName,
+    formData.dob,
+  ]);
 
   const changeStep = (n) => {
     setStep((prev) => prev + n);
@@ -170,6 +175,12 @@ function Intake({ setCurrView }) {
     if (dataCopy.insurance === "Yes")
       dataCopy = { ...dataCopy, ...formatInsData(dataCopy) };
     deleteNulls(dataCopy);
+    //
+    delete dataCopy.tobaccoUse
+    delete dataCopy.alcoholUse
+    delete dataCopy.drugUse
+    delete dataCopy.email
+    //
     if (query.get("appointment")) dataCopy.apptId = query.get("appointment");
     return dataCopy;
   };
@@ -186,7 +197,7 @@ function Intake({ setCurrView }) {
     setFormData(INITIAL_STATE);
     setMedHistory(INITIAL_MED_HISTORY);
     setInsuranceData(INITIAL_INSURANCE_STATE);
-    if (currProvider) setCurrView("Intakes");
+    if (currUser) setCurrView("Intakes");
     else changeStep(1);
   };
 

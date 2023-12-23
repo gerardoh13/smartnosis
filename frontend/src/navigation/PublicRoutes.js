@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
-import ProviderContext from "../common/ProviderContext";
+import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
-function PublicRoutes() {
-  const { currProvider } = useContext(ProviderContext);
-  if (currProvider) {
+function PublicRoutes({ currUser }) {
+  if (currUser) {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;

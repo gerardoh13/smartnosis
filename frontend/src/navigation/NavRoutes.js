@@ -1,24 +1,23 @@
 import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "../components/Login";
-import Register from "../components/Register";
+import Register from "../Practice/Register";
 import Dashboard from "../components/Dashboard";
 import Intake from "../intake/Intake";
 import ResetPwd from "../components/ResetPwd";
-// import PrivateRoutes from "./PrivateRoutes";
+import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import ProviderContext from "../common/ProviderContext";
 
-function NavRoutes({ login, register, currView, setCurrView }) {
-  const { currProvider } = useContext(ProviderContext);
+function NavRoutes({ login, registerUser, currView, setCurrView }) {
+  const { currUser } = useContext(ProviderContext);
 
   return (
     <Routes>
       <Route
-        exact
         path="/"
         element={
-          currProvider ? (
+          currUser ? (
             <Dashboard currView={currView} setCurrView={setCurrView} />
           ) : (
             <Login login={login} />
@@ -27,14 +26,17 @@ function NavRoutes({ login, register, currView, setCurrView }) {
       />
       <Route path="/intake" element={<Intake />} />
 
-      <Route element={<PublicRoutes />}>
+      <Route element={<PublicRoutes currUser={currUser} />}>
         <Route path="/reset" element={<ResetPwd />} />
-        <Route path="/register" element={<Register register={register} />} />
+        <Route
+          path="/register"
+          element={<Register registerUser={registerUser} />}
+        />
       </Route>
 
-      {/* <Route element={<PrivateRoutes />}>
-        <Route exact path="/calendar" element={<Calendar />} />
-      </Route> */}
+      <Route element={<PrivateRoutes currUser={currUser} />}>
+        {/* <Route path="/admin" element={<AdminHome />} /> */}
+      </Route>
     </Routes>
   );
 }

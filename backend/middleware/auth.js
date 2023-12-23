@@ -50,7 +50,7 @@ function ensureLoggedIn(req, res, next) {
 function ensureCorrectProvider(req, res, next) {
   try {
     const user = res.locals.user;
-    if (!(user && user.id === req.params.providerId)) {
+    if (!(user && user.providerId === req.params.providerId)) {
       throw new UnauthorizedError();
     }
     return next();

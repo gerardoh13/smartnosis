@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
-import UserContext from "../users/UserContext";
+import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
-function PrivateRoutes() {
-  const { currUser } = useContext(UserContext);
-
+function PrivateRoutes({ currUser }) {
   if (!currUser) {
     return <Navigate to="/" replace />;
   }

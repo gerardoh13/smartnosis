@@ -149,7 +149,7 @@ function ApptModal({ show, clearModal, appt, provider, setReload, currDate }) {
       <Modal show={show} centered>
         <Modal.Header>
           <Modal.Title>
-            Appointment for {appt.firstName}, {appt.lastName}
+            Appointment for {appt.lastName}, {appt.firstName}
           </Modal.Title>
           <button
             className="btn-close"

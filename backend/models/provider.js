@@ -38,7 +38,7 @@ class Provider {
     if (provider) {
       // compare hashed password to a new hash from password
       const isValid = await bcrypt.compare(password, provider.password);
-      if (isValid === true) {
+      if (isValid) {
         delete provider.password;
         return provider;
       }
@@ -56,7 +56,6 @@ class Provider {
 
   static async register({
     orgName,
-    npi,
     email,
     phone,
     address1,
@@ -64,6 +63,8 @@ class Provider {
     city,
     state,
     zip,
+    hcpsCount,
+    staffCount,
     password,
   }) {
     const duplicateCheck = await db.query(
@@ -77,14 +78,13 @@ class Provider {
       throw new BadRequestError(`Duplicate email: ${email}`);
     }
 
-    const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+    // const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
     const uId = generateUniqueId();
 
     const result = await db.query(
       `INSERT INTO providers
            (id,
             name,
-            npi,
             email,
             phone,
             address1,
@@ -92,13 +92,13 @@ class Provider {
             city,
             state,
             zip,
-            password)
+            hcps_count,
+            staff_count)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
            RETURNING id, email, name AS "orgName"`,
       [
         uId,
         orgName,
-        npi,
         email,
         phone,
         address1,
@@ -106,7 +106,8 @@ class Provider {
         city,
         state,
         zip,
-        hashedPassword,
+        hcpsCount,
+        staffCount,
       ]
     );
 
@@ -139,16 +140,15 @@ class Provider {
 
   static async get(id) {
     const providerRes = await db.query(
-      `SELECT id,
-              name,
-              npi,
-              email,
+      `SELECT name,
               phone,
               address1,
               address2,
               city,
               state,
-              zip
+              zip,
+              hcps_count AS "hcpsCount",
+              staff_count AS "staffCount"
         FROM providers
         WHERE id = $1`,
       [id]
@@ -185,6 +185,8 @@ class Provider {
 
     const { setCols, values } = sqlForPartialUpdate(data, {
       orgName: "name",
+      hcpsCount: "hcps_count",
+      staffCount: "staff_count"
     });
     const emailVarIdx = "$" + (values.length + 1);
 

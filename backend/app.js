@@ -6,10 +6,12 @@ const cors = require("cors");
 const { NotFoundError } = require("./expressError");
 
 const { authenticateJWT } = require("./middleware/auth");
-const pdfRoutes = require("./routes/pdf");
+// const pdfRoutes = require("./routes/pdf");
 const providerRoutes = require("./routes/providers");
 const intakeRoutes = require("./routes/intakes");
 const apptRoutes = require("./routes/appointments");
+const hcpsRoutes = require("./routes/hcps");
+// const staffRoutes = require("./routes/staff");
 
 const app = express();
 
@@ -20,8 +22,10 @@ app.use(authenticateJWT);
 app.use("/providers", providerRoutes);
 app.use("/intakes", intakeRoutes);
 app.use("/appointments", apptRoutes);
+app.use("/hcps", hcpsRoutes);
+// app.use("/staff", staffRoutes);
 
-app.use("/pdf", pdfRoutes);
+// app.use("/pdf", pdfRoutes);
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {

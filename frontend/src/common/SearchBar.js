@@ -10,11 +10,11 @@ function SearchBar({
   setLastView,
   currView,
 }) {
-  const { currProvider } = useContext(ProviderContext);
+  const { currUser } = useContext(ProviderContext);
 
   const search = async (e) => {
     e.preventDefault();
-    const res = await SmartnosisApi.search(query, currProvider.id);
+    const res = await SmartnosisApi.search(query, currUser.id);
     if (currView !== "Results") setLastView(currView);
     setCurrView("Results");
     setSearchRes(res.data);
@@ -28,6 +28,7 @@ function SearchBar({
               type="text"
               className="form-control"
               placeholder="Search by first or last name..."
+              id="query"
               required
               value={query}
               onChange={(e) => setQuery(e.target.value)}

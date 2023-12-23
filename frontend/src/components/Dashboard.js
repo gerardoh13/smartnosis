@@ -22,7 +22,7 @@ function Dashboard({ currView, setCurrView }) {
     phone: "",
     apptAt: "",
   };
-  const { currProvider, isXsScreen } = useContext(ProviderContext);
+  const { currUser, isXsScreen } = useContext(ProviderContext);
   const [showApptModal, setShowModal] = useState(false);
   const [currAppt, setCurrAppt] = useState(INITIAL_STATE);
   const [currDate, setCurrDate] = useState(new Date());
@@ -34,7 +34,7 @@ function Dashboard({ currView, setCurrView }) {
   const [intakeData, setIntakeData] = useState("");
 
   const generatePdf = async (intakeId) => {
-    let res = await SmartnosisApi.getIntake(currProvider.id, intakeId);
+    let res = await SmartnosisApi.getIntake(currUser.providerId, intakeId);
     if (isXsScreen) {
       const MyDoc = <PDF intake={res} />;
       const blob = await pdf(MyDoc).toBlob();
@@ -54,7 +54,7 @@ function Dashboard({ currView, setCurrView }) {
   const getActivity = async (type) => {
     const { lastMidnight, nextMidnight } = getMidnights(currDate);
     const res = await SmartnosisApi.getByDate(
-      currProvider.id,
+      currUser.providerId,
       lastMidnight,
       nextMidnight,
       type
@@ -125,7 +125,7 @@ function Dashboard({ currView, setCurrView }) {
               show={showApptModal}
               clearModal={clearModal}
               appt={currAppt}
-              provider={currProvider}
+              provider={currUser}
               currDate={currDate}
               setReload={setReload}
             />

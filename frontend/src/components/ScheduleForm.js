@@ -5,10 +5,10 @@ import { validatePhone, deleteNulls } from "../common/commonFuncs";
 import IntakeSentToast from "../common/IntakeSentToast";
 
 function ScheduleForm({ currDate, setReload }) {
-  const { currProvider } = useContext(ProviderContext);
+  const { currUser } = useContext(ProviderContext);
 
   const INITIAL_STATE = {
-    providerId: currProvider.id,
+    providerId: currUser.providerId,
     firstName: "",
     lastName: "",
     email: "",
@@ -34,7 +34,9 @@ function ScheduleForm({ currDate, setReload }) {
       return;
     }
     let data = { ...formData };
-    data.provider = { id: currProvider.id, name: currProvider.name };
+    data.provider = { id: currUser.providerId, name: currUser.provider.name };
+    // console.log(data.provider)
+    // return
     data.apptAt = new Date(data.apptAt).getTime() / 1000;
     let appt;
     if (type === "email") {
@@ -235,6 +237,7 @@ function ScheduleForm({ currDate, setReload }) {
                 className="form-control"
                 placeholder="Patient's email"
                 name="email"
+                id="email"
                 value={formData.email}
                 onChange={handleChange}
               />

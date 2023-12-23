@@ -9,6 +9,7 @@ const generateUniqueId = require("generate-unique-id");
 
 class Appointment {
   static async addAppt(data) {
+    console.log(data)
     const uId = generateUniqueId();
     const result = await db.query(
       `INSERT INTO appointments (id,

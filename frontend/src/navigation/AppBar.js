@@ -32,7 +32,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-function ResponsiveAppBar({ toggleDrawer, open, logout, orgName }) {
+function ResponsiveAppBar({ toggleDrawer, open, logout, orgName, firstName }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -84,7 +84,7 @@ function ResponsiveAppBar({ toggleDrawer, open, logout, orgName }) {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar alt={firstName} src="/static/images/avatar/2.jpg" />
             </IconButton>
           </Tooltip>
           <Menu
