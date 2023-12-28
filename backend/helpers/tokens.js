@@ -8,7 +8,8 @@ function createToken(user) {
     email: user.email,
     id: user.id,
     providerId: user.providerId,
-    role: user.role
+    role: user.role,
+    isAdmin: user.isAdmin
   };
   return jwt.sign(payload, SECRET_KEY);
 }

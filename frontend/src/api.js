@@ -44,6 +44,11 @@ class SmartnosisApi {
     return res.user;
   }
 
+  static async getInvitations(providerId) {
+    let res = await this.request(`providers/admin/${providerId}`);
+    return res.invitations;
+  }
+
   static async resetPwd(token, data) {
     let res = await this.request(
       `providers/new-password?token=${token}`,

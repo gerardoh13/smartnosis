@@ -4,7 +4,10 @@
   "type": "object",
   "properties": {
     "email": {
-      "type": "string"
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 20,
+      "format": "email"
     },
     "password": {
       "type": "string"

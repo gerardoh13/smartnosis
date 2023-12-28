@@ -14,7 +14,7 @@ function SearchBar({
 
   const search = async (e) => {
     e.preventDefault();
-    const res = await SmartnosisApi.search(query, currUser.id);
+    const res = await SmartnosisApi.search(query, currUser.providerId);
     if (currView !== "Results") setLastView(currView);
     setCurrView("Results");
     setSearchRes(res.data);

@@ -5,6 +5,7 @@ import ScheduleForm from "./ScheduleForm";
 import ApptModal from "./ApptModal";
 import IntakesByDate from "./IntakesByDate";
 import ApptsByDate from "./ApptsByDate";
+import AdminDash from "./AdminDash";
 import ProviderContext from "../common/ProviderContext";
 import { getMidnights } from "../common/commonFuncs";
 import SearchBar from "../common/SearchBar";
@@ -95,6 +96,8 @@ function Dashboard({ currView, setCurrView }) {
         setQuery={setQuery}
         lastView={lastView}
       />
+    ) : currView === "Admin" ? (
+      <AdminDash/>
     ) : null;
 
   return (

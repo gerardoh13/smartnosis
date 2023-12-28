@@ -12,6 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import IconButton from "@mui/material/IconButton";
 import QrCodeIcon from "@mui/icons-material/QrCode";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import ProviderContext from "../common/ProviderContext";
 import QrCodeModal from "../common/QrCodeModal";
@@ -112,15 +113,17 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
             <ListItemText primary="QR Code" />
           </ListItemButton>
         </ListItem>
-        {/* Refresh Code */}
-        {/* <ListItem disablePadding>
-        <ListItemButton onClick={() => setShowQrModal(true)}>
-          <ListItemIcon>
-            <RefreshIcon />
-          </ListItemIcon>
-          <ListItemText primary="Refresh" />
-        </ListItemButton>
-      </ListItem> */}
+        {/* Admin */}
+        {currUser.isAdmin ? (
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => handleClick("Admin")}>
+              <ListItemIcon>
+                <AdminPanelSettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Admin" />
+            </ListItemButton>
+          </ListItem>
+        ) : null}
       </List>
     </>
   );

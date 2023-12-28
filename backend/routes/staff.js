@@ -4,7 +4,7 @@
 
 const jsonschema = require("jsonschema");
 
-const Hcp = require("../models/hcp");
+const Staff = require("../models/staff");
 const Email = require("../models/email");
 const express = require("express");
 const { ensureCorrectProvider } = require("../middleware/auth");
@@ -32,8 +32,8 @@ router.post("/token", async function (req, res, next) {
 //       throw new BadRequestError(errs);
 //     }
     const { email, password } = req.body;
-    const hcp = await Hcp.authenticate(email, password);
-    const token = createToken(hcp);
+    const staff = await Staff.authenticate(email, password);
+    const token = createToken(staff);
     return res.json({ token });
 //   } catch (err) {
 //     return next(err);
@@ -43,8 +43,8 @@ router.post("/token", async function (req, res, next) {
 router.post("/reset", async function (req, res, next) {
   try {
     const { email } = req.body;
-    const hcp = await Hcp.getWithPassword(email);
-    const token = createPwdResetToken(hcp);
+    const staff = await Staff.getWithPassword(email);
+    const token = createPwdResetToken(staff);
     await Email.sendPwdReset(email, token);
     return res.json({ emailSent: true });
   } catch (err) {
@@ -56,10 +56,10 @@ router.post("/new-password", async function (req, res, next) {
   try {
     const { token } = req.query;
     const { email, password } = req.body;
-    const hcp = await Hcp.getWithPassword(email);
-    const tokenUser = jwt.verify(token, hcp.password);
-    if (hcp.email === tokenUser.email) {
-      await Hcp.update(email, { password: password });
+    const staff = await Staff.getWithPassword(email);
+    const tokenUser = jwt.verify(token, staff.password);
+    if (staff.email === tokenUser.email) {
+      await Staff.update(email, { password: password });
       return res.json({ passwordUpdated: true });
     }
   } catch (err) {
@@ -67,9 +67,9 @@ router.post("/new-password", async function (req, res, next) {
   }
 });
 
-/** POST /auth/register:   { hcp } => { token }
+/** POST /auth/register:   { staff } => { token }
  *
- * hcp must include { email, password, firstName  }
+ * staff must include { email, password, firstName, lastName, title  }
  *
  * Returns JWT token which can be used to authenticate further requests.
  *
@@ -84,25 +84,25 @@ router.post("/register", async function (req, res, next) {
     //   throw new BadRequestError(errs);
     // }
 
-    const newHcp = await Hcp.register({ ...req.body });
-    const token = createToken(newHcp);
+    const newStaff = await Staff.register({ ...req.body });
+    const token = createToken(newStaff);
     return res.status(201).json({ token });
   } catch (err) {
     return next(err);
   }
 });
 
-/** GET /[email] => { hcp }
+/** GET /[email] => { staff }
  *
  * Returns { id, email, firstName }
  *
- * Authorization required: same hcp-as-:email
+ * Authorization required: same staff-as-:email
  **/
 
-router.get("/:hcpId", ensureCorrectProvider, async function (req, res, next) {
+router.get("/:staffId", ensureCorrectProvider, async function (req, res, next) {
   try {
-    const hcp = await Hcp.get(req.params.hcpId);
-    return res.json({ hcp });
+    const staff = await Staff.get(req.params.staffId);
+    return res.json({ staff });
   } catch (err) {
     return next(err);
   }

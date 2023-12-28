@@ -13,6 +13,20 @@ CREATE TABLE providers (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE hcp_invitations (
+    provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
+    sent VARCHAR[],
+    active VARCHAR[],
+    PRIMARY KEY (provider_id)
+);
+
+CREATE TABLE staff_invitations (
+    provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
+    sent VARCHAR[],
+    active VARCHAR[],
+    PRIMARY KEY (provider_id)
+);
+
 CREATE TABLE hcps (
   id SERIAL PRIMARY KEY,
   is_admin BOOLEAN NOT NULL DEFAULT FALSE,
@@ -51,7 +65,7 @@ CREATE TABLE intakes (
   state VARCHAR(2) NOT NULL,
   zip INTEGER,
   insurance VARCHAR(3) NOT NULL,
-  -- email TEXT CHECK (position('@' IN email) > 1),
+  email TEXT CHECK (position('@' IN email) > 1),
   phone VARCHAR(12) NOT NULL,
   phone2 VARCHAR(12),
   symptoms VARCHAR [],

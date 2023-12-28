@@ -179,7 +179,6 @@ function Intake({ setCurrView }) {
     delete dataCopy.tobaccoUse
     delete dataCopy.alcoholUse
     delete dataCopy.drugUse
-    delete dataCopy.email
     //
     if (query.get("appointment")) dataCopy.apptId = query.get("appointment");
     return dataCopy;

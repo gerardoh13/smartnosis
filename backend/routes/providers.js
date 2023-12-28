@@ -81,20 +81,40 @@ router.post("/new-password", async function (req, res, next) {
  */
 
 router.post("/register", async function (req, res, next) {
+  let data = { ...req.body };
+  const hcpsEmails = data.hcpsEmails;
+  const staffEmails = data.staffEmails;
+  delete data.hcpsEmails;
+  delete data.staffEmails;
   try {
-    const validator = jsonschema.validate(req.body, providerNewSchema);
+    const validator = jsonschema.validate(data, providerNewSchema);
     if (!validator.valid) {
       const errs = validator.errors.map((e) => e.stack);
       throw new BadRequestError(errs);
     }
-
-    const provider = await Provider.register({ ...req.body });
-    // const token = createToken(newProvider);
+    const provider = await Provider.register({ ...data });
+    if (hcpsEmails.length) Hcp.invite(provider.id, hcpsEmails);
+    // if (staffEmails.length) Hcp.invite(staffEmails)
     return res.status(201).json({ provider });
   } catch (err) {
     return next(err);
   }
 });
+
+
+router.get(
+  "/admin/:providerId",
+  ensureCorrectProvider,
+  async function (req, res, next) {
+    const { providerId } = req.params;
+    try {
+      const invitations = await Provider.getInvitations(providerId)
+      return res.status(200).json({ invitations });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
 
 router.get(
   "/search/:providerId",

@@ -124,6 +124,8 @@ function Register({ registerUser }) {
         ].includes(key)
       )
     );
+    practiceData.hcpsEmails = formatEmailArr(hcpsEmails);
+
     let userData = Object.fromEntries(
       Object.entries(dataCopy).filter(([key]) =>
         [
@@ -145,14 +147,14 @@ function Register({ registerUser }) {
   };
   const handleSubmit = async () => {
     let [practiceData, userData] = formatData();
-    // console.log(formatEmailArr(hcpsEmails));
     // console.log(formatEmailArr(staffEmails));
+
     try {
       let provider = await SmartnosisApi.registerProvider(practiceData);
-      userData.providerId = provider.id
-      await registerUser(userData)
+      userData.providerId = provider.id;
+      await registerUser(userData);
       console.log(provider);
-      navigate("/")
+      navigate("/");
     } catch (errors) {
       console.log(errors);
     }

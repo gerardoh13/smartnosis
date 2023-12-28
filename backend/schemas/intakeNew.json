@@ -56,6 +56,12 @@
     "phone2": {
       "type": "string"
     },
+    "email": {
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 20,
+      "format": "email"
+    },
     "symptoms": {
       "type": "array"
     },
@@ -111,6 +117,7 @@
     "zip",
     "insurance",
     "phone",
+    "email",
     "submittedAt"
   ]
 }

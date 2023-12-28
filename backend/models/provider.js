@@ -8,45 +8,13 @@ const {
   BadRequestError,
   UnauthorizedError,
 } = require("../expressError");
-const generateUniqueId = require('generate-unique-id');
+const generateUniqueId = require("generate-unique-id");
 
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 
 /** Related functions for providers. */
 
 class Provider {
-  /** authenticate provider with email, password.
-   *
-   * Returns { id, email, first_name }
-   *
-   * Throws UnauthorizedError if provider not found or wrong password.
-   **/
-
-  static async authenticate(email, password) {
-    // try to find the provider first
-    const result = await db.query(
-      `SELECT id,
-                  email,
-                  password
-           FROM providers
-           WHERE email = $1`,
-      [email]
-    );
-
-    const provider = result.rows[0];
-
-    if (provider) {
-      // compare hashed password to a new hash from password
-      const isValid = await bcrypt.compare(password, provider.password);
-      if (isValid) {
-        delete provider.password;
-        return provider;
-      }
-    }
-
-    throw new UnauthorizedError("Invalid email/password");
-  }
-
   /** Register provider with data.
    *
    * Returns { email, first_name }
@@ -65,7 +33,6 @@ class Provider {
     zip,
     hcpsCount,
     staffCount,
-    password,
   }) {
     const duplicateCheck = await db.query(
       `SELECT email
@@ -116,20 +83,42 @@ class Provider {
     return provider;
   }
 
-  static async getWithPassword(email) {
-    const providerRes = await db.query(
-      `SELECT id,
-              email,
-              password
-           FROM providers
-           WHERE email = $1`,
-      [email]
+  static async getInvitations(provider_id) {
+    const hcpRes = await db.query(
+      `SELECT sent,
+              active
+        FROM hcp_invitations
+        WHERE provider_id = $1`,
+      [provider_id]
     );
-    const provider = providerRes.rows[0];
-    if (!provider) throw new NotFoundError(`No provider: ${email}`);
-    return provider;
-  }
 
+    const staffRes = await db.query(
+      `SELECT sent,
+              active
+        FROM staff_invitations
+        WHERE provider_id = $1`,
+      [provider_id]
+    );
+
+    const hcpInvitations = hcpRes.rows.length
+      ? {
+          active: hcpRes.rows[0].active || [],
+          sent: hcpRes.rows[0].sent || [],
+        }
+      : { active: [], sent: [] };
+    const staffInvitations = staffRes.rows.length
+      ? {
+          active: staffRes.rows[0].active || [],
+          sent: staffRes.rows[0].sent || [],
+        }
+      : { active: [], sent: [] };
+
+    const invtations = { hcps: hcpInvitations, staff: staffInvitations };
+
+    // if (!provider) throw new NotFoundError(`No provider: ${id}`);
+
+    return invtations;
+  }
 
   /** Given an email, return data about provider.
    *
@@ -186,7 +175,7 @@ class Provider {
     const { setCols, values } = sqlForPartialUpdate(data, {
       orgName: "name",
       hcpsCount: "hcps_count",
-      staffCount: "staff_count"
+      staffCount: "staff_count",
     });
     const emailVarIdx = "$" + (values.length + 1);
 
