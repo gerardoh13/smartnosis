@@ -83,13 +83,24 @@ class Provider {
     return provider;
   }
 
-  static async getInvitations(provider_id) {
+  static async activateUser(providerId, email, role) {
+    let invitations = this.getInvitations(providerId);
+    console.log(invitations)
+    if (invitations[role].sent.indexOf(email) > -1) {
+      invitations[role].sent = invitations[role].sent.filter(
+        (e) => e !== email
+      );
+    }
+    invitations[role].active.push(email)
+  }
+
+  static async getInvitations(providerId) {
     const hcpRes = await db.query(
       `SELECT sent,
               active
         FROM hcp_invitations
         WHERE provider_id = $1`,
-      [provider_id]
+      [providerId]
     );
 
     const staffRes = await db.query(
@@ -97,7 +108,7 @@ class Provider {
               active
         FROM staff_invitations
         WHERE provider_id = $1`,
-      [provider_id]
+      [providerId]
     );
 
     const hcpInvitations = hcpRes.rows.length
@@ -113,11 +124,11 @@ class Provider {
         }
       : { active: [], sent: [] };
 
-    const invtations = { hcps: hcpInvitations, staff: staffInvitations };
+    const invitations = { hcp: hcpInvitations, staff: staffInvitations };
 
     // if (!provider) throw new NotFoundError(`No provider: ${id}`);
 
-    return invtations;
+    return invitations;
   }
 
   /** Given an email, return data about provider.

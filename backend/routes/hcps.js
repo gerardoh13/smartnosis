@@ -85,6 +85,7 @@ router.post("/register", async function (req, res, next) {
     // }
 
     const newHcp = await Hcp.register({ ...req.body });
+    await Hcp.markActive(newHcp.providerId, newHcp.email)
     const token = createToken(newHcp);
     return res.status(201).json({ token });
   } catch (err) {

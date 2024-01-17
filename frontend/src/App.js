@@ -31,7 +31,6 @@ function App() {
           let { id, role, providerId } = decodeToken(token);
           SmartnosisApi.token = token;
           let user = await SmartnosisApi.getCurrUser(providerId, id, role);
-          console.log(user);
           setCurrUser(user);
         } catch (err) {
           console.log(err);

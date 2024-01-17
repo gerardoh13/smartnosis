@@ -9,14 +9,14 @@ function RegisterAdmin({
   handleChange,
   changeStep,
   confirmPasswords,
-  errors
+  errors,
 }) {
   //   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!confirmPasswords()) return;
-    submit();
+    changeStep(1);
   };
 
   const adminForm =
@@ -87,7 +87,7 @@ function RegisterAdmin({
             </button>
           </div>
           <div className="col">
-            <button className="btn btn-primary form-control">Sumbit</button>
+            <button className="btn btn-primary form-control">Next</button>
           </div>
         </div>
       </form>

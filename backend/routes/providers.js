@@ -36,7 +36,8 @@ router.post("/token", async function (req, res, next) {
     }
 
     const { email, password } = req.body;
-    const provider = await Provider.authenticate(email, password);
+    // should allow for both staff and user, update line 40
+    const provider = await Hcp.authenticate(email, password);
     const token = createToken(provider);
     return res.json({ token });
   } catch (err) {
@@ -93,8 +94,12 @@ router.post("/register", async function (req, res, next) {
       throw new BadRequestError(errs);
     }
     const provider = await Provider.register({ ...data });
-    if (hcpsEmails.length) Hcp.invite(provider.id, hcpsEmails);
-    // if (staffEmails.length) Hcp.invite(staffEmails)
+    if (hcpsEmails.length) {
+      for (let email of hcpsEmails){
+        Hcp.invite(provider.id, email);
+      }
+    }
+    // if (staffEmails.length) Staff.invite(staffEmails)
     return res.status(201).json({ provider });
   } catch (err) {
     return next(err);

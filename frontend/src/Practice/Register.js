@@ -147,13 +147,10 @@ function Register({ registerUser }) {
   };
   const handleSubmit = async () => {
     let [practiceData, userData] = formatData();
-    // console.log(formatEmailArr(staffEmails));
-
     try {
       let provider = await SmartnosisApi.registerProvider(practiceData);
       userData.providerId = provider.id;
       await registerUser(userData);
-      console.log(provider);
       navigate("/");
     } catch (errors) {
       console.log(errors);
@@ -182,7 +179,7 @@ function Register({ registerUser }) {
     ].every(Boolean);
   };
 
-  const stepFourComplete = () => {
+  const stepTwoComplete = () => {
     let fieldsArr = [
       formData.firstName,
       formData.lastName,
@@ -219,33 +216,35 @@ function Register({ registerUser }) {
       break;
     case 1:
       currStep = (
-        <Invitations
-          emails={hcpsEmails}
-          setEmails={setHcpsEmails}
+        <RegisterAdmin
+          data={formData}
           changeStep={changeStep}
-          step={step}
+          handleChange={handleChange}
+          errors={errors}
+          confirmPasswords={confirmPasswords}
         />
       );
       break;
     case 2:
       currStep = (
         <Invitations
-          emails={staffEmails}
-          setEmails={setStaffEmails}
+          emails={hcpsEmails}
+          setEmails={setHcpsEmails}
           changeStep={changeStep}
           step={step}
+          adminRole={formData.role}
         />
       );
       break;
     case 3:
       currStep = (
-        <RegisterAdmin
-          data={formData}
+        <Invitations
+          emails={staffEmails}
+          setEmails={setStaffEmails}
           changeStep={changeStep}
-          handleChange={handleChange}
+          step={step}
+          adminRole={formData.role}
           submit={handleSubmit}
-          confirmPasswords={confirmPasswords}
-          errors={errors}
         />
       );
       break;
@@ -266,21 +265,21 @@ function Register({ registerUser }) {
                 }`}
               ></span>
               <span
+                className={`step ${stepTwoComplete() ? "finish" : ""} ${
+                  step === 1 ? "active" : ""
+                }`}
+              ></span>
+              <span
                 className={`step ${
                   formData.hcpsCount && noEmptyStrs(hcpsEmails) ? "finish" : ""
-                } ${step === 1 ? "active" : ""}`}
+                } ${step === 2 ? "active" : ""}`}
               ></span>
               <span
                 className={`step ${
                   formData.staffCount && noEmptyStrs(staffEmails)
                     ? "finish"
                     : ""
-                } ${step === 2 ? "active" : ""}`}
-              ></span>
-              <span
-                className={`step ${stepFourComplete() ? "finish" : ""} ${
-                  step === 3 ? "active" : ""
-                }`}
+                } ${step === 3 ? "active" : ""}`}
               ></span>
             </div>
           </div>
