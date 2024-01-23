@@ -22,7 +22,7 @@ function StepTwo({ data, changeStep, handleCheckbox, setFormData }) {
     "Sexually Transmitted Diseases",
     "Asthma/Emphysema",
     "High Blood Pressure",
-    "Kidney failure",
+    "Kidney Failure",
     "Gout",
     "Arthritis",
     "Parkinson's Disease",

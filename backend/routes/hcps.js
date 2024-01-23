@@ -16,30 +16,6 @@ const jwt = require("jsonwebtoken");
 
 const router = new express.Router();
 
-/** POST /auth/token:  { email, password } => { token }
- *
- * Returns JWT token which can be used to authenticate further requests.
- *
- * Authorization required: none
-
- */
-
-router.post("/token", async function (req, res, next) {
-//   try {
-//     const validator = jsonschema.validate(req.body, providerAuthSchema);
-//     if (!validator.valid) {
-//       const errs = validator.errors.map((e) => e.stack);
-//       throw new BadRequestError(errs);
-//     }
-    const { email, password } = req.body;
-    const hcp = await Hcp.authenticate(email, password);
-    const token = createToken(hcp);
-    return res.json({ token });
-//   } catch (err) {
-//     return next(err);
-//   }
-});
-
 router.post("/reset", async function (req, res, next) {
   try {
     const { email } = req.body;
@@ -85,13 +61,27 @@ router.post("/register", async function (req, res, next) {
     // }
 
     const newHcp = await Hcp.register({ ...req.body });
-    await Hcp.markActive(newHcp.providerId, newHcp.email)
+    await Hcp.markActive(newHcp.providerId, newHcp.email);
     const token = createToken(newHcp);
     return res.status(201).json({ token });
   } catch (err) {
     return next(err);
   }
 });
+
+router.get(
+  "/invite/:providerId/:email",
+  ensureCorrectProvider,
+  async function (req, res, next) {
+    const { providerId, email } = req.params;
+    try {
+      await Hcp.invite(providerId, email);
+      return res.json({ success: true });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
 
 /** GET /[email] => { hcp }
  *
@@ -108,5 +98,4 @@ router.get("/:hcpId", ensureCorrectProvider, async function (req, res, next) {
     return next(err);
   }
 });
-
 module.exports = router;

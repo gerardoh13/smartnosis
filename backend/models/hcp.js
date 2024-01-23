@@ -233,7 +233,7 @@ class Hcp {
       const existingEmails = checkResult.rows[0].sent || [];
       if (!existingEmails.includes(email)) {
         // If the email is not in the array, append it
-        await client.query(
+        await db.query(
           `UPDATE hcp_invitations 
           SET sent = array_append(sent, $1) 
           WHERE provider_id = $2`,

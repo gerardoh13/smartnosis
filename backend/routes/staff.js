@@ -16,30 +16,6 @@ const jwt = require("jsonwebtoken");
 
 const router = new express.Router();
 
-/** POST /auth/token:  { email, password } => { token }
- *
- * Returns JWT token which can be used to authenticate further requests.
- *
- * Authorization required: none
-
- */
-
-router.post("/token", async function (req, res, next) {
-//   try {
-//     const validator = jsonschema.validate(req.body, providerAuthSchema);
-//     if (!validator.valid) {
-//       const errs = validator.errors.map((e) => e.stack);
-//       throw new BadRequestError(errs);
-//     }
-    const { email, password } = req.body;
-    const staff = await Staff.authenticate(email, password);
-    const token = createToken(staff);
-    return res.json({ token });
-//   } catch (err) {
-//     return next(err);
-//   }
-});
-
 router.post("/reset", async function (req, res, next) {
   try {
     const { email } = req.body;
@@ -85,12 +61,27 @@ router.post("/register", async function (req, res, next) {
     // }
 
     const newStaff = await Staff.register({ ...req.body });
+    await Staff.markActive(newHcp.providerId, newStaff.email)
     const token = createToken(newStaff);
     return res.status(201).json({ token });
   } catch (err) {
     return next(err);
   }
 });
+
+router.get(
+  "/invite/:providerId/:email",
+  ensureCorrectProvider,
+  async function (req, res, next) {
+    const { providerId, email } = req.params;
+    try {
+      await Staff.invite(providerId, email);
+      return res.json({ success: true });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
 
 /** GET /[email] => { staff }
  *

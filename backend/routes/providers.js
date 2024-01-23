@@ -16,6 +16,7 @@ const jwt = require("jsonwebtoken");
 const Intake = require("../models/intake");
 const Appointment = require("../models/appointment");
 const Hcp = require("../models/hcp");
+const Staff = require("../models/staff");
 
 const router = new express.Router();
 
@@ -37,36 +38,13 @@ router.post("/token", async function (req, res, next) {
 
     const { email, password } = req.body;
     // should allow for both staff and user, update line 40
-    const provider = await Hcp.authenticate(email, password);
-    const token = createToken(provider);
+    const role = await Provider.getRole(email);
+    let user;
+    console.log(role);
+    if (role === "hcp") user = await Hcp.authenticate(email, password);
+    else if (role === "staff") user = await Staff.authenticate(email, password);
+    const token = createToken(user);
     return res.json({ token });
-  } catch (err) {
-    return next(err);
-  }
-});
-
-router.post("/reset", async function (req, res, next) {
-  try {
-    const { email } = req.body;
-    const provider = await Provider.getWithPassword(email);
-    const token = createPwdResetToken(provider);
-    await Email.sendPwdReset(email, token);
-    return res.json({ emailSent: true });
-  } catch (err) {
-    return next(err);
-  }
-});
-
-router.post("/new-password", async function (req, res, next) {
-  try {
-    const { token } = req.query;
-    const { email, password } = req.body;
-    const provider = await Provider.getWithPassword(email);
-    const tokenUser = jwt.verify(token, provider.password);
-    if (provider.email === tokenUser.email) {
-      await Provider.update(email, { password: password });
-      return res.json({ passwordUpdated: true });
-    }
   } catch (err) {
     return next(err);
   }
@@ -95,17 +73,20 @@ router.post("/register", async function (req, res, next) {
     }
     const provider = await Provider.register({ ...data });
     if (hcpsEmails.length) {
-      for (let email of hcpsEmails){
+      for (let email of hcpsEmails) {
         Hcp.invite(provider.id, email);
       }
     }
-    // if (staffEmails.length) Staff.invite(staffEmails)
+    if (staffEmails.length) {
+      for (let email of staffEmails) {
+        Staff.invite(provider.id, email);
+      }
+    }
     return res.status(201).json({ provider });
   } catch (err) {
     return next(err);
   }
 });
-
 
 router.get(
   "/admin/:providerId",
@@ -113,7 +94,7 @@ router.get(
   async function (req, res, next) {
     const { providerId } = req.params;
     try {
-      const invitations = await Provider.getInvitations(providerId)
+      const invitations = await Provider.getInvitations(providerId);
       return res.status(200).json({ invitations });
     } catch (err) {
       return next(err);
@@ -152,7 +133,8 @@ router.get(
     try {
       let user;
       if (req.params.role === "hcp") user = await Hcp.get(req.params.userId);
-      // else user = await Provider.get(req.params.providerId);
+      else if (req.params.role === "staff")
+        user = await Staff.get(req.params.userId);
       const provider = await Provider.get(user.providerId);
       user.provider = provider;
       return res.json({ user });

@@ -57,8 +57,7 @@ function StepInsurance({
             <Dropdown.Menu>
               <Dropdown.Item eventKey={"Self"}>Self</Dropdown.Item>
               <Dropdown.Item eventKey={"Spouse"}>Spouse</Dropdown.Item>
-              <Dropdown.Item eventKey={"Father"}>Father</Dropdown.Item>
-              <Dropdown.Item eventKey={"Family"}>Family</Dropdown.Item>
+              <Dropdown.Item eventKey={"Parent"}>Father</Dropdown.Item>
               <Dropdown.Item eventKey={"Other"}>Other</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -188,7 +187,7 @@ function StepInsurance({
           value={data.insuranceId}
           onChange={(e) => handleChange(e, "insurance")}
         />
-        <label htmlFor="insuranceId">Insurance ID#:</label>
+        <label htmlFor="insuranceId">Insurance ID #:</label>
       </div>
       {/* insGroupNamee */}
       <div className="form-floating my-3">

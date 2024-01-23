@@ -49,6 +49,11 @@ class SmartnosisApi {
     return res.invitations;
   }
 
+  static async sendInvite(providerId, type, email) {
+    let res = await this.request(`${type}/invite/${providerId}/${email}`);
+    return res.success;
+  }
+
   static async resetPwd(token, data) {
     let res = await this.request(
       `providers/new-password?token=${token}`,
@@ -73,16 +78,6 @@ class SmartnosisApi {
     return res.intake;
   }
 
-  // static async generatePDF(providerId, intakeId) {
-  //   let res = await axios.get(
-  //     `${BASE_URL}/intakes/generate-pdf/${providerId}/${intakeId}`,
-  //     {
-  //       responseType: "arraybuffer", // Treat response as binary data
-  //       headers: { Authorization: `Bearer ${SmartnosisApi.token}` },
-  //     }
-  //   );
-  //   return res;
-  // }
   // ------------------APPTS---------------------------
 
   static async addAppt(data) {

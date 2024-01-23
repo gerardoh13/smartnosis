@@ -73,7 +73,6 @@ function StepFour({
             >
               {data.alcoholUse ? data.alcoholUse : "Select"}
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
               <Dropdown.Item eventKey={"None"}>None</Dropdown.Item>
               <Dropdown.Item eventKey={"Less than one drink per day"}>

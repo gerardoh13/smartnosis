@@ -43,23 +43,6 @@ function Invitations({
     ));
     return emailFields;
   };
-  // const emailFields = emails.map((value, i) => (
-  //   <div className="form-floating my-2" key={i}>
-  //     <input
-  //       className="form-control"
-  //       type="text"
-  //       id={`email-${i}`}
-  //       value={value}
-  //       placeholder="email"
-  //       required={step === 2 && i === 0}
-  //       onChange={(e) => handleChange(e, i)}
-  //     />
-  //     <label htmlFor={`email-${i}`}>
-  //       {step === 3 ? "Non-" : ""}HCP Email Address #{i + 1}:{" "}
-  //       <span className="text-danger">*</span>
-  //     </label>
-  //   </div>
-  // ));
 
   return (
     <form onSubmit={handleSubmit}>

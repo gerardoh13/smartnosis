@@ -204,19 +204,43 @@ class Staff {
     if (!staff) throw new NotFoundError(`No staff: ${email}`);
   }
 
-  static async invite(providerId, emailArr) {
-    let result = await db.query(
-      `INSERT INTO staff_invitations
-      (provider_id, sent)
-      VALUES ($1, $2)
-      ON CONFLICT (provider_id) DO UPDATE
-      SET sent = staff_invitations.sent || excluded.sent
-      RETURNING sent`,
-      [providerId, emailArr]
-    );
-    const staffInvitations = result.rows[0];
+  static async markActive(providerId, email) {
+    const updateQuery = {
+      text: `UPDATE staff_invitations 
+              SET sent = array_remove(sent, $1), 
+              active = array_append(active, $1) 
+              WHERE provider_id = $2`,
+      values: [email, providerId],
+    };
+    await db.query(updateQuery);
+  }
 
-    return staffInvitations;
+  static async invite(providerId, email) {
+    const checkResult = await db.query(
+      "SELECT * FROM staff_invitations WHERE provider_id = $1",
+      [providerId]
+    );
+    if (checkResult.rows.length === 0) {
+      // If the row doesn't exist, insert a new row with the provider_id and email
+      await db.query(
+        "INSERT INTO staff_invitations (provider_id, sent) VALUES ($1, ARRAY[$2])",
+        [providerId, email]
+      );
+    } else {
+      // If the row exists, check if the email is in the 'sent' array column
+      const existingEmails = checkResult.rows[0].sent || [];
+      if (!existingEmails.includes(email)) {
+        // If the email is not in the array, append it
+        await db.query(
+          `UPDATE staff_invitations 
+          SET sent = array_append(sent, $1) 
+          WHERE provider_id = $2`,
+          [email, providerId]
+        );
+      }
+      // If the email is already in the array, do nothing
+    }
+    // return staffInvitations;
   }
 }
 

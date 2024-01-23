@@ -85,13 +85,13 @@ class Provider {
 
   static async activateUser(providerId, email, role) {
     let invitations = this.getInvitations(providerId);
-    console.log(invitations)
+    console.log(invitations);
     if (invitations[role].sent.indexOf(email) > -1) {
       invitations[role].sent = invitations[role].sent.filter(
         (e) => e !== email
       );
     }
-    invitations[role].active.push(email)
+    invitations[role].active.push(email);
   }
 
   static async getInvitations(providerId) {
@@ -218,6 +218,30 @@ class Provider {
     const provider = result.rows[0];
 
     if (!provider) throw new NotFoundError(`No provider: ${email}`);
+  }
+
+  static async getRole(email) {
+    // Check if the email exists in the 'hcps' table
+    const hcpResult = await db.query("SELECT role FROM hcps WHERE email = $1", [
+      email,
+    ]);
+    if (hcpResult.rows.length > 0) {
+      // If the email is found in 'hcps', return the role
+      return hcpResult.rows[0].role;
+    }
+
+    // If the email is not found in 'hcps', check 'staff' table
+    const staffResult = await db.query(
+      "SELECT role FROM staff WHERE email = $1",
+      [email]
+    );
+
+    if (staffResult.rows.length > 0) {
+      // If the email is found in 'staff', return the role
+      return staffResult.rows[0].role;
+    }
+    // If the email is not found in either table, throw error
+    throw new NotFoundError(`No user: ${email}`);
   }
 }
 
