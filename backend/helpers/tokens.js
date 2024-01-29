@@ -9,7 +9,7 @@ function createToken(user) {
     id: user.id,
     providerId: user.providerId,
     role: user.role,
-    isAdmin: user.isAdmin
+    isAdmin: user.isAdmin,
   };
   return jwt.sign(payload, SECRET_KEY);
 }
@@ -20,4 +20,14 @@ function createPwdResetToken(user) {
   };
   return jwt.sign(payload, user.password);
 }
-module.exports = { createToken, createPwdResetToken };
+
+function createNewUserToken(user) {
+  let payload = {
+    email: user.email,
+    providerId: user.providerId,
+    role: user.role
+  };
+  return jwt.sign(payload, SECRET_KEY);
+}
+
+module.exports = { createToken, createPwdResetToken, createNewUserToken };

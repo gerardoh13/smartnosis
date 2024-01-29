@@ -51,59 +51,59 @@ function RegisterHcp({ data, handleChange }) {
           NPI: <span className="text-danger">*</span>
         </label>
       </div>
-          <div className="form-floating my-3">
-            <input
-              className="form-control"
-              type="email"
-              name="email"
-              id="email"
-              value={data.email}
-              placeholder="email"
-              required
-              minLength="6"
-              onChange={handleChange}
-              autoComplete="username"
-            />
-            <label htmlFor="email">
-              Email: <span className="text-danger">*</span>
-            </label>
-          </div>
+      <div className="form-floating my-3">
+        <input
+          className="form-control"
+          type="email"
+          name="email"
+          id="email"
+          value={data.email}
+          placeholder="email"
+          required
+          minLength="6"
+          onChange={handleChange}
+          autoComplete="username"
+        />
+        <label htmlFor="email">
+          Email: <span className="text-danger">*</span>
+        </label>
+      </div>
 
-          <div className="form-floating mb-3">
-            <input
-              className="form-control"
-              type="password"
-              name="password"
-              id="password"
-              value={data.password}
-              placeholder="password"
-              autoComplete="current-password"
-              required
-              minLength="5"
-              onChange={handleChange}
-            />
-            <label htmlFor="password">
-              Password: <span className="text-danger">*</span>
-            </label>
-          </div>
+      <div className="form-floating mb-3">
+        <input
+          className="form-control"
+          type="password"
+          name="password"
+          id="password"
+          value={data.password}
+          placeholder="password"
+          autoComplete="current-password"
+          required
+          minLength="5"
+          onChange={handleChange}
+        />
+        <label htmlFor="password">
+          Password: <span className="text-danger">*</span>
+        </label>
+      </div>
 
-          <div className="form-floating mb-3">
-            <input
-              className="form-control"
-              type="password"
-              name="confirmPwd"
-              id="confirmPwd"
-              value={data.confirmPwd}
-              placeholder="confirm password"
-              autoComplete="confirm-password"
-              required
-              minLength="5"
-              onChange={handleChange}
-            />
-            <label htmlFor="confirmPwd">
-              Confirm Password: <span className="text-danger">*</span>
-            </label>
-          </div>
+      <div className="form-floating mb-3">
+        <input
+          className="form-control"
+          type="password"
+          name="confirmPwd"
+          id="confirmPwd"
+          value={data.confirmPwd}
+          placeholder="confirm password"
+          autoComplete="confirm-password"
+          required
+          minLength="5"
+          onChange={handleChange}
+        />
+        <label htmlFor="confirmPwd">
+          Confirm Password: <span className="text-danger">*</span>
+        </label>
+      </div>
     </>
   );
 }

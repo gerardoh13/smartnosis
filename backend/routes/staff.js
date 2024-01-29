@@ -61,7 +61,7 @@ router.post("/register", async function (req, res, next) {
     // }
 
     const newStaff = await Staff.register({ ...req.body });
-    await Staff.markActive(newHcp.providerId, newStaff.email)
+    await Staff.markActive(newStaff.providerId, newStaff.email)
     const token = createToken(newStaff);
     return res.status(201).json({ token });
   } catch (err) {
@@ -76,6 +76,20 @@ router.get(
     const { providerId, email } = req.params;
     try {
       await Staff.invite(providerId, email);
+      return res.json({ success: true });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
+
+router.get(
+  "/reinvite/:providerId/:email",
+  ensureCorrectProvider,
+  async function (req, res, next) {
+    const { providerId, email } = req.params;
+    try {
+      await Staff.reinvite(providerId, email);
       return res.json({ success: true });
     } catch (err) {
       return next(err);

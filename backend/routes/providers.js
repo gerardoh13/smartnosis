@@ -8,7 +8,7 @@ const Provider = require("../models/provider");
 const Email = require("../models/email");
 const express = require("express");
 const { ensureCorrectProvider } = require("../middleware/auth");
-const { createToken, createPwdResetToken } = require("../helpers/tokens");
+const { createToken } = require("../helpers/tokens");
 const providerAuthSchema = require("../schemas/providerAuth.json");
 const providerNewSchema = require("../schemas/providerNew.json");
 const { BadRequestError } = require("../expressError");
@@ -74,12 +74,12 @@ router.post("/register", async function (req, res, next) {
     const provider = await Provider.register({ ...data });
     if (hcpsEmails.length) {
       for (let email of hcpsEmails) {
-        Hcp.invite(provider.id, email);
+        await Hcp.invite(provider.id, email);
       }
     }
     if (staffEmails.length) {
       for (let email of staffEmails) {
-        Staff.invite(provider.id, email);
+        await Staff.invite(provider.id, email);
       }
     }
     return res.status(201).json({ provider });

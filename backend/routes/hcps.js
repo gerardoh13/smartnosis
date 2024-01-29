@@ -83,6 +83,20 @@ router.get(
   }
 );
 
+router.get(
+  "/reinvite/:providerId/:email",
+  ensureCorrectProvider,
+  async function (req, res, next) {
+    const { providerId, email } = req.params;
+    try {
+      await Hcp.reinvite(providerId, email);
+      return res.json({ success: true });
+    } catch (err) {
+      return next(err);
+    }
+  }
+);
+
 /** GET /[email] => { hcp }
  *
  * Returns { id, email, firstName }

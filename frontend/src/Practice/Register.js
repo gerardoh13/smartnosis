@@ -125,6 +125,7 @@ function Register({ registerUser }) {
       )
     );
     practiceData.hcpsEmails = formatEmailArr(hcpsEmails);
+    practiceData.staffEmails = formatEmailArr(staffEmails);
 
     let userData = Object.fromEntries(
       Object.entries(dataCopy).filter(([key]) =>

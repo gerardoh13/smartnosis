@@ -85,7 +85,6 @@ class Provider {
 
   static async activateUser(providerId, email, role) {
     let invitations = this.getInvitations(providerId);
-    console.log(invitations);
     if (invitations[role].sent.indexOf(email) > -1) {
       invitations[role].sent = invitations[role].sent.filter(
         (e) => e !== email
@@ -124,7 +123,7 @@ class Provider {
         }
       : { active: [], sent: [] };
 
-    const invitations = { hcp: hcpInvitations, staff: staffInvitations };
+    const invitations = { hcps: hcpInvitations, staff: staffInvitations };
 
     // if (!provider) throw new NotFoundError(`No provider: ${id}`);
 

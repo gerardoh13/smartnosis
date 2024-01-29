@@ -2,6 +2,8 @@
 
 const db = require("../db.js");
 const bcrypt = require("bcrypt");
+const Email = require("./email.js");
+const { createNewUserToken } = require("../helpers/tokens.js");
 const { sqlForPartialUpdate } = require("../helpers/sql.js");
 const {
   NotFoundError,
@@ -25,9 +27,10 @@ class Staff {
     // try to find the staff first
     const result = await db.query(
       `SELECT id,
-              email,
-              password,
               provider_id AS "providerId",
+              email,
+              role,
+              password,
               is_admin AS "isAdmin"
            FROM staff
            WHERE email = $1`,
@@ -87,7 +90,14 @@ class Staff {
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
 
-    let rowVals = [providerId, firstName, lastName, email, title, hashedPassword];
+    let rowVals = [
+      providerId,
+      firstName,
+      lastName,
+      email,
+      title,
+      hashedPassword,
+    ];
     if (admin) rowVals.push(true);
     const result = await db.query(
       `INSERT INTO staff
@@ -173,6 +183,7 @@ class Staff {
     const { setCols, values } = sqlForPartialUpdate(data, {
       firstName: "first_name",
       lastName: "last_name",
+      isAdmin: "is_admin",
     });
     const emailVarIdx = "$" + (values.length + 1);
 
@@ -238,9 +249,22 @@ class Staff {
           [email, providerId]
         );
       }
-      // If the email is already in the array, do nothing
+      let user = { providerId, email, role: "staff" };
+      const token = createNewUserToken(user);
+      await Email.sendInvite(email, token);
     }
-    // return staffInvitations;
+  }
+
+  static async reinvite(providerId, email) {
+    const checkResult = await db.query(
+      "SELECT * FROM staff_invitations WHERE provider_id = $1 AND $2 = ANY(sent)",
+      [providerId, email]
+    );
+    if (checkResult.rows[0]) {
+      let user = { providerId, email, role: "staff" };
+      const token = createNewUserToken(user);
+      await Email.sendInvite(email, token);
+    } else throw new NotFoundError(`No invitation for: ${email}`);
   }
 }
 

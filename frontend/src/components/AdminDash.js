@@ -3,13 +3,13 @@ import ProviderContext from "../common/ProviderContext";
 import SmartnosisApi from "../api";
 
 function AdminDash() {
-  const [role, setRole] = useState("hcp");
+  const [role, setRole] = useState("hcps");
   const [newHCP, setNewHCP] = useState("");
   const [newStaff, setNewStaff] = useState("");
   const [refetch, setRefetch] = useState(false);
 
   const [invitations, SetInvitations] = useState({
-    hcp: { sent: [], active: [] },
+    hcps: { sent: [], active: [] },
     staff: { sent: [], active: [] },
   });
 
@@ -26,21 +26,36 @@ function AdminDash() {
 
   const remaining = (r) => {
     let totalCount =
-      r === "hcp" ? currUser.provider.hcpsCount : currUser.provider.staffCount;
+      r === "hcps" ? currUser.provider.hcpsCount : currUser.provider.staffCount;
     return (
       totalCount -
       Object.values(invitations[r]).reduce((p, c) => p.length + c.length)
     );
   };
 
-  const sendInvite = async (type) => {
-    const recipient = type === "hcps" ? newHCP : newStaff;
-    console.log(recipient)
-    let success = await SmartnosisApi.sendInvite(currUser.providerId, type, recipient);
+  const sendInvite = async () => {
+    const recipient = role === "hcps" ? newHCP : newStaff;
+    let success = await SmartnosisApi.sendInvite(
+      currUser.providerId,
+      role,
+      recipient
+    );
     if (success) {
       setNewHCP("");
       setNewStaff("");
       setRefetch(true);
+    }
+  };
+
+  const resendInvite = async (recipient) => {
+    let success = await SmartnosisApi.resendInvite(
+      currUser.providerId,
+      role,
+      recipient
+    );
+    if (success) {
+      // setRefetch(true);
+      console.log("invitation resent to:", recipient);
     }
   };
 
@@ -58,8 +73,8 @@ function AdminDash() {
         <td className="text-start ms-2">{email}</td>
         <td>
           <button
-            className="btn btn-success"
-            onClick={() => console.log("resend")}
+            className="btn btn-primary"
+            onClick={() => resendInvite(email)}
           >
             Resend
           </button>
@@ -67,7 +82,7 @@ function AdminDash() {
             className="btn btn-danger ms-2"
             onClick={() => console.log("rescind")}
           >
-            Rescind
+            Remove
           </button>
         </td>
       </tr>
@@ -92,13 +107,15 @@ function AdminDash() {
           <td>
             <button
               className="btn btn-primary"
-              onClick={() => console.log("resend")}
-            >
-              Make Admin
+              onClick={() => console.log("make admin")}
+              >
+                <small>
+                Make Admin
+                </small>
             </button>
             <button
               className="btn btn-danger ms-2"
-              onClick={() => console.log("rescind")}
+              onClick={() => console.log("remove")}
             >
               Remove
             </button>
@@ -118,12 +135,12 @@ function AdminDash() {
               type="radio"
               className="btn-check ms-3"
               name="role"
-              id="hcp"
+              id="hcps"
               autoComplete="off"
-              onChange={() => setRole("hcp")}
-              checked={role === "hcp"}
+              onChange={() => setRole("hcps")}
+              checked={role === "hcps"}
             />
-            <label className="btn btn-outline-secondary me-2" htmlFor="hcp">
+            <label className="btn btn-outline-secondary me-2" htmlFor="hcps">
               HCP
             </label>
             {/* Non-HCP */}
@@ -167,7 +184,7 @@ function AdminDash() {
             <button
               className="btn btn-primary input-group-text"
               type="button"
-              onClick={() => sendInvite("hcps")}
+              onClick={sendInvite}
             >
               Send
               <i className="bi bi-send ms-2"></i>
@@ -178,7 +195,7 @@ function AdminDash() {
         {/* Non-HCP */}
         <div
           className={`${
-            role === "hcp" || remaining(role) === 0 ? "d-none" : ""
+            role === "hcps" || remaining(role) === 0 ? "d-none" : ""
           }`}
         >
           <p>
@@ -200,15 +217,15 @@ function AdminDash() {
             <button
               className="btn btn-primary input-group-text"
               type="button"
-              onClick={() => sendInvite("staff")}
+              onClick={sendInvite}
             >
               Send
               <i className="bi bi-send ms-2"></i>
             </button>
           </div>
+          <hr />
         </div>
-        <hr />
-        <p>{(role === "hcp" ? "" : "Non-") + "HCP"} Invitations sent:</p>
+        <p>{(role === "hcps" ? "" : "Non-") + "HCP"} Invitations sent:</p>
         <table className="table table-striped table-sm bg-light text-center">
           <thead>
             <tr>
@@ -217,13 +234,13 @@ function AdminDash() {
             </tr>
           </thead>
           <tbody>
-            {role === "hcp"
-              ? createSentRows(invitations.hcp.sent)
+            {role === "hcps"
+              ? createSentRows(invitations.hcps.sent)
               : createSentRows(invitations.staff.sent)}
           </tbody>
         </table>
         <hr />
-        <p>Active {(role === "hcp" ? "" : "Non-") + "HCP Users"}:</p>
+        <p>Active {(role === "hcps" ? "" : "Non-") + "HCP Users"}:</p>
         <table className="table table-striped table-sm bg-light text-center">
           <thead>
             <tr>
@@ -232,8 +249,8 @@ function AdminDash() {
             </tr>
           </thead>
           <tbody>
-            {role === "hcp"
-              ? createActiveRows(invitations.hcp.active)
+            {role === "hcps"
+              ? createActiveRows(invitations.hcps.active)
               : createActiveRows(invitations.staff.active)}
           </tbody>
         </table>

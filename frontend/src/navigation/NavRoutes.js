@@ -8,6 +8,7 @@ import ResetPwd from "../components/ResetPwd";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import ProviderContext from "../common/ProviderContext";
+import RegisterUser from "../Practice/RegisterUser";
 
 function NavRoutes({ login, registerUser, currView, setCurrView }) {
   const { currUser } = useContext(ProviderContext);
@@ -32,11 +33,13 @@ function NavRoutes({ login, registerUser, currView, setCurrView }) {
           path="/register"
           element={<Register registerUser={registerUser} />}
         />
+        <Route
+          path="/new-user"
+          element={<RegisterUser registerUser={registerUser} />}
+        />
       </Route>
 
-      <Route element={<PrivateRoutes currUser={currUser} />}>
-        {/* <Route path="/admin" element={<AdminHome />} /> */}
-      </Route>
+      <Route element={<PrivateRoutes currUser={currUser} />}></Route>
     </Routes>
   );
 }

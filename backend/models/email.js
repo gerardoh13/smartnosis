@@ -24,8 +24,21 @@ class Email {
       subject: "Reset your password", // Subject line
       html: `<div style="text-align: center;">
       <h1>Forgot your Password? We've got you covered.</h1>
-      <h3>follow the link below to reset your password</h3>
+      <h3>Follow the link below to reset your password</h3>
       <a href="${REACT_APP_HOST}/reset?token=${token}">reset password</a>
+      </div>`, // html body
+    });
+    console.log("Message sent: %s", info.messageId);
+  }
+
+  static async sendInvite(email, token) {
+    let info = await transporter.sendMail({
+      from: '"Smartnosis Team" <donotreply@smartnosis.com>', // sender address
+      to: email, // list of receivers
+      subject: "Register with Smartnosis", // Subject line
+      html: `<div style="text-align: center;">
+      <h3>Follow the link below to create your Smartnosis account.</h3>
+      <a href="${REACT_APP_HOST}/new-user?token=${token}">Create account</a>
       </div>`, // html body
     });
     console.log("Message sent: %s", info.messageId);

@@ -21,19 +21,9 @@ function RegisterAdmin({
 
   const adminForm =
     data.role === "hcp" ? (
-      <RegisterHcp
-        data={data}
-        submit={submit}
-        handleChange={handleChange}
-        firstUser
-      />
+      <RegisterHcp data={data} handleChange={handleChange} />
     ) : (
-      <RegisterStaff
-        data={data}
-        submit={submit}
-        handleChange={handleChange}
-        firstUser
-      />
+      <RegisterStaff data={data} handleChange={handleChange} />
     );
   return (
     <>

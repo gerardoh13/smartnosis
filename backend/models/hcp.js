@@ -2,6 +2,8 @@
 
 const db = require("../db.js");
 const bcrypt = require("bcrypt");
+const Email = require("./email.js");
+const { createNewUserToken } = require("../helpers/tokens.js");
 const { sqlForPartialUpdate } = require("../helpers/sql.js");
 const {
   NotFoundError,
@@ -172,9 +174,9 @@ class Hcp {
     }
 
     const { setCols, values } = sqlForPartialUpdate(data, {
-      orgName: "name",
-      hcpsCount: "hcps_count",
-      staffCount: "staff_count",
+      firstName: "first_name",
+      lastName: "last_name",
+      isAdmin: "is_admin",
     });
     const emailVarIdx = "$" + (values.length + 1);
 
@@ -240,9 +242,22 @@ class Hcp {
           [email, providerId]
         );
       }
-      // If the email is already in the array, do nothing
+      let user = { providerId, email, role: "hcp" };
+      const token = createNewUserToken(user);
+      await Email.sendInvite(email, token);
     }
-    // return hcpInvitations;
+  }
+
+  static async reinvite(providerId, email) {
+    const checkResult = await db.query(
+      "SELECT * FROM hcp_invitations WHERE provider_id = $1 AND $2 = ANY(sent)",
+      [providerId, email]
+    );
+    if (checkResult.rows[0]) {
+      let user = { providerId, email, role: "hcp" };
+      const token = createNewUserToken(user);
+      await Email.sendInvite(email, token);
+    } else throw new NotFoundError(`No invitation for: ${email}`);
   }
 }
 
