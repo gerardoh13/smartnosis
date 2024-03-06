@@ -11,6 +11,8 @@ function StepInsurance({
   maxDate,
   handleSelect,
   complete,
+  intakeQs,
+  language,
 }) {
   const [insFront, setInsFront] = useState("");
   const [insBack, setInsBack] = useState("");
@@ -40,12 +42,16 @@ function StepInsurance({
       <div className="row mb-3">
         <div className="col">
           <p className="text-start ms-1 mt-1">
-            Relationship to Policy Holder:{" "}
+            {intakeQs.insRelationship[language] + ":"}
             <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col text-center">
-          <Dropdown onSelect={(val) => handleSelect("insRelationship", val, "insurance")}>
+          <Dropdown
+            onSelect={(val) =>
+              handleSelect("insRelationship", val, "insurance")
+            }
+          >
             <Dropdown.Toggle
               className="form-control"
               variant="secondary"
@@ -77,7 +83,8 @@ function StepInsurance({
           required
         />
         <label htmlFor="insFirstName">
-          First Name of Policy Holder: <span className="text-danger">*</span>
+          {intakeQs.insFirstName[language] + ":"}
+          <span className="text-danger">*</span>
         </label>
       </div>
       {/* insLastName */}
@@ -94,14 +101,16 @@ function StepInsurance({
           required
         />
         <label htmlFor="insLastName">
-          Last Name of Policy Holder: <span className="text-danger">*</span>
+          {intakeQs.insLastName[language] + ":"}
+          <span className="text-danger">*</span>
         </label>
       </div>
       {/* insDob */}
       <div className="row">
         <div className="col-6">
           <p className="text-start ms-1 mt-1">
-            Birthdate of Policy Holder: <span className="text-danger">*</span>
+            {intakeQs.insDob[language] + ":"}
+            <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col-6">
@@ -122,7 +131,8 @@ function StepInsurance({
       <div className="row my-3">
         <div className="col">
           <p className="text-start ms-1 mt-1">
-            Insurance Provider: <span className="text-danger">*</span>
+            {intakeQs.insProvider[language] + ":"}
+            <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col text-center">
@@ -170,7 +180,8 @@ function StepInsurance({
               onChange={(e) => handleChange(e, "insurance")}
             />
             <label htmlFor="insOtherProvider">
-              Insurance Provider: <span className="text-danger">*</span>
+              Insurance Provider:
+              <span className="text-danger">*</span>
             </label>
           </div>
           <hr />
@@ -187,7 +198,9 @@ function StepInsurance({
           value={data.insuranceId}
           onChange={(e) => handleChange(e, "insurance")}
         />
-        <label htmlFor="insuranceId">Insurance ID #:</label>
+        <label htmlFor="insuranceId">
+        {intakeQs.insuranceId[language] + ":"}
+        </label>
       </div>
       {/* insGroupNamee */}
       <div className="form-floating my-3">
@@ -200,7 +213,9 @@ function StepInsurance({
           value={data.insGroupName}
           onChange={(e) => handleChange(e, "insurance")}
         />
-        <label htmlFor="insGroupName">Group Name:</label>
+        <label htmlFor="insGroupName">
+        {intakeQs.insGroupName[language] + ":"}
+        </label>
       </div>
       {/* insGroupNumber */}
       <div className="form-floating my-3">
@@ -213,7 +228,9 @@ function StepInsurance({
           value={data.insGroupNumber}
           onChange={(e) => handleChange(e, "insurance")}
         />
-        <label htmlFor="insGroupNumber">Group Number:</label>
+        <label htmlFor="insGroupNumber">
+        {intakeQs.insGroupNumber[language] + ":"}
+        </label>
       </div>
       <div>
         <hr />
@@ -226,7 +243,9 @@ function StepInsurance({
             />
           </div>
         ) : null}
-        <span className="me-3">Upload front of insurance card</span>
+        <span className="me-3">
+        {intakeQs.insPhotoFront[language] + ":"}
+        </span>
         <ImageUpload
           uploadSuccess={uploadSuccess}
           setUrl={setInsFront}
@@ -244,7 +263,9 @@ function StepInsurance({
             />
           </div>
         ) : null}
-        <span className="me-3">Upload back of insurance card</span>
+        <span className="me-3">
+        {intakeQs.insPhotoBack[language] + ":"}
+        </span>
         <ImageUpload
           uploadSuccess={uploadSuccess}
           setUrl={setInsBack}
@@ -259,7 +280,7 @@ function StepInsurance({
           Previous
         </button>
         <button className="btn btn-success mt-3 form-control col">Next</button>
-      </div>{" "}
+      </div>
     </form>
   );
 }

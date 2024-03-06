@@ -8,6 +8,8 @@ function StepOne({
   handlePhones,
   handleKeydown,
   complete,
+  intakeQs,
+  language,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +35,8 @@ function StepOne({
           required
         />
         <label htmlFor="firstName">
-          First Name: <span className="text-danger">*</span>
+          {intakeQs.firstName[language] + ":"}
+          <span className="text-danger">*</span>
         </label>
       </div>
       {/* middleName */}
@@ -47,7 +50,9 @@ function StepOne({
           value={data.middleName}
           onChange={handleChange}
         />
-        <label htmlFor="middleName">Middle Name:</label>
+        <label htmlFor="middleName">
+          {intakeQs.middleName[language] + ":"}
+        </label>
       </div>
       {/* lastName */}
       <div className="form-floating my-3">
@@ -62,14 +67,16 @@ function StepOne({
           required
         />
         <label htmlFor="lastName">
-          Last Name: <span className="text-danger">*</span>
+          {intakeQs.lastName[language] + ":"}
+          <span className="text-danger">*</span>
         </label>
       </div>
       {/* Dob */}
       <div className="row">
         <div className="col-6">
           <p className="text-start ms-1 mt-1">
-            Date of Birth: <span className="text-danger">*</span>
+            {intakeQs.dob[language] + ":"}
+            <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col-6">
@@ -88,7 +95,8 @@ function StepOne({
       {/* Sex */}
       <div className="mt-3">
         <span className="text-start ms-1 me-3">
-          Sex <span className="text-danger">*</span>
+          {intakeQs.sex[language] + ":"}
+          <span className="text-danger">*</span>
         </span>
         <div className="text-center">
           {/* Male */}
@@ -149,7 +157,8 @@ function StepOne({
           required
         />
         <label htmlFor="email">
-          Email: <span className="text-danger">*</span>
+          {intakeQs.email[language] + ":"}
+          <span className="text-danger">*</span>
         </label>
       </div>
       {/* Phone1 */}
@@ -168,7 +177,8 @@ function StepOne({
           required
         />
         <label htmlFor="phone">
-          Primary Phone: <span className="text-danger">*</span>
+          {intakeQs.phone1[language] + ":"}
+          <span className="text-danger">*</span>
         </label>
       </div>
       {/* Phone2 */}
@@ -185,7 +195,7 @@ function StepOne({
           value={data.phone2}
           placeholder="phone"
         />
-        <label htmlFor="phone2">Secondary Phone:</label>
+        <label htmlFor="phone2">{intakeQs.phone2[language] + ":"}</label>
       </div>
       {/* Address1 */}
       <div className="form-floating mb-3">
@@ -200,7 +210,8 @@ function StepOne({
           required
         />
         <label htmlFor="address1">
-          Address 1: <span className="text-danger">*</span>
+        {intakeQs.address1[language] + ":"}
+          <span className="text-danger">*</span>
         </label>
       </div>
       {/* Address2 */}
@@ -214,7 +225,9 @@ function StepOne({
           value={data.address2}
           onChange={handleChange}
         />
-        <label htmlFor="address2">Address 2:</label>
+        <label htmlFor="address2">
+        {intakeQs.address2[language] + ":"}
+        </label>
       </div>
       {/* City */}
       <div className="form-floating mt-3">
@@ -229,7 +242,8 @@ function StepOne({
           required
         />
         <label htmlFor="city">
-          City: <span className="text-danger">*</span>
+        {intakeQs.city[language] + ":"}
+          <span className="text-danger">*</span>
         </label>
       </div>
       {/* State */}
@@ -247,7 +261,8 @@ function StepOne({
             required
           />
           <label className="ms-2" htmlFor="state">
-            State: <span className="text-danger">*</span>
+          {intakeQs.state[language] + ":"}
+            <span className="text-danger">*</span>
           </label>
         </div>
         {/* Zip */}
@@ -265,7 +280,8 @@ function StepOne({
             required
           />
           <label className="ms-2" htmlFor="zip">
-            Zip Code: <span className="text-danger">*</span>
+          {intakeQs.zip[language] + ":"}
+            <span className="text-danger">*</span>
           </label>
         </div>
       </div>
@@ -273,7 +289,8 @@ function StepOne({
       <div className="row mb-2">
         <div className="col-6">
           <p className="text-start ms-1">
-            Do you have insurance? <span className="text-danger">*</span>
+          {intakeQs.insurance[language] + ":"}
+           <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col-6 text-center">

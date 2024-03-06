@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { createCheckbox } from "../common/commonFuncs";
 
-function StepTwo({ data, changeStep, handleCheckbox, setFormData }) {
+function StepTwo({
+  data,
+  changeStep,
+  handleCheckbox,
+  setFormData,
+  intakeQs,
+  language,
+}) {
   const defaultConditions = [
     "Pneumonia",
     "Bronchitis",
@@ -133,9 +140,7 @@ function StepTwo({ data, changeStep, handleCheckbox, setFormData }) {
           </button>
         </div>
         <div className="col">
-          <button className="btn btn-success form-control">
-            Next
-          </button>
+          <button className="btn btn-success form-control">Next</button>
         </div>
       </div>
     </form>

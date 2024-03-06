@@ -7,6 +7,8 @@ function StepThree({
   changeStep,
   setFormData,
   hasInsurnace,
+  intakeQs,
+  language,
 }) {
   const defaultSymptoms = [
     "Abnormal Pain",

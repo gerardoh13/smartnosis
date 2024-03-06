@@ -1,6 +1,6 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import PhotoUploader from "../common/PhotoUploader";
+// import PhotoUploader from "../common/PhotoUploader";
 
 function StepFour({
   data,
@@ -9,6 +9,8 @@ function StepFour({
   complete,
   submit,
   handleSelect,
+  intakeQs,
+  language,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -132,7 +134,7 @@ function StepFour({
           </label>
         </div>
       ) : null}
-      <PhotoUploader />
+      {/* <PhotoUploader /> */}
       <div className="row mt-4">
         <div className="col">
           <button

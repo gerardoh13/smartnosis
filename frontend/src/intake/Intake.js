@@ -13,6 +13,8 @@ import ProviderContext from "../common/ProviderContext";
 import Grid from "@mui/material/Grid";
 import { deleteNulls } from "../common/commonFuncs";
 import DisclaimerModal from "../components/DisclaimerModal";
+import LangToggle from "../common/LangToggle";
+import { intakeQs } from "../common/translations";
 
 function Intake({ setCurrView }) {
   const INITIAL_STATE = {
@@ -52,7 +54,6 @@ function Intake({ setCurrView }) {
     alcoholUse: "",
     drugUse: "",
     otherDrugUse: "",
-    otherTobaccoUse: "",
     symptoms: new Set(),
     conditions: new Set(),
   };
@@ -67,6 +68,7 @@ function Intake({ setCurrView }) {
   const [complete, setComplete] = useState(false);
   const [apptCancelled, setApptCancelled] = useState(false);
   const [agreeDisclaimer, setAgreeDisclaimer] = useState(false);
+  const [language, setLanguage] = useState("english");
 
   const navigate = useNavigate();
   let query = useQuery();
@@ -161,8 +163,6 @@ function Intake({ setCurrView }) {
     let medHistoryCopy = { ...medHistory };
     medHistoryCopy.symptoms = Array.from(medHistoryCopy.symptoms);
     medHistoryCopy.conditions = Array.from(medHistoryCopy.conditions);
-    if (medHistoryCopy.tobaccoUse === "Other")
-      medHistoryCopy.tobaccoUse = medHistoryCopy.otherTobaccoUse;
     if (medHistoryCopy.drugUse === "Other")
       medHistoryCopy.drugUse = medHistoryCopy.otherDrugUse;
     return medHistoryCopy;
@@ -176,9 +176,9 @@ function Intake({ setCurrView }) {
       dataCopy = { ...dataCopy, ...formatInsData(dataCopy) };
     deleteNulls(dataCopy);
     //
-    delete dataCopy.tobaccoUse
-    delete dataCopy.alcoholUse
-    delete dataCopy.drugUse
+    delete dataCopy.tobaccoUse;
+    delete dataCopy.alcoholUse;
+    delete dataCopy.drugUse;
     //
     if (query.get("appointment")) dataCopy.apptId = query.get("appointment");
     return dataCopy;
@@ -302,8 +302,6 @@ function Intake({ setCurrView }) {
       medHistory.drugUse,
       medHistory.tobaccoUse,
     ];
-    if (medHistory.tobaccoUse === "Other")
-      fields.push(medHistory.otherTobaccoUse);
     if (medHistory.drugUse === "Other") fields.push(medHistory.otherDrugUse);
     return fields.every(Boolean);
   };
@@ -320,6 +318,8 @@ function Intake({ setCurrView }) {
           handlePhones={handlePhones}
           handleKeydown={handleKeydown}
           complete={stepOneComplete}
+          intakeQs={intakeQs}
+          language={language}
         />
       );
       break;
@@ -333,6 +333,8 @@ function Intake({ setCurrView }) {
           maxDate={maxDate}
           handleSelect={handleSelect}
           complete={stepInsuranceComplete}
+          intakeQs={intakeQs}
+          language={language}
         />
       );
       break;
@@ -345,6 +347,8 @@ function Intake({ setCurrView }) {
           handleCheckbox={handleCheckbox}
           setFormData={setFormData}
           hasInsurnace={formData.insurance === "Yes"}
+          intakeQs={intakeQs}
+          language={language}
         />
       );
       break;
@@ -355,6 +359,8 @@ function Intake({ setCurrView }) {
           setFormData={setFormData}
           changeStep={changeStep}
           handleCheckbox={handleCheckbox}
+          intakeQs={intakeQs}
+          language={language}
         />
       );
       break;
@@ -367,6 +373,8 @@ function Intake({ setCurrView }) {
           complete={stepFourComplete}
           handleSelect={handleSelect}
           submit={submit}
+          intakeQs={intakeQs}
+          language={language}
         />
       );
       break;
@@ -386,28 +394,36 @@ function Intake({ setCurrView }) {
   const content = (
     <>
       <div className="card">
-        <img
-          src="smartnosis-logo.jpg"
-          className="rounded mx-auto w60 mt-2"
-          alt="smartnosis logo"
-        />
-        <h2 className="my-3 text-center">Patient Intake Form</h2>
-        {apptAt ? (
-          <>
-            <hr />
-            <p className="text-center">
-              <span>Appointment on </span>
-              <span>
-                {new Date(apptAt * 1000).toLocaleDateString()} {" at "}
-              </span>
-              <span>{new Date(apptAt * 1000).toLocaleTimeString()}</span>
-              <span>
-                {" with "}
-                {providerName}
-              </span>
-            </p>
-          </>
-        ) : null}
+        <div className="card-body">
+          <img
+            src="smartnosis-logo.jpg"
+            className="rounded mx-auto d-block w60 mt-2"
+            alt="smartnosis logo"
+          />
+          <h2 className="my-3 text-center">Patient Intake Form</h2>
+
+          {apptAt ? (
+            <>
+              <hr />
+              <p className="text-center">
+                <span>Appointment on </span>
+                <span>
+                  {new Date(apptAt * 1000).toLocaleDateString()} {" at "}
+                </span>
+                <span>{new Date(apptAt * 1000).toLocaleTimeString()}</span>
+                <span>
+                  {" with "}
+                  {providerName}
+                </span>
+              </p>
+            </>
+          ) : null}
+          <div className="float-end">
+            <div className="col-12 col-lg-4">
+              <LangToggle language={language} setLanguage={setLanguage} />
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="card mt-3">
