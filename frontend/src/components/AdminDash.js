@@ -18,6 +18,7 @@ function AdminDash() {
   useEffect(() => {
     const fetchAdminData = async () => {
       let invites = await SmartnosisApi.getInvitations(currUser.providerId);
+      console.log(invites);
       SetInvitations(invites);
       if (refetch) setRefetch(false);
     };
@@ -98,21 +99,26 @@ function AdminDash() {
         </tr>
       );
     }
-    return arr.map((email) => (
-      <tr key={email} className="align-middle">
-        <td className="text-start ms-2">{email}</td>
-        {email === currUser.email ? (
+    return arr.map((u) => (
+      <tr key={u.email} className="align-middle">
+        <td className="text-start ms-2">{u.email}</td>
+        {u.email === currUser.email ? (
           <td />
         ) : (
           <td>
-            <button
-              className="btn btn-primary"
-              onClick={() => console.log("make admin")}
+            {u.isAdmin ? (
+              <span className="mx-2">
+                <b>Admin User</b>
+              </span>
+            ) : (
+              <button
+                className="btn btn-primary"
+                onClick={() => console.log("make admin")}
               >
-                <small>
-                Make Admin
-                </small>
-            </button>
+                <small>Make Admin</small>
+              </button>
+            )}
+
             <button
               className="btn btn-danger ms-2"
               onClick={() => console.log("remove")}
@@ -190,6 +196,7 @@ function AdminDash() {
               <i className="bi bi-send ms-2"></i>
             </button>
           </div>
+          <hr />
         </div>
 
         {/* Non-HCP */}
@@ -225,7 +232,7 @@ function AdminDash() {
           </div>
           <hr />
         </div>
-        <p>{(role === "hcps" ? "" : "Non-") + "HCP"} Invitations sent:</p>
+        <p>{(role === "hcps" ? "" : "Non-") + "HCP"} Invitations pending:</p>
         <table className="table table-striped table-sm bg-light text-center">
           <thead>
             <tr>

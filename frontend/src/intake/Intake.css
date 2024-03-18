@@ -20,3 +20,7 @@
 .img75 {
   width: 75%;
 }
+
+.w-48 {
+  max-width: 49% !important;
+}

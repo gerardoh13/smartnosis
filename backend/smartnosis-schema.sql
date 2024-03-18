@@ -23,6 +23,7 @@ CREATE TABLE hcp_invitations (
 CREATE TABLE staff_invitations (
     provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
     sent VARCHAR[],
+    -- delete active?
     active VARCHAR[],
     PRIMARY KEY (provider_id)
 );

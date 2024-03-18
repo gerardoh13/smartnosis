@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RegisterHcp from "./RegisterHcp";
-import RegisterStaff from "./registerStaff";
+import RegisterStaff from "./RegisterStaff";
 import Alerts from "../common/Alerts";
 import Grid from "@mui/material/Grid";
 import { decodeToken } from "react-jwt";

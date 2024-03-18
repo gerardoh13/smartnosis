@@ -37,7 +37,7 @@ function StepFour({
             <Dropdown.Toggle
               className="form-control"
               variant="secondary"
-              id="dropdown-basic"
+              id="tobacco-dropdown"
             >
               {data.tobaccoUse ? data.tobaccoUse : "Select"}
             </Dropdown.Toggle>
@@ -71,7 +71,7 @@ function StepFour({
             <Dropdown.Toggle
               className="form-control"
               variant="secondary"
-              id="dropdown-basic"
+              id="alcohol-dropdown"
             >
               {data.alcoholUse ? data.alcoholUse : "Select"}
             </Dropdown.Toggle>
@@ -104,7 +104,7 @@ function StepFour({
             <Dropdown.Toggle
               className="form-control"
               variant="secondary"
-              id="dropdown-basic"
+              id="druguse-dropdown"
             >
               {data.drugUse ? data.drugUse : "Select"}
             </Dropdown.Toggle>

@@ -14,7 +14,7 @@ class Email {
       <a href=${REACT_APP_HOST}/intake?provider=${provider.id}&appointment=${appointment.id}>Intake Form</a>
       </div>`, // html body
     });
-    console.log("Message sent: %s", info.messageId);
+    console.log("Message sent: %s", info.accepted, appointment.email);
   }
 
   static async sendPwdReset(email, token) {
@@ -28,7 +28,7 @@ class Email {
       <a href="${REACT_APP_HOST}/reset?token=${token}">reset password</a>
       </div>`, // html body
     });
-    console.log("Message sent: %s", info.messageId);
+    console.log("Message sent: %s", info.accepted, email);
   }
 
   static async sendInvite(email, token) {
@@ -41,7 +41,7 @@ class Email {
       <a href="${REACT_APP_HOST}/new-user?token=${token}">Create account</a>
       </div>`, // html body
     });
-    console.log("Message sent: %s", info.messageId);
+    console.log("Message sent: %s", info.accepted, email);
   }
 }
 

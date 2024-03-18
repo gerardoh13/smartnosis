@@ -94,35 +94,47 @@ class Provider {
   }
 
   static async getInvitations(providerId) {
-    const hcpRes = await db.query(
-      `SELECT sent,
-              active
-        FROM hcp_invitations
-        WHERE provider_id = $1`,
+    const hcpInvites = await db.query(
+      `SELECT sent
+          FROM hcp_invitations
+          WHERE provider_id = $1`,
       [providerId]
     );
 
-    const staffRes = await db.query(
-      `SELECT sent,
-              active
-        FROM staff_invitations
-        WHERE provider_id = $1`,
+    const hcpActive = await db.query(
+      `SELECT id,
+          is_admin AS "isAdmin",
+          email
+          FROM hcps
+          WHERE provider_id = $1`,
       [providerId]
     );
 
-    const hcpInvitations = hcpRes.rows.length
-      ? {
-          active: hcpRes.rows[0].active || [],
-          sent: hcpRes.rows[0].sent || [],
-        }
-      : { active: [], sent: [] };
-    const staffInvitations = staffRes.rows.length
-      ? {
-          active: staffRes.rows[0].active || [],
-          sent: staffRes.rows[0].sent || [],
-        }
-      : { active: [], sent: [] };
+    const hcpInvitations = {
+      sent: hcpInvites.rows[0].sent || [],
+      active: hcpActive.rows || [],
+    };
 
+    const staffInvites = await db.query(
+      `SELECT sent
+          FROM staff_invitations
+          WHERE provider_id = $1`,
+      [providerId]
+    );
+
+    const staffActive = await db.query(
+      `SELECT id,
+          is_admin AS "isAdmin",
+          email
+          FROM staff
+          WHERE provider_id = $1`,
+      [providerId]
+    );
+
+    const staffInvitations = {
+      sent: staffInvites.rows[0].sent || [],
+      active: staffActive.rows || [],
+    };
     const invitations = { hcps: hcpInvitations, staff: staffInvitations };
 
     // if (!provider) throw new NotFoundError(`No provider: ${id}`);

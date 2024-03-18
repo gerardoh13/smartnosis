@@ -40,7 +40,6 @@ router.post("/token", async function (req, res, next) {
     // should allow for both staff and user, update line 40
     const role = await Provider.getRole(email);
     let user;
-    console.log(role);
     if (role === "hcp") user = await Hcp.authenticate(email, password);
     else if (role === "staff") user = await Staff.authenticate(email, password);
     const token = createToken(user);

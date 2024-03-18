@@ -9,6 +9,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import ProviderContext from "../common/ProviderContext";
 import RegisterUser from "../Practice/RegisterUser";
+import PbIntake from "../postBoutIntake/PbIntake";
 
 function NavRoutes({ login, registerUser, currView, setCurrView }) {
   const { currUser } = useContext(ProviderContext);
@@ -27,12 +28,17 @@ function NavRoutes({ login, registerUser, currView, setCurrView }) {
       />
       <Route path="/intake" element={<Intake />} />
 
+      <Route path="/pb-intake" element={<PbIntake />} />
+
       <Route element={<PublicRoutes currUser={currUser} />}>
+
         <Route path="/reset" element={<ResetPwd />} />
+
         <Route
           path="/register"
           element={<Register registerUser={registerUser} />}
         />
+
         <Route
           path="/new-user"
           element={<RegisterUser registerUser={registerUser} />}

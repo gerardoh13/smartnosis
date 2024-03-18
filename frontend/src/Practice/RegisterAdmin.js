@@ -1,11 +1,10 @@
 import React from "react";
 import RegisterHcp from "./RegisterHcp";
-import RegisterStaff from "./registerStaff";
+import RegisterStaff from "./RegisterStaff";
 import Alerts from "../common/Alerts";
 
 function RegisterAdmin({
   data,
-  submit,
   handleChange,
   changeStep,
   confirmPasswords,

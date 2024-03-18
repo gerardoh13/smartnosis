@@ -77,17 +77,36 @@ class Hcp {
       throw new BadRequestError(`Duplicate email: ${email}`);
     }
 
+    // const adminCheck = await db.query(
+    //   `SELECT h.id,
+    //           s.id
+    //        FROM hcps h JOIN staff s
+    //        ON h.provider_id = s.provider_id
+    //        WHERE h.provider_id = $1 AND s.provider_id = $1`,
+    //   [providerId]
+    // );
+
     const adminCheck = await db.query(
-      `SELECT h.id,
-              s.id
-           FROM hcps h JOIN staff s 
-           ON h.provider_id = s.provider_id 
-           WHERE h.provider_id = $1 AND s.provider_id = $1`,
+      `SELECT DISTINCT email
+      FROM (
+          SELECT hcps.email
+          FROM hcps
+          INNER JOIN staff ON hcps.provider_id = staff.provider_id
+          WHERE (hcps.provider_id = $1 OR staff.provider_id = $1)
+          AND (hcps.is_admin = true OR staff.is_admin = true)
+          UNION
+          SELECT staff.email
+          FROM hcps
+          INNER JOIN staff ON hcps.provider_id = staff.provider_id
+          WHERE (hcps.provider_id = $1 OR staff.provider_id = $1)
+          AND (hcps.is_admin = true OR staff.is_admin = true)
+      ) AS admins`,
       [providerId]
     );
 
     const admin = adminCheck.rows.length === 0 ? true : false;
-
+    console.log(adminCheck.rows);
+    console.log(admin);
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
 
     let rowVals = [providerId, firstName, lastName, email, npi, hashedPassword];
@@ -220,6 +239,7 @@ class Hcp {
   }
 
   static async invite(providerId, email) {
+    let sendEmail = false;
     const checkResult = await db.query(
       "SELECT * FROM hcp_invitations WHERE provider_id = $1",
       [providerId]
@@ -230,6 +250,7 @@ class Hcp {
         "INSERT INTO hcp_invitations (provider_id, sent) VALUES ($1, ARRAY[$2])",
         [providerId, email]
       );
+      sendEmail = true;
     } else {
       // If the row exists, check if the email is in the 'sent' array column
       const existingEmails = checkResult.rows[0].sent || [];
@@ -241,7 +262,10 @@ class Hcp {
           WHERE provider_id = $2`,
           [email, providerId]
         );
+        sendEmail = true;
       }
+    }
+    if (sendEmail) {
       let user = { providerId, email, role: "hcp" };
       const token = createNewUserToken(user);
       await Email.sendInvite(email, token);
