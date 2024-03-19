@@ -9,6 +9,7 @@ function PbStepFour({
   handleChange,
   handleSelect,
   changeStep,
+  maxDate,
   complete,
   intakeQs,
   intakeOptions,
@@ -36,7 +37,7 @@ function PbStepFour({
         <div className="col text-center">
           <Dropdown onSelect={(val) => handleSelect("irritable", val)}>
             <Dropdown.Toggle
-              className="form-control"
+              className="form-control text-wrap"
               variant="secondary"
               id="irritable-dropdown"
             >
@@ -46,7 +47,11 @@ function PbStepFour({
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {intakeOptions.irritable.map((option) => (
-                <Dropdown.Item key={option.english} eventKey={option.english}>
+                <Dropdown.Item
+                  key={option.english}
+                  eventKey={option.english}
+                  className="text-wrap"
+                >
                   {option[language]}
                 </Dropdown.Item>
               ))}
@@ -82,6 +87,7 @@ function PbStepFour({
                 type="date"
                 name="ringingStart"
                 id="ringingStart"
+                max={maxDate}
                 value={data.ringingStart}
                 onChange={handleChange}
                 required

@@ -6,11 +6,10 @@ import Slider from "@mui/material/Slider";
 function PbStepFive({
   data,
   handleChange,
-  handleSelect,
   changeStep,
+  maxDate,
   complete,
   intakeQs,
-  intakeOptions,
   language,
 }) {
   const handleSubmit = (e) => {
@@ -56,6 +55,7 @@ function PbStepFive({
                 type="date"
                 name="blurredVisionStart"
                 id="blurredVisionStart"
+                max={maxDate}
                 value={data.blurredVisionStart}
                 onChange={handleChange}
                 required
@@ -128,6 +128,7 @@ function PbStepFive({
                 type="date"
                 name="doubleVisionStart"
                 id="doubleVisionStart"
+                max={maxDate}
                 value={data.doubleVisionStart}
                 onChange={handleChange}
                 required
@@ -200,6 +201,7 @@ function PbStepFive({
                 type="date"
                 name="lightSensitivityStart"
                 id="lightSensitivityStart"
+                max={maxDate}
                 value={data.lightSensitivityStart}
                 onChange={handleChange}
                 required

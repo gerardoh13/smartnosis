@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import { useNavigate } from "react-router-dom";
 
 const settings = ["Logout"];
 const drawerWidth = 200;
@@ -35,6 +36,8 @@ const AppBar = styled(MuiAppBar, {
 function ResponsiveAppBar({ toggleDrawer, open, logout, orgName, firstName }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -42,11 +45,12 @@ function ResponsiveAppBar({ toggleDrawer, open, logout, orgName, firstName }) {
   const handleCloseUserMenu = (e) => {
     let { innerText } = e.target;
     if (innerText === "Logout") logout();
+    navigate("/");
     setAnchorElUser(null);
   };
 
   return (
-    <AppBar position="absolute" open={open} sx={{zIndex: "1020"}}>
+    <AppBar position="absolute" open={open} sx={{ zIndex: "1020" }}>
       <Toolbar
         sx={{
           pr: "24px", // keep right padding when drawer closed

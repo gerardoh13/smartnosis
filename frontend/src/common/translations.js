@@ -450,8 +450,29 @@ const pBintakeQs = {
     spanish: "¿Ciertos tipos de luz afectan su sensibilidad a la luz?",
   },
   lightSensitivityScale: {
-    english: "On a scale of 1-10 (10 = painfully sensitive), rate your sensitivity",
-    spanish: "En una escala del 1 al 10 (10 = dolorosamente sensible), califique su sensibilidad",
+    english:
+      "On a scale of 1-10 (10 = painfully sensitive), rate your sensitivity",
+    spanish:
+      "En una escala del 1 al 10 (10 = dolorosamente sensible), califique su sensibilidad",
+  },
+  neckPain: {
+    english: "Have you experienced any Neck Pain?",
+    spanish: "¿Ha experimentado algún dolor de cuello?",
+  },
+  neckPainScale: {
+    english: "On a scale of 1-10 (10 = very painful), rate your neck pain",
+    spanish:
+      "En una escala de 1 a 10 (10 = muy doloroso), califique su dolor de cuello",
+  },
+  lowerBackPain: {
+    english: "Have you experienced any Lower Back Pain?",
+    spanish: "¿Ha experimentado algún dolor lumbar?",
+  },
+  lowerBackPainScale: {
+    english:
+      "On a scale of 1-10 (10 = very painful), rate your lower back pain",
+    spanish:
+      "En una escala de 1 a 10 (10 = muy doloroso), califique su dolor de espalda baja",
   },
 };
 
@@ -532,6 +553,24 @@ const PbIntakeOptions = {
       english: "Im not sleeping",
       spanish: "No estoy durmiendo.",
     },
+  ],
+  neckPainExplain: [
+    { english: "Sometimes", spanish: "A veces" },
+    { english: "Often", spanish: "A menudo" },
+    {
+      english: "All the time",
+      spanish: "Todo el tiempo",
+    },
+    { english: "Right now", spanish: "Ahora mismo" },
+  ],
+  lowerBackPainExplain: [
+    { english: "Sometimes", spanish: "A veces" },
+    { english: "Often", spanish: "A menudo" },
+    {
+      english: "All the time",
+      spanish: "Todo el tiempo",
+    },
+    { english: "Right now", spanish: "Ahora mismo" },
   ],
 };
 export { intakeQs, pBintakeQs, PbIntakeOptions };

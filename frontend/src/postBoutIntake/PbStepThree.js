@@ -9,6 +9,7 @@ function PbStepThree({
   handleChange,
   handleSelect,
   changeStep,
+  maxDate,
   complete,
   intakeQs,
   intakeOptions,
@@ -39,6 +40,7 @@ function PbStepThree({
       />
       {data.headache === "Yes" ? (
         <>
+          {/* Headache Explain*/}
           <div className="row mb-3">
             <div className="col">
               {/* <span className="text-start ms-1 mt-1">
@@ -126,6 +128,7 @@ function PbStepThree({
                 type="date"
                 name="dizzinessStart"
                 id="dizzinessStart"
+                max={maxDate}
                 value={data.dizzinessStart}
                 onChange={handleChange}
                 required

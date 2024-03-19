@@ -5,6 +5,8 @@ import PbStepTwo from "./PbStepTwo";
 import PbStepThree from "./PbStepThree";
 import PbStepFour from "./PbStepFour";
 import PbStepFive from "./PbStepFive";
+import PbStepSix from "./PbStepSix";
+
 import SmartnosisApi from "../api";
 import { useQuery } from "../hooks";
 import "../intake/Intake.css";
@@ -96,13 +98,20 @@ function PbIntake({ setCurrView }) {
     lightSensitivityTrigger: "",
     lightSensitivityScale: "",
 
+    neckPain: "",
+    neckPainExplain: "",
+    neckPainScale: "",
+    lowerBackPain: "",
+    lowerBackPainExplain: "",
+    lowerBackPainScale: "",
+
     symptoms: new Set(),
     comments: "",
     additionalPId: "",
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(0);
   const [maxDate, setMaxDate] = useState("");
   const [apptAt, setApptAt] = useState("");
   const [providerName, setProviderName] = useState("");
@@ -274,6 +283,7 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
+          maxDate={maxDate}
           complete={stepOneComplete}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
@@ -288,6 +298,7 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
+          maxDate={maxDate}
           complete={stepOneComplete}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
@@ -302,6 +313,7 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
+          maxDate={maxDate}
           complete={stepOneComplete}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
@@ -311,9 +323,23 @@ function PbIntake({ setCurrView }) {
       break;
     case 5:
       currStep = (
+        <PbStepSix
+          data={formData}
+          handleChange={handleChange}
+          handleSelect={handleSelect}
+          changeStep={changeStep}
+          complete={stepOneComplete}
+          intakeQs={pBintakeQs}
+          intakeOptions={PbIntakeOptions}
+          language={language}
+        />
+      );
+      break;
+    case 6:
+      currStep = (
         <>
           <div className="text-center">
-            <p>Your intake form has been submitted!</p>
+            <p>Your ssesment has been submitted!</p>
             <p>You can now close this window</p>
           </div>
         </>
@@ -351,12 +377,6 @@ function PbIntake({ setCurrView }) {
           ) : null}
           <div className="float-end">
             <div className="col-12 col-lg-4">
-              <button
-                className="btn btn-primary"
-                onClick={() => console.log(formData)}
-              >
-                Console
-              </button>
               <LangToggle
                 language={language}
                 setLanguage={setLanguage}
@@ -400,6 +420,16 @@ function PbIntake({ setCurrView }) {
                 className={`step ${
                   stepFourComplete() || complete ? "finish" : ""
                 } ${step === 3 ? "active" : ""}`}
+              ></span>
+              <span
+                className={`step ${step > 3 || complete ? "finish" : ""} ${
+                  step === 4 ? "active" : ""
+                }`}
+              ></span>
+              <span
+                className={`step ${step > 4 || complete ? "finish" : ""} ${
+                  step === 5 ? "active" : ""
+                }`}
               ></span>
             </div>
           </div>
