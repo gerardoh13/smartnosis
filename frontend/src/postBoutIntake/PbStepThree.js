@@ -4,6 +4,29 @@ import YesNoRadio from "../common/YesNoRadio";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
+const marks = [
+  {
+    value: 1,
+    label: "😐",
+  },
+  {
+    value: 2,
+    label: "🙁",
+  },
+  {
+    value: 3,
+    label: "😠",
+  },
+  {
+    value: 4,
+    label: "😬",
+  },
+  {
+    value: 5,
+    label: "😵",
+  },
+];
+
 function PbStepThree({
   data,
   handleChange,
@@ -21,6 +44,11 @@ function PbStepThree({
   };
 
   return (
+    <>
+    <div>
+      <p className="text-center">In the 3 days after your fight, the below questions are to monitor your headache(s) and dizziness.</p>
+    </div>
+    <hr/>
     <form onSubmit={handleSubmit} className="needs-validation">
       <p className="text-center">
         <span className="text-danger">*</span>
@@ -89,9 +117,14 @@ function PbStepThree({
                   defaultValue={1}
                   valueLabelDisplay="on"
                   step={1}
-                  marks
+                  marks={marks}
+                  sx={{
+                    "& .MuiSlider-markLabel": {
+                      fontSize: "1.5rem",
+                    },
+                  }}
                   min={1}
-                  max={10}
+                  max={5}
                   name="headachePain"
                   onChange={handleChange}
                 />
@@ -135,28 +168,28 @@ function PbStepThree({
               />
             </div>
           </div>
-          {/* Spinning */}
+          {/* Dizzy Lying Down*/}
           <YesNoRadio
-            title={intakeQs.spinning[language]}
+            title={intakeQs.dizzyLying[language]}
             handleChange={handleChange}
-            name="spinning"
-            status={data.spinning}
+            name="dizzyLying"
+            status={data.dizzyLying}
             language={language}
           />
-          {/* LightHead */}
+          {/* Dizzy Sitting Down */}
           <YesNoRadio
-            title={intakeQs.lightHead[language]}
+            title={intakeQs.dizzySitting[language]}
             handleChange={handleChange}
-            name="lightHead"
-            status={data.lightHead}
+            name="dizzySitting"
+            status={data.dizzySitting}
             language={language}
           />
-          {/* Unsteady */}
+          {/* Dizzy Standing */}
           <YesNoRadio
-            title={intakeQs.unsteady[language]}
+            title={intakeQs.dizzyStanding[language]}
             handleChange={handleChange}
-            name="unsteady"
-            status={data.unsteady}
+            name="dizzyStanding"
+            status={data.dizzyStanding}
             language={language}
           />
           {/* Dizziness Come and Go */}
@@ -338,6 +371,7 @@ function PbStepThree({
         </div>
       </div>
     </form>
+    </>
   );
 }
 

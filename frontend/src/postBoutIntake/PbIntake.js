@@ -43,9 +43,9 @@ function PbIntake({ setCurrView }) {
     headachePain: "",
     dizziness: "",
     dizzinessStart: "",
-    spinning: "",
-    lightHead: "",
-    unsteady: "",
+    dizzyLying: "",
+    dizzySitting: "",
+    dizzyStanding: "",
     dizzinessComeAndGo: "",
     dizzyChangeInVission: "",
     forgetfulness: "",
@@ -111,7 +111,7 @@ function PbIntake({ setCurrView }) {
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
   const [maxDate, setMaxDate] = useState("");
   const [apptAt, setApptAt] = useState("");
   const [providerName, setProviderName] = useState("");
@@ -387,7 +387,7 @@ function PbIntake({ setCurrView }) {
         </div>
       </div>
 
-      <div className="card mt-3">
+      <div className="card mt-3 bg-light-blue">
         <div className="card-body">
           {complete ? (
             <div className="text-center">

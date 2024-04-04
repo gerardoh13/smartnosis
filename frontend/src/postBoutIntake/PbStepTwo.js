@@ -12,7 +12,6 @@ function PbStepTwo({
   intakeOptions,
   language,
 }) {
-
   const handleSubmit = (e) => {
     e.preventDefault();
     changeStep(1);
@@ -26,7 +25,7 @@ function PbStepTwo({
       </p>
       {/* result */}
       <div className="row mb-3">
-      <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
           <span className="text-start ms-1 mt-1">
             {intakeQs.result[language] + ":"}
             <span className="text-danger">*</span>
@@ -55,7 +54,7 @@ function PbStepTwo({
       </div>
       {/* status */}
       <div className="row mb-3">
-      <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
           <span className="text-start ms-1 mt-1">
             {intakeQs.status[language] + ":"}
             <span className="text-danger">*</span>
@@ -161,6 +160,7 @@ function PbStepTwo({
           </div>
         </>
       ) : null}
+      <hr />
       {/* Concussion */}
       <YesNoRadio
         title={intakeQs.concussion[language]}
@@ -172,7 +172,7 @@ function PbStepTwo({
       />
       {data.concussion === "Yes" ? (
         <div className="row mb-3">
-            <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+          <div className="col-12 col-lg-6 mb-lg-0 mb-2">
             <span className="text-start ms-1 mt-1">
               {intakeQs.concussionNum[language] + ":"}
               <span className="text-danger">*</span>
@@ -198,6 +198,7 @@ function PbStepTwo({
           </div>
         </div>
       ) : null}
+      <hr />
       {/* Alertness Loss */}
       <YesNoRadio
         title={intakeQs.alertnessLoss[language]}
@@ -278,6 +279,7 @@ function PbStepTwo({
           </div>
         </>
       ) : null}
+      <hr />
       <div className="row mt-4">
         <div className="col">
           <button

@@ -225,7 +225,7 @@ const pBintakeQs = {
     spanish: "Duración de la estancia hospitalaria (horas)",
   },
   concussion: {
-    english: "Have you had a concussion in the past?",
+    english: "Have you had a Head Injury before?",
     spanish: "¿Ha tenido una conmoción cerebral en el pasado?",
   },
   concussionNum: {
@@ -233,8 +233,7 @@ const pBintakeQs = {
     spanish: "Cuantas: seleccione el número 1-10",
   },
   alertnessLoss: {
-    english:
-      "Did you feel any changes in alertness at any time during the fight?",
+    english: "Did you feel any changes in alertness during the fight?",
     spanish:
       "¿Sentiste algún cambio en tu estado de alerta en algún momento durante la pelea?",
   },
@@ -246,47 +245,49 @@ const pBintakeQs = {
     english: "How Long? (seconds)",
     spanish: "¿cuánto tiempo? (segundos)",
   },
+  drugsOrAlcohol: {
+    english: "Any Alcohol or Drug Use since time of Fight?",
+    spanish: "translationMissing",
+  },
   headache: {
-    english: "Suffering any Headache(s)?",
+    english: "Have you felt any Headache(s)?",
     spanish: "¿Sufres algún dolor de cabeza?",
   },
   headachePain: {
-    english:
-      "On a scale of 1-10 (10 = painfully sensitive), rate your Headache(s)",
+    english: "On a scale of 1-5 (5 = very painful), rate your Headache(s)",
     spanish:
-      "En una escala del 1 al 10 (10 = dolorosamente sensible), califique su dolor de cabeza.",
+      "En una escala del 1 al 5 (5 = dolorosamente sensible), califique su dolor de cabeza.",
   },
   dizziness: {
-    english: "Suffering any Dizziness?",
+    english: "Have you fely any dizziness since the Fight?",
     spanish: "¿Sufres algún mareo?",
   },
   dizzinessStart: {
     english: "When did it start?",
     spanish: "¿Cuándo empezo?",
   },
-  spinning: {
-    english: "Are you experiencing spinning?",
-    spanish: "¿Estás experimentando giros?",
+  dizzyLying: {
+    english: "Are you dizzy when lying down?",
+    spanish: "translationMissing",
   },
-  lightHead: {
-    english: "Are you experiencing Lightheadedness?",
-    spanish: "¿Estás experimentando aturdimiento?",
+  dizzySitting: {
+    english: "Are you dizzy when sitting?",
+    spanish: "translationMissing",
   },
-  unsteady: {
-    english: "Are you experiencing Unsteadiness?",
-    spanish: "¿Estás experimentando inestabilidad?",
+  dizzyStanding: {
+    english: "Are you dizzy when standing up?",
+    spanish: "translationMissing",
   },
   dizzinessComeAndGo: {
     english: "Does dizziness come and go?",
     spanish: "¿Los mareos van y vienen?",
   },
   dizzyChangeInVission: {
-    english:
-      "Are there any changes in your vision or hearing during dizziness?",
+    english: "Are there any changes in your vision or hearing when dizzy?",
     spanish: "¿Hay algún cambio en su visión o audición durante los mareos?",
   },
   forgetfulness: {
-    english: "Have you been forgetful or have Poor Memory?",
+    english: "Have you been forgetful since the fight?",
     spanish: "¿Ha sido olvidadizo o tiene mala memoria?",
   },
   forgetRecentEvents: {
@@ -306,11 +307,11 @@ const pBintakeQs = {
     spanish: "¿Estás experimentando algún cambio de humor?",
   },
   concentrate: {
-    english: "Is it difficult to Concentrate?",
+    english: "Has it been hard for you to Concentrate?",
     spanish: "¿Es difícil concentrarse?",
   },
   depression: {
-    english: "Do you feel Depression or tearfulness?",
+    english: "Have you felt Depressed in the last 72 hours?",
     spanish: "¿Sientes depresión o llanto?",
   },
   irritable: {
@@ -355,7 +356,7 @@ const pBintakeQs = {
     spanish: "¿Cómo estás durmiendo?",
   },
   noiseSensitivity: {
-    english: "Are you suffering from Noise sensitivity?",
+    english: "Are you suffering from noise sensitivity?",
     spanish: "¿Sufres de sensibilidad al ruido?",
   },
   noiseSensitivityStart: {
@@ -406,11 +407,11 @@ const pBintakeQs = {
     spanish: "¿Tienes visión borrosa en ambos ojos?",
   },
   doubleVision: {
-    english: "¿Sufres de alguna visión doble?",
+    english: "Are you suffering from any double vision?",
     spanish: "¿Sufres de alguna visión doble?",
   },
   doubleVisionStart: {
-    english: "When did Double vision start?",
+    english: "When did double vision start?",
     spanish: "¿Cuándo empezó la visión doble?",
   },
   doubleVisionConstant: {
@@ -456,7 +457,7 @@ const pBintakeQs = {
       "En una escala del 1 al 10 (10 = dolorosamente sensible), califique su sensibilidad",
   },
   neckPain: {
-    english: "Have you experienced any Neck Pain?",
+    english: "Have you experienced any neck pain?",
     spanish: "¿Ha experimentado algún dolor de cuello?",
   },
   neckPainScale: {
@@ -465,7 +466,7 @@ const pBintakeQs = {
       "En una escala de 1 a 10 (10 = muy doloroso), califique su dolor de cuello",
   },
   lowerBackPain: {
-    english: "Have you experienced any Lower Back Pain?",
+    english: "Have you experienced any lower back pain?",
     spanish: "¿Ha experimentado algún dolor lumbar?",
   },
   lowerBackPainScale: {

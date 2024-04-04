@@ -24,3 +24,7 @@
 .w-48 {
   max-width: 49% !important;
 }
+
+.bg-light-blue {
+  background-color:#b3e5fc;
+}
