@@ -4,7 +4,7 @@ import YesNoRadio from "../common/YesNoRadio";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
-function PbStepSix({
+function PbStepNine({
   data,
   handleChange,
   handleSelect,
@@ -23,7 +23,7 @@ function PbStepSix({
   return (
     <>
       <div>
-        <p className="text-center">{headers.pgSix[language]}</p>
+        <p className="text-center">{headers.pgNine[language]}</p>
       </div>
       <hr />
       <form onSubmit={handleSubmit} className="needs-validation">
@@ -31,35 +31,6 @@ function PbStepSix({
           <span className="text-danger">*</span>
           <span>Indicates required field</span>
         </p>
-        {/* Sleeping */}
-        <div className="row mb-3">
-          <div className="col-12 col-lg-6 mb-lg-0 mb-2">
-            <span className="text-start ms-1 mt-1">
-              {intakeQs.sleeping[language] + ":"}
-              <span className="text-danger">*</span>
-            </span>
-          </div>
-          <div className="col text-center">
-            <Dropdown onSelect={(val) => handleSelect("sleeping", val)}>
-              <Dropdown.Toggle
-                className="form-control"
-                variant="secondary"
-                id="sleeping-dropdown"
-              >
-                {intakeOptions.sleeping.find(
-                  (option) => option.english === data.sleeping
-                )?.[language] || "Select"}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {intakeOptions.sleeping.map((option) => (
-                  <Dropdown.Item key={option.english} eventKey={option.english}>
-                    {option[language]}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </div>
         {/* Neck Pain */}
         <YesNoRadio
           title={intakeQs.neckPain[language]}
@@ -224,4 +195,4 @@ function PbStepSix({
   );
 }
 
-export default PbStepSix;
+export default PbStepNine;

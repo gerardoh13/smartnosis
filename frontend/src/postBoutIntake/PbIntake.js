@@ -6,7 +6,9 @@ import PbStepThree from "./PbStepThree";
 import PbStepFour from "./PbStepFour";
 import PbStepFive from "./PbStepFive";
 import PbStepSix from "./PbStepSix";
-
+import PbStepSeven from "./PbStepSeven";
+import PbStepEight from "./PbStepEight";
+import PbStepNine from "./PbStepNine";
 import SmartnosisApi from "../api";
 import { useQuery } from "../hooks";
 import "../intake/Intake.css";
@@ -74,12 +76,14 @@ function PbIntake({ setCurrView }) {
     ringingBothEars: "",
     // page 6
     sleeping: "",
+    // page 7
     noiseSensitivity: "",
     noiseSensitivityStart: "",
     noiseSensitivityTrigger: "",
     noiseSensitivityDizziness: "",
     noiseSensitivityPain: "",
     noiseSensitivityScale: "",
+    // page 8
     blurredVision: "",
     blurredVisionStart: "",
     blurredVisionConstant: "",
@@ -98,18 +102,20 @@ function PbIntake({ setCurrView }) {
     lightSensitivityOnAndOff: "",
     lightSensitivityTrigger: "",
     lightSensitivityScale: "",
+    // page 9
     neckPain: "",
     neckPainExplain: "",
     neckPainScale: "",
     lowerBackPain: "",
     lowerBackPainExplain: "",
     lowerBackPainScale: "",
+    // page 10
     comments: "",
     additionalPId: "",
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(6);
   const [maxDate, setMaxDate] = useState("");
   const [complete, setComplete] = useState(false);
   const [agreeDisclaimer, setAgreeDisclaimer] = useState(false);
@@ -281,6 +287,42 @@ function PbIntake({ setCurrView }) {
     return req.every(Boolean);
   };
 
+  const stepFiveComplete = () => {
+    let req = [formData.ringingEars];
+    if (formData.ringingEars === "Yes") {
+      req.push(formData.forgetRecentEvents);
+      req.push(formData.forgetNames);
+      req.push(formData.forgetItems);
+      req.push(formData.moodChanges);
+    }
+    if (formData.concentrate === "Yes") req.push(formData.concentrateExplain);
+    if (formData.depression === "Yes") req.push(formData.depressionExplain);
+
+    return req.every(Boolean);
+  };
+
+  const stepSixComplete = () => {
+    if (formData.sleeping) return true;
+    return false;
+  };
+
+  const stepSevenComplete = () => {
+    let req = [formData.noiseSensitivity];
+    if (formData.noiseSensitivity) {
+      req.push(formData.noiseSensitivityStart);
+      req.push(formData.noiseSensitivityTrigger);
+      req.push(formData.noiseSensitivityDizziness);
+      req.push(formData.noiseSensitivityPain);
+      req.push(formData.noiseSensitivityScale);
+    }
+    return req.every(Boolean);
+  };
+  const stepEightComplete = () => {
+    return false;
+  };
+  const stepNineComplete = () => {
+    return false;
+  };
   let currStep;
   switch (step) {
     case 0:
@@ -354,7 +396,7 @@ function PbIntake({ setCurrView }) {
           handleSelect={handleSelect}
           changeStep={changeStep}
           maxDate={maxDate}
-          complete={stepOneComplete}
+          complete={stepFiveComplete}
           headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
@@ -377,7 +419,53 @@ function PbIntake({ setCurrView }) {
         />
       );
       break;
+    //
     case 6:
+      currStep = (
+        <PbStepSeven
+          data={formData}
+          handleChange={handleChange}
+          handleSelect={handleSelect}
+          changeStep={changeStep}
+          complete={stepOneComplete}
+          headers={pbHeaders}
+          intakeQs={pBintakeQs}
+          intakeOptions={PbIntakeOptions}
+          language={language}
+        />
+      );
+      break;
+    case 7:
+      currStep = (
+        <PbStepEight
+          data={formData}
+          handleChange={handleChange}
+          handleSelect={handleSelect}
+          changeStep={changeStep}
+          complete={stepOneComplete}
+          headers={pbHeaders}
+          intakeQs={pBintakeQs}
+          intakeOptions={PbIntakeOptions}
+          language={language}
+        />
+      );
+      break;
+    case 8:
+      currStep = (
+        <PbStepNine
+          data={formData}
+          handleChange={handleChange}
+          handleSelect={handleSelect}
+          changeStep={changeStep}
+          complete={stepOneComplete}
+          headers={pbHeaders}
+          intakeQs={pBintakeQs}
+          intakeOptions={PbIntakeOptions}
+          language={language}
+        />
+      );
+      break;
+    case 9:
       currStep = (
         <>
           <div className="text-center">
@@ -447,14 +535,29 @@ function PbIntake({ setCurrView }) {
                 } ${step === 3 ? "active" : ""}`}
               ></span>
               <span
-                className={`step ${step > 3 || complete ? "finish" : ""} ${
-                  step === 4 ? "active" : ""
-                }`}
+                className={`step ${
+                  stepFiveComplete() || complete ? "finish" : ""
+                } ${step === 4 ? "active" : ""}`}
               ></span>
               <span
-                className={`step ${step > 4 || complete ? "finish" : ""} ${
-                  step === 5 ? "active" : ""
-                }`}
+                className={`step ${
+                  stepSixComplete() || complete ? "finish" : ""
+                } ${step === 5 ? "active" : ""}`}
+              ></span>
+              <span
+                className={`step ${
+                  stepSevenComplete() || complete ? "finish" : ""
+                } ${step === 6 ? "active" : ""}`}
+              ></span>
+              <span
+                className={`step ${
+                  stepEightComplete() || complete ? "finish" : ""
+                } ${step === 7 ? "active" : ""}`}
+              ></span>
+              <span
+                className={`step ${
+                  stepNineComplete() || complete ? "finish" : ""
+                } ${step === 8 ? "active" : ""}`}
               ></span>
             </div>
           </div>
