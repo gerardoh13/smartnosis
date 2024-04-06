@@ -313,6 +313,10 @@ const pBintakeQs = {
     english: "Have you felt Depressed in the last 72 hours?",
     spanish: "¿Sientes depresión o llanto?",
   },
+  depressionExplain: {
+    english: "When did it start?",
+    spanish: "¿Cuándo empezo?",
+  },
   irritable: {
     english: "How often do you feel irritable or are easily angered?",
     spanish:
@@ -330,29 +334,29 @@ const pBintakeQs = {
     english: "Are you hearing Buzzing?",
     spanish: "¿Estás escuchando un zumbido?",
   },
-  ringing: {
-    english: "Are you hearing Ringing?",
-    spanish: "¿Estás escuchando un timbre?",
-  },
+  // ringing: {
+  //   english: "Are you hearing Ringing?",
+  //   spanish: "¿Estás escuchando un timbre?",
+  // },
   whistling: {
     english: "Are you hearing Whistling?",
     spanish: "¿Estás escuchando silbidos?",
   },
-  hissing: {
-    english: "Are you hearing Hissing?",
-    spanish: "¿Estás escuchando silbido?",
-  },
+  // hissing: {
+  //   english: "Are you hearing Hissing?",
+  //   spanish: "¿Estás escuchando silbido?",
+  // },
   ringingConstant: {
-    english: "Is the ringing sound constant or On-and-off?",
-    spanish: "¿El sonido del timbre es constante o intermitente?",
+    english: "Have you heard ringing alot or just sometimes?",
+    spanish: "¿Has oído zumbidos mucho o sólo algunas veces?",
   },
   ringingBothEars: {
-    english: "Is the ringing in one ear or both? ",
-    spanish: "¿El zumbido es en un oído o en ambos?",
+    english: "Is the ringing in one ear or both ears? ",
+    spanish: "¿El zumbido es en un oído o en ambos oídos?",
   },
   sleeping: {
-    english: "How are you Sleeping?",
-    spanish: "¿Cómo estás durmiendo?",
+    english: "On average, how many hours of sleep are you getting per night?",
+    spanish: "En promedio, ¿cuántas horas duermes por noche?",
   },
   noiseSensitivity: {
     english: "Are you suffering from noise sensitivity?",
@@ -382,8 +386,8 @@ const pBintakeQs = {
     spanish: "TranslationMissing",
   },
   blurredVision: {
-    english: "Are you suffering from any Blurred Vision?",
-    spanish: "wad",
+    english: "Has your vision been blurry in past 72 hours?",
+    spanish: "¿Ha tenido la visión borrosa en las últimas 72 horas?",
   },
   blurredVisionStart: {
     english: "When did Blurred vision start?",
@@ -514,6 +518,11 @@ const PbIntakeOptions = {
       spanish: "Dolores de cabeza severos",
     },
   ],
+  dizzinessStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
   concentrateExplain: [
     { english: "Sometimes", spanish: "A veces" },
     { english: "Often", spanish: "A menudo" },
@@ -523,42 +532,35 @@ const PbIntakeOptions = {
     },
   ],
   depressionExplain: [
-    { english: "Sometimes", spanish: "A veces" },
-    { english: "Often", spanish: "A menudo" },
-    {
-      english: "All the time",
-      spanish: "Todo el tiempo",
-    },
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
   ],
   irritable: [
     { english: "Not at all", spanish: "Para nada" },
-    {
-      english: "Sometimes I feel irritable and easily get angered",
-      spanish: "A veces me siento irritable y me enojo fácilmente.",
-    },
-    {
-      english: "Often I feel irritable and easily get angered",
-      spanish: "A menudo me siento irritable y me enojo fácilmente.",
-    },
-    {
-      english: "I feel irritable and I get easily get angered all the time",
-      spanish: "Me siento irritable y me enojo fácilmente todo el tiempo.",
-    },
+    { english: "Sometimes", spanish: "A veces." },
+    { english: "Often", spanish: "A menudo." },
+    { english: "All the time", spanish: "Todo el tiempo." },
+  ],
+  ringingStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
+  ringingConstant: [
+    { english: "A lot", spanish: "Mucho" },
+    { english: "Sometimes", spanish: "A veces" },
+  ],
+  ringingBothEars: [
+    { english: "One ear", spanish: "Un oído" },
+    { english: "Both ears", spanish: "Ambos oídos" },
   ],
   sleeping: [
-    { english: "I sleep very well", spanish: "Duermo muy bien." },
-    {
-      english: "I sleep good most of the time",
-      spanish: "Duermo bien la mayor parte del tiempo.",
-    },
-    {
-      english: "I hardly get good sleep",
-      spanish: "casi no duermo bien.",
-    },
-    {
-      english: "Im not sleeping",
-      spanish: "No estoy durmiendo.",
-    },
+    { english: "0-1", spanish: "0-1" },
+    {english: "1-3", spanish: "1-3"},
+    {english: "4-6", spanish: "4-6"},
+    {english: "7-9", spanish: "7-9"},
+    {english: "More", spanish: "Mas"},
   ],
   neckPainExplain: [
     { english: "Sometimes", spanish: "A veces" },

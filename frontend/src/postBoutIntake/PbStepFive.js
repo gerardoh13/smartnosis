@@ -1,7 +1,5 @@
 import React from "react";
 import YesNoRadio from "../common/YesNoRadio";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
 import Dropdown from "react-bootstrap/Dropdown";
 
 function PbStepFive({
@@ -47,23 +45,34 @@ function PbStepFive({
           <>
             {/* Ringing Start */}
             <div className="row mb-3">
-              <div className="col-6">
+              <div className="col d-flex align-items-center">
                 <span className="text-start ms-1 mt-1">
                   {intakeQs.ringingStart[language] + ":"}
                   <span className="text-danger">*</span>
                 </span>
               </div>
-              <div className="col-6">
-                <input
-                  className="form-control"
-                  type="date"
-                  name="ringingStart"
-                  id="ringingStart"
-                  max={maxDate}
-                  value={data.ringingStart}
-                  onChange={handleChange}
-                  required
-                />
+              <div className="col">
+                <Dropdown onSelect={(val) => handleSelect("ringingStart", val)}>
+                  <Dropdown.Toggle
+                    className="form-control"
+                    variant="secondary"
+                    id="ringingStart-dropdown"
+                  >
+                    {intakeOptions.ringingStart.find(
+                      (option) => option.english === data.ringingStart
+                    )?.[language] || "Select"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {intakeOptions.ringingStart.map((option) => (
+                      <Dropdown.Item
+                        key={option.english}
+                        eventKey={option.english}
+                      >
+                        {option[language]}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
             {/* Buzzing */}
@@ -75,13 +84,13 @@ function PbStepFive({
               language={language}
             />
             {/* Ringing */}
-            <YesNoRadio
+            {/* <YesNoRadio
               title={intakeQs.ringing[language]}
               handleChange={handleChange}
               name="ringing"
               status={data.ringing}
               language={language}
-            />
+            /> */}
             {/* Whistling */}
             <YesNoRadio
               title={intakeQs.whistling[language]}
@@ -91,15 +100,74 @@ function PbStepFive({
               language={language}
             />
             {/* Hissing */}
-            <YesNoRadio
+            {/* <YesNoRadio
               title={intakeQs.hissing[language]}
               handleChange={handleChange}
               name="hissing"
               status={data.hissing}
               language={language}
-            />
+            /> */}
           </>
         ) : null}
+        {/* Ringing Constant */}
+        <div className="row mb-3">
+          <div className="col d-flex align-items-center">
+            <span className="text-start ms-1 mt-1">
+              {intakeQs.ringingConstant[language] + ":"}
+              <span className="text-danger">*</span>
+            </span>
+          </div>
+          <div className="col">
+            <Dropdown onSelect={(val) => handleSelect("ringingConstant", val)}>
+              <Dropdown.Toggle
+                className="form-control"
+                variant="secondary"
+                id="ringingConstant-dropdown"
+              >
+                {intakeOptions.ringingConstant.find(
+                  (option) => option.english === data.ringingConstant
+                )?.[language] || "Select"}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {intakeOptions.ringingConstant.map((option) => (
+                  <Dropdown.Item key={option.english} eventKey={option.english}>
+                    {option[language]}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </div>
+        {/* Ringing Both Ears */}
+        <div className="row mb-3">
+          <div className="col d-flex align-items-center">
+            <span className="text-start ms-1 mt-1">
+              {intakeQs.ringingBothEars[language] + ":"}
+              <span className="text-danger">*</span>
+            </span>
+          </div>
+          <div className="col">
+            <Dropdown onSelect={(val) => handleSelect("ringingBothEars", val)}>
+              <Dropdown.Toggle
+                className="form-control"
+                variant="secondary"
+                id="ringingBothEars-dropdown"
+              >
+                {intakeOptions.ringingBothEars.find(
+                  (option) => option.english === data.ringingBothEars
+                )?.[language] || "Select"}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {intakeOptions.ringingBothEars.map((option) => (
+                  <Dropdown.Item key={option.english} eventKey={option.english}>
+                    {option[language]}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+
+          </div>
+        </div>
         <div className="row mt-4">
           <div className="col">
             <button

@@ -69,9 +69,9 @@ function PbIntake({ setCurrView }) {
     ringingEars: "",
     ringingStart: "",
     buzzing: "",
-    ringing: "",
+    // ringing: "",
     whistling: "",
-    hissing: "",
+    // hissing: "",
     ringingConstant: "",
     ringingBothEars: "",
     // page 6
@@ -290,10 +290,13 @@ function PbIntake({ setCurrView }) {
   const stepFiveComplete = () => {
     let req = [formData.ringingEars];
     if (formData.ringingEars === "Yes") {
-      req.push(formData.forgetRecentEvents);
-      req.push(formData.forgetNames);
-      req.push(formData.forgetItems);
-      req.push(formData.moodChanges);
+      req.push(formData.ringingStart);
+      req.push(formData.buzzing);
+      // req.push(formData.ringing);
+      req.push(formData.whistling);
+      // req.push(formData.hissing);
+      req.push(formData.ringingConstant);
+      req.push(formData.ringingBothEars);
     }
     if (formData.concentrate === "Yes") req.push(formData.concentrateExplain);
     if (formData.depression === "Yes") req.push(formData.depressionExplain);
@@ -303,7 +306,6 @@ function PbIntake({ setCurrView }) {
 
   const stepSixComplete = () => {
     if (formData.sleeping) return true;
-    return false;
   };
 
   const stepSevenComplete = () => {
@@ -411,7 +413,7 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
-          complete={stepOneComplete}
+          complete={stepSixComplete}
           headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
@@ -513,51 +515,60 @@ function PbIntake({ setCurrView }) {
             currStep
           )}
           <div className="row">
-            <div className="mt-2 text-center">
+            <div className="mt-3 text-center">
               <span
                 className={`step ${
                   stepOneComplete() || complete ? "finish" : ""
                 } ${step === 0 ? "active" : ""}`}
+                onClick={() => setStep(0)}
               ></span>
               <span
                 className={`step ${
                   stepTwoComplete() || complete ? "finish" : ""
                 } ${step === 1 ? "active" : ""}`}
+                onClick={() => setStep(1)}
               ></span>
               <span
                 className={`step ${
                   stepThreeComplete() || complete ? "finish" : ""
                 } ${step === 2 ? "active" : ""}`}
+                onClick={() => setStep(2)}
               ></span>
               <span
                 className={`step ${
                   stepFourComplete() || complete ? "finish" : ""
                 } ${step === 3 ? "active" : ""}`}
+                onClick={() => setStep(3)}
               ></span>
               <span
                 className={`step ${
                   stepFiveComplete() || complete ? "finish" : ""
                 } ${step === 4 ? "active" : ""}`}
+                onClick={() => setStep(4)}
               ></span>
               <span
                 className={`step ${
                   stepSixComplete() || complete ? "finish" : ""
                 } ${step === 5 ? "active" : ""}`}
+                onClick={() => setStep(5)}
               ></span>
               <span
                 className={`step ${
                   stepSevenComplete() || complete ? "finish" : ""
                 } ${step === 6 ? "active" : ""}`}
+                onClick={() => setStep(6)}
               ></span>
               <span
                 className={`step ${
                   stepEightComplete() || complete ? "finish" : ""
                 } ${step === 7 ? "active" : ""}`}
+                onClick={() => setStep(7)}
               ></span>
               <span
                 className={`step ${
                   stepNineComplete() || complete ? "finish" : ""
                 } ${step === 8 ? "active" : ""}`}
+                onClick={() => setStep(8)}
               ></span>
             </div>
           </div>

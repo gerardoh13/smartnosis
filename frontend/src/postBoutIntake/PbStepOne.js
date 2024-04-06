@@ -100,7 +100,7 @@ function PbStepOne({
         </div>
         {/* Dof - Date of Fight */}
         <div className="row">
-          <div className="col-6">
+          <div className="col-6 d-flex align-items-center">
             <span className="text-start ms-1 mt-1">
               {intakeQs.dof[language] + ":"}
               <span className="text-danger">*</span>

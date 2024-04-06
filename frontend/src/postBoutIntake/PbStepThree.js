@@ -145,23 +145,37 @@ function PbStepThree({
           <>
             {/* Dizziness Start */}
             <div className="row mb-3">
-              <div className="col-6">
+              <div className="col-6 d-flex align-items-center">
                 <span className="text-start ms-1 mt-1">
                   {intakeQs.dizzinessStart[language] + ":"}
                   <span className="text-danger">*</span>
                 </span>
               </div>
-              <div className="col-6">
-                <input
-                  className="form-control"
-                  type="date"
-                  name="dizzinessStart"
-                  id="dizzinessStart"
-                  max={maxDate}
-                  value={data.dizzinessStart}
-                  onChange={handleChange}
-                  required
-                />
+              <div className="col text-center">
+                <Dropdown
+                  onSelect={(val) => handleSelect("dizzinessStart", val)}
+                >
+                  <Dropdown.Toggle
+                    className="form-control text-wrap"
+                    variant="secondary"
+                    id="dizzinessStart-dropdown"
+                  >
+                    {intakeOptions.dizzinessStart.find(
+                      (option) => option.english === data.dizzinessStart
+                    )?.[language] || "Select"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {intakeOptions.dizzinessStart.map((option) => (
+                      <Dropdown.Item
+                        key={option.english}
+                        eventKey={option.english}
+                        className="text-wrap"
+                      >
+                        {option[language]}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
             {/* Dizzy Lying Down*/}

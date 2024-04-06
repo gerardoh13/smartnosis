@@ -78,7 +78,7 @@ function PbStepTwo({
         {data.alertnessLoss === "Yes" ? (
           <>
             <div className="row mb-3">
-              <div className="col">
+              <div className="col d-flex align-items-center">
                 <span className="text-start ms-1 mt-1">
                   {intakeQs.alertnessLossRound[language] + ":"}
                   <span className="text-danger">*</span>
@@ -122,7 +122,7 @@ function PbStepTwo({
             </div>
             {/* Alertness Loss Length */}
             <div className="row mb-3">
-              <div className="col">
+              <div className="col d-flex align-items-center">
                 <span className="text-start ms-1 mt-1">
                   {intakeQs.alertnessLossLength[language] + ":"}
                   <span className="text-danger">*</span>

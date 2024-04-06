@@ -135,7 +135,12 @@ function PbStepFour({
         {/* Depression Explain */}
         {data.depression === "Yes" ? (
           <div className="row mb-3">
-            <div className="col"></div>
+            <div className="col d-flex align-items-center">
+            <span className="text-start ms-1 mt-1">
+                  {intakeQs.depressionExplain[language] + ":"}
+                  <span className="text-danger">*</span>
+                </span>
+            </div>
             <div className="col text-center">
               <Dropdown
                 onSelect={(val) => handleSelect("depressionExplain", val)}
