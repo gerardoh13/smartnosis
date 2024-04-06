@@ -233,9 +233,8 @@ const pBintakeQs = {
     spanish: "Cuantas: seleccione el número 1-10",
   },
   alertnessLoss: {
-    english: "Did you feel any changes in alertness during the fight?",
-    spanish:
-      "¿Sentiste algún cambio en tu estado de alerta en algún momento durante la pelea?",
+    english: "Did you feel any changes in your awareness during the fight?",
+    spanish: "¿Sentiste algún cambio en tu conciencia durante la pelea?",
   },
   alertnessLossRound: {
     english: "What Round?",
@@ -501,6 +500,12 @@ const PbIntakeOptions = {
       spanish: "Asesoramiento/tratamiento médico rechazado",
     },
   ],
+  drugsOrAlcohol: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+    { english: "All Days", spanish: "Todos los días" },
+  ],
   headacheExplain: [
     { english: "Mild headaches", spanish: "Dolores de cabeza leves" },
     { english: "Moderate headaches", spanish: "Dolores de cabeza moderados" },
@@ -574,4 +579,68 @@ const PbIntakeOptions = {
     { english: "Right now", spanish: "Ahora mismo" },
   ],
 };
-export { intakeQs, pBintakeQs, PbIntakeOptions };
+
+const pbHeaders = {
+  pgOne: {
+    english:
+      "Head injuries are serious. Answer the following questions in the 3 days after your fight.",
+    spanish:
+      "Las lesiones en la cabeza son graves. Responde las siguientes preguntas en los 3 días posteriores a tu pelea.",
+  },
+  pgTwo: {
+    english:
+      "The following questions are to see if you have suffered a head injury after your fight.",
+    spanish:
+      "Las siguientes preguntas son para ver si ha sufrido una lesión en la cabeza después de su pelea.",
+  },
+  pgThree: {
+    english:
+      "In the 3 days after your fight, the below questions are to monitor your headache(s) and dizziness.",
+    spanish:
+      "En los 3 días posteriores a su pelea, las siguientes preguntas son para controlar sus dolores de cabeza y mareos.",
+  },
+  pgFour: {
+    english:
+      "In the 3 days after your fight, the below questions are to monitor your memory and mood.",
+    spanish:
+      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para controlar tu memoria y estado de ánimo.",
+  },
+  pgFive: {
+    english:
+      "In the 3 days after your fight, the below questions are to monitor your hearing.",
+    spanish:
+      "En los 3 días posteriores a su pelea, las siguientes preguntas son para controlar su audición.",
+  },
+  pgSix: {
+    english:
+      "In the 3 days after your fight, the below questions are to monitor your sleep habits.",
+    spanish:
+      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para controlar tus hábitos de sueño.",
+  },
+  pgSeven: {
+    english:
+      "In the 3 days after your fight, the below questions are to monitor how you respond to noise.",
+    spanish:
+      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para monitorear cómo respondes al ruido.",
+  },
+  pgEight: {
+    english:
+      "In the 3 days after your fight, the below questions are to monitor your vision.",
+    spanish:
+      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para controlar tu visión.",
+  },
+  pgNine: {
+    english:
+      "In the 3 days after your fight, the below questions are to monitor your neck and back pain.",
+    spanish:
+      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para controlar tu dolor de cuello y espalda.",
+  },
+  pgTen: {
+    english:
+      "In the 3 day after your fight, Select Any other symptoms you have experienced.",
+    spanish:
+      "En los 3 días posteriores a su pelea, seleccione Cualquier otro síntoma que haya experimentado.",
+  },
+};
+
+export { intakeQs, pBintakeQs, PbIntakeOptions, pbHeaders };

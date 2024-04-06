@@ -16,10 +16,11 @@ import Grid from "@mui/material/Grid";
 // import { deleteNulls } from "../common/commonFuncs";
 import DisclaimerModal from "../components/DisclaimerModal";
 import LangToggle from "../common/LangToggle";
-import { pBintakeQs, PbIntakeOptions } from "../common/translations";
+import { pBintakeQs, PbIntakeOptions, pbHeaders } from "../common/translations";
 
 function PbIntake({ setCurrView }) {
   const INITIAL_STATE = {
+    // page 1
     providerId: "",
     firstName: "",
     lastName: "",
@@ -33,11 +34,14 @@ function PbIntake({ setCurrView }) {
     transport: "",
     hospitalName: "",
     visitLength: "",
+    // page 2
     concussion: "",
     concussionNum: "",
     alertnessLoss: "",
     alertnessLossRound: "",
     alertnessLossLength: "",
+    drugsOrAlcohol: "",
+    // page 3
     headache: "",
     headacheExplain: "",
     headachePain: "",
@@ -48,19 +52,18 @@ function PbIntake({ setCurrView }) {
     dizzyStanding: "",
     dizzinessComeAndGo: "",
     dizzyChangeInVission: "",
+    // page 4
     forgetfulness: "",
     forgetRecentEvents: "",
     forgetNames: "",
     forgetItems: "",
     moodChanges: "",
-    //-------------------------------------
-    sleep: "",
-    //-------------------------------------
     concentrate: "",
     concentrateExplain: "",
     depression: "",
     depressionExplain: "",
     irritable: "",
+    // page 5
     ringingEars: "",
     ringingStart: "",
     buzzing: "",
@@ -69,6 +72,7 @@ function PbIntake({ setCurrView }) {
     hissing: "",
     ringingConstant: "",
     ringingBothEars: "",
+    // page 6
     sleeping: "",
     noiseSensitivity: "",
     noiseSensitivityStart: "",
@@ -76,45 +80,37 @@ function PbIntake({ setCurrView }) {
     noiseSensitivityDizziness: "",
     noiseSensitivityPain: "",
     noiseSensitivityScale: "",
-
     blurredVision: "",
     blurredVisionStart: "",
     blurredVisionConstant: "",
     blurredVisionOnAndOff: "",
     blurredVisionOneEye: "",
     blurredVisionBothEyes: "",
-
     doubleVision: "",
     doubleVisionStart: "",
     doubleVisionConstant: "",
     doubleVisionOnAndOff: "",
     doubleVisionOneEye: "",
     doubleVisionBothEyes: "",
-
     lightSensitivity: "",
     lightSensitivityStart: "",
     lightSensitivityConstant: "",
     lightSensitivityOnAndOff: "",
     lightSensitivityTrigger: "",
     lightSensitivityScale: "",
-
     neckPain: "",
     neckPainExplain: "",
     neckPainScale: "",
     lowerBackPain: "",
     lowerBackPainExplain: "",
     lowerBackPainScale: "",
-
-    symptoms: new Set(),
     comments: "",
     additionalPId: "",
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(3);
   const [maxDate, setMaxDate] = useState("");
-  const [apptAt, setApptAt] = useState("");
-  const [providerName, setProviderName] = useState("");
   const [complete, setComplete] = useState(false);
   const [agreeDisclaimer, setAgreeDisclaimer] = useState(false);
   const [language, setLanguage] = useState("english");
@@ -134,8 +130,6 @@ function PbIntake({ setCurrView }) {
     setMaxDate(max);
     async function getAppt() {
       let appt = await SmartnosisApi.getAppt(queryProvider, queryAppt);
-      setApptAt(appt.apptAt);
-      setProviderName(appt.providerName);
       setComplete(appt.complete);
       setFormData((data) => ({
         ...data,
@@ -220,31 +214,71 @@ function PbIntake({ setCurrView }) {
   // };
 
   const stepOneComplete = () => {
-    return [
+    let req = [
       formData.firstName,
       formData.lastName,
-      formData.dob,
-      formData.sex,
-      formData.email,
-      formData.phone,
-      formData.address1,
-      formData.city,
-      formData.state,
-      formData.zip,
-      formData.insurance,
-    ].every(Boolean);
+      formData.promoter,
+      formData.physicianName,
+      formData.dof,
+      formData.location,
+      formData.result,
+      formData.status,
+    ];
+    if (formData.status === "Sent to Hospital") {
+      req.push(formData.transport);
+      req.push(formData.hospitalName);
+      req.push(formData.visitLength);
+    }
+    return req.every(Boolean);
+  };
+
+  const stepTwoComplete = () => {
+    let req = [
+      formData.concussion,
+      formData.alertnessLoss,
+      formData.drugsOrAlcohol,
+    ];
+    if (formData.concussion === "Yes") req.push(formData.concussionNum);
+    if (formData.alertnessLoss === "Yes") {
+      req.push(formData.alertnessLossRound);
+      req.push(formData.alertnessLossLength);
+    }
+    return req.every(Boolean);
+  };
+
+  const stepThreeComplete = () => {
+    let req = [formData.headache, formData.dizziness];
+    if (formData.headache === "Yes") {
+      req.push(formData.headacheExplain);
+      req.push(formData.headachePain);
+    }
+    if (formData.dizziness === "Yes") {
+      req.push(formData.dizzinessStart);
+      req.push(formData.dizzyLying);
+      req.push(formData.dizzySitting);
+      req.push(formData.dizzyStanding);
+      req.push(formData.dizzinessComeAndGo);
+      req.push(formData.dizzyChangeInVission);
+    }
+    return req.every(Boolean);
   };
 
   const stepFourComplete = () => {
-    return false;
+    let req = [
+      formData.forgetfulness,
+      formData.concentrate,
+      formData.irritable,
+    ];
+    if (formData.forgetfulness === "Yes") {
+      req.push(formData.forgetRecentEvents);
+      req.push(formData.forgetNames);
+      req.push(formData.forgetItems);
+      req.push(formData.moodChanges);
+    }
+    if (formData.concentrate === "Yes") req.push(formData.concentrateExplain);
+    if (formData.depression === "Yes") req.push(formData.depressionExplain);
 
-    // let fields = [
-    //   medHistory.alcoholUse,
-    //   medHistory.drugUse,
-    //   medHistory.tobaccoUse,
-    // ];
-    // if (medHistory.drugUse === "Other") fields.push(medHistory.otherDrugUse);
-    // return fields.every(Boolean);
+    return req.every(Boolean);
   };
 
   let currStep;
@@ -254,10 +288,13 @@ function PbIntake({ setCurrView }) {
         <PbStepOne
           data={formData}
           handleChange={handleChange}
+          handleSelect={handleSelect}
           changeStep={changeStep}
           maxDate={maxDate}
           complete={stepOneComplete}
+          headers={pbHeaders}
           intakeQs={pBintakeQs}
+          intakeOptions={PbIntakeOptions}
           language={language}
         />
       );
@@ -269,7 +306,8 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
-          complete={stepOneComplete}
+          complete={stepTwoComplete}
+          headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
           language={language}
@@ -284,7 +322,8 @@ function PbIntake({ setCurrView }) {
           handleSelect={handleSelect}
           changeStep={changeStep}
           maxDate={maxDate}
-          complete={stepOneComplete}
+          complete={stepThreeComplete}
+          headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
           language={language}
@@ -299,7 +338,8 @@ function PbIntake({ setCurrView }) {
           handleSelect={handleSelect}
           changeStep={changeStep}
           maxDate={maxDate}
-          complete={stepOneComplete}
+          complete={stepFourComplete}
+          headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
           language={language}
@@ -315,6 +355,7 @@ function PbIntake({ setCurrView }) {
           changeStep={changeStep}
           maxDate={maxDate}
           complete={stepOneComplete}
+          headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
           language={language}
@@ -329,6 +370,7 @@ function PbIntake({ setCurrView }) {
           handleSelect={handleSelect}
           changeStep={changeStep}
           complete={stepOneComplete}
+          headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
           language={language}
@@ -358,23 +400,6 @@ function PbIntake({ setCurrView }) {
             alt="smartnosis logo"
           />
           <h2 className="my-3 text-center">Post-Bout Assesment</h2>
-
-          {apptAt ? (
-            <>
-              <hr />
-              <p className="text-center">
-                <span>Appointment on </span>
-                <span>
-                  {new Date(apptAt * 1000).toLocaleDateString()} {" at "}
-                </span>
-                <span>{new Date(apptAt * 1000).toLocaleTimeString()}</span>
-                <span>
-                  {" with "}
-                  {providerName}
-                </span>
-              </p>
-            </>
-          ) : null}
           <div className="float-end">
             <div className="col-12 col-lg-4">
               <LangToggle
@@ -407,14 +432,14 @@ function PbIntake({ setCurrView }) {
                 } ${step === 0 ? "active" : ""}`}
               ></span>
               <span
-                className={`step ${step > 0.5 || complete ? "finish" : ""} ${
-                  step === 1 ? "active" : ""
-                }`}
+                className={`step ${
+                  stepTwoComplete() || complete ? "finish" : ""
+                } ${step === 1 ? "active" : ""}`}
               ></span>
               <span
-                className={`step ${step > 1 || complete ? "finish" : ""} ${
-                  step === 2 ? "active" : ""
-                }`}
+                className={`step ${
+                  stepThreeComplete() || complete ? "finish" : ""
+                } ${step === 2 ? "active" : ""}`}
               ></span>
               <span
                 className={`step ${
