@@ -40,6 +40,11 @@ function NavRoutes({ login, registerUser, currView, setCurrView }) {
         />
 
         <Route
+          path="/register/:checkoutSessionId"
+          element={<Register registerUser={registerUser} />}
+        />
+
+        <Route
           path="/new-user"
           element={<RegisterUser registerUser={registerUser} />}
         />

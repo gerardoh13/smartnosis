@@ -5,6 +5,7 @@ import Invitations from "./InviteStaff";
 import RegisterAdmin from "./RegisterAdmin";
 import RegisterPractice from "./RegisterPractice";
 import SmartnosisApi from "../api";
+import RegisterStripe from "../stripe/RegisterStripe";
 
 function Register({ registerUser }) {
   const INITIAL_STATE = {
@@ -44,8 +45,28 @@ function Register({ registerUser }) {
       setHcpsEmails(Array(parseInt(formData.hcpsCount)).fill(""));
   }, [formData.hcpsCount]);
 
+  useEffect(() => {
+    let session = loadLocalSession();
+    if (session) setStep(2);
+  }, []);
+
+
   const changeStep = (n) => {
+    if(step === 1) saveLocalSession();
     setStep((prev) => prev + n);
+  };
+
+  const saveLocalSession = () => {
+    localStorage.setItem("session-initiated", JSON.stringify(formData));
+  };
+
+  const loadLocalSession = () => {
+    const session = JSON.parse(localStorage.getItem("session-initiated"));
+    if (session) {
+      setFormData(session);
+      return true
+    } else return false
+
   };
 
   const handleChange = (e) => {
@@ -102,9 +123,11 @@ function Register({ registerUser }) {
   const formatData = () => {
     let dataCopy = { ...formData };
     for (let key in dataCopy) {
+      console.log(key, dataCopy[key])
       if (key === "email") {
         dataCopy[key] = dataCopy[key].toLowerCase();
-      } else dataCopy[key] = dataCopy[key].trimEnd();
+      } else if (key === "billing") continue;
+      else dataCopy[key] = dataCopy[key].trimEnd();
     }
     if (dataCopy.role === "hcp") delete dataCopy.title;
     else delete dataCopy.npi;
@@ -147,6 +170,7 @@ function Register({ registerUser }) {
     return arr.filter((str) => str.trim() !== "");
   };
   const handleSubmit = async () => {
+    console.log(formData)
     let [practiceData, userData] = formatData();
     try {
       let provider = await SmartnosisApi.registerProvider(practiceData);
@@ -201,6 +225,7 @@ function Register({ registerUser }) {
       fieldsArr.every(Boolean) && formData.password === formData.confirmPwd
     );
   };
+
   let currStep;
   switch (step) {
     case 0:
@@ -227,6 +252,18 @@ function Register({ registerUser }) {
       );
       break;
     case 2:
+        currStep = (
+          <RegisterStripe
+            orgType="hcp" // or "league"
+            count={hcpsEmails.length + staffEmails.length} // or # of intakes expected
+            changeStep={changeStep}
+            step={step}
+            adminRole={formData.role}
+            setCheckoutId={(id)=>setFormData({...formData, billing: {stripeCheckoutSessionId: id}})}
+          />
+        );
+        break;
+    case 3:
       currStep = (
         <Invitations
           emails={hcpsEmails}
@@ -237,7 +274,7 @@ function Register({ registerUser }) {
         />
       );
       break;
-    case 3:
+    case 4:
       currStep = (
         <Invitations
           emails={staffEmails}
@@ -270,17 +307,22 @@ function Register({ registerUser }) {
                   step === 1 ? "active" : ""
                 }`}
               ></span>
+                {/* <span
+                className={`step ${stepThreeComplete() ? "finish" : ""} ${
+                  step === 1 ? "active" : ""
+                }`}
+              ></span> */}
               <span
                 className={`step ${
                   formData.hcpsCount && noEmptyStrs(hcpsEmails) ? "finish" : ""
-                } ${step === 2 ? "active" : ""}`}
+                } ${step === 3 ? "active" : ""}`}
               ></span>
               <span
                 className={`step ${
                   formData.staffCount && noEmptyStrs(staffEmails)
                     ? "finish"
                     : ""
-                } ${step === 3 ? "active" : ""}`}
+                } ${step === 4 ? "active" : ""}`}
               ></span>
             </div>
           </div>
