@@ -69,9 +69,7 @@ function PbIntake({ setCurrView }) {
     ringingEars: "",
     ringingStart: "",
     buzzing: "",
-    // ringing: "",
     whistling: "",
-    // hissing: "",
     ringingConstant: "",
     ringingBothEars: "",
     // page 6
@@ -81,8 +79,7 @@ function PbIntake({ setCurrView }) {
     noiseSensitivityStart: "",
     noiseSensitivityTrigger: "",
     noiseSensitivityDizziness: "",
-    noiseSensitivityPain: "",
-    noiseSensitivityScale: "",
+    noiseSensitivityScale: "1",
     // page 8
     blurredVision: "",
     blurredVisionStart: "",
@@ -101,21 +98,21 @@ function PbIntake({ setCurrView }) {
     lightSensitivityConstant: "",
     lightSensitivityOnAndOff: "",
     lightSensitivityTrigger: "",
-    lightSensitivityScale: "",
+    lightSensitivityScale: "1",
     // page 9
     neckPain: "",
-    neckPainExplain: "",
-    neckPainScale: "",
+    neckPainStart: "",
+    neckPainScale: "1",
     lowerBackPain: "",
-    lowerBackPainExplain: "",
-    lowerBackPainScale: "",
+    lowerBackPainStart: "",
+    lowerBackPainScale: "1",
     // page 10
     comments: "",
     additionalPId: "",
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [step, setStep] = useState(6);
+  const [step, setStep] = useState(0);
   const [maxDate, setMaxDate] = useState("");
   const [complete, setComplete] = useState(false);
   const [agreeDisclaimer, setAgreeDisclaimer] = useState(false);
@@ -292,15 +289,10 @@ function PbIntake({ setCurrView }) {
     if (formData.ringingEars === "Yes") {
       req.push(formData.ringingStart);
       req.push(formData.buzzing);
-      // req.push(formData.ringing);
       req.push(formData.whistling);
-      // req.push(formData.hissing);
       req.push(formData.ringingConstant);
       req.push(formData.ringingBothEars);
     }
-    if (formData.concentrate === "Yes") req.push(formData.concentrateExplain);
-    if (formData.depression === "Yes") req.push(formData.depressionExplain);
-
     return req.every(Boolean);
   };
 
@@ -310,20 +302,54 @@ function PbIntake({ setCurrView }) {
 
   const stepSevenComplete = () => {
     let req = [formData.noiseSensitivity];
-    if (formData.noiseSensitivity) {
+    if (formData.noiseSensitivity === "Yes") {
       req.push(formData.noiseSensitivityStart);
       req.push(formData.noiseSensitivityTrigger);
       req.push(formData.noiseSensitivityDizziness);
-      req.push(formData.noiseSensitivityPain);
       req.push(formData.noiseSensitivityScale);
     }
     return req.every(Boolean);
   };
   const stepEightComplete = () => {
-    return false;
+    let req = [
+      formData.blurredVision,
+      formData.doubleVision,
+      formData.lightSensitivity,
+    ];
+    if (formData.blurredVision === "Yes") {
+      req.push(formData.blurredVisionStart);
+      req.push(formData.blurredVisionConstant);
+      req.push(formData.blurredVisionOnAndOff);
+      req.push(formData.blurredVisionOneEye);
+      req.push(formData.blurredVisionBothEyes);
+    }
+    if (formData.doubleVision === "Yes") {
+      req.push(formData.doubleVisionStart);
+      req.push(formData.doubleVisionConstant);
+      req.push(formData.doubleVisionOnAndOff);
+      req.push(formData.doubleVisionOneEye);
+      req.push(formData.doubleVisionBothEyes);
+    }
+    if (formData.lightSensitivity === "Yes") {
+      req.push(formData.lightSensitivityStart);
+      req.push(formData.lightSensitivityConstant);
+      req.push(formData.lightSensitivityOnAndOff);
+      req.push(formData.lightSensitivityTrigger);
+      req.push(formData.lightSensitivityScale);
+    }
+    return req.every(Boolean);
   };
   const stepNineComplete = () => {
-    return false;
+    let req = [formData.neckPain, formData.lowerBackPain];
+    if (formData.neckPain === "Yes") {
+      req.push(formData.neckPainStart);
+      req.push(formData.neckPainScale);
+    }
+    if (formData.lowerBackPain === "Yes") {
+      req.push(formData.lowerBackPainStart);
+      req.push(formData.lowerBackPainScale);
+    }
+    return req.every(Boolean);
   };
   let currStep;
   switch (step) {
@@ -381,7 +407,6 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
-          maxDate={maxDate}
           complete={stepFourComplete}
           headers={pbHeaders}
           intakeQs={pBintakeQs}
@@ -397,7 +422,6 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
-          maxDate={maxDate}
           complete={stepFiveComplete}
           headers={pbHeaders}
           intakeQs={pBintakeQs}
@@ -410,7 +434,6 @@ function PbIntake({ setCurrView }) {
       currStep = (
         <PbStepSix
           data={formData}
-          handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
           complete={stepSixComplete}
@@ -429,7 +452,7 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
-          complete={stepOneComplete}
+          complete={stepSevenComplete}
           headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
@@ -444,7 +467,7 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
-          complete={stepOneComplete}
+          complete={stepEightComplete}
           headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
@@ -459,7 +482,7 @@ function PbIntake({ setCurrView }) {
           handleChange={handleChange}
           handleSelect={handleSelect}
           changeStep={changeStep}
-          complete={stepOneComplete}
+          complete={stepNineComplete}
           headers={pbHeaders}
           intakeQs={pBintakeQs}
           intakeOptions={PbIntakeOptions}
@@ -468,6 +491,7 @@ function PbIntake({ setCurrView }) {
       );
       break;
     case 9:
+      console.log(formData);
       currStep = (
         <>
           <div className="text-center">

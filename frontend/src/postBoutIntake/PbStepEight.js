@@ -4,12 +4,34 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Dropdown from "react-bootstrap/Dropdown";
 
+const marks = [
+  {
+    value: 1,
+    label: "😐",
+  },
+  {
+    value: 2,
+    label: "🙁",
+  },
+  {
+    value: 3,
+    label: "😠",
+  },
+  {
+    value: 4,
+    label: "😬",
+  },
+  {
+    value: 5,
+    label: "😵",
+  },
+];
+
 function PbStepEight({
   data,
   handleChange,
   handleSelect,
   changeStep,
-  maxDate,
   complete,
   headers,
   intakeQs,
@@ -42,12 +64,8 @@ function PbStepEight({
             english: "Not at all",
             spanish: "Para nada",
           }}
-          positive={{
-            english: "Yes, I suffer from Blurred Vision",
-            spanish: "Sí, sufro de visión borrosa",
-          }}
         />
-        {data.blurredVision === "Yes, I suffer from Blurred Vision" ? (
+        {data.blurredVision === "Yes" ? (
           <>
             {/* Blurred Vision Start */}
             <div className="row mb-3">
@@ -58,16 +76,30 @@ function PbStepEight({
                 </span>
               </div>
               <div className="col-6">
-                <input
-                  className="form-control"
-                  type="date"
-                  name="blurredVisionStart"
-                  id="blurredVisionStart"
-                  max={maxDate}
-                  value={data.blurredVisionStart}
-                  onChange={handleChange}
-                  required
-                />
+                <Dropdown
+                  onSelect={(val) => handleSelect("blurredVisionStart", val)}
+                >
+                  <Dropdown.Toggle
+                    className="form-control text-wrap"
+                    variant="secondary"
+                    id="blurredVisionStart-dropdown"
+                  >
+                    {intakeOptions.blurredVisionStart.find(
+                      (option) => option.english === data.blurredVisionStart
+                    )?.[language] || "Select"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {intakeOptions.blurredVisionStart.map((option) => (
+                      <Dropdown.Item
+                        key={option.english}
+                        eventKey={option.english}
+                        className="text-wrap"
+                      >
+                        {option[language]}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
             {/* Blurred Vision Constant */}
@@ -115,12 +147,8 @@ function PbStepEight({
             english: "Not at all",
             spanish: "Para nada",
           }}
-          positive={{
-            english: "Yes, I suffer from Double Vision",
-            spanish: "Sí, sufro de visión doble",
-          }}
         />
-        {data.doubleVision === "Yes, I suffer from Double Vision" ? (
+        {data.doubleVision === "Yes" ? (
           <>
             {/* Double Vision Start */}
             <div className="row mb-3">
@@ -131,16 +159,30 @@ function PbStepEight({
                 </span>
               </div>
               <div className="col-6">
-                <input
-                  className="form-control"
-                  type="date"
-                  name="doubleVisionStart"
-                  id="doubleVisionStart"
-                  max={maxDate}
-                  value={data.doubleVisionStart}
-                  onChange={handleChange}
-                  required
-                />
+                <Dropdown
+                  onSelect={(val) => handleSelect("doubleVisionStart", val)}
+                >
+                  <Dropdown.Toggle
+                    className="form-control text-wrap"
+                    variant="secondary"
+                    id="doubleVisionStart-dropdown"
+                  >
+                    {intakeOptions.doubleVisionStart.find(
+                      (option) => option.english === data.doubleVisionStart
+                    )?.[language] || "Select"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {intakeOptions.doubleVisionStart.map((option) => (
+                      <Dropdown.Item
+                        key={option.english}
+                        eventKey={option.english}
+                        className="text-wrap"
+                      >
+                        {option[language]}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
             {/* Double Vision Constant */}
@@ -188,12 +230,8 @@ function PbStepEight({
             english: "Not at all",
             spanish: "Para nada",
           }}
-          positive={{
-            english: "Yes, I suffer from Light sensitivity",
-            spanish: "Sí, sufro de sensibilidad a la luz.",
-          }}
         />
-        {data.lightSensitivity === "Yes, I suffer from Light sensitivity" ? (
+        {data.lightSensitivity === "Yes" ? (
           <>
             {/* Light Sensitivity Start */}
             <div className="row mb-3">
@@ -204,16 +242,30 @@ function PbStepEight({
                 </span>
               </div>
               <div className="col-6">
-                <input
-                  className="form-control"
-                  type="date"
-                  name="lightSensitivityStart"
-                  id="lightSensitivityStart"
-                  max={maxDate}
-                  value={data.lightSensitivityStart}
-                  onChange={handleChange}
-                  required
-                />
+                <Dropdown
+                  onSelect={(val) => handleSelect("lightSensitivityStart", val)}
+                >
+                  <Dropdown.Toggle
+                    className="form-control text-wrap"
+                    variant="secondary"
+                    id="lightSensitivityStart-dropdown"
+                  >
+                    {intakeOptions.lightSensitivityStart.find(
+                      (option) => option.english === data.lightSensitivityStart
+                    )?.[language] || "Select"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {intakeOptions.lightSensitivityStart.map((option) => (
+                      <Dropdown.Item
+                        key={option.english}
+                        eventKey={option.english}
+                        className="text-wrap"
+                      >
+                        {option[language]}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
             {/* Light Sensitivity Constant */}
@@ -255,9 +307,14 @@ function PbStepEight({
                     defaultValue={1}
                     valueLabelDisplay="on"
                     step={1}
-                    marks
+                    marks={marks}
+                    sx={{
+                      "& .MuiSlider-markLabel": {
+                        fontSize: "1.5rem",
+                      },
+                    }}
                     min={1}
-                    max={10}
+                    max={5}
                     name="lightSensitivityScale"
                     onChange={handleChange}
                   />

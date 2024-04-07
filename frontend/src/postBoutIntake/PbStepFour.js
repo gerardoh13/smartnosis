@@ -7,7 +7,6 @@ function PbStepFour({
   handleChange,
   handleSelect,
   changeStep,
-  maxDate,
   complete,
   headers,
   intakeQs,

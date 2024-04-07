@@ -212,10 +212,10 @@ const pBintakeQs = {
     english: "Your Status after Fight",
     spanish: "Tu estado después de la pelea",
   },
-  transport: {
-    english: "State",
-    spanish: "translationMissing",
-  },
+  // transport: {
+  //   english: "",
+  //   spanish: "",
+  // },
   hospitalName: {
     english: "Name of Hospital",
     spanish: "Nombre del hospital",
@@ -246,7 +246,7 @@ const pBintakeQs = {
   },
   drugsOrAlcohol: {
     english: "Any Alcohol or Drug Use since time of Fight?",
-    spanish: "translationMissing",
+    spanish: "¿Algún consumo de alcohol o drogas desde el momento de la pelea?",
   },
   headache: {
     english: "Have you felt any Headache(s)?",
@@ -258,24 +258,24 @@ const pBintakeQs = {
       "En una escala del 1 al 5 (5 = dolorosamente sensible), califique su dolor de cabeza.",
   },
   dizziness: {
-    english: "Have you fely any dizziness since the Fight?",
-    spanish: "¿Sufres algún mareo?",
+    english: "Have you felt any dizziness since the fight?",
+    spanish: "¿Has sentido mareos desde la pelea?",
   },
   dizzinessStart: {
-    english: "When did it start?",
-    spanish: "¿Cuándo empezo?",
+    english: "- When after your fight did it start?",
+    spanish: "¿Cuándo empezó esto después de tu pelea?",
   },
   dizzyLying: {
     english: "Are you dizzy when lying down?",
-    spanish: "translationMissing",
+    spanish: "¿Estás mareado cuando te acuestas?",
   },
   dizzySitting: {
     english: "Are you dizzy when sitting?",
-    spanish: "translationMissing",
+    spanish: "¿Estás mareado cuando estás sentado?",
   },
   dizzyStanding: {
     english: "Are you dizzy when standing up?",
-    spanish: "translationMissing",
+    spanish: "¿Estás mareado cuando te pones de pie?",
   },
   dizzinessComeAndGo: {
     english: "Does dizziness come and go?",
@@ -334,18 +334,10 @@ const pBintakeQs = {
     english: "Are you hearing Buzzing?",
     spanish: "¿Estás escuchando un zumbido?",
   },
-  // ringing: {
-  //   english: "Are you hearing Ringing?",
-  //   spanish: "¿Estás escuchando un timbre?",
-  // },
   whistling: {
     english: "Are you hearing Whistling?",
     spanish: "¿Estás escuchando silbidos?",
   },
-  // hissing: {
-  //   english: "Are you hearing Hissing?",
-  //   spanish: "¿Estás escuchando silbido?",
-  // },
   ringingConstant: {
     english: "Have you heard ringing alot or just sometimes?",
     spanish: "¿Has oído zumbidos mucho o sólo algunas veces?",
@@ -359,31 +351,26 @@ const pBintakeQs = {
     spanish: "En promedio, ¿cuántas horas duermes por noche?",
   },
   noiseSensitivity: {
-    english: "Are you suffering from noise sensitivity?",
-    spanish: "¿Sufres de sensibilidad al ruido?",
+    english: "Have you felt any sensitivity to Noise in last 72 hours?",
+    spanish:
+      "¿Ha sentido alguna sensibilidad al ruido en las últimas 72 horas?",
   },
   noiseSensitivityStart: {
     english: "When did you notice sensitivity to noise?",
     spanish: "¿Cuándo notaste sensibilidad al ruido?",
   },
   noiseSensitivityTrigger: {
-    english: "Are there specific sounds that trigger sensitivity?",
-    spanish: "¿Hay sonidos específicos que desencadenan la sensibilidad?",
-  },
-  noiseSensitivityPain: {
-    english: "Do you experience pain in your ears with noise?",
-    spanish: "¿Siente dolor en los oídos con el ruido?",
+    english: "Are there certain sounds that start your hearing pain?",
+    spanish: "¿Hay ciertos sonidos que provocan dolor de audición?",
   },
   noiseSensitivityDizziness: {
-    english:
-      "Are you having symptoms of Dizziness, Ringing in ears, or Headaches?",
-    spanish:
-      "¿Tiene síntomas de mareos, zumbidos en los oídos o dolores de cabeza?",
+    english: "Do you feel Dizzy or have Headaches with your noise pain",
+    spanish: "¿Se siente mareado o tiene dolores de cabeza con el ruido?",
   },
   noiseSensitivityScale: {
-    english:
-      "On a scale of 1-10 (10 = painfully sensitive), rate your sensitivity",
-    spanish: "TranslationMissing",
+    english: "On a scale of 1-5 (5 = very painful), rate your noise pain",
+    spanish:
+      "En una escala del 1 al 5 (5 = muy doloroso), califica tu dolor por ruido",
   },
   blurredVision: {
     english: "Has your vision been blurry in past 72 hours?",
@@ -410,8 +397,8 @@ const pBintakeQs = {
     spanish: "¿Tienes visión borrosa en ambos ojos?",
   },
   doubleVision: {
-    english: "Are you suffering from any double vision?",
-    spanish: "¿Sufres de alguna visión doble?",
+    english: "Have you had any Double Vision in last 72 hours?",
+    spanish: "¿Ha tenido visión doble en las últimas 72 horas?",
   },
   doubleVisionStart: {
     english: "When did double vision start?",
@@ -434,49 +421,56 @@ const pBintakeQs = {
     spanish: "¿Tu Visión Doble es en ambos ojos?",
   },
   lightSensitivity: {
-    english: "Are you suffering from any Light sensitivity?",
-    spanish: "¿Sufres de alguna sensibilidad a la luz?",
+    english: "Have you been sensitive to Light in the past 72 hours?",
+    spanish: "¿Has sido sensible a la Luz en las últimas 72 horas?",
   },
   lightSensitivityStart: {
     english: "When did you notice Light Sensitivity?",
     spanish: "¿Cuándo notaste la sensibilidad a la luz?",
   },
   lightSensitivityConstant: {
-    english: "Is your Light Sensitivity constant?",
-    spanish: "¿Tu sensibilidad a la luz es constante?",
+    english: "Is your Light Sensitivity all the time?",
+    spanish: "¿Tu sensibilidad a la luz es todo el tiempo?",
   },
   lightSensitivityOnAndOff: {
     english: "Is your Light Sensitivity on-and-off?",
     spanish: "¿Está activada y desactivada su sensibilidad a la luz?",
   },
   lightSensitivityTrigger: {
-    english: "Do certain types of light affect your Light Sensitivity",
-    spanish: "¿Ciertos tipos de luz afectan su sensibilidad a la luz?",
+    english: "Do certain types of light affect your Pain ?",
+    spanish: "¿Ciertos tipos de luz afectan tu dolor?",
   },
   lightSensitivityScale: {
     english:
-      "On a scale of 1-10 (10 = painfully sensitive), rate your sensitivity",
+      "On a scale of 1-5 (5= very painful), how painful is Light to you?",
     spanish:
-      "En una escala del 1 al 10 (10 = dolorosamente sensible), califique su sensibilidad",
+      "En una escala del 1 al 5 (5 = muy doloroso), ¿qué tan dolorosa es la Luz para ti?",
   },
   neckPain: {
-    english: "Have you experienced any neck pain?",
-    spanish: "¿Ha experimentado algún dolor de cuello?",
+    english: "Have you experienced any Neck Pain in past 72 hours?",
+    spanish: "¿Ha experimentado algún dolor de cuello en las últimas 72 horas?",
+  },
+  neckPainStart: {
+    english: "When did your neck pain start?",
+    spanish: "¿Cuándo empezó tu dolor de cuello?",
   },
   neckPainScale: {
-    english: "On a scale of 1-10 (10 = very painful), rate your neck pain",
+    english: "On a scale of 1-5 (5 = very painful), rate your Neck Pain",
     spanish:
-      "En una escala de 1 a 10 (10 = muy doloroso), califique su dolor de cuello",
+      "En una escala del 1 al 5 (5 = muy doloroso), califique su dolor de cuello",
   },
   lowerBackPain: {
-    english: "Have you experienced any lower back pain?",
-    spanish: "¿Ha experimentado algún dolor lumbar?",
+    english: "Have you experienced any Lower Back Pain in last 72 hours?",
+    spanish: "¿Ha experimentado algún dolor lumbar en las últimas 72 horas?",
+  },
+  lowerBackPainStart: {
+    english: "When did your lower back pain start?",
+    spanish: "¿Cuándo empezó tu dolor lumbar?",
   },
   lowerBackPainScale: {
-    english:
-      "On a scale of 1-10 (10 = very painful), rate your lower back pain",
+    english: "On a scale of 1-5 (5 = very painful), rate your lower back pain",
     spanish:
-      "En una escala de 1 a 10 (10 = muy doloroso), califique su dolor de espalda baja",
+      "En una escala del 1 al 5 (5 = muy doloroso), califique su dolor lumbar",
   },
 };
 
@@ -505,6 +499,7 @@ const PbIntakeOptions = {
     },
   ],
   drugsOrAlcohol: [
+    { english: "Not at all", spanish: "Para nada" },
     { english: "Day 1", spanish: "Día 1" },
     { english: "Day 2", spanish: "Día 2" },
     { english: "Day 3", spanish: "Día 3" },
@@ -557,28 +552,40 @@ const PbIntakeOptions = {
   ],
   sleeping: [
     { english: "0-1", spanish: "0-1" },
-    {english: "1-3", spanish: "1-3"},
-    {english: "4-6", spanish: "4-6"},
-    {english: "7-9", spanish: "7-9"},
-    {english: "More", spanish: "Mas"},
+    { english: "1-3", spanish: "1-3" },
+    { english: "4-6", spanish: "4-6" },
+    { english: "7-9", spanish: "7-9" },
+    { english: "More", spanish: "Mas" },
   ],
-  neckPainExplain: [
-    { english: "Sometimes", spanish: "A veces" },
-    { english: "Often", spanish: "A menudo" },
-    {
-      english: "All the time",
-      spanish: "Todo el tiempo",
-    },
-    { english: "Right now", spanish: "Ahora mismo" },
+  noiseSensitivityStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
   ],
-  lowerBackPainExplain: [
-    { english: "Sometimes", spanish: "A veces" },
-    { english: "Often", spanish: "A menudo" },
-    {
-      english: "All the time",
-      spanish: "Todo el tiempo",
-    },
-    { english: "Right now", spanish: "Ahora mismo" },
+  blurredVisionStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
+  doubleVisionStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
+  lightSensitivityStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
+  neckPainStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
+  lowerBackPainStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
   ],
 };
 

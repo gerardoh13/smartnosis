@@ -32,7 +32,6 @@ function PbStepThree({
   handleChange,
   handleSelect,
   changeStep,
-  maxDate,
   complete,
   headers,
   intakeQs,

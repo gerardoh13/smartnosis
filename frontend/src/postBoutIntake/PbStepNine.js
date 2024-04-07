@@ -4,6 +4,29 @@ import YesNoRadio from "../common/YesNoRadio";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
+const marks = [
+  {
+    value: 1,
+    label: "😐",
+  },
+  {
+    value: 2,
+    label: "🙁",
+  },
+  {
+    value: 3,
+    label: "😠",
+  },
+  {
+    value: 4,
+    label: "😬",
+  },
+  {
+    value: 5,
+    label: "😵",
+  },
+];
+
 function PbStepNine({
   data,
   handleChange,
@@ -42,34 +65,36 @@ function PbStepNine({
             english: "Not more than before fight",
             spanish: "No más que antes de la pelea.",
           }}
-          positive={{
-            english: "Yes, I have Neck Pain(s)",
-            spanish: "Si, tengo dolor de cuello",
-          }}
         />
-        {data.neckPain === "Yes, I have Neck Pain(s)" ? (
+        {data.neckPain === "Yes" ? (
           <>
-            {/* Neck Pain Explain */}
+            {/* Neck Pain Start */}
             <div className="row mb-3">
-              <div className="col"></div>
+              <div className="col-6">
+                <span className="text-start ms-1 mt-1">
+                  {intakeQs.neckPainStart[language] + ":"}
+                  <span className="text-danger">*</span>
+                </span>
+              </div>
               <div className="col text-center">
                 <Dropdown
-                  onSelect={(val) => handleSelect("neckPainExplain", val)}
+                  onSelect={(val) => handleSelect("neckPainStart", val)}
                 >
                   <Dropdown.Toggle
-                    className="form-control"
+                    className="form-control text-wrap"
                     variant="secondary"
-                    id="neckPainExplain-dropdown"
+                    id="neckPainStart-dropdown"
                   >
-                    {intakeOptions.neckPainExplain.find(
-                      (option) => option.english === data.neckPainExplain
+                    {intakeOptions.neckPainStart.find(
+                      (option) => option.english === data.neckPainStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.neckPainExplain.map((option) => (
+                    {intakeOptions.neckPainStart.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}
+                        className="text-wrap"
                       >
                         {option[language]}
                       </Dropdown.Item>
@@ -93,9 +118,14 @@ function PbStepNine({
                     defaultValue={1}
                     valueLabelDisplay="on"
                     step={1}
-                    marks
+                    marks={marks}
+                    sx={{
+                      "& .MuiSlider-markLabel": {
+                        fontSize: "1.5rem",
+                      },
+                    }}
                     min={1}
-                    max={10}
+                    max={5}
                     name="neckPainScale"
                     onChange={handleChange}
                   />
@@ -115,34 +145,36 @@ function PbStepNine({
             english: "Not more than before fight",
             spanish: "No más que antes de la pelea.",
           }}
-          positive={{
-            english: "Yes, I have Lower Back Pain(s)",
-            spanish: "Sí, tengo dolor lumbar.",
-          }}
         />
-        {data.lowerBackPain === "Yes, I have Lower Back Pain(s)" ? (
+        {data.lowerBackPain === "Yes" ? (
           <>
-            {/* Lower Back Pain Explain */}
+            {/* Lower Back Pain Start */}
             <div className="row mb-3">
-              <div className="col"></div>
+              <div className="col-6">
+                <span className="text-start ms-1 mt-1">
+                  {intakeQs.lowerBackPainStart[language] + ":"}
+                  <span className="text-danger">*</span>
+                </span>
+              </div>
               <div className="col text-center">
                 <Dropdown
-                  onSelect={(val) => handleSelect("lowerBackPainExplain", val)}
+                  onSelect={(val) => handleSelect("lowerBackPainStart", val)}
                 >
                   <Dropdown.Toggle
-                    className="form-control"
+                    className="form-control text-wrap"
                     variant="secondary"
-                    id="lowerBackPainExplain-dropdown"
+                    id="lowerBackPainStart-dropdown"
                   >
-                    {intakeOptions.lowerBackPainExplain.find(
-                      (option) => option.english === data.lowerBackPainExplain
+                    {intakeOptions.lowerBackPainStart.find(
+                      (option) => option.english === data.lowerBackPainStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.lowerBackPainExplain.map((option) => (
+                    {intakeOptions.lowerBackPainStart.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}
+                        className="text-wrap"
                       >
                         {option[language]}
                       </Dropdown.Item>
@@ -166,9 +198,14 @@ function PbStepNine({
                     defaultValue={1}
                     valueLabelDisplay="on"
                     step={1}
-                    marks
+                    marks={marks}
+                    sx={{
+                      "& .MuiSlider-markLabel": {
+                        fontSize: "1.5rem",
+                      },
+                    }}
                     min={1}
-                    max={10}
+                    max={5}
                     name="lowerBackPainScale"
                     onChange={handleChange}
                   />

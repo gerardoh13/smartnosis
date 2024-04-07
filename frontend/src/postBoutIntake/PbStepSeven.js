@@ -4,6 +4,29 @@ import YesNoRadio from "../common/YesNoRadio";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
+const marks = [
+  {
+    value: 1,
+    label: "😐",
+  },
+  {
+    value: 2,
+    label: "🙁",
+  },
+  {
+    value: 3,
+    label: "😠",
+  },
+  {
+    value: 4,
+    label: "😬",
+  },
+  {
+    value: 5,
+    label: "😵",
+  },
+];
+
 function PbStepSeven({
   data,
   handleChange,
@@ -42,12 +65,8 @@ function PbStepSeven({
             english: "Not at all",
             spanish: "Para nada.",
           }}
-          positive={{
-            english: "Yes, I suffer from Noise sensitivity",
-            spanish: "Sí, sufro de sensibilidad al ruido.",
-          }}
         />
-        {data.noiseSensitivity === "Yes, I suffer from Noise sensitivity" ? (
+        {data.noiseSensitivity === "Yes" ? (
           <>
             {/* Noise Sensitivity Start */}
             <div className="row mb-3">
@@ -57,16 +76,31 @@ function PbStepSeven({
                   <span className="text-danger">*</span>
                 </span>
               </div>
-              <div className="col-6">
-                <input
-                  className="form-control"
-                  type="date"
-                  name="noiseSensitivityStart"
-                  id="noiseSensitivityStart"
-                  value={data.noiseSensitivityStart}
-                  onChange={handleChange}
-                  required
-                />
+              <div className="col text-center">
+                <Dropdown
+                  onSelect={(val) => handleSelect("noiseSensitivityStart", val)}
+                >
+                  <Dropdown.Toggle
+                    className="form-control text-wrap"
+                    variant="secondary"
+                    id="noiseSensitivityStart-dropdown"
+                  >
+                    {intakeOptions.noiseSensitivityStart.find(
+                      (option) => option.english === data.noiseSensitivityStart
+                    )?.[language] || "Select"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {intakeOptions.noiseSensitivityStart.map((option) => (
+                      <Dropdown.Item
+                        key={option.english}
+                        eventKey={option.english}
+                        className="text-wrap"
+                      >
+                        {option[language]}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </div>
             {/* Noise Sensitivity Trigger */}
@@ -75,14 +109,6 @@ function PbStepSeven({
               handleChange={handleChange}
               name="noiseSensitivityTrigger"
               status={data.noiseSensitivityTrigger}
-              language={language}
-            />
-            {/* Noise Sensitivity Pain */}
-            <YesNoRadio
-              title={intakeQs.noiseSensitivityPain[language]}
-              handleChange={handleChange}
-              name="noiseSensitivityPain"
-              status={data.noiseSensitivityPain}
               language={language}
             />
             {/* Noise Sensitivity Dizziness */}
@@ -108,9 +134,14 @@ function PbStepSeven({
                     defaultValue={1}
                     valueLabelDisplay="on"
                     step={1}
-                    marks
+                    marks={marks}
+                    sx={{
+                      "& .MuiSlider-markLabel": {
+                        fontSize: "1.5rem",
+                      },
+                    }}
                     min={1}
-                    max={10}
+                    max={5}
                     name="noiseSensitivityScale"
                     onChange={handleChange}
                   />
