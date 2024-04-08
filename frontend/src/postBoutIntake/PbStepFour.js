@@ -20,7 +20,14 @@ function PbStepFour({
   return (
     <>
       <div>
-        <p className="text-center">{headers.pgFour[language]}</p>
+        <img
+          src="Moody.png"
+          className="rounded mx-auto d-block w60 my-2"
+          alt="Memory and Mood"
+        />
+        <p className="text-center">
+          <b>{headers.pgFour[language]}</b>
+        </p>
       </div>
       <hr />
       <form onSubmit={handleSubmit} className="needs-validation">
@@ -135,10 +142,10 @@ function PbStepFour({
         {data.depression === "Yes" ? (
           <div className="row mb-3">
             <div className="col d-flex align-items-center">
-            <span className="text-start ms-1 mt-1">
-                  {intakeQs.depressionExplain[language] + ":"}
-                  <span className="text-danger">*</span>
-                </span>
+              <span className="text-start ms-1 mt-1">
+                {intakeQs.depressionExplain[language] + ":"}
+                <span className="text-danger">*</span>
+              </span>
             </div>
             <div className="col text-center">
               <Dropdown

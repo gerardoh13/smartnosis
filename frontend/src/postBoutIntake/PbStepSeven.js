@@ -46,7 +46,14 @@ function PbStepSeven({
   return (
     <>
       <div>
-        <p className="text-center">{headers.pgSeven[language]}</p>
+        <img
+          src="Noise.png"
+          className="rounded mx-auto d-block w60 my-2"
+          alt="Noise"
+        />
+        <p className="text-center">
+          <b>{headers.pgSeven[language]}</b>
+        </p>
       </div>
       <hr />
       <form onSubmit={handleSubmit} className="needs-validation">

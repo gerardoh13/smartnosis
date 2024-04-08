@@ -21,7 +21,14 @@ function PbStepTwo({
   return (
     <>
       <div>
-        <p className="text-center">{headers.pgTwo[language]}</p>
+        <img
+          src="Head-Injury.png"
+          className="rounded mx-auto d-block w60 my-2"
+          alt="Head Injury"
+        />
+        <p className="text-center">
+          <b>{headers.pgTwo[language]}</b>
+        </p>
       </div>
       <hr />
       <form onSubmit={handleSubmit} className="needs-validation">

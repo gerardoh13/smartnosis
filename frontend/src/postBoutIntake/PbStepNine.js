@@ -46,7 +46,14 @@ function PbStepNine({
   return (
     <>
       <div>
-        <p className="text-center">{headers.pgNine[language]}</p>
+        <img
+          src="Neck-Back-Pain.png"
+          className="rounded mx-auto d-block w60 my-2"
+          alt="Boxing Glove"
+        />
+        <p className="text-center">
+          <b>{headers.pgNine[language]}</b>
+        </p>
       </div>
       <hr />
       <form onSubmit={handleSubmit} className="needs-validation">

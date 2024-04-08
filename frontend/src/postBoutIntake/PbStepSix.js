@@ -19,7 +19,14 @@ function PbStepSix({
   return (
     <>
       <div>
-        <p className="text-center">{headers.pgSix[language]}</p>
+        <img
+          src="Sleep.png"
+          className="rounded mx-auto d-block w60 my-2"
+          alt="Sleep"
+        />
+        <p className="text-center">
+          <b>{headers.pgSix[language]}</b>
+        </p>
       </div>
       <hr />
       <form onSubmit={handleSubmit} className="needs-validation">

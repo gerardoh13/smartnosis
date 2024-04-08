@@ -45,7 +45,14 @@ function PbStepEight({
   return (
     <>
       <div>
-        <p className="text-center">{headers.pgFive[language]}</p>
+        <img
+          src="Vision.png"
+          className="rounded mx-auto d-block w60 my-2"
+          alt="Vision"
+        />
+        <p className="text-center">
+          <b>{headers.pgEight[language]}</b>
+        </p>
       </div>
       <hr />
       <form onSubmit={handleSubmit} className="needs-validation">

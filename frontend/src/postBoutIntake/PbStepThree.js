@@ -46,7 +46,14 @@ function PbStepThree({
   return (
     <>
       <div>
-        <p className="text-center">{headers.pgThree[language]}</p>
+        <img
+          src="Dizziness.png"
+          className="rounded mx-auto d-block w60 my-2"
+          alt="Dizziness"
+        />
+        <p className="text-center">
+          <b>{headers.pgThree[language]}</b>
+        </p>
       </div>
       <hr />
       <form onSubmit={handleSubmit} className="needs-validation">

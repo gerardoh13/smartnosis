@@ -20,8 +20,13 @@ function PbStepOne({
   return (
     <>
       <div>
+        <img
+          src="boxing-glove-app-icon.png"
+          className="rounded mx-auto d-block w60 my-2"
+          alt="Boxing Glove"
+        />
         <p className="text-center">
-          {headers.pgOne[language]}
+          <b>{headers.pgOne[language]}</b>
         </p>
       </div>
       <hr />
@@ -136,82 +141,27 @@ function PbStepOne({
             <span className="text-danger">*</span>
           </label>
         </div>
-              {/* result */}
-      <div className="row mb-3">
-        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
-          <span className="text-start ms-1 mt-1">
-            {intakeQs.result[language] + ":"}
-            <span className="text-danger">*</span>
-          </span>
-        </div>
-        <div className="col text-center">
-          <Dropdown onSelect={(val) => handleSelect("result", val)}>
-            <Dropdown.Toggle
-              className="form-control"
-              variant="secondary"
-              id="result-dropdown"
-            >
-              {intakeOptions.result.find(
-                (option) => option.english === data.result
-              )?.[language] || "Select"}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {intakeOptions.result.map((option) => (
-                <Dropdown.Item key={option.english} eventKey={option.english}>
-                  {option[language]}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      </div>
-      {/* status */}
-      <div className="row mb-3">
-        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
-          <span className="text-start ms-1 mt-1">
-            {intakeQs.status[language] + ":"}
-            <span className="text-danger">*</span>
-          </span>
-        </div>
-        <div className="col text-center">
-          <Dropdown onSelect={(val) => handleSelect("status", val)}>
-            <Dropdown.Toggle
-              className="form-control"
-              variant="secondary"
-              id="status-dropdown"
-            >
-              {intakeOptions.status.find(
-                (option) => option.english === data.status
-              )?.[language] || "Select"}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {intakeOptions.status.map((option) => (
-                <Dropdown.Item key={option.english} eventKey={option.english}>
-                  {option[language]}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      </div>
-      {/* transport */}
-      {data.status === "Sent to Hospital" ? (
+        {/* result */}
         <div className="row mb-3">
           <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+            <span className="text-start ms-1 mt-1">
+              {intakeQs.result[language] + ":"}
+              <span className="text-danger">*</span>
+            </span>
           </div>
           <div className="col text-center">
-            <Dropdown onSelect={(val) => handleSelect("transport", val)}>
+            <Dropdown onSelect={(val) => handleSelect("result", val)}>
               <Dropdown.Toggle
                 className="form-control"
                 variant="secondary"
-                id="transport-dropdown"
+                id="result-dropdown"
               >
-                {intakeOptions.transport.find(
-                  (option) => option.english === data.transport
+                {intakeOptions.result.find(
+                  (option) => option.english === data.result
                 )?.[language] || "Select"}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                {intakeOptions.transport.map((option) => (
+                {intakeOptions.result.map((option) => (
                   <Dropdown.Item key={option.english} eventKey={option.english}>
                     {option[language]}
                   </Dropdown.Item>
@@ -220,55 +170,112 @@ function PbStepOne({
             </Dropdown>
           </div>
         </div>
-      ) : null}
-      {/* hospital name */}
-      {data.status === "Sent to Hospital" ? (
-        <>
-          <div className="form-floating my-3">
-            <input
-              className="form-control"
-              type="text"
-              name="hospitalName"
-              id="hospitalName"
-              placeholder="Hospital Name"
-              onChange={handleChange}
-              value={data.hospitalName}
-              required
-            />
-            <label htmlFor="hospitalName">
-              {intakeQs.hospitalName[language] + ":"}
+        {/* status */}
+        <div className="row mb-3">
+          <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+            <span className="text-start ms-1 mt-1">
+              {intakeQs.status[language] + ":"}
               <span className="text-danger">*</span>
-            </label>
+            </span>
           </div>
-          {/* Visit Length */}
+          <div className="col text-center">
+            <Dropdown onSelect={(val) => handleSelect("status", val)}>
+              <Dropdown.Toggle
+                className="form-control"
+                variant="secondary"
+                id="status-dropdown"
+              >
+                {intakeOptions.status.find(
+                  (option) => option.english === data.status
+                )?.[language] || "Select"}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {intakeOptions.status.map((option) => (
+                  <Dropdown.Item key={option.english} eventKey={option.english}>
+                    {option[language]}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </div>
+        {/* transport */}
+        {data.status === "Sent to Hospital" ? (
           <div className="row mb-3">
-            <div className="col-12 col-lg-6 mb-lg-0 mb-2">
-              <span className="text-start ms-1 mt-1">
-                {intakeQs.visitLength[language] + ":"}
-                <span className="text-danger">*</span>
-              </span>
-            </div>
+            <div className="col-12 col-lg-6 mb-lg-0 mb-2"></div>
             <div className="col text-center">
-              <Dropdown onSelect={(val) => handleSelect("visitLength", val)}>
+              <Dropdown onSelect={(val) => handleSelect("transport", val)}>
                 <Dropdown.Toggle
                   className="form-control"
                   variant="secondary"
-                  id="visitLength-dropdown"
+                  id="transport-dropdown"
                 >
-                  {data.visitLength ? data.visitLength : "Select"}
+                  {intakeOptions.transport.find(
+                    (option) => option.english === data.transport
+                  )?.[language] || "Select"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((option) => (
-                    <Dropdown.Item key={option} eventKey={option}>
-                      {option}
+                  {intakeOptions.transport.map((option) => (
+                    <Dropdown.Item
+                      key={option.english}
+                      eventKey={option.english}
+                    >
+                      {option[language]}
                     </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
             </div>
           </div>
-        </>
-      ) : null}
+        ) : null}
+        {/* hospital name */}
+        {data.status === "Sent to Hospital" ? (
+          <>
+            <div className="form-floating my-3">
+              <input
+                className="form-control"
+                type="text"
+                name="hospitalName"
+                id="hospitalName"
+                placeholder="Hospital Name"
+                onChange={handleChange}
+                value={data.hospitalName}
+                required
+              />
+              <label htmlFor="hospitalName">
+                {intakeQs.hospitalName[language] + ":"}
+                <span className="text-danger">*</span>
+              </label>
+            </div>
+            {/* Visit Length */}
+            <div className="row mb-3">
+              <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+                <span className="text-start ms-1 mt-1">
+                  {intakeQs.visitLength[language] + ":"}
+                  <span className="text-danger">*</span>
+                </span>
+              </div>
+              <div className="col text-center">
+                <Dropdown onSelect={(val) => handleSelect("visitLength", val)}>
+                  <Dropdown.Toggle
+                    className="form-control"
+                    variant="secondary"
+                    id="visitLength-dropdown"
+                  >
+                    {data.visitLength ? data.visitLength : "Select"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((option) => (
+                      <Dropdown.Item key={option} eventKey={option}>
+                        {option}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            </div>
+          </>
+        ) : null}
         <button className="btn btn-success mt-3 form-control">Next</button>
       </form>
     </>
