@@ -176,6 +176,7 @@ function Register({ registerUser }) {
       let provider = await SmartnosisApi.registerProvider(practiceData);
       userData.providerId = provider.id;
       await registerUser(userData);
+      localStorage.removeItem('session-initiated')
       navigate("/");
     } catch (errors) {
       console.log(errors);
