@@ -42,16 +42,14 @@ app.post('/create-checkout-session', async (req, res) => {
       line_items: [
         {
           // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-          price: 'price_1P31GmKudO6a4edUqbKXmIPl',
-          quantity: 1,
+          price: 'price_1P33JCKudO6a4edUtQXl6vcV',
         },
       ],
       mode: 'subscription',
-      success_url: `${SNS_DOMAIN}?success=true`,
+      success_url: `${SNS_DOMAIN}?success=true&checkoutSessionId={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SNS_DOMAIN}?canceled=true`,
       automatic_tax: {enabled: true},
     });
-    console.log(session.url)
   
     res.redirect(303, session.url);
   });

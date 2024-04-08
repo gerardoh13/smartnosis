@@ -4,19 +4,19 @@ import React, { useState, useEffect } from "react";
 const ProductDisplay = () => (
   <section>
     <div className="product">
-      <img
+      {/* <img
         src="https://i.imgur.com/EHyR2nP.png"
         alt="The cover of Stubborn Attachments"
-      />
-      <div className="description">
-      <h3>Stubborn Attachments</h3>
+      /> */}
+      {/* <div className="description">
+      <h3> your </h3>
       <h5>$20.00</h5>
-      </div>
+      </div> */}
     </div>
     <form action="/create-checkout-session" method="POST">
-      <button type="submit">
-        Checkout
-      </button>
+      <button type="submit" className="btn btn-secondary form-control">
+            Connect to Stripe
+        </button>
     </form>
   </section>
 );
@@ -27,7 +27,7 @@ const Message = ({ message }) => (
   </section>
 );
 
-export default function App() {
+export default function IntakeCheckout() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {

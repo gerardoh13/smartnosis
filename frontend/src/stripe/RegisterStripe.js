@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
+import IntakeCheckout from "./IntakeCheckout";
 
  
 function RegisterStripe({
@@ -9,14 +10,17 @@ function RegisterStripe({
   submit,
   adminRole,
   setCheckoutId,
+  orgType
 }) {
 
     let [message, setMessage] = useState('');
     let [success, setSuccess] = useState(false);
     let [sessionId, setSessionId] = useState('');
+    let [intakeCheckoutId, setIntakeCheckoutId] = useState('');
 
     let params = useParams();
     let checkoutId = params.checkoutSessionId;
+    // console.log(params)
 
 
   const handleSubmit = (e) => {
@@ -100,13 +104,29 @@ const SuccessDisplay = ({ sessionId }) => {
   };
 
   useEffect(() =>{
-    console.log('we got an id', checkoutId)
+    // console.log('we got an id', checkoutId)
     if(checkoutId){
       setSuccess(true);
       setCheckoutId(checkoutId);
     }
   }
     , [checkoutId]);
+
+    useEffect(() => {
+        // Check to see if this is a redirect back from Checkout
+        const query = new URLSearchParams(window.location.search);
+        // console.log(query.values())
+
+        if (query.get('success')) {
+        //  console.log('this one works!');
+        }
+    
+        if (query.get("checkoutSessionId")) {
+            // console.log('in the if')
+            let id = query.get('checkoutSessionId')
+            setIntakeCheckoutId(id)
+        }
+      }, []);
 
 // const Message = ({ message }) => (
 //     <section>
@@ -131,12 +151,16 @@ const SuccessDisplay = ({ sessionId }) => {
 //     }
 //   }, [sessionId]);
 
+let StripeCheckout
+if(orgType !== 'hcp'){ StripeCheckout = <IntakeCheckout /> }
+else { StripeCheckout = <ProductDisplay /> }
+
 
   return (
     <form onSubmit={handleSubmit}>
       <p>Set up your billing account</p>
-      {!checkoutId && <ProductDisplay />}
-        {checkoutId && <SuccessDisplay sessionId={checkoutId} /> }
+      {!checkoutId && !intakeCheckoutId && StripeCheckout}
+        {checkoutId || intakeCheckoutId && <SuccessDisplay sessionId={checkoutId} /> }
      {/* {<Message message={message} />;} */}
 
       <div className="row mt-4">
@@ -150,7 +174,7 @@ const SuccessDisplay = ({ sessionId }) => {
           </button>
         </div>
         <div className="col">
-          <button className="btn btn-primary form-control" disabled={!checkoutId}>
+          <button className="btn btn-primary form-control" disabled={!checkoutId && !intakeCheckoutId}>
             {step === 3 ? "Submit" : "Next"}
           </button>
         </div>
