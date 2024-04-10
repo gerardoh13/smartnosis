@@ -82,23 +82,23 @@ function PbStepFive({
               </div>
             </div>
             {/* Buzzing */}
-            <YesNoRadio
+            {/* <YesNoRadio
               title={intakeQs.buzzing[language]}
               handleChange={handleChange}
               name="buzzing"
               status={data.buzzing}
               language={language}
-            />
+            /> */}
             {/* Whistling */}
-            <YesNoRadio
+            {/* <YesNoRadio
               title={intakeQs.whistling[language]}
               handleChange={handleChange}
               name="whistling"
               status={data.whistling}
               language={language}
-            />
+            /> */}
             {/* Ringing Constant */}
-            <div className="row mb-3">
+            {/* <div className="row mb-3">
               <div className="col d-flex align-items-center">
                 <span className="text-start ms-1 mt-1">
                   {intakeQs.ringingConstant[language] + ":"}
@@ -130,9 +130,9 @@ function PbStepFive({
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
-            </div>
+            </div> */}
             {/* Ringing Both Ears */}
-            <div className="row mb-3">
+            {/* <div className="row mb-3">
               <div className="col d-flex align-items-center">
                 <span className="text-start ms-1 mt-1">
                   {intakeQs.ringingBothEars[language] + ":"}
@@ -164,7 +164,33 @@ function PbStepFive({
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
-            </div>
+            </div> */}
+            <YesNoRadio
+              title={intakeQs.ringingBothEars[language]}
+              handleChange={handleChange}
+              name="ringingBothEars"
+              status={data.ringingBothEars}
+              language={language}
+            />
+            {data.ringingBothEars === "No" ? (
+              <>
+                <YesNoRadio
+                  title={intakeQs.leftRightEar[language]}
+                  handleChange={handleChange}
+                  name="leftRightEar"
+                  status={data.leftRightEar}
+                  language={language}
+                  negative={{
+                    english: "Right only",
+                    spanish: "Solo derecho",
+                  }}
+                  positive={{
+                    english: "Left only",
+                    spanish: "Solo izquierdo",
+                  }}
+                />
+              </>
+            ) : null}
           </>
         ) : null}
         <div className="row mt-4">

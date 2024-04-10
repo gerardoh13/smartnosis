@@ -209,21 +209,21 @@ function PbStepEight({
               language={language}
             />
             {/* Double Vision One Eye */}
-            <YesNoRadio
+            {/* <YesNoRadio
               title={intakeQs.doubleVisionOneEye[language]}
               handleChange={handleChange}
               name="doubleVisionOneEye"
               status={data.doubleVisionOneEye}
               language={language}
-            />
+            /> */}
             {/* Double Vision Both Eyes */}
-            <YesNoRadio
+            {/* <YesNoRadio
               title={intakeQs.doubleVisionBothEyes[language]}
               handleChange={handleChange}
               name="doubleVisionBothEyes"
               status={data.doubleVisionBothEyes}
               language={language}
-            />
+            /> */}
           </>
         ) : null}
         {/* Light Sensitivity */}
@@ -292,13 +292,13 @@ function PbStepEight({
               language={language}
             />
             {/* Light Sensitivity Trigger */}
-            <YesNoRadio
+            {/* <YesNoRadio
               title={intakeQs.lightSensitivityTrigger[language]}
               handleChange={handleChange}
               name="lightSensitivityTrigger"
               status={data.lightSensitivityTrigger}
               language={language}
-            />
+            /> */}
             {/* Light Sensitivity Scale */}
             <div className="row mb-3">
               <div className="col-12 col-lg-6 mb-lg-0 mb-2">

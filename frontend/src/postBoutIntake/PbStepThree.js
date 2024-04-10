@@ -216,6 +216,42 @@ function PbStepThree({
               status={data.dizzinessComeAndGo}
               language={language}
             />
+            {data.dizzinessComeAndGo === "Yes" ? (
+              <div className="row mb-3">
+                <div className="col-6 d-flex align-items-center">
+                  <span className="text-start ms-1 mt-1">
+                    {intakeQs.dizzinessStart[language] + ":"}
+                    <span className="text-danger">*</span>
+                  </span>
+                </div>
+                <div className="col text-center">
+                  <Dropdown
+                    onSelect={(val) => handleSelect("lightHeadedStart", val)}
+                  >
+                    <Dropdown.Toggle
+                      className="form-control text-wrap"
+                      variant="secondary"
+                      id="lightHeadedStart-dropdown"
+                    >
+                      {intakeOptions.lightHeadedStart.find(
+                        (option) => option.english === data.lightHeadedStart
+                      )?.[language] || "Select"}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      {intakeOptions.lightHeadedStart.map((option) => (
+                        <Dropdown.Item
+                          key={option.english}
+                          eventKey={option.english}
+                          className="text-wrap"
+                        >
+                          {option[language]}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              </div>
+            ) : null}
             {/* Dizzyness Change in Vission */}
             <YesNoRadio
               title={intakeQs.dizzyChangeInVission[language]}
@@ -224,6 +260,42 @@ function PbStepThree({
               status={data.dizzyChangeInVission}
               language={language}
             />
+            {data.dizzyChangeInVission === "Yes" ? (
+                            <div className="row mb-3">
+                            <div className="col-6 d-flex align-items-center">
+                              <span className="text-start ms-1 mt-1">
+                                {intakeQs.dizzinessStart[language] + ":"}
+                                <span className="text-danger">*</span>
+                              </span>
+                            </div>
+                            <div className="col text-center">
+                              <Dropdown
+                                onSelect={(val) => handleSelect("headSpinningStart", val)}
+                              >
+                                <Dropdown.Toggle
+                                  className="form-control text-wrap"
+                                  variant="secondary"
+                                  id="headSpinningStart-dropdown"
+                                >
+                                  {intakeOptions.headSpinningStart.find(
+                                    (option) => option.english === data.headSpinningStart
+                                  )?.[language] || "Select"}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                  {intakeOptions.headSpinningStart.map((option) => (
+                                    <Dropdown.Item
+                                      key={option.english}
+                                      eventKey={option.english}
+                                      className="text-wrap"
+                                    >
+                                      {option[language]}
+                                    </Dropdown.Item>
+                                  ))}
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </div>
+                          </div>
+            ) : null}
           </>
         ) : null}
         <div className="row mt-4">

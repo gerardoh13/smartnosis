@@ -262,7 +262,7 @@ const pBintakeQs = {
     spanish: "¿Has sentido mareos posteriormente a la pelea?",
   },
   dizzinessStart: {
-    english: "- When after your fight did it start?",
+    english: "When after your fight did it start?",
     spanish: "¿Cuándo comensaron después de la pelea?",
   },
   dizzyLying: {
@@ -312,7 +312,7 @@ const pBintakeQs = {
     spanish: "¿Te es difícil concentrarte?",
   },
   depression: {
-    english: "5. Have you been experiencing any depression since the fight?",
+    english: "Have you been experiencing any depression since the fight?",
     spanish: "¿Te deprimiste en las 72 horas posteriores a la pelea?",
   },
   depressionExplain: {
@@ -320,7 +320,7 @@ const pBintakeQs = {
     spanish: "¿Cuándo empezo?",
   },
   irritable: {
-    english: "6. Have you been feeling easily angered after the fight?",
+    english: "Have you been feeling easily angered after the fight?",
     spanish: "¿Te has enojado fácilmente en las 72 horas despues de la pelea?",
   },
   ringingEars: {
@@ -333,8 +333,12 @@ const pBintakeQs = {
   },
   // add question on spreadsheet row 165-167
   ringingBothEars: {
-    english: "Is the ringing in one ear or both ears? ",
+    english: "Can you hear in both ears?",
     spanish: "¿El zumbido es en un oído o en ambos oídos?",
+  },
+  leftRightEar: {
+    english: "Which ear can you hear from?",
+    spanish: "¿De qué oído puedes oír?",
   },
   sleeping: {
     english: "On average, how many hours of sleep are you getting per night?",
@@ -346,16 +350,16 @@ const pBintakeQs = {
       "¿Has notado alguna sensibilidad al ruido en las 72 horas posteriores a la pelea?",
   },
   noiseSensitivityStart: {
-    english: "- When did you notice sensitivity to loud sounds?",
+    english: "When did you notice sensitivity to loud sounds?",
     spanish: "¿Cuándo notaste sensibilidad al ruido?",
   },
   noiseSensitivityScale: {
-    english: "- On a scale of 1-5 (5 = very painful), rate the pain caused by loud sounds",
+    english: "On a scale of 1-5 (5 = very painful), rate the pain caused by loud sounds",
     spanish:
       "En una escala del 1 al 5 (5 = muy doloroso), califica tu dolor por ruido",
   },
   blurredVision: {
-    english: "10. Has your experienced any blurred vision after the fight?",
+    english: "Have you experienced any blurred vision after the fight?",
     spanish: "¿Has tenido visión borrosa a las 72 horas posteriores a la pelea?",
   },
   blurredVisionStart: {
@@ -379,7 +383,7 @@ const pBintakeQs = {
     spanish: "¿Tienes visión borrosa en ambos ojos?",
   },
   doubleVision: {
-    english: "11. Are you experiencing any Double Vision?",
+    english: "Are you experiencing any Double Vision?",
     spanish: "¿Has tenido visión doble en las últimas 72 horas?",
   },
   doubleVisionStart: {
@@ -399,7 +403,7 @@ const pBintakeQs = {
     spanish: "¿Has sido sensible a la Luz en las últimas 72 horas?",
   },
   lightSensitivityStart: {
-    english: "- When did you notice the eye pain from light?",
+    english: "When did you notice the eye pain from light?",
     spanish: "¿Cuándo notaste la sensibilidad a la luz?",
   },
   lightSensitivityConstant: {
@@ -484,6 +488,16 @@ const PbIntakeOptions = {
     },
   ],
   dizzinessStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
+  lightHeadedStart: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
+  headSpinningStart: [
     { english: "Day 1", spanish: "Día 1" },
     { english: "Day 2", spanish: "Día 2" },
     { english: "Day 3", spanish: "Día 3" },
@@ -574,7 +588,7 @@ const pbHeaders = {
   },
   pgThree: {
     english:
-      "For tonight and th enwxt 3 days, answer the questions below to monitor your headache(s) and dizziness after the fight.",
+      "For tonight and th next 3 days, answer the questions below to monitor your headache(s) and dizziness after the fight.",
     spanish:
       "En los 3 días posteriores a su pelea, las siguientes preguntas son para controlar sus dolores de cabeza y mareos.",
   },
