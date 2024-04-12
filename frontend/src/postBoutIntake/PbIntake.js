@@ -9,6 +9,7 @@ import PbStepSix from "./PbStepSix";
 import PbStepSeven from "./PbStepSeven";
 import PbStepEight from "./PbStepEight";
 import PbStepNine from "./PbStepNine";
+import PbStepTen from "./PbStepTen";
 import SmartnosisApi from "../api";
 import { useQuery } from "../hooks";
 import "../intake/Intake.css";
@@ -28,7 +29,7 @@ function PbIntake({ setCurrView }) {
     lastName: "",
     promoter: "",
     physicianName: "",
-    idPid: "",
+    // idPid: "",
     dof: "",
     location: "",
     result: "",
@@ -70,7 +71,7 @@ function PbIntake({ setCurrView }) {
     // page 5
     ringingEars: "",
     ringingStart: "",
-    ringingBothEars: "",
+    hearingBothEars: "",
     leftRightEar: "",
     // page 6
     sleeping: "",
@@ -102,8 +103,9 @@ function PbIntake({ setCurrView }) {
     lowerBackPainStart: "",
     lowerBackPainScale: "1",
     // page 10
+    symptoms: new Set(),
     comments: "",
-    additionalPId: "",
+    // additionalPId: "",
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
@@ -197,19 +199,19 @@ function PbIntake({ setCurrView }) {
     }));
   };
 
-  // const handleCheckbox = (e) => {
-  //   const { checked, value, name } = e.target;
-  //   let copy = new Set([...formData[name]]);
-  //   if (checked) {
-  //     if (!copy.has(value)) copy.add(value);
-  //   } else {
-  //     if (copy.has(value)) copy.delete(value);
-  //   }
-  //   setFormData((data) => ({
-  //     ...data,
-  //     [name]: copy,
-  //   }));
-  // };
+  const handleCheckbox = (e) => {
+    const { checked, value, name } = e.target;
+    let copy = new Set([...formData[name]]);
+    if (checked) {
+      if (!copy.has(value)) copy.add(value);
+    } else {
+      if (copy.has(value)) copy.delete(value);
+    }
+    setFormData((data) => ({
+      ...data,
+      [name]: copy,
+    }));
+  };
 
   const stepOneComplete = () => {
     let req = [
@@ -283,7 +285,7 @@ function PbIntake({ setCurrView }) {
     let req = [formData.ringingEars];
     if (formData.ringingEars === "Yes") {
       req.push(formData.ringingStart);
-      req.push(formData.ringingBothEars);
+      req.push(formData.hearingBothEars);
     }
     return req.every(Boolean);
   };
@@ -317,7 +319,6 @@ function PbIntake({ setCurrView }) {
       req.push(formData.doubleVisionStart);
       req.push(formData.doubleVisionConstant);
       req.push(formData.doubleVisionOnAndOff);
-
     }
     if (formData.lightSensitivity === "Yes") {
       req.push(formData.lightSensitivityStart);
@@ -339,6 +340,7 @@ function PbIntake({ setCurrView }) {
     }
     return req.every(Boolean);
   };
+
   let currStep;
   switch (step) {
     case 0:
@@ -479,14 +481,25 @@ function PbIntake({ setCurrView }) {
       );
       break;
     case 9:
+      currStep = (
+        <PbStepTen
+          data={formData}
+          handleChange={handleChange}
+          handleCheckbox={handleCheckbox}
+          changeStep={changeStep}
+          headers={pbHeaders}
+          intakeQs={pBintakeQs}
+          language={language}
+        />
+      );
+      break;
+    case 10:
       console.log(formData);
       currStep = (
-        <>
-          <div className="text-center">
-            <p>Your ssesment has been submitted!</p>
-            <p>You can now close this window</p>
-          </div>
-        </>
+        <div className="text-center">
+          <p>Your ssesment has been submitted!</p>
+          <p>You can now close this window</p>
+        </div>
       );
       break;
     default:
@@ -581,6 +594,12 @@ function PbIntake({ setCurrView }) {
                   stepNineComplete() || complete ? "finish" : ""
                 } ${step === 8 ? "active" : ""}`}
                 onClick={() => setStep(8)}
+              ></span>
+              <span
+                className={`step ${step === 9 ? "finish" : ""} ${
+                  step === 9 ? "active" : ""
+                }`}
+                onClick={() => setStep(9)}
               ></span>
             </div>
           </div>

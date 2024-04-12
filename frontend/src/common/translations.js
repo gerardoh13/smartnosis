@@ -283,7 +283,8 @@ const pBintakeQs = {
     spanish: "¿Te has sentido mareado en algún momento después de la pelea?",
   },
   headSpinning: {
-    english: "Have you felt like your head is spinning any time after the fight?",
+    english:
+      "Have you felt like your head is spinning any time after the fight?",
     spanish: "¿Hay algún cambio en su visión o audición durante los mareos?",
   },
   //
@@ -331,8 +332,7 @@ const pBintakeQs = {
     english: "When did the ringing start?",
     spanish: "¿Cuándo empezó el ruido?",
   },
-  // add question on spreadsheet row 165-167
-  ringingBothEars: {
+  hearingBothEars: {
     english: "Can you hear in both ears?",
     spanish: "¿El zumbido es en un oído o en ambos oídos?",
   },
@@ -354,13 +354,15 @@ const pBintakeQs = {
     spanish: "¿Cuándo notaste sensibilidad al ruido?",
   },
   noiseSensitivityScale: {
-    english: "On a scale of 1-5 (5 = very painful), rate the pain caused by loud sounds",
+    english:
+      "On a scale of 1-5 (5 = very painful), rate the pain caused by loud sounds",
     spanish:
       "En una escala del 1 al 5 (5 = muy doloroso), califica tu dolor por ruido",
   },
   blurredVision: {
     english: "Have you experienced any blurred vision after the fight?",
-    spanish: "¿Has tenido visión borrosa a las 72 horas posteriores a la pelea?",
+    spanish:
+      "¿Has tenido visión borrosa a las 72 horas posteriores a la pelea?",
   },
   blurredVisionStart: {
     english: "When did Blurred vision start?",
@@ -435,7 +437,8 @@ const pBintakeQs = {
   },
   lowerBackPain: {
     english: "Have you experienced any Lower Back Pain?",
-    spanish: "¿Ha experimentado algún dolor de espalda baja en las últimas 72 horas?",
+    spanish:
+      "¿Ha experimentado algún dolor de espalda baja en las últimas 72 horas?",
   },
   lowerBackPainStart: {
     english: "When did your lower back pain start?",
@@ -445,6 +448,15 @@ const pBintakeQs = {
     english: "On a scale of 1-5 (5 = very painful), rate your lower back pain",
     spanish:
       "En una escala del 1 al 5 (5 = muy doloroso), califique su dolor de espalda baja",
+  },
+  symptoms: {
+    english: "Select Any other symptoms you have experienced after the fight.",
+    spanish:
+      "Seleccione Cualquier otro síntoma que haya experimentado después de la pelea.",
+  },
+  comments: {
+    english: "Enter Comments or Details Here: enter (500 characters)",
+    spanish: "Ingrese comentarios o detalles aquí",
   },
 };
 
@@ -486,6 +498,11 @@ const PbIntakeOptions = {
       english: "Severe headaches",
       spanish: "Dolores de cabeza severos",
     },
+  ],
+  daysOneToThree: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
   ],
   dizzinessStart: [
     { english: "Day 1", spanish: "Día 1" },
@@ -530,7 +547,7 @@ const PbIntakeOptions = {
     { english: "A lot", spanish: "Mucho" },
     { english: "Sometimes", spanish: "A veces" },
   ],
-  ringingBothEars: [
+  hearingBothEars: [
     { english: "One ear", spanish: "Un oído" },
     { english: "Both ears", spanish: "Ambos oídos" },
   ],

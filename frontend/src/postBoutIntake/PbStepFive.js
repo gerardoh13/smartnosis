@@ -83,13 +83,13 @@ function PbStepFive({
             </div>
             {/* Ringing Both Ears */}
             <YesNoRadio
-              title={intakeQs.ringingBothEars[language]}
+              title={intakeQs.hearingBothEars[language]}
               handleChange={handleChange}
-              name="ringingBothEars"
-              status={data.ringingBothEars}
+              name="hearingBothEars"
+              status={data.hearingBothEars}
               language={language}
             />
-            {data.ringingBothEars === "No" ? (
+            {data.hearingBothEars === "No" ? (
               <YesNoRadio
                 title={intakeQs.leftRightEar[language]}
                 handleChange={handleChange}
