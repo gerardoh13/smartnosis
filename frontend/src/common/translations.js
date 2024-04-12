@@ -278,11 +278,11 @@ const pBintakeQs = {
     spanish: "¿Sientes mareos cuando te pones de pie?",
   },
   // change key name
-  dizzinessComeAndGo: {
+  lightheaded: {
     english: "Have you felt lightheaded any time after the fight?",
     spanish: "¿Te has sentido mareado en algún momento después de la pelea?",
   },
-  dizzyChangeInVission: {
+  headSpinning: {
     english: "Have you felt like your head is spinning any time after the fight?",
     spanish: "¿Hay algún cambio en su visión o audición durante los mareos?",
   },
@@ -578,13 +578,13 @@ const pbHeaders = {
     english:
       "Head injuries are serious. Answer the following questions for tonight and the next 3 days after your fight.",
     spanish:
-      "Las lesiones en la cabeza son graves. Responde las siguientes preguntas en los 3 días posteriores a tu pelea.",
+      "Las lesiones en la cabeza son graves. Responda las siguientes preguntas para esta noche y los próximos 3 días después de su pelea.",
   },
   pgTwo: {
     english:
       "For tonight and the next 3 days, answer the below questions to see if you have suffered a head injury after your fight.",
     spanish:
-      "Las siguientes preguntas son para ver si ha sufrido una lesión en la cabeza después de su pelea.",
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para ver si sufrió una lesión en la cabeza después de su pelea.",
   },
   pgThree: {
     english:

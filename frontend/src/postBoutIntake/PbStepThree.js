@@ -210,13 +210,13 @@ function PbStepThree({
             />
             {/* Dizziness Come and Go */}
             <YesNoRadio
-              title={intakeQs.dizzinessComeAndGo[language]}
+              title={intakeQs.lightheaded[language]}
               handleChange={handleChange}
-              name="dizzinessComeAndGo"
-              status={data.dizzinessComeAndGo}
+              name="lightheaded"
+              status={data.lightheaded}
               language={language}
             />
-            {data.dizzinessComeAndGo === "Yes" ? (
+            {data.lightheaded === "Yes" ? (
               <div className="row mb-3">
                 <div className="col-6 d-flex align-items-center">
                   <span className="text-start ms-1 mt-1">
@@ -254,13 +254,13 @@ function PbStepThree({
             ) : null}
             {/* Dizzyness Change in Vission */}
             <YesNoRadio
-              title={intakeQs.dizzyChangeInVission[language]}
+              title={intakeQs.headSpinning[language]}
               handleChange={handleChange}
-              name="dizzyChangeInVission"
-              status={data.dizzyChangeInVission}
+              name="headSpinning"
+              status={data.headSpinning}
               language={language}
             />
-            {data.dizzyChangeInVission === "Yes" ? (
+            {data.headSpinning === "Yes" ? (
                             <div className="row mb-3">
                             <div className="col-6 d-flex align-items-center">
                               <span className="text-start ms-1 mt-1">

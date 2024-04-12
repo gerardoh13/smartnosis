@@ -81,90 +81,7 @@ function PbStepFive({
                 </Dropdown>
               </div>
             </div>
-            {/* Buzzing */}
-            {/* <YesNoRadio
-              title={intakeQs.buzzing[language]}
-              handleChange={handleChange}
-              name="buzzing"
-              status={data.buzzing}
-              language={language}
-            /> */}
-            {/* Whistling */}
-            {/* <YesNoRadio
-              title={intakeQs.whistling[language]}
-              handleChange={handleChange}
-              name="whistling"
-              status={data.whistling}
-              language={language}
-            /> */}
-            {/* Ringing Constant */}
-            {/* <div className="row mb-3">
-              <div className="col d-flex align-items-center">
-                <span className="text-start ms-1 mt-1">
-                  {intakeQs.ringingConstant[language] + ":"}
-                  <span className="text-danger">*</span>
-                </span>
-              </div>
-              <div className="col">
-                <Dropdown
-                  onSelect={(val) => handleSelect("ringingConstant", val)}
-                >
-                  <Dropdown.Toggle
-                    className="form-control"
-                    variant="secondary"
-                    id="ringingConstant-dropdown"
-                  >
-                    {intakeOptions.ringingConstant.find(
-                      (option) => option.english === data.ringingConstant
-                    )?.[language] || "Select"}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    {intakeOptions.ringingConstant.map((option) => (
-                      <Dropdown.Item
-                        key={option.english}
-                        eventKey={option.english}
-                      >
-                        {option[language]}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </div> */}
             {/* Ringing Both Ears */}
-            {/* <div className="row mb-3">
-              <div className="col d-flex align-items-center">
-                <span className="text-start ms-1 mt-1">
-                  {intakeQs.ringingBothEars[language] + ":"}
-                  <span className="text-danger">*</span>
-                </span>
-              </div>
-              <div className="col">
-                <Dropdown
-                  onSelect={(val) => handleSelect("ringingBothEars", val)}
-                >
-                  <Dropdown.Toggle
-                    className="form-control"
-                    variant="secondary"
-                    id="ringingBothEars-dropdown"
-                  >
-                    {intakeOptions.ringingBothEars.find(
-                      (option) => option.english === data.ringingBothEars
-                    )?.[language] || "Select"}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    {intakeOptions.ringingBothEars.map((option) => (
-                      <Dropdown.Item
-                        key={option.english}
-                        eventKey={option.english}
-                      >
-                        {option[language]}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </div> */}
             <YesNoRadio
               title={intakeQs.ringingBothEars[language]}
               handleChange={handleChange}
@@ -173,23 +90,21 @@ function PbStepFive({
               language={language}
             />
             {data.ringingBothEars === "No" ? (
-              <>
-                <YesNoRadio
-                  title={intakeQs.leftRightEar[language]}
-                  handleChange={handleChange}
-                  name="leftRightEar"
-                  status={data.leftRightEar}
-                  language={language}
-                  negative={{
-                    english: "Right only",
-                    spanish: "Solo derecho",
-                  }}
-                  positive={{
-                    english: "Left only",
-                    spanish: "Solo izquierdo",
-                  }}
-                />
-              </>
+              <YesNoRadio
+                title={intakeQs.leftRightEar[language]}
+                handleChange={handleChange}
+                name="leftRightEar"
+                status={data.leftRightEar}
+                language={language}
+                negative={{
+                  english: "Right only",
+                  spanish: "Solo derecho",
+                }}
+                positive={{
+                  english: "Left only",
+                  spanish: "Solo izquierdo",
+                }}
+              />
             ) : null}
           </>
         ) : null}

@@ -52,11 +52,9 @@ function PbIntake({ setCurrView }) {
     dizzyLying: "",
     dizzySitting: "",
     dizzyStanding: "",
-    // rename to lighthead
-    dizzinessComeAndGo: "",
+    lightheaded: "",
     lightHeadedStart: "",
-    // rename to headSpinning
-    dizzyChangeInVission: "",
+    headSpinning: "",
     headSpinningStart: "",
     // page 4
     forgetfulness: "",
@@ -72,9 +70,6 @@ function PbIntake({ setCurrView }) {
     // page 5
     ringingEars: "",
     ringingStart: "",
-    // buzzing: "",
-    // whistling: "",
-    // ringingConstant: "",
     ringingBothEars: "",
     leftRightEar: "",
     // page 6
@@ -82,8 +77,6 @@ function PbIntake({ setCurrView }) {
     // page 7
     noiseSensitivity: "",
     noiseSensitivityStart: "",
-    // noiseSensitivityTrigger: "",
-    // noiseSensitivityDizziness: "",
     noiseSensitivityScale: "1",
     // page 8
     blurredVision: "",
@@ -96,13 +89,10 @@ function PbIntake({ setCurrView }) {
     doubleVisionStart: "",
     doubleVisionConstant: "",
     doubleVisionOnAndOff: "",
-    // doubleVisionOneEye: "",
-    // doubleVisionBothEyes: "",
     lightSensitivity: "",
     lightSensitivityStart: "",
     lightSensitivityConstant: "",
     lightSensitivityOnAndOff: "",
-    // lightSensitivityTrigger: "",
     lightSensitivityScale: "1",
     // page 9
     neckPain: "",
@@ -293,9 +283,6 @@ function PbIntake({ setCurrView }) {
     let req = [formData.ringingEars];
     if (formData.ringingEars === "Yes") {
       req.push(formData.ringingStart);
-      // req.push(formData.buzzing);
-      // req.push(formData.whistling);
-      // req.push(formData.ringingConstant);
       req.push(formData.ringingBothEars);
     }
     return req.every(Boolean);
@@ -309,8 +296,6 @@ function PbIntake({ setCurrView }) {
     let req = [formData.noiseSensitivity];
     if (formData.noiseSensitivity === "Yes") {
       req.push(formData.noiseSensitivityStart);
-      // req.push(formData.noiseSensitivityTrigger);
-      // req.push(formData.noiseSensitivityDizziness);
       req.push(formData.noiseSensitivityScale);
     }
     return req.every(Boolean);
@@ -332,14 +317,12 @@ function PbIntake({ setCurrView }) {
       req.push(formData.doubleVisionStart);
       req.push(formData.doubleVisionConstant);
       req.push(formData.doubleVisionOnAndOff);
-      // req.push(formData.doubleVisionOneEye);
-      // req.push(formData.doubleVisionBothEyes);
+
     }
     if (formData.lightSensitivity === "Yes") {
       req.push(formData.lightSensitivityStart);
       req.push(formData.lightSensitivityConstant);
       req.push(formData.lightSensitivityOnAndOff);
-      // req.push(formData.lightSensitivityTrigger);
       req.push(formData.lightSensitivityScale);
     }
     return req.every(Boolean);

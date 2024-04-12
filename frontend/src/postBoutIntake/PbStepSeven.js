@@ -110,22 +110,6 @@ function PbStepSeven({
                 </Dropdown>
               </div>
             </div>
-            {/* Noise Sensitivity Trigger */}
-            {/* <YesNoRadio
-              title={intakeQs.noiseSensitivityTrigger[language]}
-              handleChange={handleChange}
-              name="noiseSensitivityTrigger"
-              status={data.noiseSensitivityTrigger}
-              language={language}
-            /> */}
-            {/* Noise Sensitivity Dizziness */}
-            {/* <YesNoRadio
-              title={intakeQs.noiseSensitivityDizziness[language]}
-              handleChange={handleChange}
-              name="noiseSensitivityDizziness"
-              status={data.noiseSensitivityDizziness}
-              language={language}
-            /> */}
             {/* Noise Sensitivity Scale */}
             <div className="row mb-3">
               <div className="col-12 col-lg-6 mb-lg-0 mb-2">
