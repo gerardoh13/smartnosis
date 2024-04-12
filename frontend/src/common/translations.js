@@ -212,10 +212,6 @@ const pBintakeQs = {
     english: "Your Status after Fight",
     spanish: "Tu estado después de la pelea",
   },
-  // transport: {
-  //   english: "",
-  //   spanish: "",
-  // },
   hospitalName: {
     english: "Name of Hospital",
     spanish: "Nombre del hospital",
@@ -252,7 +248,7 @@ const pBintakeQs = {
     english: "Have you felt any Headache(s)?",
     spanish: "¿Sufres algún dolor de cabeza?",
   },
-  headachePain: {
+  headachePainScale: {
     english: "On a scale of 1-5 (5 = very painful), rate your Headache(s)",
     spanish:
       "En una escala del 1 al 5 (1 = leve 5 = severo), califique su dolor de cabeza.",
@@ -277,7 +273,6 @@ const pBintakeQs = {
     english: "Are you dizzy when standing up?",
     spanish: "¿Sientes mareos cuando te pones de pie?",
   },
-  // change key name
   lightheaded: {
     english: "Have you felt lightheaded any time after the fight?",
     spanish: "¿Te has sentido mareado en algún momento después de la pelea?",
@@ -287,7 +282,6 @@ const pBintakeQs = {
       "Have you felt like your head is spinning any time after the fight?",
     spanish: "¿Hay algún cambio en su visión o audición durante los mareos?",
   },
-  //
   forgetfulness: {
     english: "Have you been forgetful since the fight?",
     spanish: "¿Has sido olvidadizo posteriormente a la pelea?",
@@ -504,44 +498,16 @@ const PbIntakeOptions = {
     { english: "Day 2", spanish: "Día 2" },
     { english: "Day 3", spanish: "Día 3" },
   ],
-  dizzinessStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
-  ],
-  lightHeadedStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
-  ],
-  headSpinningStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
-  ],
   concentrateExplain: [
     { english: "Sometimes", spanish: "A veces" },
     { english: "Often", spanish: "A menudo" },
-    {
-      english: "All the time",
-      spanish: "Todo el tiempo",
-    },
-  ],
-  depressionExplain: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
+    { english: "All the time", spanish: "Todo el tiempo" },
   ],
   irritable: [
     { english: "Not at all", spanish: "Para nada" },
     { english: "Sometimes", spanish: "A veces." },
     { english: "Often", spanish: "A menudo." },
     { english: "All the time", spanish: "Todo el tiempo." },
-  ],
-  ringingStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
   ],
   ringingConstant: [
     { english: "A lot", spanish: "Mucho" },
@@ -557,36 +523,6 @@ const PbIntakeOptions = {
     { english: "4-6", spanish: "4-6" },
     { english: "7-9", spanish: "7-9" },
     { english: "More", spanish: "Mas" },
-  ],
-  noiseSensitivityStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
-  ],
-  blurredVisionStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
-  ],
-  doubleVisionStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
-  ],
-  lightSensitivityStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
-  ],
-  neckPainStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
-  ],
-  lowerBackPainStart: [
-    { english: "Day 1", spanish: "Día 1" },
-    { english: "Day 2", spanish: "Día 2" },
-    { english: "Day 3", spanish: "Día 3" },
   ],
 };
 

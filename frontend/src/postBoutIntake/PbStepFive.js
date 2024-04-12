@@ -64,12 +64,12 @@ function PbStepFive({
                     variant="secondary"
                     id="ringingStart-dropdown"
                   >
-                    {intakeOptions.ringingStart.find(
+                    {intakeOptions.daysOneToThree.find(
                       (option) => option.english === data.ringingStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.ringingStart.map((option) => (
+                    {intakeOptions.daysOneToThree.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}

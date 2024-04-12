@@ -83,6 +83,7 @@ function PbStepFour({
             />
           </>
         ) : null}
+        <hr />
         {/* Concentrate */}
         <YesNoRadio
           title={intakeQs.concentrate[language]}
@@ -126,6 +127,7 @@ function PbStepFour({
             </div>
           </div>
         ) : null}
+        <hr />
         {/* Depression */}
         <YesNoRadio
           title={intakeQs.depression[language]}
@@ -156,12 +158,12 @@ function PbStepFour({
                   variant="secondary"
                   id="depressionExplain-dropdown"
                 >
-                  {intakeOptions.depressionExplain.find(
+                  {intakeOptions.daysOneToThree.find(
                     (option) => option.english === data.depressionExplain
                   )?.[language] || "Select"}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {intakeOptions.depressionExplain.map((option) => (
+                  {intakeOptions.daysOneToThree.map((option) => (
                     <Dropdown.Item
                       key={option.english}
                       eventKey={option.english}
@@ -174,6 +176,7 @@ function PbStepFour({
             </div>
           </div>
         ) : null}
+        <hr />
         {/* Irritable */}
         <div className="row mb-3">
           <div className="col-12 col-lg-6 mb-lg-0 mb-2">

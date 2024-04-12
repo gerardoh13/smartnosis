@@ -47,7 +47,7 @@ function PbIntake({ setCurrView }) {
     // page 3
     headache: "",
     headacheExplain: "",
-    headachePain: "",
+    headachePainScale: "1",
     dizziness: "",
     dizzinessStart: "",
     dizzyLying: "",
@@ -250,16 +250,20 @@ function PbIntake({ setCurrView }) {
     let req = [formData.headache, formData.dizziness];
     if (formData.headache === "Yes") {
       req.push(formData.headacheExplain);
-      req.push(formData.headachePain);
+      req.push(formData.headachePainScale);
     }
     if (formData.dizziness === "Yes") {
       req.push(formData.dizzinessStart);
       req.push(formData.dizzyLying);
       req.push(formData.dizzySitting);
       req.push(formData.dizzyStanding);
-      req.push(formData.dizzinessComeAndGo);
-      req.push(formData.dizzyChangeInVission);
+      req.push(formData.lightheaded);
+      req.push(formData.headSpinning);
     }
+    if (formData.lightHeadedStart === "Yes")
+      req.push(formData.lightHeadedStart);
+    if (formData.headSpinning === "Yes") req.push(formData.headSpinningStart);
+
     return req.every(Boolean);
   };
 
@@ -497,7 +501,7 @@ function PbIntake({ setCurrView }) {
       console.log(formData);
       currStep = (
         <div className="text-center">
-          <p>Your ssesment has been submitted!</p>
+          <p>Your Assesment has been submitted!</p>
           <p>You can now close this window</p>
         </div>
       );

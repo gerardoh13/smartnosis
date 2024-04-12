@@ -91,12 +91,12 @@ function PbStepEight({
                     variant="secondary"
                     id="blurredVisionStart-dropdown"
                   >
-                    {intakeOptions.blurredVisionStart.find(
+                    {intakeOptions.daysOneToThree.find(
                       (option) => option.english === data.blurredVisionStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.blurredVisionStart.map((option) => (
+                    {intakeOptions.daysOneToThree.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}
@@ -143,6 +143,7 @@ function PbStepEight({
             />
           </>
         ) : null}
+        <hr/>
         {/* Double Vision */}
         <YesNoRadio
           title={intakeQs.doubleVision[language]}
@@ -174,12 +175,12 @@ function PbStepEight({
                     variant="secondary"
                     id="doubleVisionStart-dropdown"
                   >
-                    {intakeOptions.doubleVisionStart.find(
+                    {intakeOptions.daysOneToThree.find(
                       (option) => option.english === data.doubleVisionStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.doubleVisionStart.map((option) => (
+                    {intakeOptions.daysOneToThree.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}
@@ -210,6 +211,7 @@ function PbStepEight({
             />
           </>
         ) : null}
+                <hr/>
         {/* Light Sensitivity */}
         <YesNoRadio
           title={intakeQs.lightSensitivity[language]}
@@ -241,12 +243,12 @@ function PbStepEight({
                     variant="secondary"
                     id="lightSensitivityStart-dropdown"
                   >
-                    {intakeOptions.lightSensitivityStart.find(
+                    {intakeOptions.daysOneToThree.find(
                       (option) => option.english === data.lightSensitivityStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.lightSensitivityStart.map((option) => (
+                    {intakeOptions.daysOneToThree.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}

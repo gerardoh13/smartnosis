@@ -92,12 +92,12 @@ function PbStepNine({
                     variant="secondary"
                     id="neckPainStart-dropdown"
                   >
-                    {intakeOptions.neckPainStart.find(
+                    {intakeOptions.daysOneToThree.find(
                       (option) => option.english === data.neckPainStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.neckPainStart.map((option) => (
+                    {intakeOptions.daysOneToThree.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}
@@ -141,6 +141,7 @@ function PbStepNine({
             </div>
           </>
         ) : null}
+        <hr/>
         {/* Lower Back Pain */}
         <YesNoRadio
           title={intakeQs.lowerBackPain[language]}
@@ -172,12 +173,12 @@ function PbStepNine({
                     variant="secondary"
                     id="lowerBackPainStart-dropdown"
                   >
-                    {intakeOptions.lowerBackPainStart.find(
+                    {intakeOptions.daysOneToThree.find(
                       (option) => option.english === data.lowerBackPainStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.lowerBackPainStart.map((option) => (
+                    {intakeOptions.daysOneToThree.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}
@@ -221,6 +222,7 @@ function PbStepNine({
             </div>
           </>
         ) : null}
+        <hr/>
         <div className="row mt-4">
           <div className="col">
             <button

@@ -92,12 +92,12 @@ function PbStepSeven({
                     variant="secondary"
                     id="noiseSensitivityStart-dropdown"
                   >
-                    {intakeOptions.noiseSensitivityStart.find(
+                    {intakeOptions.daysOneToThree.find(
                       (option) => option.english === data.noiseSensitivityStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.noiseSensitivityStart.map((option) => (
+                    {intakeOptions.daysOneToThree.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}

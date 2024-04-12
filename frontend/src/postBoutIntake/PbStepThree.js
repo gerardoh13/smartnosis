@@ -108,7 +108,7 @@ function PbStepThree({
             <div className="row mb-3">
               <div className="col-12 col-lg-6 mb-lg-0 mb-2">
                 <span className="text-start ms-1 mt-1">
-                  {intakeQs.headachePain[language] + ":"}
+                  {intakeQs.headachePainScale[language] + ":"}
                   <span className="text-danger">*</span>
                 </span>
               </div>
@@ -127,7 +127,7 @@ function PbStepThree({
                     }}
                     min={1}
                     max={5}
-                    name="headachePain"
+                    name="headachePainScale"
                     onChange={handleChange}
                   />
                 </Box>
@@ -135,6 +135,7 @@ function PbStepThree({
             </div>
           </>
         ) : null}
+        <hr />
         {/* Dizziness */}
         <YesNoRadio
           title={intakeQs.dizziness[language]}
@@ -166,12 +167,12 @@ function PbStepThree({
                     variant="secondary"
                     id="dizzinessStart-dropdown"
                   >
-                    {intakeOptions.dizzinessStart.find(
+                    {intakeOptions.daysOneToThree.find(
                       (option) => option.english === data.dizzinessStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {intakeOptions.dizzinessStart.map((option) => (
+                    {intakeOptions.daysOneToThree.map((option) => (
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}
@@ -217,6 +218,53 @@ function PbStepThree({
               language={language}
             />
             {data.lightheaded === "Yes" ? (
+              <>
+                <div className="row mb-3">
+                  <div className="col-6 d-flex align-items-center">
+                    <span className="text-start ms-1 mt-1">
+                      {intakeQs.dizzinessStart[language] + ":"}
+                      <span className="text-danger">*</span>
+                    </span>
+                  </div>
+                  <div className="col text-center">
+                    <Dropdown
+                      onSelect={(val) => handleSelect("lightHeadedStart", val)}
+                    >
+                      <Dropdown.Toggle
+                        className="form-control text-wrap"
+                        variant="secondary"
+                        id="lightHeadedStart-dropdown"
+                      >
+                        {intakeOptions.daysOneToThree.find(
+                          (option) => option.english === data.lightHeadedStart
+                        )?.[language] || "Select"}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        {intakeOptions.daysOneToThree.map((option) => (
+                          <Dropdown.Item
+                            key={option.english}
+                            eventKey={option.english}
+                            className="text-wrap"
+                          >
+                            {option[language]}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                </div>
+                <hr />
+              </>
+            ) : null}
+            {/* Dizzyness Change in Vission */}
+            <YesNoRadio
+              title={intakeQs.headSpinning[language]}
+              handleChange={handleChange}
+              name="headSpinning"
+              status={data.headSpinning}
+              language={language}
+            />
+            {data.headSpinning === "Yes" ? (
               <div className="row mb-3">
                 <div className="col-6 d-flex align-items-center">
                   <span className="text-start ms-1 mt-1">
@@ -226,19 +274,19 @@ function PbStepThree({
                 </div>
                 <div className="col text-center">
                   <Dropdown
-                    onSelect={(val) => handleSelect("lightHeadedStart", val)}
+                    onSelect={(val) => handleSelect("headSpinningStart", val)}
                   >
                     <Dropdown.Toggle
                       className="form-control text-wrap"
                       variant="secondary"
-                      id="lightHeadedStart-dropdown"
+                      id="headSpinningStart-dropdown"
                     >
-                      {intakeOptions.lightHeadedStart.find(
-                        (option) => option.english === data.lightHeadedStart
+                      {intakeOptions.daysOneToThree.find(
+                        (option) => option.english === data.headSpinningStart
                       )?.[language] || "Select"}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      {intakeOptions.lightHeadedStart.map((option) => (
+                      {intakeOptions.daysOneToThree.map((option) => (
                         <Dropdown.Item
                           key={option.english}
                           eventKey={option.english}
@@ -251,50 +299,6 @@ function PbStepThree({
                   </Dropdown>
                 </div>
               </div>
-            ) : null}
-            {/* Dizzyness Change in Vission */}
-            <YesNoRadio
-              title={intakeQs.headSpinning[language]}
-              handleChange={handleChange}
-              name="headSpinning"
-              status={data.headSpinning}
-              language={language}
-            />
-            {data.headSpinning === "Yes" ? (
-                            <div className="row mb-3">
-                            <div className="col-6 d-flex align-items-center">
-                              <span className="text-start ms-1 mt-1">
-                                {intakeQs.dizzinessStart[language] + ":"}
-                                <span className="text-danger">*</span>
-                              </span>
-                            </div>
-                            <div className="col text-center">
-                              <Dropdown
-                                onSelect={(val) => handleSelect("headSpinningStart", val)}
-                              >
-                                <Dropdown.Toggle
-                                  className="form-control text-wrap"
-                                  variant="secondary"
-                                  id="headSpinningStart-dropdown"
-                                >
-                                  {intakeOptions.headSpinningStart.find(
-                                    (option) => option.english === data.headSpinningStart
-                                  )?.[language] || "Select"}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                  {intakeOptions.headSpinningStart.map((option) => (
-                                    <Dropdown.Item
-                                      key={option.english}
-                                      eventKey={option.english}
-                                      className="text-wrap"
-                                    >
-                                      {option[language]}
-                                    </Dropdown.Item>
-                                  ))}
-                                </Dropdown.Menu>
-                              </Dropdown>
-                            </div>
-                          </div>
             ) : null}
           </>
         ) : null}
