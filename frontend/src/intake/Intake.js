@@ -449,28 +449,33 @@ function Intake({ setCurrView }) {
                 className={`step ${
                   stepOneComplete() || complete ? "finish" : ""
                 } ${step === 0 ? "active" : ""}`}
+                onClick={() => setStep(0)}
               ></span>
               {formData.insurance === "Yes" ? (
                 <span
                   className={`step ${stepInsuranceComplete() ? "finish" : ""} ${
                     step === 0.5 ? "active" : ""
                   }`}
+                  onClick={() => setStep(0.5)}
                 ></span>
               ) : null}
               <span
                 className={`step ${step > 0.5 || complete ? "finish" : ""} ${
                   step === 1 ? "active" : ""
                 }`}
+                onClick={() => setStep(1)}
               ></span>
               <span
                 className={`step ${step > 1 || complete ? "finish" : ""} ${
                   step === 2 ? "active" : ""
                 }`}
+                onClick={() => setStep(2)}
               ></span>
               <span
                 className={`step ${
                   stepFourComplete() || complete ? "finish" : ""
                 } ${step === 3 ? "active" : ""}`}
+                onClick={() => setStep(3)}
               ></span>
             </div>
           </div>

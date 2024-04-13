@@ -105,7 +105,7 @@ function PbIntake({ setCurrView }) {
     // page 10
     symptoms: new Set(),
     comments: "",
-    // additionalPId: "",
+    additionalPIds: [],
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);

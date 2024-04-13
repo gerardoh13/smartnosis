@@ -452,6 +452,10 @@ const pBintakeQs = {
     english: "Enter Comments or Details Here: enter (500 characters)",
     spanish: "Ingrese comentarios o detalles aquí",
   },
+  additionalPIds: {
+    english: "Additional Photos",
+    spanish: "Fotos adicionales",
+  },
 };
 
 const PbIntakeOptions = {

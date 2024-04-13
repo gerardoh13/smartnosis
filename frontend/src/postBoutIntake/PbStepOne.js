@@ -1,5 +1,6 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import PhotoUploader from "../common/PhotoUploader";
 
 function PbStepOne({
   data,
@@ -36,7 +37,7 @@ function PbStepOne({
           <span>Indicates required field</span>
         </p>
         {/* firstName */}
-        <div className="form-floating">
+        <div className="form-floating mb-3">
           <input
             type="text"
             className="form-control"
@@ -52,6 +53,9 @@ function PbStepOne({
             <span className="text-danger">*</span>
           </label>
         </div>
+        {/* Photo Uploader */}
+        <p>{intakeQs.idPid[language] + ":"}</p>
+        <PhotoUploader />
         {/* lastName */}
         <div className="form-floating my-3">
           <input

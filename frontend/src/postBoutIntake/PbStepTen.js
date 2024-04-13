@@ -1,4 +1,5 @@
 import React from "react";
+import PhotoUploader from "../common/PhotoUploader";
 
 function PbStepTen({
   data,
@@ -70,6 +71,8 @@ function PbStepTen({
           value={data.comments}
           onChange={handleChange}
         ></textarea>
+        <p className="mt-3">{intakeQs.additionalPIds[language] + ":"}</p>
+        <PhotoUploader uploadLimit={5} />
         <div className="row mt-4">
           <div className="col">
             <button
