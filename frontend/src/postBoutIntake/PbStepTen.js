@@ -11,12 +11,12 @@ function PbStepTen({
   language,
 }) {
   const symptoms = [
-    { english: "Bruising or Bleeding", spanish: "Moretones o sangrado" },
-    { english: "Shortness of Breath", spanish: "Dificultad para respirar" },
+    { english: "Bruising or bleeding", spanish: "Moretones o sangrado" },
+    { english: "Shortness of breath", spanish: "Dificultad para respirar" },
     { english: "Chest Pain", spanish: "Dolor en el pecho" },
     { english: "Swelling", spanish: "Hinchazón" },
     { english: "Seizures/Tremors", spanish: "Convulsiones/Temblores" },
-    { english: "Nausea/ Vomiting", spanish: "Náuseas vómitos" },
+    { english: "Nausea/Vomiting", spanish: "Náuseas vómitos" },
   ];
 
   const createCheckbox = (symptom, data) => {

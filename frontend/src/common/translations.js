@@ -177,11 +177,11 @@ const intakeQs = {
 
 const pBintakeQs = {
   firstName: {
-    english: "First Name",
+    english: "First name",
     spanish: "Nombre de pila",
   },
   lastName: {
-    english: "Last Name",
+    english: "Last name",
     spanish: "Apellido",
   },
   promoter: {
@@ -189,39 +189,39 @@ const pBintakeQs = {
     spanish: "Promotor",
   },
   physicianName: {
-    english: "Physicians Name",
+    english: "Physicians name",
     spanish: "Nombre del médico",
   },
   idPid: {
-    english: "Picture of Identification",
+    english: "Picture of identification",
     spanish: "Imagen de identificación",
   },
   dof: {
-    english: "Date of Fight",
+    english: "Date of fight",
     spanish: "Fecha de la pelea",
   },
   location: {
-    english: "Location of Fight",
+    english: "Location of fight",
     spanish: "Ubicación de la pelea",
   },
   result: {
-    english: "Fight Result",
+    english: "Fight result",
     spanish: "Resultado de la pelea",
   },
   status: {
-    english: "Your Status after Fight",
+    english: "Your status after fight",
     spanish: "Tu estado después de la pelea",
   },
   hospitalName: {
-    english: "Name of Hospital",
+    english: "Name of hospital",
     spanish: "Nombre del hospital",
   },
   visitLength: {
-    english: "Length of Hospital Stay (Hours)",
+    english: "Length of hospital stay (Hours)",
     spanish: "Duración de la estancia hospitalaria (horas)",
   },
   concussion: {
-    english: "Have you had a Head Injury before?",
+    english: "Have you had a head injury before?",
     spanish: "¿Ha tenido una lesión en la cabeza antes?",
   },
   concussionNum: {
@@ -233,25 +233,25 @@ const pBintakeQs = {
     spanish: "¿Sentiste algún cambio en tu conciencia durante la pelea?",
   },
   alertnessLossRound: {
-    english: "What Round?",
+    english: "What round?",
     spanish: "¿Qué round?",
   },
   alertnessLossLength: {
-    english: "How Long? (seconds)",
+    english: "How long? (seconds)",
     spanish: "¿cuánto tiempo? (segundos)",
   },
   drugsOrAlcohol: {
-    english: "Any Alcohol or Drug Use since time of Fight?",
+    english: "Any alcohol or drug use since time of fight?",
     spanish: "¿Algún consumo de alcohol o drogas posterior la pelea?",
   },
   headache: {
-    english: "Have you felt any Headache(s)?",
+    english: "Have you felt any headache(s)?",
     spanish: "¿Sufres algún dolor de cabeza?",
   },
   headachePainScale: {
-    english: "On a scale of 1-5 (5 = very painful), rate your Headache(s)",
+    english: "On a scale of 1-5 (5 = very painful), rate your headache(s)",
     spanish:
-      "En una escala del 1 al 5 (1 = leve 5 = severo), califique su dolor de cabeza.",
+      "En una escala del 1 al 5 (5 = severo), califique su dolor de cabeza.",
   },
   dizziness: {
     english: "Have you felt any dizziness since the fight?",
@@ -280,7 +280,7 @@ const pBintakeQs = {
   headSpinning: {
     english:
       "Have you felt like your head is spinning any time after the fight?",
-    spanish: "¿Hay algún cambio en su visión o audición durante los mareos?",
+    spanish: "¿Has sentido que tu cabeza da vueltas en algún momento después de la pelea?",
   },
   forgetfulness: {
     english: "Have you been forgetful since the fight?",
@@ -303,7 +303,7 @@ const pBintakeQs = {
     spanish: "¿Experimentas algún cambio de humor?",
   },
   concentrate: {
-    english: "Has it been hard for you to Concentrate?",
+    english: "Has it been hard for you to concentrate?",
     spanish: "¿Te es difícil concentrarte?",
   },
   depression: {
@@ -328,20 +328,20 @@ const pBintakeQs = {
   },
   hearingBothEars: {
     english: "Can you hear in both ears?",
-    spanish: "¿El zumbido es en un oído o en ambos oídos?",
+    spanish: "¿Puedes oír con ambos oídos?",
   },
   leftRightEar: {
     english: "Which ear can you hear from?",
     spanish: "¿De qué oído puedes oír?",
   },
   sleeping: {
-    english: "On average, how many hours of sleep are you getting per night?",
-    spanish: "En promedio, ¿cuántas horas duermes por noche?",
+    english: "8. On average, How much Sleep are you getting? (last 72 hours)",
+    spanish: "En promedio, ¿cuánto duermes? (últimas 72 horas)",
   },
   noiseSensitivity: {
     english: "Have you felt any pain caused by noise after the fight?",
     spanish:
-      "¿Has notado alguna sensibilidad al ruido en las 72 horas posteriores a la pelea?",
+      "¿Has sentido algún dolor provocado por el ruido después de la pelea?",
   },
   noiseSensitivityStart: {
     english: "When did you notice sensitivity to loud sounds?",
@@ -379,8 +379,8 @@ const pBintakeQs = {
     spanish: "¿Tienes visión borrosa en ambos ojos?",
   },
   doubleVision: {
-    english: "Are you experiencing any Double Vision?",
-    spanish: "¿Has tenido visión doble en las últimas 72 horas?",
+    english: "Are you experiencing any double vision?",
+    spanish: "¿Tienes visión doble?",
   },
   doubleVisionStart: {
     english: "When did double vision start?",
@@ -395,44 +395,44 @@ const pBintakeQs = {
     spanish: "¿Tu visión doble es intermitente?",
   },
   lightSensitivity: {
-    english: "Are you experiencing any sensitivty to Light after the fight?",
-    spanish: "¿Has sido sensible a la Luz en las últimas 72 horas?",
+    english: "Are you experiencing any sensitivty to light after the fight?",
+    spanish: "¿Sientes alguna sensibilidad a Light después de la pelea?",
   },
   lightSensitivityStart: {
     english: "When did you notice the eye pain from light?",
-    spanish: "¿Cuándo notaste la sensibilidad a la luz?",
+    spanish: "¿Cuándo notaste el dolor en los ojos por la luz?",
   },
   lightSensitivityConstant: {
-    english: "Is your Light Sensitivity all the time?",
+    english: "Is your light sensitivity all the time?",
     spanish: "¿Tu sensibilidad a la luz es todo el tiempo?",
   },
   lightSensitivityOnAndOff: {
-    english: "Is your Light Sensitivity on-and-off?",
+    english: "Is your light sensitivity on-and-off?",
     spanish: "¿Tu sensibilidad a la luz es intermitente?",
   },
   lightSensitivityScale: {
     english:
-      "On a scale of 1-5 (5 = very painful), how painful is Light to your eyes?",
+      "On a scale of 1-5 (5 = very painful), how painful is light to your eyes?",
     spanish:
       "En una escala del 1 al 5 (5 = muy doloroso), ¿qué tan dolorosa es la luz para ti?",
   },
   neckPain: {
-    english: "Have you experienced any Neck Pain?",
-    spanish: "¿Ha experimentado algún dolor de cuello en las últimas 72 horas?",
+    english: "Have you experienced any neck pain?",
+    spanish: "¿Ha experimentado algún dolor de cuello?",
   },
   neckPainStart: {
     english: "When did your neck pain start?",
     spanish: "¿Cuándo empezó tu dolor de cuello?",
   },
   neckPainScale: {
-    english: "On a scale of 1-5 (5 = very painful), rate your Neck Pain",
+    english: "On a scale of 1-5 (5 = very painful), rate your neck pain",
     spanish:
       "En una escala del 1 al 5 (5 = muy doloroso), califique su dolor de cuello",
   },
   lowerBackPain: {
     english: "Have you experienced any Lower Back Pain?",
     spanish:
-      "¿Ha experimentado algún dolor de espalda baja en las últimas 72 horas?",
+      "¿Ha experimentado algún dolor lumbar?",
   },
   lowerBackPainStart: {
     english: "When did your lower back pain start?",
@@ -545,51 +545,51 @@ const pbHeaders = {
   },
   pgThree: {
     english:
-      "For tonight and th next 3 days, answer the questions below to monitor your headache(s) and dizziness after the fight.",
+      "For tonight and the next 3 days, answer the questions below to monitor your headache(s) and dizziness after the fight.",
     spanish:
-      "En los 3 días posteriores a su pelea, las siguientes preguntas son para controlar sus dolores de cabeza y mareos.",
+      "Para esta noche y los próximos 3 días, responda las preguntas a continuación para controlar sus dolores de cabeza y mareos después de la pelea.",
   },
   pgFour: {
     english:
       "For tonight and the next 3 days, answer the questions below to monitor your memory and mood.",
     spanish:
-      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para controlar tu memoria y estado de ánimo.",
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para controlar su memoria y estado de ánimo.",
   },
   pgFive: {
     english:
       "For tonight and the next 3 days, answer the below questions to monitor your hearing.",
     spanish:
-      "En los 3 días posteriores a su pelea, las siguientes preguntas son para controlar su audición.",
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para controlar su audiencia.",
   },
   pgSix: {
     english:
       "For tonight and the next 3 days, answer the below questions to monitor your sleep habits.",
     spanish:
-      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para controlar tus hábitos de sueño.",
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para controlar sus hábitos de sueño.",
   },
   pgSeven: {
     english:
-      "For tonight and the next 3 days, answer the below questions to monitor how you respond to Loud Sounds.",
+      "For tonight and the next 3 days, answer the below questions to monitor how you respond to loud sounds.",
     spanish:
-      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para monitorear cómo respondes al ruido.",
+      "Durante esta noche y los próximos 3 días, responda las siguientes preguntas para controlar cómo responde a los sonidos fuertes.",
   },
   pgEight: {
     english:
-      "In the 3 days after your fight, the below questions are to monitor your vision.",
+      "For tonight and the next 3 days, answer the below questions to monitor your vision.",
     spanish:
-      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para controlar tu visión.",
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para controlar su visión.",
   },
   pgNine: {
     english:
-      "In the 3 days after your fight, the below questions are to monitor your neck and back pain.",
+      "For tonight and the next 3 days, answer the below questions to monitor your neck and back pain.",
     spanish:
-      "En los 3 días posteriores a tu pelea, las siguientes preguntas son para identificar tu dolor de cuello y espalda.",
+      "Durante esta noche y los próximos 3 días, responda las siguientes preguntas para controlar su dolor de cuello y espalda.",
   },
   pgTen: {
     english:
-      "In the 3 day after your fight, Select Any other symptoms you have experienced.",
+      "For tonight and the next 3 days, select Any other symptoms you have experienced.",
     spanish:
-      "En los 3 días posteriores a su pelea, seleccione Cualquier otro síntoma que haya experimentado.",
+      "Para esta noche y los próximos 3 días, seleccione cualquier otro síntoma que haya experimentado.",
   },
 };
 
