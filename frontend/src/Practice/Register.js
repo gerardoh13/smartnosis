@@ -158,12 +158,12 @@ function Register({ registerUser }) {
     }
   };
 
-  const isValidEmail = (email) => {
-    // Define a regular expression for a basic email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // Test the email against the regular expression
-    return emailRegex.test(email);
-  };
+  // const isValidEmail = (email) => {
+  //   // Define a regular expression for a basic email format
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   // Test the email against the regular expression
+  //   return emailRegex.test(email);
+  // };
 
   const noEmptyStrs = (arr) => arr.every((str) => str.trim() !== "");
 

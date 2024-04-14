@@ -15,31 +15,32 @@ const PhotoUploader = ({ uploadLimit = 1 }) => {
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
 
-  let chonk = (
-    <>
-      <div className="ant-upload2 ant-upload-select2">
-        <span className="ant-upload2">
-          <input type="file" style={{ display: "none" }} />
-          <button
-            style={{
-              border: 0,
-              background: "none",
-            }}
-            type="button"
-          >
-            <PlusOutlined />
-            <div
-              style={{
-                marginTop: 8,
-              }}
-            >
-              Upload
-            </div>
-          </button>
-        </span>
-      </div>
-    </>
-  );
+  // let chonk = (
+  //   <>
+  //     <div className="ant-upload2 ant-upload-select2">
+  //       <span className="ant-upload2">
+  //         <input type="file" style={{ display: "none" }} />
+  //         <button
+  //           style={{
+  //             border: 0,
+  //             background: "none",
+  //           }}
+  //           type="button"
+  //         >
+  //           <PlusOutlined />
+  //           <div
+  //             style={{
+  //               marginTop: 8,
+  //             }}
+  //           >
+  //             Upload
+  //           </div>
+  //         </button>
+  //       </span>
+  //     </div>
+  //   </>
+  // );
+  
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
