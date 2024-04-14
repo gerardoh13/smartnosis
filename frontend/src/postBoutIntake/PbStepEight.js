@@ -3,29 +3,7 @@ import YesNoRadio from "../common/YesNoRadio";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Dropdown from "react-bootstrap/Dropdown";
-
-const marks = [
-  {
-    value: 1,
-    label: "😐",
-  },
-  {
-    value: 2,
-    label: "🙁",
-  },
-  {
-    value: 3,
-    label: "😠",
-  },
-  {
-    value: 4,
-    label: "😬",
-  },
-  {
-    value: 5,
-    label: "😵",
-  },
-];
+import { getEmojiMarks } from "../common/commonFuncs";
 
 function PbStepEight({
   data,
@@ -47,7 +25,7 @@ function PbStepEight({
       <div>
         <img
           src="Vision.png"
-          className="rounded mx-auto d-block w60 my-2"
+          className="rounded mx-auto d-block w-25 my-2"
           alt="Vision"
         />
         <p className="text-center">
@@ -292,12 +270,7 @@ function PbStepEight({
                     defaultValue={1}
                     valueLabelDisplay="on"
                     step={1}
-                    marks={marks}
-                    sx={{
-                      "& .MuiSlider-markLabel": {
-                        fontSize: "1.5rem",
-                      },
-                    }}
+                    marks={getEmojiMarks()}
                     min={1}
                     max={5}
                     name="lightSensitivityScale"

@@ -23,7 +23,7 @@ function PbStepOne({
       <div>
         <img
           src="boxing-glove-app-icon.png"
-          className="rounded mx-auto d-block w60 my-2"
+          className="rounded mx-auto d-block w-25 my-2"
           alt="Boxing Glove"
         />
         <p className="text-center">
@@ -53,9 +53,6 @@ function PbStepOne({
             <span className="text-danger">*</span>
           </label>
         </div>
-        {/* Photo Uploader */}
-        <p>{intakeQs.idPid[language] + ":"}</p>
-        <PhotoUploader />
         {/* lastName */}
         <div className="form-floating my-3">
           <input
@@ -73,7 +70,10 @@ function PbStepOne({
             <span className="text-danger">*</span>
           </label>
         </div>
-        {/* promoter */}
+        {/* Photo Uploader */}
+        <p>{intakeQs.idPid[language] + ":"}</p>
+        <PhotoUploader />
+        {/* promotor */}
         <div className="form-floating my-3">
           <input
             type="text"

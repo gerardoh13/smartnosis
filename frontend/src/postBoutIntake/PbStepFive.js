@@ -22,7 +22,7 @@ function PbStepFive({
       <div>
         <img
           src="Hearing.png"
-          className="rounded mx-auto d-block w60 my-2"
+          className="rounded mx-auto d-block w-25 my-2"
           alt="Hearing"
         />
         <p className="text-center">

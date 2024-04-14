@@ -35,7 +35,7 @@ function Login({ login }) {
     <Grid item xs={12} md={8} lg={6}>
       <div className="card">
         <img
-          src="smartnosis-logo.jpg"
+          src="BW-Smartnosis-Logo.png"
           className="rounded mx-auto w60 mt-2"
           alt="smartnosis logo"
         />

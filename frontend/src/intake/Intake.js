@@ -396,7 +396,7 @@ function Intake({ setCurrView }) {
       <div className="card">
         <div className="card-body">
           <img
-            src="smartnosis-logo.jpg"
+            src="BW-Smartnosis-Logo.png"
             className="rounded mx-auto d-block w60 mt-2"
             alt="smartnosis logo"
           />

@@ -29,7 +29,10 @@ const getMidnights = (date) => {
 };
 
 const formatTime = (epoch) => {
-  return new Date(epoch * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  return new Date(epoch * 1000).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 };
 
 const validatePhone = (phone) => {
@@ -47,4 +50,53 @@ const deleteNulls = (data) => {
   }
 };
 
-export { createCheckbox, getMidnights, formatTime, validatePhone, deleteNulls };
+const getEmojiMarks = () => {
+  return [
+    {
+      value: 1,
+      label: (
+        <>
+          <span className="bit" />
+          <i className="bi bi-emoji-expressionless-fill" />
+        </>
+      ),
+    },
+    {
+      value: 2,
+      label: (
+        <>
+          <span className="bit" />
+          <i className="bi bi-emoji-frown-fill" />
+        </>
+      ),
+    },
+    {
+      value: 3,
+      label: (
+        <>
+          <span className="bit" />
+          <i className="bi bi-emoji-angry-fill" />
+        </>
+      ),
+    },
+    {
+      value: 4,
+      label: (
+        <>
+          <span className="bit" />
+          <i className="bi bi-emoji-grimace-fill" />
+        </>
+      ),
+    },
+    {
+      value: 5,
+      label: (
+        <>
+          <span className="bit" />
+          <i className="bi bi-emoji-dizzy-fill" />
+        </>
+      ),
+    },
+  ];
+};
+export { createCheckbox, getMidnights, formatTime, validatePhone, deleteNulls, getEmojiMarks };

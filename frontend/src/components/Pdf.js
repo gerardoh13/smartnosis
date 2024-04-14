@@ -120,7 +120,7 @@ function PDF({ intake }) {
   return (
     <Document>
       <Page style={styles.body}>
-        <Image style={styles.image} src="/smartnosis-logo.jpg" />
+        <Image style={styles.image} src="/BW-Smartnosis-Logo.png" />
 
         <View style={styles.textRow}>
           <View style={styles.columnLeft}>

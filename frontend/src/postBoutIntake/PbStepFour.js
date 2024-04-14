@@ -22,7 +22,7 @@ function PbStepFour({
       <div>
         <img
           src="Moody.png"
-          className="rounded mx-auto d-block w60 my-2"
+          className="rounded mx-auto d-block w-25 my-2"
           alt="Memory and Mood"
         />
         <p className="text-center">

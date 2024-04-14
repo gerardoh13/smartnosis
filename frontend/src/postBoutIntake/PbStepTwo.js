@@ -23,7 +23,7 @@ function PbStepTwo({
       <div>
         <img
           src="Head-Injury.png"
-          className="rounded mx-auto d-block w60 my-2"
+          className="rounded mx-auto d-block w-25 my-2"
           alt="Head Injury"
         />
         <p className="text-center">

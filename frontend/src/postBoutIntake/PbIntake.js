@@ -109,7 +109,7 @@ function PbIntake({ setCurrView }) {
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
   const [maxDate, setMaxDate] = useState("");
   const [complete, setComplete] = useState(false);
   const [agreeDisclaimer, setAgreeDisclaimer] = useState(false);
@@ -514,7 +514,7 @@ function PbIntake({ setCurrView }) {
       <div className="card">
         <div className="card-body">
           <img
-            src="smartnosis-logo.jpg"
+            src="BW-Smartnosis-Logo.png"
             className="rounded mx-auto d-block w60 mt-2"
             alt="smartnosis logo"
           />
