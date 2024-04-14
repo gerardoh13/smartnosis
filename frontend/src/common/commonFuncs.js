@@ -57,7 +57,7 @@ const getEmojiMarks = () => {
       label: (
         <>
           <span className="bit" />
-          <i className="bi bi-emoji-expressionless-fill" />
+          <i className="bi bi-emoji-expressionless-fill emoji" />
         </>
       ),
     },
@@ -66,7 +66,7 @@ const getEmojiMarks = () => {
       label: (
         <>
           <span className="bit" />
-          <i className="bi bi-emoji-frown-fill" />
+          <i className="bi bi-emoji-frown-fill emoji" />
         </>
       ),
     },
@@ -75,7 +75,7 @@ const getEmojiMarks = () => {
       label: (
         <>
           <span className="bit" />
-          <i className="bi bi-emoji-angry-fill" />
+          <i className="bi bi-emoji-angry-fill emoji" />
         </>
       ),
     },
@@ -84,7 +84,7 @@ const getEmojiMarks = () => {
       label: (
         <>
           <span className="bit" />
-          <i className="bi bi-emoji-grimace-fill" />
+          <i className="bi bi-emoji-grimace-fill emoji" />
         </>
       ),
     },
@@ -93,7 +93,7 @@ const getEmojiMarks = () => {
       label: (
         <>
           <span className="bit" />
-          <i className="bi bi-emoji-dizzy-fill" />
+          <i className="bi bi-emoji-dizzy-fill emoji" />
         </>
       ),
     },

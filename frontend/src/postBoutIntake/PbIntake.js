@@ -109,7 +109,7 @@ function PbIntake({ setCurrView }) {
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
   const [maxDate, setMaxDate] = useState("");
   const [complete, setComplete] = useState(false);
   const [agreeDisclaimer, setAgreeDisclaimer] = useState(false);
@@ -501,7 +501,7 @@ function PbIntake({ setCurrView }) {
       console.log(formData);
       currStep = (
         <div className="text-center">
-          <p>Your Assesment has been submitted!</p>
+          <p>Your Assessment has been submitted!</p>
           <p>You can now close this window</p>
         </div>
       );
@@ -518,7 +518,7 @@ function PbIntake({ setCurrView }) {
             className="rounded mx-auto d-block w60 mt-2"
             alt="smartnosis logo"
           />
-          <h2 className="my-3 text-center">Post-Bout Assesment</h2>
+          <h2 className="my-3 text-center">Post-Bout Assessment</h2>
           <div className="float-end">
             <div className="col-12 col-lg-4">
               <LangToggle
