@@ -10,6 +10,8 @@ import PublicRoutes from "./PublicRoutes";
 import ProviderContext from "../common/ProviderContext";
 import RegisterUser from "../Practice/RegisterUser";
 import PbIntake from "../postBoutIntake/PbIntake";
+// import IntakeCheckout from "../stripe/IntakeCheckout";
+import RegisterStripe from "../stripe/RegisterStripe";
 
 function NavRoutes({ login, registerUser, currView, setCurrView }) {
   const { currUser } = useContext(ProviderContext);
@@ -36,6 +38,11 @@ function NavRoutes({ login, registerUser, currView, setCurrView }) {
 
         <Route
           path="/register"
+          element={<Register registerUser={registerUser} />}
+        />
+
+        <Route
+          path="/register/:checkoutSessionId"
           element={<Register registerUser={registerUser} />}
         />
 
