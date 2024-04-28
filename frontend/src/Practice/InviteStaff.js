@@ -10,8 +10,8 @@ function Invitations({
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (step === 2) changeStep(1);
-    else if (step === 3) submit();
+    if (step === 3) changeStep(1);
+    else if (step === 4) submit();
   };
 
   const handleChange = (e, i) => {
@@ -22,8 +22,8 @@ function Invitations({
 
   const generateEmailFields = () => {
     let emailsCopy = [...emails];
-    if (step === 2 && adminRole === "hcp") emailsCopy.pop();
-    if (step === 3 && adminRole === "staff") emailsCopy.pop();
+    if (step === 3 && adminRole === "hcp") emailsCopy.pop();
+    if (step === 4 && adminRole === "staff") emailsCopy.pop();
     const emailFields = emailsCopy.map((value, i) => (
       <div className="form-floating my-2" key={i}>
         <input
@@ -32,11 +32,11 @@ function Invitations({
           id={`email-${i}`}
           value={value}
           placeholder="email"
-          required={step === 2 && i === 0}
+          required={step === 3 && i === 0}
           onChange={(e) => handleChange(e, i)}
         />
         <label htmlFor={`email-${i}`}>
-          {step === 3 ? "Non-" : ""}HCP Email Address #{i + 1}:{" "}
+          {step === 4 ? "Non-" : ""}HCP Email Address #{i + 1}:{" "}
           <span className="text-danger">*</span>
         </label>
       </div>
@@ -60,7 +60,7 @@ function Invitations({
         </div>
         <div className="col">
           <button className="btn btn-primary form-control">
-            {step === 3 ? "Submit" : "Next"}
+            {step === 4 ? "Submit" : "Next"}
           </button>
         </div>
       </div>

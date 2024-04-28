@@ -11,6 +11,7 @@ const intakeRoutes = require("./routes/intakes");
 const apptRoutes = require("./routes/appointments");
 const hcpsRoutes = require("./routes/hcps");
 const staffRoutes = require("./routes/staff");
+const stripeRoutes = require("./routes/stripe")
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/intakes", intakeRoutes);
 app.use("/appointments", apptRoutes);
 app.use("/hcps", hcpsRoutes);
 app.use("/staff", staffRoutes);
+app.use("/stripe", stripeRoutes)
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
