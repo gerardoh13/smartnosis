@@ -56,6 +56,12 @@ function Intake({ setCurrView }) {
     otherDrugUse: "",
     symptoms: new Set(),
     conditions: new Set(),
+    motherHistory: new Set(),
+    fatherHistory: new Set(),
+    grandParentsHistory: new Set(),
+    auntsHistory: new Set(),
+    unclesHistory: new Set(),
+    comments: "",
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
@@ -163,6 +169,15 @@ function Intake({ setCurrView }) {
     let medHistoryCopy = { ...medHistory };
     medHistoryCopy.symptoms = Array.from(medHistoryCopy.symptoms);
     medHistoryCopy.conditions = Array.from(medHistoryCopy.conditions);
+    //
+    medHistoryCopy.motherHistory = Array.from(medHistoryCopy.motherHistory);
+    medHistoryCopy.fatherHistory = Array.from(medHistoryCopy.fatherHistory);
+    medHistoryCopy.grandParentsHistory = Array.from(
+      medHistoryCopy.grandParentsHistory
+    );
+    medHistoryCopy.auntsHistory = Array.from(medHistoryCopy.auntsHistory);
+    medHistoryCopy.unclesHistory = Array.from(medHistoryCopy.unclesHistory);
+
     if (medHistoryCopy.drugUse === "Other")
       medHistoryCopy.drugUse = medHistoryCopy.otherDrugUse;
     return medHistoryCopy;
@@ -176,9 +191,9 @@ function Intake({ setCurrView }) {
       dataCopy = { ...dataCopy, ...formatInsData(dataCopy) };
     deleteNulls(dataCopy);
     //
-    delete dataCopy.tobaccoUse;
-    delete dataCopy.alcoholUse;
-    delete dataCopy.drugUse;
+    // delete dataCopy.tobaccoUse;
+    // delete dataCopy.alcoholUse;
+    // delete dataCopy.drugUse;
     //
     if (query.get("appointment")) dataCopy.apptId = query.get("appointment");
     return dataCopy;
@@ -192,12 +207,13 @@ function Intake({ setCurrView }) {
 
   const submit = async () => {
     let formattedData = formatData();
-    await SmartnosisApi.addIntake(formattedData);
+    // await SmartnosisApi.addIntake(formattedData);
+    console.log(formattedData);
     setFormData(INITIAL_STATE);
     setMedHistory(INITIAL_MED_HISTORY);
     setInsuranceData(INITIAL_INSURANCE_STATE);
-    if (currUser) setCurrView("Intakes");
-    else changeStep(1);
+    // if (currUser) setCurrView("Intakes");
+    // else changeStep(1);
   };
 
   const handleChange = (e, type) => {
@@ -302,7 +318,7 @@ function Intake({ setCurrView }) {
       medHistory.drugUse,
       medHistory.tobaccoUse,
     ];
-    if (medHistory.drugUse === "Other") fields.push(medHistory.otherDrugUse);
+    if (medHistory.drugUse === "Yes") fields.push(medHistory.otherDrugUse);
     return fields.every(Boolean);
   };
 
@@ -372,6 +388,7 @@ function Intake({ setCurrView }) {
           changeStep={changeStep}
           complete={stepFourComplete}
           handleSelect={handleSelect}
+          handleCheckbox={handleCheckbox}
           submit={submit}
           intakeQs={intakeQs}
           language={language}

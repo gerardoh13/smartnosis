@@ -9,12 +9,41 @@ function StepFour({
   complete,
   submit,
   handleSelect,
+  handleCheckbox,
   intakeQs,
   language,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (complete()) submit();
+  };
+  const familyHistory = [
+    "Cancer",
+    "Diabetes",
+    "High Cholesterol",
+    "Heart Attack",
+    "High Blood Pressure",
+    "Mental Illness",
+  ];
+
+  const createCheckbox = (condition, type) => {
+    return (
+      <div className="form-check col-6 col-sm-4 mb-4 mb-sm-0" key={condition}>
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value={condition}
+          id={`${type}-${condition}`}
+          onChange={handleCheckbox}
+          checked={data[type].has(condition)
+          }
+          name={type}
+        />
+        <label className="form-check-label" htmlFor={`${type}-${condition}`}>
+          <strong>{condition}</strong>
+        </label>
+      </div>
+    );
   };
 
   return (
@@ -35,7 +64,7 @@ function StepFour({
             onSelect={(val) => handleSelect("tobaccoUse", val, "medHistory")}
           >
             <Dropdown.Toggle
-              className="form-control"
+              className="form-control text-wrap"
               variant="secondary"
               id="tobacco-dropdown"
             >
@@ -69,7 +98,7 @@ function StepFour({
             onSelect={(val) => handleSelect("alcoholUse", val, "medHistory")}
           >
             <Dropdown.Toggle
-              className="form-control"
+              className="form-control text-wrap"
               variant="secondary"
               id="alcohol-dropdown"
             >
@@ -134,6 +163,49 @@ function StepFour({
           </label>
         </div>
       ) : null}
+      {/* Family History */}
+      <b>Family History</b>
+      <hr />
+      <div className="row ms-2">
+        <b>Mother:</b>
+        {familyHistory.map(condition => createCheckbox(condition, "motherHistory"))}
+      </div>
+      <hr />
+      <div className="row ms-2">
+        <b>Father:</b>
+        {familyHistory.map(condition => createCheckbox(condition, "fatherHistory"))}
+      </div>
+      <hr />
+      <div className="row ms-2">
+        <b>Grand Parents:</b>
+        {familyHistory.map(condition => createCheckbox(condition, "grandParentsHistory"))}
+      </div>
+      <hr />
+      <div className="row ms-2">
+        <b>Aunts:</b>
+        {familyHistory.map(condition => createCheckbox(condition, "auntsHistory"))}
+      </div>
+      <hr />
+      <div className="row ms-2">
+        <b>Uncles:</b>
+        {familyHistory.map(condition => createCheckbox(condition, "unclesHistory"))}
+      </div>
+      <hr />
+      {/* Comments */}
+      <div className="mt-3">
+        <label htmlFor="comments" className="fw-bold ms-1">
+          Comments:
+        </label>
+        <textarea
+          className="form-control"
+          placeholder="Additional Comments (Optional)"
+          rows={3}
+          onChange={(e) => handleChange(e, "medHistory")}
+          value={data.comments}
+          name="comments"
+          id="comments"
+        />
+      </div>
       {/* <PhotoUploader /> */}
       <div className="row mt-4">
         <div className="col">
