@@ -8,7 +8,7 @@ const Provider = require("../models/provider");
 const Email = require("../models/email");
 const express = require("express");
 const { ensureCorrectProvider } = require("../middleware/auth");
-const { createToken } = require("../helpers/tokens");
+const { createToken, createPwdResetToken } = require("../helpers/tokens");
 const providerAuthSchema = require("../schemas/providerAuth.json");
 const providerNewSchema = require("../schemas/providerNew.json");
 const { BadRequestError } = require("../expressError");
@@ -82,6 +82,41 @@ router.post("/register", async function (req, res, next) {
       }
     }
     return res.status(201).json({ provider });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post("/reset", async function (req, res, next) {
+  try {
+    const { email } = req.body;
+    const role = await Provider.getRole(email);
+    let user;
+    if (role === "hcp") user = await Hcp.getWithPassword(email);
+    else if (role === "staff") user = await Staff.getWithPassword(email);
+    const token = createPwdResetToken(user);
+    await Email.sendPwdReset(email, token);
+    return res.json({ emailSent: true });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post("/new-password", async function (req, res, next) {
+  try {
+    const { token } = req.query;
+    const { email, password } = req.body;
+    const role = await Provider.getRole(email);
+    let user;
+    if (role === "hcp") user = await Hcp.getWithPassword(email);
+    else if (role === "staff") user = await Staff.getWithPassword(email);
+    const tokenUser = jwt.verify(token, user.password);
+    if (user.email === tokenUser.email) {
+      if (role === "hcp") await Hcp.update(email, { password: password });
+      else if (role === "staff")
+        await Staff.update(email, { password: password });
+      return res.json({ passwordUpdated: true });
+    }
   } catch (err) {
     return next(err);
   }
