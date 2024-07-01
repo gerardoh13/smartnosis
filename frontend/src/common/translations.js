@@ -175,6 +175,30 @@ const intakeQs = {
   },
 };
 
+const intakeOptions = {
+  sex: [
+    { english: "Male", spanish: "Masculino" },
+    { english: "Female", spanish: "Femenina" },
+    { english: "Other", spanish: "Otro" },
+  ],
+  orientation: [
+    { english: "Straight", spanish: "Heterosexual" },
+    { english: "Gay", spanish: "Gay" },
+    { english: "Lesbian", spanish: "Lesbiana" },
+    { english: "Bisexual", spanish: "Bisexual" },
+    { english: "Other", spanish: "Otro" },
+  ],
+  ethnicity: [
+    { english: "Native American", spanish: "Nativo Americano" },
+    { english: "Black/African American", spanish: "Negro/Afroamericano" },
+    { english: "Hispanic/Latino", spanish: "Hispano/Latino" },
+    { english: "Asian", spanish: "Asiatico" },
+    { english: "Indian", spanish: "Indu" },
+    { english: "White", spanish: "Blanco" },
+    { english: "Decline to Answer", spanish: "Negarse a contestar" },
+  ],
+};
+
 const pBintakeQs = {
   firstName: {
     english: "First name",
@@ -280,7 +304,8 @@ const pBintakeQs = {
   headSpinning: {
     english:
       "Have you felt like your head is spinning any time after the fight?",
-    spanish: "¿Has sentido que tu cabeza da vueltas en algún momento después de la pelea?",
+    spanish:
+      "¿Has sentido que tu cabeza da vueltas en algún momento después de la pelea?",
   },
   forgetfulness: {
     english: "Have you been forgetful since the fight?",
@@ -431,8 +456,7 @@ const pBintakeQs = {
   },
   lowerBackPain: {
     english: "Have you experienced any Lower Back Pain?",
-    spanish:
-      "¿Ha experimentado algún dolor lumbar?",
+    spanish: "¿Ha experimentado algún dolor lumbar?",
   },
   lowerBackPainStart: {
     english: "When did your lower back pain start?",
@@ -593,4 +617,4 @@ const pbHeaders = {
   },
 };
 
-export { intakeQs, pBintakeQs, PbIntakeOptions, pbHeaders };
+export { intakeQs, intakeOptions, pBintakeQs, PbIntakeOptions, pbHeaders };
