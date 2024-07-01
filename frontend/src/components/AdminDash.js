@@ -18,7 +18,6 @@ function AdminDash() {
   useEffect(() => {
     const fetchAdminData = async () => {
       let invites = await SmartnosisApi.getInvitations(currUser.providerId);
-      console.log(invites);
       SetInvitations(invites);
       if (refetch) setRefetch(false);
     };
@@ -61,7 +60,7 @@ function AdminDash() {
   };
 
   const createSentRows = (arr) => {
-    if (arr.length === 0) {
+    if (!arr.length) {
       return (
         <tr>
           <td>N/A</td>
