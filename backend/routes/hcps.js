@@ -30,11 +30,20 @@ router.post("/register", async function (req, res, next) {
     //   const errs = validator.errors.map((e) => e.stack);
     //   throw new BadRequestError(errs);
     // }
-
     const newHcp = await Hcp.register({ ...req.body });
     await Hcp.markActive(newHcp.providerId, newHcp.email);
     const token = createToken(newHcp);
     return res.status(201).json({ token });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get("/checkduplicate/:email", async function (req, res, next) {
+  const { email } = req.params;
+  try {
+    await Hcp.checkDupe(email);
+    return res.json({ validEmail: true });
   } catch (err) {
     return next(err);
   }

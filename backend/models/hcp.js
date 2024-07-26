@@ -58,6 +58,18 @@ class Hcp {
    * Throws BadRequestError on duplicates.
    **/
 
+  static async checkDupe(email) {
+    const duplicateCheck = await db.query(
+      `SELECT email
+           FROM hcps
+           WHERE email = $1`,
+      [email]
+    );
+    if (duplicateCheck.rows[0]) {
+      throw new BadRequestError(`Duplicate email: ${email}`);
+    }
+  }
+
   static async register({
     providerId,
     firstName,
@@ -66,25 +78,7 @@ class Hcp {
     npi,
     password,
   }) {
-    const duplicateCheck = await db.query(
-      `SELECT email
-           FROM hcps
-           WHERE email = $1`,
-      [email]
-    );
-
-    if (duplicateCheck.rows[0]) {
-      throw new BadRequestError(`Duplicate email: ${email}`);
-    }
-
-    // const adminCheck = await db.query(
-    //   `SELECT h.id,
-    //           s.id
-    //        FROM hcps h JOIN staff s
-    //        ON h.provider_id = s.provider_id
-    //        WHERE h.provider_id = $1 AND s.provider_id = $1`,
-    //   [providerId]
-    // );
+    this.checkDupe(email);
 
     const adminCheck = await db.query(
       `SELECT DISTINCT email
@@ -108,7 +102,6 @@ class Hcp {
     console.log(adminCheck.rows);
     console.log(admin);
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
-
     let rowVals = [providerId, firstName, lastName, email, npi, hashedPassword];
     if (admin) rowVals.push(true);
     const result = await db.query(
@@ -123,9 +116,7 @@ class Hcp {
            RETURNING id, provider_id AS "providerId", email, role, is_admin AS "isAdmin"`,
       rowVals
     );
-
     const hcp = result.rows[0];
-
     return hcp;
   }
 

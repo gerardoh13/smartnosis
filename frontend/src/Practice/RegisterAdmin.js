@@ -8,13 +8,21 @@ function RegisterAdmin({
   handleChange,
   changeStep,
   confirmPasswords,
+  setErrors,
   errors,
+  checkDupe,
 }) {
-  //   const [errors, setErrors] = useState([]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!confirmPasswords()) return;
+    let validPassword = confirmPasswords();
+    let validEmail = await checkDupe();
+    if (!validPassword.valid || !validEmail.valid) {
+      let errors = [];
+      if (validPassword.err) errors.push(validPassword.err);
+      if (validEmail.err) errors.push(validEmail.err);
+      setErrors(errors);
+      return;
+    }
     changeStep(1);
   };
 

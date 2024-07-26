@@ -30,11 +30,20 @@ router.post("/register", async function (req, res, next) {
     //   const errs = validator.errors.map((e) => e.stack);
     //   throw new BadRequestError(errs);
     // }
-
     const newStaff = await Staff.register({ ...req.body });
     await Staff.markActive(newStaff.providerId, newStaff.email)
     const token = createToken(newStaff);
     return res.status(201).json({ token });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get("/checkduplicate/:email", async function (req, res, next) {
+  const { email } = req.params;
+  try {
+    await Staff.checkDupe(email);
+    return res.json({ validEmail: true });
   } catch (err) {
     return next(err);
   }

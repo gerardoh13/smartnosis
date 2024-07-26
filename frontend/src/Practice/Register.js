@@ -17,7 +17,6 @@ function Register({ registerUser }) {
     email: "",
     password: "",
     confirmPwd: "",
-    //
     orgName: "",
     phone: "",
     address1: "",
@@ -50,9 +49,8 @@ function Register({ registerUser }) {
     if (session) setStep(2);
   }, []);
 
-
   const changeStep = (n) => {
-    if(step === 1) saveLocalSession();
+    if (step === 1) saveLocalSession();
     setStep((prev) => prev + n);
   };
 
@@ -64,9 +62,8 @@ function Register({ registerUser }) {
     const session = JSON.parse(localStorage.getItem("session-initiated"));
     if (session) {
       setFormData(session);
-      return true
-    } else return false
-
+      return true;
+    } else return false;
   };
 
   const handleChange = (e) => {
@@ -74,17 +71,28 @@ function Register({ registerUser }) {
     const trimCheck = name === "firstName" || name === "lastName";
     setFormData((data) => ({
       ...data,
-      [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
+      [name]: trimCheck
+        ? value.trimStart().replace(/\s+/g, " ")
+        : name === "state"
+        ? value.toUpperCase()
+        : value,
     }));
   };
 
   const confirmPasswords = () => {
-    if (formData.password !== formData.confirmPwd) {
-      setErrors(["Passwords do not match"]);
-      return false;
+    if (formData.password === formData.confirmPwd) {
+      return { valid: true, err: "" };
     } else {
-      setErrors([]);
-      return true;
+      return { valid: false, err: "Passwords do not match" };
+    }
+  };
+
+  const checkDupe = async () => {
+    try {
+      await SmartnosisApi.checkDupe(formData.role, formData.email);
+      return { valid: true, err: "" };
+    } catch (error) {
+      return { valid: false, err: error[0] };
     }
   };
 
@@ -123,7 +131,7 @@ function Register({ registerUser }) {
   const formatData = () => {
     let dataCopy = { ...formData };
     for (let key in dataCopy) {
-      console.log(key, dataCopy[key])
+      console.log(key, dataCopy[key]);
       if (key === "email") {
         dataCopy[key] = dataCopy[key].toLowerCase();
       } else if (key === "billing") continue;
@@ -170,13 +178,13 @@ function Register({ registerUser }) {
     return arr.filter((str) => str.trim() !== "");
   };
   const handleSubmit = async () => {
-    console.log(formData)
+    // console.log(formData);
     let [practiceData, userData] = formatData();
     try {
       let provider = await SmartnosisApi.registerProvider(practiceData);
       userData.providerId = provider.id;
       await registerUser(userData);
-      localStorage.removeItem('session-initiated')
+      localStorage.removeItem("session-initiated");
       navigate("/");
     } catch (errors) {
       console.log(errors);
@@ -248,22 +256,29 @@ function Register({ registerUser }) {
           changeStep={changeStep}
           handleChange={handleChange}
           errors={errors}
+          setErrors={setErrors}
           confirmPasswords={confirmPasswords}
+          checkDupe={checkDupe}
         />
       );
       break;
     case 2:
-        currStep = (
-          <RegisterStripe
-            orgType="hcp" // or "league"
-            count={hcpsEmails.length + staffEmails.length} // or # of intakes expected
-            changeStep={changeStep}
-            step={step}
-            adminRole={formData.role}
-            setCheckoutId={(id)=>setFormData({...formData, billing: {stripeCheckoutSessionId: id}})}
-          />
-        );
-        break;
+      currStep = (
+        <RegisterStripe
+          orgType="hcp" // or "league"
+          count={hcpsEmails.length + staffEmails.length} // or # of intakes expected
+          changeStep={changeStep}
+          step={step}
+          adminRole={formData.role}
+          setCheckoutId={(id) =>
+            setFormData({
+              ...formData,
+              billing: { stripeCheckoutSessionId: id },
+            })
+          }
+        />
+      );
+      break;
     case 3:
       currStep = (
         <Invitations
@@ -308,7 +323,7 @@ function Register({ registerUser }) {
                   step === 1 ? "active" : ""
                 }`}
               ></span>
-                {/* <span
+              {/* <span
                 className={`step ${stepThreeComplete() ? "finish" : ""} ${
                   step === 1 ? "active" : ""
                 }`}
