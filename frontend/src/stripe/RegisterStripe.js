@@ -13,9 +13,9 @@ function RegisterStripe({
   orgType
 }) {
 
-    let [message, setMessage] = useState('');
+    // let [message, setMessage] = useState('');
     let [success, setSuccess] = useState(false);
-    let [sessionId, setSessionId] = useState('');
+    // let [sessionId, setSessionId] = useState('');
     let [intakeCheckoutId, setIntakeCheckoutId] = useState('');
 
     let params = useParams();
@@ -34,29 +34,29 @@ function RegisterStripe({
     // setEmails(emailArr);
   };
 
-  const generateEmailFields = () => {
-    let emailsCopy = [...emails];
-    if (step === 2 && adminRole === "hcp") emailsCopy.pop();
-    if (step === 3 && adminRole === "staff") emailsCopy.pop();
-    const emailFields = emailsCopy.map((value, i) => (
-      <div className="form-floating my-2" key={i}>
-        <input
-          className="form-control"
-          type="text"
-          id={`email-${i}`}
-          value={value}
-          placeholder="email"
-          required={step === 2 && i === 0}
-          onChange={(e) => handleChange(e, i)}
-        />
-        <label htmlFor={`email-${i}`}>
-          {step === 3 ? "Non-" : ""}HCP Email Address #{i + 1}:{" "}
-          <span className="text-danger">*</span>
-        </label>
-      </div>
-    ));
-    return emailFields;
-  };
+  // const generateEmailFields = () => {
+  //   let emailsCopy = [...emails];
+  //   if (step === 2 && adminRole === "hcp") emailsCopy.pop();
+  //   if (step === 3 && adminRole === "staff") emailsCopy.pop();
+  //   const emailFields = emailsCopy.map((value, i) => (
+  //     <div className="form-floating my-2" key={i}>
+  //       <input
+  //         className="form-control"
+  //         type="text"
+  //         id={`email-${i}`}
+  //         value={value}
+  //         placeholder="email"
+  //         required={step === 2 && i === 0}
+  //         onChange={(e) => handleChange(e, i)}
+  //       />
+  //       <label htmlFor={`email-${i}`}>
+  //         {step === 3 ? "Non-" : ""}HCP Email Address #{i + 1}:{" "}
+  //         <span className="text-danger">*</span>
+  //       </label>
+  //     </div>
+  //   ));
+  //   return emailFields;
+  // };
 
   const ProductDisplay = () => (
     <section>

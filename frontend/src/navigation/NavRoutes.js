@@ -11,7 +11,7 @@ import ProviderContext from "../common/ProviderContext";
 import RegisterUser from "../Practice/RegisterUser";
 import PbIntake from "../postBoutIntake/PbIntake";
 // import IntakeCheckout from "../stripe/IntakeCheckout";
-import RegisterStripe from "../stripe/RegisterStripe";
+// import RegisterStripe from "../stripe/RegisterStripe";
 
 function NavRoutes({ login, registerUser, currView, setCurrView }) {
   const { currUser } = useContext(ProviderContext);
