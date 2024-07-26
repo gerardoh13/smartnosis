@@ -7,7 +7,8 @@ function RegisterPractice({
   changeStep,
   data,
   handleChange,
-  errors
+  errors,
+  adminRole,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -135,11 +136,12 @@ function RegisterPractice({
         <div className="row mb-3">
           <div className="form-floating col">
             <input
-              type="tel"
+              type="number"
               className="form-control"
               id="hcpsCount"
               name="hcpsCount"
               placeholder="hcpsCount"
+              min={1}
               maxLength={3}
               value={data.hcpsCount}
               onChange={handleChange}
@@ -151,11 +153,12 @@ function RegisterPractice({
           </div>
           <div className="form-floating col">
             <input
-              type="tel"
+              type="number"
               className="form-control"
               id="staffCount"
               name="staffCount"
               maxLength={3}
+              min={adminRole === "staff" ? 1 : 0}
               placeholder="staffCount"
               value={data.staffCount}
               onChange={handleChange}
@@ -166,7 +169,20 @@ function RegisterPractice({
             </label>
           </div>
         </div>
-        <button className="btn btn-primary form-control">Next</button>
+        <div className="row mt-4">
+          <div className="col">
+            <button
+              type="button"
+              className="btn btn-primary form-control"
+              onClick={() => changeStep(-1)}
+            >
+              Previous
+            </button>
+          </div>
+          <div className="col">
+            <button className="btn btn-primary form-control">Next</button>
+          </div>
+        </div>
       </form>
     </>
   );

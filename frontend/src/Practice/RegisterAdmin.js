@@ -16,13 +16,11 @@ function RegisterAdmin({
     e.preventDefault();
     let validPassword = confirmPasswords();
     let validEmail = await checkDupe();
-    if (!validPassword.valid || !validEmail.valid) {
-      let errors = [];
-      if (validPassword.err) errors.push(validPassword.err);
-      if (validEmail.err) errors.push(validEmail.err);
-      setErrors(errors);
-      return;
-    }
+    let errors = [];
+    if (validPassword.err) errors.push(validPassword.err);
+    if (validEmail.err) errors.push(validEmail.err);
+    setErrors(errors);
+    if (!validPassword.valid || !validEmail.valid) return;
     changeStep(1);
   };
 
@@ -73,20 +71,7 @@ function RegisterAdmin({
       </div>
       <form onSubmit={handleSubmit}>
         {adminForm}
-        <div className="row mt-4">
-          <div className="col">
-            <button
-              type="button"
-              className="btn btn-primary form-control"
-              onClick={() => changeStep(-1)}
-            >
-              Previous
-            </button>
-          </div>
-          <div className="col">
-            <button className="btn btn-primary form-control">Next</button>
-          </div>
-        </div>
+        <button className="btn btn-primary form-control">Next</button>
       </form>
     </>
   );
