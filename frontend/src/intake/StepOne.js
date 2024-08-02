@@ -1,4 +1,5 @@
 import React from "react";
+import Dropdown from "react-bootstrap/Dropdown";
 
 function StepOne({
   data,
@@ -7,8 +8,10 @@ function StepOne({
   maxDate,
   handlePhones,
   handleKeydown,
+  handleSelect,
   complete,
   intakeQs,
+  intakeOptions,
   language,
 }) {
   const handleSubmit = (e) => {
@@ -19,8 +22,8 @@ function StepOne({
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
       <p className="text-center">
-        <span className="text-danger">*</span>{" "}
-        <span>Indicates required field</span>
+        <span className="text-danger">*</span>
+        <span>{intakeQs.required[language] + ":"}</span>
       </p>
       {/* firstName */}
       <div className="form-floating">
@@ -72,7 +75,7 @@ function StepOne({
         </label>
       </div>
       {/* Dob */}
-      <div className="row">
+      <div className="row mb-3">
         <div className="col-6">
           <p className="text-start ms-1 mt-1">
             {intakeQs.dob[language] + ":"}
@@ -93,55 +96,94 @@ function StepOne({
         </div>
       </div>
       {/* Sex */}
-      <div className="mt-3">
-        <span className="text-start ms-1 me-3">
-          {intakeQs.sex[language] + ":"}
-          <span className="text-danger">*</span>
-        </span>
-        <div className="text-center">
-          {/* Male */}
-          <input
-            type="radio"
-            className="btn-check ms-3"
-            name="sex"
-            id="male"
-            autoComplete="off"
-            onChange={handleChange}
-            checked={data.sex === "Male"}
-            value="Male"
-            required
-          />
-          <label className="btn btn-outline-secondary me-2" htmlFor="male">
-            Male
-          </label>
-          {/* Female */}
-          <input
-            type="radio"
-            className="btn-check"
-            name="sex"
-            id="female"
-            autoComplete="off"
-            onChange={handleChange}
-            checked={data.sex === "Female"}
-            value="Female"
-          />
-          <label className="btn btn-outline-secondary me-2" htmlFor="female">
-            Female
-          </label>
-          {/* Other */}
-          <input
-            type="radio"
-            className="btn-check"
-            name="sex"
-            id="other"
-            autoComplete="off"
-            onChange={handleChange}
-            checked={data.sex === "Other"}
-            value="Other"
-          />
-          <label className="btn btn-outline-secondary me-2" htmlFor="other">
-            Other
-          </label>
+      <div className="row mb-3">
+        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+          <span className="text-start ms-1 mt-1">
+            {intakeQs.sex[language] + ":"}
+            <span className="text-danger">*</span>
+          </span>
+        </div>
+        <div className="col text-center">
+          <Dropdown onSelect={(val) => handleSelect("sex", val, "formData")}>
+            <Dropdown.Toggle
+              className="form-control"
+              variant="secondary"
+              id="sex-dropdown"
+            >
+              {intakeOptions.sex.find(
+                (option) => option.english === data.sex
+              )?.[language] || intakeQs.select[language]}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {intakeOptions.sex.map((option) => (
+                <Dropdown.Item key={option.english} eventKey={option.english}>
+                  {option[language]}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </div>
+      {/* Sexual Orientation */}
+      <div className="row mb-3">
+        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+          <span className="text-start ms-1 mt-1">
+            {intakeQs.sexOrientation[language] + ":"}
+            <span className="text-danger">*</span>
+          </span>
+        </div>
+        <div className="col text-center">
+          <Dropdown
+            onSelect={(val) => handleSelect("sexOrientation", val, "formData")}
+          >
+            <Dropdown.Toggle
+              className="form-control"
+              variant="secondary"
+              id="sexOrientation-dropdown"
+            >
+              {intakeOptions.sexOrientation.find(
+                (option) => option.english === data.sexOrientation
+              )?.[language] || intakeQs.select[language]}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {intakeOptions.sexOrientation.map((option) => (
+                <Dropdown.Item key={option.english} eventKey={option.english}>
+                  {option[language]}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </div>
+      {/* Ethnicity */}
+      <div className="row mb-3">
+        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+          <span className="text-start ms-1 mt-1">
+            {intakeQs.ethnicity[language] + ":"}
+            <span className="text-danger">*</span>
+          </span>
+        </div>
+        <div className="col text-center">
+          <Dropdown
+            onSelect={(val) => handleSelect("ethnicity", val, "formData")}
+          >
+            <Dropdown.Toggle
+              className="form-control"
+              variant="secondary"
+              id="ethnicity-dropdown"
+            >
+              {intakeOptions.ethnicity.find(
+                (option) => option.english === data.ethnicity
+              )?.[language] || intakeQs.select[language]}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {intakeOptions.ethnicity.map((option) => (
+                <Dropdown.Item key={option.english} eventKey={option.english}>
+                  {option[language]}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </div>
       {/* Email */}
@@ -210,7 +252,7 @@ function StepOne({
           required
         />
         <label htmlFor="address1">
-        {intakeQs.address1[language] + ":"}
+          {intakeQs.address1[language] + ":"}
           <span className="text-danger">*</span>
         </label>
       </div>
@@ -225,9 +267,7 @@ function StepOne({
           value={data.address2}
           onChange={handleChange}
         />
-        <label htmlFor="address2">
-        {intakeQs.address2[language] + ":"}
-        </label>
+        <label htmlFor="address2">{intakeQs.address2[language] + ":"}</label>
       </div>
       {/* City */}
       <div className="form-floating mt-3">
@@ -242,7 +282,7 @@ function StepOne({
           required
         />
         <label htmlFor="city">
-        {intakeQs.city[language] + ":"}
+          {intakeQs.city[language] + ":"}
           <span className="text-danger">*</span>
         </label>
       </div>
@@ -261,7 +301,7 @@ function StepOne({
             required
           />
           <label className="ms-2" htmlFor="state">
-          {intakeQs.state[language] + ":"}
+            {intakeQs.state[language] + ":"}
             <span className="text-danger">*</span>
           </label>
         </div>
@@ -280,7 +320,7 @@ function StepOne({
             required
           />
           <label className="ms-2" htmlFor="zip">
-          {intakeQs.zip[language] + ":"}
+            {intakeQs.zip[language] + ":"}
             <span className="text-danger">*</span>
           </label>
         </div>
@@ -289,8 +329,8 @@ function StepOne({
       <div className="row mb-2">
         <div className="col-6">
           <p className="text-start ms-1">
-          {intakeQs.insurance[language] + ":"}
-           <span className="text-danger">*</span>
+            {intakeQs.insurance[language] + ":"}
+            <span className="text-danger">*</span>
           </p>
         </div>
         <div className="col-6 text-center">

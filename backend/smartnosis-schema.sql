@@ -12,22 +12,19 @@ CREATE TABLE providers (
   staff_count INTEGER NOT NULL,
   PRIMARY KEY (id)
 );
-
 CREATE TABLE hcp_invitations (
-    provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
-    sent VARCHAR[],
-    active VARCHAR[],
-    PRIMARY KEY (provider_id)
+  provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
+  sent VARCHAR [],
+  active VARCHAR [],
+  PRIMARY KEY (provider_id)
 );
-
 CREATE TABLE staff_invitations (
-    provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
-    sent VARCHAR[],
-    -- delete active?
-    active VARCHAR[],
-    PRIMARY KEY (provider_id)
+  provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
+  sent VARCHAR [],
+  -- delete active?
+  active VARCHAR [],
+  PRIMARY KEY (provider_id)
 );
-
 CREATE TABLE hcps (
   id SERIAL PRIMARY KEY,
   is_admin BOOLEAN NOT NULL DEFAULT FALSE,
@@ -39,7 +36,6 @@ CREATE TABLE hcps (
   npi VARCHAR(10) NOT NULL,
   password TEXT NOT NULL
 );
-
 CREATE TABLE staff (
   id SERIAL PRIMARY KEY,
   is_admin BOOLEAN NOT NULL DEFAULT FALSE,
@@ -51,7 +47,6 @@ CREATE TABLE staff (
   title TEXT NOT NULL,
   password TEXT NOT NULL
 );
-
 CREATE TABLE intakes (
   id SERIAL PRIMARY KEY,
   provider_id TEXT NOT NULL REFERENCES providers ON DELETE CASCADE,
@@ -81,9 +76,21 @@ CREATE TABLE intakes (
   ins_group_name TEXT,
   ins_group_number TEXT,
   ins_front_pid TEXT,
-  ins_back_pid TEXT
+  ins_back_pid TEXT,
+  -- new fields
+  sex_orientation VARCHAR(15) NOT NULL,
+  ethnicity VARCHAR(30) NOT NULL,
+  tobacco_use VARCHAR(15) NOT NULL,
+  cigs_per_day VARCHAR(20),
+  alcohol_use VARCHAR(15) NOT NULL,
+  drug_use VARCHAR(3) NOT NULL,
+  other_drug_use VARCHAR(100),
+  mother_history VARCHAR [],
+  father_history VARCHAR [],
+  grandparents_history VARCHAR [],
+  sibling_history VARCHAR [],
+  comments VARCHAR(500)
 );
-
 CREATE TABLE appointments (
   id VARCHAR(20) NOT NULL,
   provider_id TEXT REFERENCES providers ON DELETE CASCADE,

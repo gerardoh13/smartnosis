@@ -37,11 +37,25 @@ class Intake {
                             ins_group_name,
                             ins_group_number,
                             ins_front_pid,
-                            ins_back_pid
+                            ins_back_pid,
+
+                            sex_orientation,
+                            ethnicity,
+                            tobacco_use,
+                            cigs_per_day,
+                            alcohol_use,
+                            drug_use,
+                            other_drug_use,
+                            mother_history,
+                            father_history,
+                            grandparents_history,
+                            sibling_history,
+                            comments
                             )
               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 
               $11, $12, $13, $14, $15, $16, $17, $18, $19, $20,
-              $21, $22, $23, $24, $25, $26, $27)
+              $21, $22, $23, $24, $25, $26, $27, $28, $29, $30,
+              $31, $32, $33, $34, $35, $36, $37, $38, $39)
               RETURNING id`,
       [
         data.providerId,
@@ -61,7 +75,6 @@ class Intake {
         data.symptoms,
         data.conditions,
         data.submittedAt,
-
         data.insRelationship,
         data.insFirstName,
         data.insLastName,
@@ -72,10 +85,22 @@ class Intake {
         data.insGroupNumber,
         data.insFrontPId,
         data.insBackPId,
+
+        data.sexOrientation,
+        data.ethnicity,
+        data.tobaccoUse,
+        data.cigsPerDay,
+        data.alcoholUse,
+        data.drugUse,
+        data.otherDrugUse,
+        data.motherHistory,
+        data.fatherHistory,
+        data.grandparentsHistory,
+        data.siblingHistory,
+        data.comments,
       ]
     );
     let intake = result.rows[0];
-
     return intake;
   }
 
@@ -126,7 +151,20 @@ class Intake {
               ins_group_name AS "insGroupName",
               ins_group_number AS "insGroupNumber",
               ins_front_pid AS "insFrontPId",
-              ins_back_pid AS "insBackPId"
+              ins_back_pid AS "insBackPId",
+
+              sex_orientation AS "sexOrientation",
+              ethnicity,
+              tobacco_use AS "tobaccoUse",
+              cigs_per_day AS "cigsPerDay",
+              alcohol_use AS "alcoholUse",
+              drug_use AS "drugUse",
+              other_drug_use AS "otherDrugUse",
+              mother_history AS "motherHistory",
+              father_history AS "fatherHistory",
+              grandparents_history AS "grandparentsHistory",
+              sibling_history AS "siblingHistory",
+              comments
       FROM intakes 
       WHERE id = $1`,
       [id]
@@ -137,7 +175,7 @@ class Intake {
 
   static async search(query, providerId) {
     const result = await db.query(
-    `SELECT id,
+      `SELECT id,
               first_name AS "firstName",
               middle_name AS "middleName",
               last_name AS "lastName",
@@ -152,35 +190,46 @@ class Intake {
     return intakes;
   }
 
-  // static async update(id, data) {
-  //   const { setCols, values } = sqlForPartialUpdate(data, {
-  //     firstName: "first_name",
-  //     middleName: "middle_name",
-  //     lastName: "last_name",
-  //     insRelationship: "ins_relationship",
-  //     insFirstName: "ins_firstName",
-  //     insLastName: "ins_lastName",
-  //     insDob: "ins_dob",
-  //     insProvider: "ins_provider",
-  //     insuranceId: "insurance_id",
-  //     insGroupName: "ins_group_name",
-  //     insGroupNumber: "ins_group_number",
-  //     insFrontPId: "ins_front_pid",
-  //     insBackPId: "ins_back_pid",
-  //   });
-  //   const idVarIdx = "$" + (values.length + 1);
+  static async update(id, data) {
+    const { setCols, values } = sqlForPartialUpdate(data, {
+      firstName: "first_name",
+      middleName: "middle_name",
+      lastName: "last_name",
+      insRelationship: "ins_relationship",
+      insFirstName: "ins_firstName",
+      insLastName: "ins_lastName",
+      insDob: "ins_dob",
+      insProvider: "ins_provider",
+      insuranceId: "insurance_id",
+      insGroupName: "ins_group_name",
+      insGroupNumber: "ins_group_number",
+      insFrontPId: "ins_front_pid",
+      insBackPId: "ins_back_pid",
 
-  //   const querySql = `UPDATE intakes
-  //                     SET ${setCols}
-  //                     WHERE id = ${idVarIdx}
-  //                     RETURNING id`;
-  //   const result = await db.query(querySql, [...values, id]);
-  //   const intake = result.rows[0];
+      sexOrientation: "sex_orientation",
+      tobaccoUse: "tobacco_use",
+      cigsPerDay: "cigs_per_day",
+      alcoholUse: "alcohol_use",
+      drugUse: "drug_use",
+      otherDrugUse: "other_drug_use",
+      motherHistory: "mother_history",
+      fatherHistory: "father_history",
+      grandparentsHistory: "grandparents_history",
+      siblingHistory: "sibling_history",
+    });
+    const idVarIdx = "$" + (values.length + 1);
 
-  //   if (!intake) throw new NotFoundError(`No intake: ${id}`);
+    const querySql = `UPDATE intakes
+                      SET ${setCols}
+                      WHERE id = ${idVarIdx}
+                      RETURNING id`;
+    const result = await db.query(querySql, [...values, id]);
+    const intake = result.rows[0];
 
-  //   return intake;
-  // }
+    if (!intake) throw new NotFoundError(`No intake: ${id}`);
+
+    return intake;
+  }
 }
 
 module.exports = Intake;

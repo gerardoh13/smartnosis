@@ -59,7 +59,7 @@
     "email": {
       "type": "string",
       "minLength": 6,
-      "maxLength": 20,
+      "maxLength": 50,
       "format": "email"
     },
     "symptoms": {
@@ -103,6 +103,43 @@
     },
     "insBackPId": {
       "type": "string"
+    },
+
+    "sexOrientation": {
+      "type": "string"
+    },
+    "ethnicity": {
+      "type": "string"
+    },
+    "tobaccoUse": {
+      "type": "string"
+    },
+    "cigsPerDay": {
+      "type": "string"
+    },
+    "alcoholUse": {
+      "type": "string"
+    },
+    "drugUse": {
+      "type": "string"
+    },
+    "otherDrugUse": {
+      "type": "string"
+    },
+    "motherHistory": {
+      "type": "array"
+    },
+    "fatherHistory": {
+      "type": "array"
+    },
+    "grandparentsHistory": {
+      "type": "array"
+    },
+    "siblingHistory": {
+      "type": "array"
+    },
+    "comments": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
@@ -118,6 +155,11 @@
     "insurance",
     "phone",
     "email",
-    "submittedAt"
+    "submittedAt",
+    "sexOrientation",
+    "ethnicity",
+    "tobaccoUse",
+    "alcoholUse",
+    "drugUse"
   ]
 }

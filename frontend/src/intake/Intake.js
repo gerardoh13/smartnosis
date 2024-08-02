@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import { deleteNulls } from "../common/commonFuncs";
 import DisclaimerModal from "../components/DisclaimerModal";
 import LangToggle from "../common/LangToggle";
-import { intakeQs } from "../common/translations";
+import { intakeOptions, intakeQs } from "../common/translations";
 
 function Intake({ setCurrView }) {
   const INITIAL_STATE = {
@@ -24,6 +24,8 @@ function Intake({ setCurrView }) {
     middleName: "",
     dob: "",
     sex: "",
+    sexOrientation: "",
+    ethnicity: "",
     address1: "",
     address2: "",
     city: "",
@@ -51,6 +53,7 @@ function Intake({ setCurrView }) {
 
   const INITIAL_MED_HISTORY = {
     tobaccoUse: "",
+    cigsPerDay: "",
     alcoholUse: "",
     drugUse: "",
     otherDrugUse: "",
@@ -58,9 +61,8 @@ function Intake({ setCurrView }) {
     conditions: new Set(),
     motherHistory: new Set(),
     fatherHistory: new Set(),
-    grandParentsHistory: new Set(),
-    auntsHistory: new Set(),
-    unclesHistory: new Set(),
+    grandparentsHistory: new Set(),
+    siblingHistory: new Set(),
     comments: "",
   };
 
@@ -172,11 +174,10 @@ function Intake({ setCurrView }) {
     //
     medHistoryCopy.motherHistory = Array.from(medHistoryCopy.motherHistory);
     medHistoryCopy.fatherHistory = Array.from(medHistoryCopy.fatherHistory);
-    medHistoryCopy.grandParentsHistory = Array.from(
-      medHistoryCopy.grandParentsHistory
+    medHistoryCopy.grandparentsHistory = Array.from(
+      medHistoryCopy.grandparentsHistory
     );
-    medHistoryCopy.auntsHistory = Array.from(medHistoryCopy.auntsHistory);
-    medHistoryCopy.unclesHistory = Array.from(medHistoryCopy.unclesHistory);
+    medHistoryCopy.siblingHistory = Array.from(medHistoryCopy.siblingHistory);
 
     if (medHistoryCopy.drugUse === "Other")
       medHistoryCopy.drugUse = medHistoryCopy.otherDrugUse;
@@ -207,7 +208,7 @@ function Intake({ setCurrView }) {
 
   const submit = async () => {
     let formattedData = formatData();
-    // await SmartnosisApi.addIntake(formattedData);
+    await SmartnosisApi.addIntake(formattedData);
     console.log(formattedData);
     setFormData(INITIAL_STATE);
     setMedHistory(INITIAL_MED_HISTORY);
@@ -234,7 +235,12 @@ function Intake({ setCurrView }) {
   };
 
   const handleSelect = (name, value, type) => {
-    const func = type === "medHistory" ? setMedHistory : setInsuranceData;
+    const func =
+      type === "medHistory"
+        ? setMedHistory
+        : type === "formData"
+        ? setFormData
+        : setInsuranceData;
     func((data) => ({
       ...data,
       [name]: value,
@@ -319,6 +325,8 @@ function Intake({ setCurrView }) {
       medHistory.tobaccoUse,
     ];
     if (medHistory.drugUse === "Yes") fields.push(medHistory.otherDrugUse);
+    if (medHistory.tobaccoUse === "Cigarettes")
+      fields.push(medHistory.cigsPerDay);
     return fields.every(Boolean);
   };
 
@@ -333,8 +341,10 @@ function Intake({ setCurrView }) {
           maxDate={maxDate}
           handlePhones={handlePhones}
           handleKeydown={handleKeydown}
+          handleSelect={handleSelect}
           complete={stepOneComplete}
           intakeQs={intakeQs}
+          intakeOptions={intakeOptions}
           language={language}
         />
       );
@@ -391,6 +401,7 @@ function Intake({ setCurrView }) {
           handleCheckbox={handleCheckbox}
           submit={submit}
           intakeQs={intakeQs}
+          intakeOptions={intakeOptions}
           language={language}
         />
       );
@@ -437,7 +448,11 @@ function Intake({ setCurrView }) {
           ) : null}
           <div className="float-end">
             <div className="col-12 col-lg-4">
-              <LangToggle language={language} setLanguage={setLanguage} />
+              <LangToggle
+                language={language}
+                setLanguage={setLanguage}
+                langOptions={["spanish"]}
+              />
             </div>
           </div>
         </div>

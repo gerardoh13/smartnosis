@@ -11,36 +11,34 @@ function StepFour({
   handleSelect,
   handleCheckbox,
   intakeQs,
+  intakeOptions,
   language,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (complete()) submit();
   };
-  const familyHistory = [
-    "Cancer",
-    "Diabetes",
-    "High Cholesterol",
-    "Heart Attack",
-    "High Blood Pressure",
-    "Mental Illness",
-  ];
 
   const createCheckbox = (condition, type) => {
     return (
-      <div className="form-check col-6 col-sm-4 mb-4 mb-sm-0" key={condition}>
+      <div
+        className="form-check col-6 col-sm-4 mb-4 mb-sm-0"
+        key={condition.english}
+      >
         <input
           className="form-check-input"
           type="checkbox"
-          value={condition}
-          id={`${type}-${condition}`}
+          value={condition.english}
+          id={`${type}-${condition.english}`}
           onChange={handleCheckbox}
-          checked={data[type].has(condition)
-          }
+          checked={data[type].has(condition.english)}
           name={type}
         />
-        <label className="form-check-label" htmlFor={`${type}-${condition}`}>
-          <strong>{condition}</strong>
+        <label
+          className="form-check-label"
+          htmlFor={`${type}-${condition.english}`}
+        >
+          <strong>{condition[language]}</strong>
         </label>
       </div>
     );
@@ -49,15 +47,16 @@ function StepFour({
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
       <p className="text-center">
-        <span className="text-danger">*</span>{" "}
-        <span>Indicates required field</span>
+        <span className="text-danger">*</span>
+        <span>{intakeQs.required[language] + ":"}</span>
       </p>
       {/* tobaccoUse */}
       <div className="row mb-3">
-        <div className="col">
-          <p className="text-start ms-1 mt-1">
-            Tobacco Use: <span className="text-danger">*</span>
-          </p>
+        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+          <span className="text-start ms-1 mt-1">
+            {intakeQs.tobaccoUse[language] + ":"}
+            <span className="text-danger">*</span>
+          </span>
         </div>
         <div className="col text-center">
           <Dropdown
@@ -68,30 +67,60 @@ function StepFour({
               variant="secondary"
               id="tobacco-dropdown"
             >
-              {data.tobaccoUse ? data.tobaccoUse : "Select"}
+              {intakeOptions.tobaccoUse.find(
+                (option) => option.english === data.tobaccoUse
+              )?.[language] || intakeQs.select[language]}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item eventKey={"Never smoked"}>
-                Never smoked
-              </Dropdown.Item>
-              <Dropdown.Item eventKey={"Former smoker"}>
-                Former smoker
-              </Dropdown.Item>
-              <Dropdown.Item eventKey={"Cigars"}>Cigars</Dropdown.Item>
-              <Dropdown.Item eventKey={"Vapes"}>Vapes</Dropdown.Item>
-              <Dropdown.Item eventKey={"Chewing tobacco"}>
-                Chewing tobacco
-              </Dropdown.Item>
+              {intakeOptions.tobaccoUse.map((option) => (
+                <Dropdown.Item key={option.english} eventKey={option.english}>
+                  {option[language]}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
         </div>
       </div>
+      {/* cigsPerDay */}
+      {data.tobaccoUse === "Cigarettes" ? (
+        <div className="row mb-3">
+          <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+            <span className="text-start ms-1 mt-1">
+              {intakeQs.cigsPerDay[language] + ":"}
+              <span className="text-danger">*</span>
+            </span>
+          </div>
+          <div className="col text-center">
+            <Dropdown
+              onSelect={(val) => handleSelect("cigsPerDay", val, "medHistory")}
+            >
+              <Dropdown.Toggle
+                className="form-control text-wrap"
+                variant="secondary"
+                id="cigsPerDay-dropdown"
+              >
+                {intakeOptions.cigsPerDay.find(
+                  (option) => option.english === data.cigsPerDay
+                )?.[language] || intakeQs.select[language]}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {intakeOptions.cigsPerDay.map((option) => (
+                  <Dropdown.Item key={option.english} eventKey={option.english}>
+                    {option[language]}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </div>
+      ) : null}
       {/* alcoholUse */}
       <div className="row mb-3">
-        <div className="col">
-          <p className="text-start ms-1 mt-1">
-            Alcohol Use: <span className="text-danger">*</span>
-          </p>
+        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+          <span className="text-start ms-1 mt-1">
+            {intakeQs.alcoholUse[language] + ":"}
+            <span className="text-danger">*</span>
+          </span>
         </div>
         <div className="col text-center">
           <Dropdown
@@ -102,29 +131,27 @@ function StepFour({
               variant="secondary"
               id="alcohol-dropdown"
             >
-              {data.alcoholUse ? data.alcoholUse : "Select"}
+              {intakeOptions.alcoholUse.find(
+                (option) => option.english === data.alcoholUse
+              )?.[language] || intakeQs.select[language]}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item eventKey={"None"}>None</Dropdown.Item>
-              <Dropdown.Item eventKey={"Less than one drink per day"}>
-                Less than one drink per day
-              </Dropdown.Item>
-              <Dropdown.Item eventKey={"1-2 drinks per day"}>
-                1-2 drinks per day
-              </Dropdown.Item>
-              <Dropdown.Item eventKey={"3 or more drinks per day"}>
-                3 or more drinks per day
-              </Dropdown.Item>
+              {intakeOptions.alcoholUse.map((option) => (
+                <Dropdown.Item key={option.english} eventKey={option.english}>
+                  {option[language]}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
         </div>
       </div>
       {/* drugUse */}
       <div className="row mb-3">
-        <div className="col">
-          <p className="text-start ms-1 mt-1">
-            Drug Use: <span className="text-danger">*</span>
-          </p>
+        <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+          <span className="text-start ms-1 mt-1">
+            {intakeQs.drugUse[language] + ":"}
+            <span className="text-danger">*</span>
+          </span>
         </div>
         <div className="col text-center">
           <Dropdown
@@ -135,12 +162,16 @@ function StepFour({
               variant="secondary"
               id="druguse-dropdown"
             >
-              {data.drugUse ? data.drugUse : "Select"}
+              {intakeOptions.yesNo.find(
+                (option) => option.english === data.drugUse
+              )?.[language] || intakeQs.select[language]}
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
-              <Dropdown.Item eventKey={"Yes"}>Yes</Dropdown.Item>
-              <Dropdown.Item eventKey={"No"}>No</Dropdown.Item>
+              {intakeOptions.yesNo.map((option) => (
+                <Dropdown.Item key={option.english} eventKey={option.english}>
+                  {option[language]}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -159,47 +190,51 @@ function StepFour({
             required
           />
           <label htmlFor="otherDrugUse">
-            (Drug Use) If so, Explain: <span className="text-danger">*</span>
+            {intakeQs.otherDrugUse[language] + ":"}
           </label>
         </div>
       ) : null}
       {/* Family History */}
-      <b>Family History</b>
+      <b>{intakeQs.familyHistory[language] + ":"}</b>
       <hr />
       <div className="row ms-2">
-        <b>Mother:</b>
-        {familyHistory.map(condition => createCheckbox(condition, "motherHistory"))}
+        <b>{intakeQs.mother[language] + ":"}</b>
+        {intakeOptions.familyHistory.map((condition) =>
+          createCheckbox(condition, "motherHistory")
+        )}
       </div>
       <hr />
       <div className="row ms-2">
-        <b>Father:</b>
-        {familyHistory.map(condition => createCheckbox(condition, "fatherHistory"))}
+        <b>{intakeQs.father[language] + ":"}</b>
+        {intakeOptions.familyHistory.map((condition) =>
+          createCheckbox(condition, "fatherHistory")
+        )}
       </div>
       <hr />
       <div className="row ms-2">
-        <b>Grand Parents:</b>
-        {familyHistory.map(condition => createCheckbox(condition, "grandParentsHistory"))}
+        <b>{intakeQs.grandparents[language] + ":"}</b>
+        {intakeOptions.familyHistory.map((condition) =>
+          createCheckbox(condition, "grandparentsHistory")
+        )}
       </div>
       <hr />
       <div className="row ms-2">
-        <b>Aunts:</b>
-        {familyHistory.map(condition => createCheckbox(condition, "auntsHistory"))}
-      </div>
-      <hr />
-      <div className="row ms-2">
-        <b>Uncles:</b>
-        {familyHistory.map(condition => createCheckbox(condition, "unclesHistory"))}
+        <b>{intakeQs.siblings[language] + ":"}</b>
+        {intakeOptions.familyHistory.map((condition) =>
+          createCheckbox(condition, "siblingHistory")
+        )}
       </div>
       <hr />
       {/* Comments */}
       <div className="mt-3">
         <label htmlFor="comments" className="fw-bold ms-1">
-          Comments:
+          {intakeQs.comments[language] + ":"}
         </label>
         <textarea
           className="form-control"
-          placeholder="Additional Comments (Optional)"
+          placeholder={intakeQs.commentsLabel[language]}
           rows={3}
+          maxLength={500}
           onChange={(e) => handleChange(e, "medHistory")}
           value={data.comments}
           name="comments"
