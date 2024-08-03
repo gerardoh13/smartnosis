@@ -171,7 +171,6 @@ function Intake({ setCurrView }) {
     let medHistoryCopy = { ...medHistory };
     medHistoryCopy.symptoms = Array.from(medHistoryCopy.symptoms);
     medHistoryCopy.conditions = Array.from(medHistoryCopy.conditions);
-    //
     medHistoryCopy.motherHistory = Array.from(medHistoryCopy.motherHistory);
     medHistoryCopy.fatherHistory = Array.from(medHistoryCopy.fatherHistory);
     medHistoryCopy.grandparentsHistory = Array.from(
@@ -191,11 +190,6 @@ function Intake({ setCurrView }) {
     if (dataCopy.insurance === "Yes")
       dataCopy = { ...dataCopy, ...formatInsData(dataCopy) };
     deleteNulls(dataCopy);
-    //
-    // delete dataCopy.tobaccoUse;
-    // delete dataCopy.alcoholUse;
-    // delete dataCopy.drugUse;
-    //
     if (query.get("appointment")) dataCopy.apptId = query.get("appointment");
     return dataCopy;
   };
@@ -213,8 +207,8 @@ function Intake({ setCurrView }) {
     setFormData(INITIAL_STATE);
     setMedHistory(INITIAL_MED_HISTORY);
     setInsuranceData(INITIAL_INSURANCE_STATE);
-    // if (currUser) setCurrView("Intakes");
-    // else changeStep(1);
+    if (currUser) setCurrView("Intakes");
+    else changeStep(1);
   };
 
   const handleChange = (e, type) => {
