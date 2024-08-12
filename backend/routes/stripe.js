@@ -11,11 +11,16 @@ router.use(express.static('public'));
 
 
 router.post('/create-checkout-session', async (req, res) => {
+
+
+  let productID = process.env.NODE_ENV === "test" ? process.env.STRIPE_HCP_DEV_PRICE_ID : process.env.STRIPE_HCP_PROD_PRICE_ID
+
+
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-          price: process.env.STRIPE_PRICE_ID,
+          price: productID,
         },
       ],
       mode: 'subscription',
