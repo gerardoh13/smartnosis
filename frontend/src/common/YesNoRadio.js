@@ -11,6 +11,7 @@ function YesNoRadio({
 }) {
   const negativeLabel = negative[language] || negative.english; // Get the translation for the negative option
   const positiveLabel = positive[language] || positive.english;
+
   return (
     <div className="row mb-3">
       <div className="col-12 col-lg-6 mb-lg-0 mb-2 d-flex align-items-center">
@@ -32,7 +33,7 @@ function YesNoRadio({
           required
         />
         <label
-          className="btn btn-outline-secondary btn-sm me-2 text-wrap h-100 w-50 d-flex align-items-center justify-content-center"
+          className={`btn ${status === positive.english ? "btn-dark" : "btn-light"} btn-sm me-2 text-wrap h-100 w-50 d-flex align-items-center justify-content-center`}
           htmlFor={"yes-" + name}
         >
           {positiveLabel}
@@ -48,7 +49,7 @@ function YesNoRadio({
           value={negative.english}
         />
         <label
-          className="btn btn-outline-secondary btn-sm text-wrap h-100 w-50 d-flex align-items-center justify-content-center"
+          className={`btn ${status === negative.english ? "btn-dark" : "btn-light"} btn-sm text-wrap h-100 w-50 d-flex align-items-center justify-content-center`}
           htmlFor={"no-" + name}
         >
           {negativeLabel}

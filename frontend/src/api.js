@@ -34,6 +34,12 @@ class SmartnosisApi {
     return res.token;
   }
 
+  static async checkDupe(type, email) {
+    if (type === "hcp") type += "s"
+    let res = await this.request(`${type}/checkduplicate/${email}`);
+    return res.validEmail;
+  }
+
   static async login(data) {
     let res = await this.request("providers/token", data, "post");
     return res.token;

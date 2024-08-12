@@ -5,43 +5,14 @@
 const jsonschema = require("jsonschema");
 
 const Hcp = require("../models/hcp");
-const Email = require("../models/email");
 const express = require("express");
 const { ensureCorrectProvider } = require("../middleware/auth");
 const { createToken, createPwdResetToken } = require("../helpers/tokens");
 // const providerAuthSchema = require("../schemas/providerAuth.json");
 // const providerNewSchema = require("../schemas/providerNew.json");
 // const { BadRequestError } = require("../expressError");
-const jwt = require("jsonwebtoken");
 
 const router = new express.Router();
-
-router.post("/reset", async function (req, res, next) {
-  try {
-    const { email } = req.body;
-    const hcp = await Hcp.getWithPassword(email);
-    const token = createPwdResetToken(hcp);
-    await Email.sendPwdReset(email, token);
-    return res.json({ emailSent: true });
-  } catch (err) {
-    return next(err);
-  }
-});
-
-router.post("/new-password", async function (req, res, next) {
-  try {
-    const { token } = req.query;
-    const { email, password } = req.body;
-    const hcp = await Hcp.getWithPassword(email);
-    const tokenUser = jwt.verify(token, hcp.password);
-    if (hcp.email === tokenUser.email) {
-      await Hcp.update(email, { password: password });
-      return res.json({ passwordUpdated: true });
-    }
-  } catch (err) {
-    return next(err);
-  }
-});
 
 /** POST /auth/register:   { hcp } => { token }
  *
@@ -59,11 +30,20 @@ router.post("/register", async function (req, res, next) {
     //   const errs = validator.errors.map((e) => e.stack);
     //   throw new BadRequestError(errs);
     // }
-
     const newHcp = await Hcp.register({ ...req.body });
     await Hcp.markActive(newHcp.providerId, newHcp.email);
     const token = createToken(newHcp);
     return res.status(201).json({ token });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get("/checkduplicate/:email", async function (req, res, next) {
+  const { email } = req.params;
+  try {
+    await Hcp.checkDupe(email);
+    return res.json({ validEmail: true });
   } catch (err) {
     return next(err);
   }

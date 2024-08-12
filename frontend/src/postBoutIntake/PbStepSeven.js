@@ -1,8 +1,11 @@
 import React from "react";
-import YesNoRadio from "../common/YesNoRadio";
 import Dropdown from "react-bootstrap/Dropdown";
+import YesNoRadio from "../common/YesNoRadio";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
+import { getEmojiMarks } from "../common/commonFuncs";
 
-function PbStepFive({
+function PbStepSeven({
   data,
   handleChange,
   handleSelect,
@@ -17,16 +20,17 @@ function PbStepFive({
     e.preventDefault();
     if (complete()) changeStep(1);
   };
+
   return (
     <>
       <div>
         <img
-          src="Hearing.png"
+          src="Noise.png"
           className="rounded mx-auto d-block w-25 my-2"
-          alt="Hearing"
+          alt="Noise"
         />
         <p className="text-center">
-          <b>{headers.pgFive[language]}</b>
+          <b>{headers.pgSeven[language]}</b>
         </p>
       </div>
       <hr />
@@ -35,37 +39,39 @@ function PbStepFive({
           <span className="text-danger">*</span>
           <span>Indicates required field</span>
         </p>
-        {/* Ringing Ears */}
+        {/* Noise Sensitivity */}
         <YesNoRadio
-          title={intakeQs.ringingEars[language]}
+          title={intakeQs.noiseSensitivity[language]}
           handleChange={handleChange}
-          name="ringingEars"
-          status={data.ringingEars}
+          name="noiseSensitivity"
+          status={data.noiseSensitivity}
           language={language}
           negative={{
             english: "Not at all",
-            spanish: "Para nada",
+            spanish: "Para nada.",
           }}
         />
-        {data.ringingEars === "Yes" ? (
+        {data.noiseSensitivity === "Yes" ? (
           <>
-            {/* Ringing Start */}
+            {/* Noise Sensitivity Start */}
             <div className="row mb-3">
-              <div className="col d-flex align-items-center">
+              <div className="col-6">
                 <span className="text-start ms-1 mt-1">
-                  {intakeQs.ringingStart[language] + ":"}
+                  {intakeQs.noiseSensitivityStart[language] + ":"}
                   <span className="text-danger">*</span>
                 </span>
               </div>
-              <div className="col">
-                <Dropdown onSelect={(val) => handleSelect("ringingStart", val)}>
+              <div className="col text-center">
+                <Dropdown
+                  onSelect={(val) => handleSelect("noiseSensitivityStart", val)}
+                >
                   <Dropdown.Toggle
-                    className="form-control"
+                    className="form-control text-wrap"
                     variant="secondary"
-                    id="ringingStart-dropdown"
+                    id="noiseSensitivityStart-dropdown"
                   >
                     {intakeOptions.daysOneToThree.find(
-                      (option) => option.english === data.ringingStart
+                      (option) => option.english === data.noiseSensitivityStart
                     )?.[language] || "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -73,6 +79,7 @@ function PbStepFive({
                       <Dropdown.Item
                         key={option.english}
                         eventKey={option.english}
+                        className="text-wrap"
                       >
                         {option[language]}
                       </Dropdown.Item>
@@ -81,31 +88,30 @@ function PbStepFive({
                 </Dropdown>
               </div>
             </div>
-            {/* Ringing Both Ears */}
-            <YesNoRadio
-              title={intakeQs.hearingBothEars[language]}
-              handleChange={handleChange}
-              name="hearingBothEars"
-              status={data.hearingBothEars}
-              language={language}
-            />
-            {data.hearingBothEars === "No" ? (
-              <YesNoRadio
-                title={intakeQs.leftRightEar[language]}
-                handleChange={handleChange}
-                name="leftRightEar"
-                status={data.leftRightEar}
-                language={language}
-                negative={{
-                  english: "Right only",
-                  spanish: "Solo derecho",
-                }}
-                positive={{
-                  english: "Left only",
-                  spanish: "Solo izquierdo",
-                }}
-              />
-            ) : null}
+            {/* Noise Sensitivity Scale */}
+            <div className="row mb-3">
+              <div className="col-12 col-lg-6 mb-lg-0 mb-2">
+                <span className="text-start ms-1 mt-1">
+                  {intakeQs.noiseSensitivityScale[language] + ":"}
+                  <span className="text-danger">*</span>
+                </span>
+              </div>
+              <div className="col text-center">
+                <Box sx={{ width: "90%", marginX: "auto", marginTop: 4 }}>
+                  <Slider
+                    aria-label="Noise Sensitivity Scale"
+                    defaultValue={1}
+                    valueLabelDisplay="on"
+                    step={1}
+                    marks={getEmojiMarks()}
+                    min={1}
+                    max={5}
+                    name="noiseSensitivityScale"
+                    onChange={handleChange}
+                  />
+                </Box>
+              </div>
+            </div>
           </>
         ) : null}
         <div className="row mt-4">
@@ -126,4 +132,4 @@ function PbStepFive({
   );
 }
 
-export default PbStepFive;
+export default PbStepSeven;

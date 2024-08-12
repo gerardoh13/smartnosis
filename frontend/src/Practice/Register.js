@@ -5,7 +5,7 @@ import Invitations from "./InviteStaff";
 import RegisterAdmin from "./RegisterAdmin";
 import RegisterPractice from "./RegisterPractice";
 import SmartnosisApi from "../api";
-import RegisterStripe from "../stripe/RegisterStripe";
+// import RegisterStripe from "../stripe/RegisterStripe";
 
 function Register({ registerUser }) {
   const INITIAL_STATE = {
@@ -17,7 +17,6 @@ function Register({ registerUser }) {
     email: "",
     password: "",
     confirmPwd: "",
-    //
     orgName: "",
     phone: "",
     address1: "",
@@ -25,8 +24,9 @@ function Register({ registerUser }) {
     city: "",
     state: "",
     zip: "",
-    hcpsCount: "",
-    staffCount: "",
+    hcpsCount: "1",
+    staffCount: "0",
+    billing: "",
   };
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [hcpsEmails, setHcpsEmails] = useState([]);
@@ -36,23 +36,42 @@ function Register({ registerUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (formData.staffCount && parseInt(formData.staffCount))
-      setStaffEmails(Array(parseInt(formData.staffCount)).fill(""));
-  }, [formData.staffCount]);
+    let count = +formData.staffCount;
+    if (!count && formData.role === "staff") {
+      setFormData((data) => ({
+        ...data,
+        staffCount: "1",
+      }));
+    }
+    setStaffEmails((prevEmails) => {
+      if (count < prevEmails.length) {
+        return prevEmails.slice(0, count);
+      } else {
+        return [...prevEmails, ...Array(count - prevEmails.length).fill("")];
+      }
+    });
+  }, [formData.staffCount, formData.role]);
 
   useEffect(() => {
-    if (formData.hcpsCount && parseInt(formData.hcpsCount))
-      setHcpsEmails(Array(parseInt(formData.hcpsCount)).fill(""));
+    let count = +formData.hcpsCount;
+    setHcpsEmails((prevEmails) => {
+      if (count < prevEmails.length) {
+        return prevEmails.slice(0, count);
+      } else {
+        return [...prevEmails, ...Array(count - prevEmails.length).fill("")];
+      }
+    });
   }, [formData.hcpsCount]);
 
   useEffect(() => {
-    let session = loadLocalSession();
-    if (session) setStep(2);
+    // undo after stripe is updated
+    loadLocalSession();
+    // let session = loadLocalSession();
+    // if (session) setStep(2);
   }, []);
 
-
   const changeStep = (n) => {
-    if(step === 1) saveLocalSession();
+    if (step <= 1) saveLocalSession();
     setStep((prev) => prev + n);
   };
 
@@ -64,9 +83,8 @@ function Register({ registerUser }) {
     const session = JSON.parse(localStorage.getItem("session-initiated"));
     if (session) {
       setFormData(session);
-      return true
-    } else return false
-
+      return true;
+    } else return false;
   };
 
   const handleChange = (e) => {
@@ -74,17 +92,33 @@ function Register({ registerUser }) {
     const trimCheck = name === "firstName" || name === "lastName";
     setFormData((data) => ({
       ...data,
-      [name]: trimCheck ? value.trimStart().replace(/\s+/g, " ") : value,
+      [name]: trimCheck
+        ? value.trimStart().replace(/\s+/g, " ")
+        : name === "state"
+        ? value.toUpperCase()
+        : name === "zip" ||
+          name === "staffCount" ||
+          name === "hcpsCount" ||
+          name === "npi"
+        ? value.replace(/[^0-9]/g, "") // Remove all non-numeric characters
+        : value,
     }));
   };
 
   const confirmPasswords = () => {
-    if (formData.password !== formData.confirmPwd) {
-      setErrors(["Passwords do not match"]);
-      return false;
+    if (formData.password === formData.confirmPwd) {
+      return { valid: true, err: "" };
     } else {
-      setErrors([]);
-      return true;
+      return { valid: false, err: "Passwords do not match" };
+    }
+  };
+
+  const checkDupe = async () => {
+    try {
+      await SmartnosisApi.checkDupe(formData.role, formData.email);
+      return { valid: true, err: "" };
+    } catch (error) {
+      return { valid: false, err: error[0] };
     }
   };
 
@@ -123,7 +157,7 @@ function Register({ registerUser }) {
   const formatData = () => {
     let dataCopy = { ...formData };
     for (let key in dataCopy) {
-      console.log(key, dataCopy[key])
+      // console.log(key, dataCopy[key]);
       if (key === "email") {
         dataCopy[key] = dataCopy[key].toLowerCase();
       } else if (key === "billing") continue;
@@ -170,42 +204,29 @@ function Register({ registerUser }) {
     return arr.filter((str) => str.trim() !== "");
   };
   const handleSubmit = async () => {
-    console.log(formData)
+    // console.log(formData);
     let [practiceData, userData] = formatData();
     try {
       let provider = await SmartnosisApi.registerProvider(practiceData);
       userData.providerId = provider.id;
       await registerUser(userData);
-      localStorage.removeItem('session-initiated')
+      localStorage.removeItem("session-initiated");
       navigate("/");
     } catch (errors) {
       console.log(errors);
     }
   };
 
-  const isValidEmail = (email) => {
-    // Define a regular expression for a basic email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // Test the email against the regular expression
-    return emailRegex.test(email);
-  };
+  // const isValidEmail = (email) => {
+  //   // Define a regular expression for a basic email format
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   // Test the email against the regular expression
+  //   return emailRegex.test(email);
+  // };
 
   const noEmptyStrs = (arr) => arr.every((str) => str.trim() !== "");
 
   const stepOneComplete = () => {
-    return [
-      formData.orgName,
-      formData.phone,
-      formData.address1,
-      formData.city,
-      formData.state,
-      formData.zip,
-      formData.hcpsCount,
-      formData.staffCount,
-    ].every(Boolean);
-  };
-
-  const stepTwoComplete = () => {
     let fieldsArr = [
       formData.firstName,
       formData.lastName,
@@ -227,9 +248,35 @@ function Register({ registerUser }) {
     );
   };
 
+  const stepTwoComplete = () => {
+    return [
+      formData.orgName,
+      formData.phone,
+      formData.address1,
+      formData.city,
+      formData.state,
+      formData.zip,
+      formData.hcpsCount,
+      formData.staffCount,
+    ].every(Boolean);
+  };
+
   let currStep;
   switch (step) {
     case 0:
+      currStep = (
+        <RegisterAdmin
+          data={formData}
+          changeStep={changeStep}
+          handleChange={handleChange}
+          errors={errors}
+          setErrors={setErrors}
+          confirmPasswords={confirmPasswords}
+          checkDupe={checkDupe}
+        />
+      );
+      break;
+    case 1:
       currStep = (
         <RegisterPractice
           handlePhones={handlePhones}
@@ -238,33 +285,28 @@ function Register({ registerUser }) {
           changeStep={changeStep}
           data={formData}
           errors={errors}
+          adminRole={formData.role}
         />
       );
       break;
-    case 1:
-      currStep = (
-        <RegisterAdmin
-          data={formData}
-          changeStep={changeStep}
-          handleChange={handleChange}
-          errors={errors}
-          confirmPasswords={confirmPasswords}
-        />
-      );
-      break;
+    // case 2:
+    //   currStep = (
+    //     <RegisterStripe
+    //       orgType="hcp" // or "league"
+    //       count={hcpsEmails.length + staffEmails.length} // or # of intakes expected
+    //       changeStep={changeStep}
+    //       step={step}
+    //       adminRole={formData.role}
+    //       setCheckoutId={(id) =>
+    //         setFormData({
+    //           ...formData,
+    //           billing: { stripeCheckoutSessionId: id },
+    //         })
+    //       }
+    //     />
+    //   );
+    //   break;
     case 2:
-        currStep = (
-          <RegisterStripe
-            orgType="hcp" // or "league"
-            count={hcpsEmails.length + staffEmails.length} // or # of intakes expected
-            changeStep={changeStep}
-            step={step}
-            adminRole={formData.role}
-            setCheckoutId={(id)=>setFormData({...formData, billing: {stripeCheckoutSessionId: id}})}
-          />
-        );
-        break;
-    case 3:
       currStep = (
         <Invitations
           emails={hcpsEmails}
@@ -275,7 +317,7 @@ function Register({ registerUser }) {
         />
       );
       break;
-    case 4:
+    case 3:
       currStep = (
         <Invitations
           emails={staffEmails}
@@ -308,22 +350,22 @@ function Register({ registerUser }) {
                   step === 1 ? "active" : ""
                 }`}
               ></span>
-                {/* <span
+              {/* <span
                 className={`step ${stepThreeComplete() ? "finish" : ""} ${
                   step === 1 ? "active" : ""
                 }`}
               ></span> */}
               <span
                 className={`step ${
-                  formData.hcpsCount && noEmptyStrs(hcpsEmails) ? "finish" : ""
-                } ${step === 3 ? "active" : ""}`}
+                  +formData.hcpsCount && noEmptyStrs(hcpsEmails) ? "finish" : ""
+                } ${step === 2 ? "active" : ""}`}
               ></span>
               <span
                 className={`step ${
-                  formData.staffCount && noEmptyStrs(staffEmails)
+                  +formData.staffCount && noEmptyStrs(staffEmails)
                     ? "finish"
                     : ""
-                } ${step === 4 ? "active" : ""}`}
+                } ${step === 3 ? "active" : ""}`}
               ></span>
             </div>
           </div>

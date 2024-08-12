@@ -11,6 +11,7 @@ import { getMidnights } from "../common/commonFuncs";
 import SearchBar from "../common/SearchBar";
 import Intake from "../intake/Intake";
 import Results from "./Results";
+import PbIntake from "../postBoutIntake/PbIntake";
 import PdfModal from "./PdfModal";
 import PDF from "./Pdf";
 import { pdf } from "@react-pdf/renderer";
@@ -97,7 +98,7 @@ function Dashboard({ currView, setCurrView }) {
         lastView={lastView}
       />
     ) : currView === "Admin" ? (
-      <AdminDash/>
+      <AdminDash />
     ) : null;
 
   return (
@@ -109,6 +110,8 @@ function Dashboard({ currView, setCurrView }) {
       />
       {currView === "Form" ? (
         <Intake setCurrView={setCurrView} />
+      ) : currView === "PBAssessment" ? (
+        <PbIntake setCurrView={setCurrView} />
       ) : (
         <>
           <Grid item xs={12} md={8} lg={7}>

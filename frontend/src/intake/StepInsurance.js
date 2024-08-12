@@ -35,8 +35,8 @@ function StepInsurance({
   return (
     <form onSubmit={handleSubmit} className="needs-validation">
       <p className="text-center">
-        <span className="text-danger">*</span>{" "}
-        <span>Indicates required field</span>
+        <span className="text-danger">*</span>
+        <span>{intakeQs.required[language] + ":"}</span>
       </p>
       {/* insRelationship */}
       <div className="row mb-3">

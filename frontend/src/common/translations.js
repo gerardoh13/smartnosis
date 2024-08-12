@@ -13,7 +13,7 @@ const intakeQs = {
   },
   middleName: {
     english: "Middle Name",
-    spanish: "translationMissing",
+    spanish: "Segundo Nombre",
     chinese: "中间初始",
     armenian: "translationMissing",
   },
@@ -29,51 +29,65 @@ const intakeQs = {
     chinese: "性别",
     armenian: "translationMissing",
   },
+  //
+  sexOrientation: {
+    english: "Sexual Orientation",
+    spanish: "Orientación sexual",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  ethnicity: {
+    english: "Ethnicity",
+    spanish: "Etnicidad",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  //
   address1: {
     english: "Address 1",
-    spanish: "translationMissing",
+    spanish: "Dirección 1",
     chinese: "家庭地址",
     armenian: "translationMissing",
   },
   address2: {
-    english: "Address 2",
-    spanish: "translationMissing",
+    english: "Address 2 (Apt., Suite, Unit)",
+    spanish: "Dirección 2 (Apto., Suite, Unidad)",
     chinese: "家庭住址二",
     armenian: "translationMissing",
   },
   city: {
     english: "City",
-    spanish: "translationMissing",
+    spanish: "Ciudad",
     chinese: "城市",
     armenian: "translationMissing",
   },
   state: {
     english: "State",
-    spanish: "translationMissing",
+    spanish: "Estado",
     chinese: "状态",
     armenian: "translationMissing",
   },
   zip: {
     english: "Zip Code",
-    spanish: "translationMissing",
+    spanish: "Código postal",
     chinese: "邮政编码",
     armenian: "translationMissing",
   },
   insurance: {
     english: "Do you Have Insurance?",
-    spanish: "translationMissing",
+    spanish: "¿Tiene seguro medico?",
     chinese: "你有保险吗?",
     armenian: "translationMissing",
   },
   phone1: {
     english: "Cell Phone",
-    spanish: "translationMissing",
+    spanish: "Teléfono móvil",
     chinese: "手机",
     armenian: "translationMissing",
   },
   phone2: {
     english: "Secondary Phone",
-    spanish: "translationMissing",
+    spanish: "Otro Teléfono",
     chinese: "辅助电话号码",
     armenian: "translationMissing",
   },
@@ -149,39 +163,205 @@ const intakeQs = {
     chinese: "保险卡背面图片",
     armenian: "translationMissing",
   },
+  symptoms: {
+    english: "Reason for Visit (Symptoms)?",
+    spanish: "¿Motivo de la visita (síntomas)?",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  conditions: {
+    english:
+      "Have you been diagnosed with any of the following (past or present)?",
+    spanish:
+      "¿Le han diagnosticado alguno de los siguientes (pasado o presente)?",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
   tobaccoUse: {
     english: "Tobacco Use",
-    spanish: "translationMissing",
+    spanish: "Consumo de tabaco",
     chinese: "你使用烟草吗？",
     armenian: "translationMissing",
   },
   alcoholUse: {
     english: "Alcohol Use",
-    spanish: "translationMissing",
+    spanish: "Consumo de alcohol",
     chinese: "你喝酒吗？",
     armenian: "translationMissing",
   },
   drugUse: {
     english: "Drug Use",
-    spanish: "translationMissing",
+    spanish: "Consumo de drogas",
     chinese: "你使用毒品吗？",
     armenian: "translationMissing",
   },
   otherDrugUse: {
-    english: "(Drug Use) If so, Explain:",
-    spanish: "translationMissing",
+    english: "(Drug Use) If so, Explain",
+    spanish: "En caso afirmativo explicar",
     chinese: "请解释更多?",
     armenian: "translationMissing",
   },
+  cigsPerDay: {
+    english: "Cigarettes (per day)",
+    spanish: "Cigarrillos (por día)",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  select: {
+    english: "Select",
+    spanish: "Seleccione",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  //
+  required: {
+    english: "Indicates required field",
+    spanish: "Indica campo requerido",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  familyHistory: {
+    english: "Family Medical History",
+    spanish: "Historia médica familiar",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  mother: {
+    english: "Mother",
+    spanish: "Madre",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  father: {
+    english: "Father",
+    spanish: "Padre",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  grandparents: {
+    english: "Grandparents",
+    spanish: "Abuelos",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  siblings: {
+    english: "Siblings",
+    spanish: "Hermanos",
+    chinese: "translationMissing",
+    armenian: "translationMissing",
+  },
+  comments: {
+    english: "Additional Visit Details",
+    spanish: "Detalles adicionales de la visita",
+  },
+  commentsLabel: {
+    english: "(500 characters)",
+    spanish: "(límite de 500 caracteres)",
+  },
+};
+
+const intakeOptions = {
+  sex: [
+    { english: "Male", spanish: "Masculino" },
+    { english: "Female", spanish: "Femenina" },
+    { english: "Other", spanish: "Otro" },
+  ],
+  sexOrientation: [
+    { english: "Straight", spanish: "Heterosexual" },
+    { english: "Gay", spanish: "Gay" },
+    { english: "Lesbian", spanish: "Lesbiana" },
+    { english: "Bisexual", spanish: "Bisexual" },
+    { english: "Other", spanish: "Otro" },
+  ],
+  ethnicity: [
+    { english: "Native American", spanish: "Nativo Americano" },
+    { english: "Black/African American", spanish: "Negro/Afroamericano" },
+    { english: "Hispanic/Latino", spanish: "Hispano/Latino" },
+    { english: "Asian", spanish: "Asiatico" },
+    { english: "Indian", spanish: "Indu" },
+    { english: "White", spanish: "Blanco" },
+    { english: "Decline to Answer", spanish: "Negarse a contestar" },
+  ],
+  tobaccoUse: [
+    { english: "Never Smoked", spanish: "Nunca fumé" },
+    { english: "Former Smoker", spanish: "Ex Fumador" },
+    { english: "Cigarettes", spanish: "Cigarrillos" },
+    { english: "Cigars", spanish: "Puros" },
+    { english: "Vapes", spanish: "vaporizadores" },
+    { english: "Chewing Tobacco", spanish: "Mascando tabaco" },
+  ],
+  alcoholUse: [
+    { english: "Weekends", spanish: "Fin de semana" },
+    { english: "Socially", spanish: "Socialmente" },
+    { english: "Daily", spanish: "A diario" },
+  ],
+  yesNo: [
+    { english: "Yes", spanish: "Si" },
+    { english: "No", spanish: "No" },
+  ],
+  cigsPerDay: [
+    { english: "Less Than Half Pack", spanish: "Menos de un paquete" },
+    { english: "Half Pack", spanish: "Medio paquete" },
+    { english: "More Than Half Pack", spanish: "Mas de un paquete" },
+  ],
+  symptoms: [
+    { english: "Abnormal Pain", spanish: "translationMissing" },
+    { english: "Anxiety", spanish: "translationMissing" },
+    { english: "Asthma", spanish: "translationMissing" },
+    { english: "Back Pain", spanish: "translationMissing" },
+    { english: "Covid-19 Symptoms", spanish: "translationMissing" },
+    { english: "Depression", spanish: "translationMissing" },
+    { english: "Dizziness", spanish: "translationMissing" },
+    { english: "Erectile Dysfunction", spanish: "translationMissing" },
+    { english: "Fever", spanish: "translationMissing" },
+    { english: "Headache(s)", spanish: "translationMissing" },
+    { english: "Irritable Bowel", spanish: "translationMissing" },
+    { english: "Rash", spanish: "translationMissing" },
+    { english: "Seasonal Allergies", spanish: "translationMissing" },
+    { english: "Seizure", spanish: "translationMissing" },
+    { english: "Stroke", spanish: "translationMissing" },
+    { english: "Urinary Pain", spanish: "translationMissing" },
+    { english: "Prescription Refill", spanish: "translationMissing" },
+  ],
+  conditions: [
+    { english: "Bronchitis", spanish: "translationMissing" },
+    { english: "Cancer", spanish: "translationMissing" },
+    { english: "Stomach/Intestinal Ulcers", spanish: "translationMissing" },
+    { english: "Kidney Stones", spanish: "translationMissing" },
+    { english: "Mental Illness", spanish: "translationMissing" },
+    { english: "Diabetes", spanish: "translationMissing" },
+    { english: "Heart Attack", spanish: "translationMissing" },
+    { english: "Seizures", spanish: "translationMissing" },
+    { english: "High Cholesterol", spanish: "translationMissing" },
+    { english: "Strokes", spanish: "translationMissing" },
+    { english: "STD", spanish: "translationMissing" },
+    { english: "Asthma", spanish: "translationMissing" },
+    { english: "High Blood Pressure", spanish: "translationMissing" },
+    { english: "Kidney Failure", spanish: "translationMissing" },
+    { english: "Arthritis", spanish: "translationMissing" },
+    { english: "Migraines", spanish: "translationMissing" },
+  ],
+  familyHistory: [
+    { english: "Cancer", spanish: "translationMissing" },
+    { english: "Diabetes", spanish: "translationMissing" },
+    { english: "High Cholesterol", spanish: "translationMissing" },
+    { english: "Heart Attack", spanish: "translationMissing" },
+    { english: "High Blood Pressure", spanish: "translationMissing" },
+    { english: "Stroke", spanish: "translationMissing" },
+    { english: "Blood Clots", spanish: "translationMissing" },
+    { english: "Depression", spanish: "translationMissing" },
+    { english: "Autism", spanish: "translationMissing" },
+    { english: "ADHD", spanish: "translationMissing" },
+  ],
 };
 
 const pBintakeQs = {
   firstName: {
-    english: "First Name",
+    english: "First name",
     spanish: "Nombre de pila",
   },
   lastName: {
-    english: "Last Name",
+    english: "Last name",
     spanish: "Apellido",
   },
   promoter: {
@@ -189,201 +369,175 @@ const pBintakeQs = {
     spanish: "Promotor",
   },
   physicianName: {
-    english: "Physicians Name",
+    english: "Physicians name",
     spanish: "Nombre del médico",
   },
   idPid: {
-    english: "Picture of Identification",
+    english: "Picture of identification",
     spanish: "Imagen de identificación",
   },
   dof: {
-    english: "Date of Fight",
+    english: "Date of fight",
     spanish: "Fecha de la pelea",
   },
   location: {
-    english: "Location of Fight",
+    english: "Location of fight",
     spanish: "Ubicación de la pelea",
   },
   result: {
-    english: "Fight Result",
+    english: "Fight result",
     spanish: "Resultado de la pelea",
   },
   status: {
-    english: "Your Status after Fight",
+    english: "Your status after fight",
     spanish: "Tu estado después de la pelea",
   },
-  transport: {
-    english: "State",
-    spanish: "translationMissing",
-  },
   hospitalName: {
-    english: "Name of Hospital",
+    english: "Name of hospital",
     spanish: "Nombre del hospital",
   },
   visitLength: {
-    english: "Length of Hospital Stay (Hours)",
+    english: "Length of hospital stay (Hours)",
     spanish: "Duración de la estancia hospitalaria (horas)",
   },
   concussion: {
-    english: "Have you had a concussion in the past?",
-    spanish: "¿Ha tenido una conmoción cerebral en el pasado?",
+    english: "Have you had a head injury before?",
+    spanish: "¿Ha tenido una lesión en la cabeza antes?",
   },
   concussionNum: {
     english: "How many? : select number 1-10",
     spanish: "Cuantas: seleccione el número 1-10",
   },
   alertnessLoss: {
-    english:
-      "Did you feel any changes in alertness at any time during the fight?",
-    spanish:
-      "¿Sentiste algún cambio en tu estado de alerta en algún momento durante la pelea?",
+    english: "Did you feel any changes in your awareness during the fight?",
+    spanish: "¿Sentiste algún cambio en tu conciencia durante la pelea?",
   },
   alertnessLossRound: {
-    english: "What Round?",
-    spanish: "¿Qué ronda?",
+    english: "What round?",
+    spanish: "¿Qué round?",
   },
   alertnessLossLength: {
-    english: "How Long? (seconds)",
+    english: "How long? (seconds)",
     spanish: "¿cuánto tiempo? (segundos)",
   },
+  drugsOrAlcohol: {
+    english: "Any alcohol or drug use since time of fight?",
+    spanish: "¿Algún consumo de alcohol o drogas posterior la pelea?",
+  },
   headache: {
-    english: "Suffering any Headache(s)?",
+    english: "Have you felt any headache(s)?",
     spanish: "¿Sufres algún dolor de cabeza?",
   },
-  headachePain: {
-    english:
-      "On a scale of 1-10 (10 = painfully sensitive), rate your Headache(s)",
+  headachePainScale: {
+    english: "On a scale of 1-5 (5 = very painful), rate your headache(s)",
     spanish:
-      "En una escala del 1 al 10 (10 = dolorosamente sensible), califique su dolor de cabeza.",
+      "En una escala del 1 al 5 (5 = severo), califique su dolor de cabeza.",
   },
   dizziness: {
-    english: "Suffering any Dizziness?",
-    spanish: "¿Sufres algún mareo?",
+    english: "Have you felt any dizziness since the fight?",
+    spanish: "¿Has sentido mareos posteriormente a la pelea?",
   },
   dizzinessStart: {
-    english: "When did it start?",
-    spanish: "¿Cuándo empezo?",
+    english: "When after your fight did it start?",
+    spanish: "¿Cuándo comensaron después de la pelea?",
   },
-  spinning: {
-    english: "Are you experiencing spinning?",
-    spanish: "¿Estás experimentando giros?",
+  dizzyLying: {
+    english: "Are you dizzy when lying down?",
+    spanish: "¿Sientes mareos acostado?",
   },
-  lightHead: {
-    english: "Are you experiencing Lightheadedness?",
-    spanish: "¿Estás experimentando aturdimiento?",
+  dizzySitting: {
+    english: "Are you dizzy when sitting?",
+    spanish: "¿Sientes mareos sentado?",
   },
-  unsteady: {
-    english: "Are you experiencing Unsteadiness?",
-    spanish: "¿Estás experimentando inestabilidad?",
+  dizzyStanding: {
+    english: "Are you dizzy when standing up?",
+    spanish: "¿Sientes mareos cuando te pones de pie?",
   },
-  dizzinessComeAndGo: {
-    english: "Does dizziness come and go?",
-    spanish: "¿Los mareos van y vienen?",
+  lightheaded: {
+    english: "Have you felt lightheaded any time after the fight?",
+    spanish: "¿Te has sentido mareado en algún momento después de la pelea?",
   },
-  dizzyChangeInVission: {
+  headSpinning: {
     english:
-      "Are there any changes in your vision or hearing during dizziness?",
-    spanish: "¿Hay algún cambio en su visión o audición durante los mareos?",
+      "Have you felt like your head is spinning any time after the fight?",
+    spanish:
+      "¿Has sentido que tu cabeza da vueltas en algún momento después de la pelea?",
   },
   forgetfulness: {
-    english: "Have you been forgetful or have Poor Memory?",
-    spanish: "¿Ha sido olvidadizo o tiene mala memoria?",
+    english: "Have you been forgetful since the fight?",
+    spanish: "¿Has sido olvidadizo posteriormente a la pelea?",
   },
   forgetRecentEvents: {
     english: "Are you forgetting recent events?",
-    spanish: "¿Estás olvidando los acontecimientos recientes?",
+    spanish: "¿Olvidas acontecimientos recientes?",
   },
   forgetNames: {
     english: "Difficult to remember names?",
-    spanish: "¿Le resulta difícil recordar nombres?",
+    spanish: "¿Te es difícil recordar nombres?",
   },
   forgetItems: {
     english: "Are you misplacing items?",
-    spanish: "¿Estás extraviando artículos?",
+    spanish: "¿Extravias artículos personales?",
   },
   moodChanges: {
     english: "Are you experiencing any mood changes?",
-    spanish: "¿Estás experimentando algún cambio de humor?",
+    spanish: "¿Experimentas algún cambio de humor?",
   },
   concentrate: {
-    english: "Is it difficult to Concentrate?",
-    spanish: "¿Es difícil concentrarse?",
+    english: "Has it been hard for you to concentrate?",
+    spanish: "¿Te es difícil concentrarte?",
   },
   depression: {
-    english: "Do you feel Depression or tearfulness?",
-    spanish: "¿Sientes depresión o llanto?",
+    english: "Have you been experiencing any depression since the fight?",
+    spanish: "¿Te deprimiste en las 72 horas posteriores a la pelea?",
+  },
+  depressionExplain: {
+    english: "When did it start?",
+    spanish: "¿Cuándo empezo?",
   },
   irritable: {
-    english: "How often do you feel irritable or are easily angered?",
-    spanish:
-      "¿Con qué frecuencia te sientes irritable o estás fácilmente enojado?",
+    english: "Have you been feeling easily angered after the fight?",
+    spanish: "¿Te has enojado fácilmente en las 72 horas despues de la pelea?",
   },
   ringingEars: {
     english: "Are you suffering from any ringing in the ears?",
-    spanish: "¿Sufre algún zumbido en los oídos?",
+    spanish: "¿Sufres algún ruido en los oídos?",
   },
   ringingStart: {
     english: "When did the ringing start?",
-    spanish: "¿Cuándo empezó el timbre?",
+    spanish: "¿Cuándo empezó el ruido?",
   },
-  buzzing: {
-    english: "Are you hearing Buzzing?",
-    spanish: "¿Estás escuchando un zumbido?",
+  hearingBothEars: {
+    english: "Can you hear in both ears?",
+    spanish: "¿Puedes oír con ambos oídos?",
   },
-  ringing: {
-    english: "Are you hearing Ringing?",
-    spanish: "¿Estás escuchando un timbre?",
-  },
-  whistling: {
-    english: "Are you hearing Whistling?",
-    spanish: "¿Estás escuchando silbidos?",
-  },
-  hissing: {
-    english: "Are you hearing Hissing?",
-    spanish: "¿Estás escuchando silbido?",
-  },
-  ringingConstant: {
-    english: "Is the ringing sound constant or On-and-off?",
-    spanish: "¿El sonido del timbre es constante o intermitente?",
-  },
-  ringingBothEars: {
-    english: "Is the ringing in one ear or both? ",
-    spanish: "¿El zumbido es en un oído o en ambos?",
+  leftRightEar: {
+    english: "Which ear can you hear from?",
+    spanish: "¿De qué oído puedes oír?",
   },
   sleeping: {
-    english: "How are you Sleeping?",
-    spanish: "¿Cómo estás durmiendo?",
+    english: "8. On average, How much Sleep are you getting? (last 72 hours)",
+    spanish: "En promedio, ¿cuánto duermes? (últimas 72 horas)",
   },
   noiseSensitivity: {
-    english: "Are you suffering from Noise sensitivity?",
-    spanish: "¿Sufres de sensibilidad al ruido?",
+    english: "Have you felt any pain caused by noise after the fight?",
+    spanish:
+      "¿Has sentido algún dolor provocado por el ruido después de la pelea?",
   },
   noiseSensitivityStart: {
-    english: "When did you notice sensitivity to noise?",
+    english: "When did you notice sensitivity to loud sounds?",
     spanish: "¿Cuándo notaste sensibilidad al ruido?",
-  },
-  noiseSensitivityTrigger: {
-    english: "Are there specific sounds that trigger sensitivity?",
-    spanish: "¿Hay sonidos específicos que desencadenan la sensibilidad?",
-  },
-  noiseSensitivityPain: {
-    english: "Do you experience pain in your ears with noise?",
-    spanish: "¿Siente dolor en los oídos con el ruido?",
-  },
-  noiseSensitivityDizziness: {
-    english:
-      "Are you having symptoms of Dizziness, Ringing in ears, or Headaches?",
-    spanish:
-      "¿Tiene síntomas de mareos, zumbidos en los oídos o dolores de cabeza?",
   },
   noiseSensitivityScale: {
     english:
-      "On a scale of 1-10 (10 = painfully sensitive), rate your sensitivity",
-    spanish: "TranslationMissing",
+      "On a scale of 1-5 (5 = very painful), rate the pain caused by loud sounds",
+    spanish:
+      "En una escala del 1 al 5 (5 = muy doloroso), califica tu dolor por ruido",
   },
   blurredVision: {
-    english: "Are you suffering from any Blurred Vision?",
-    spanish: "wad",
+    english: "Have you experienced any blurred vision after the fight?",
+    spanish:
+      "¿Has tenido visión borrosa a las 72 horas posteriores a la pelea?",
   },
   blurredVisionStart: {
     english: "When did Blurred vision start?",
@@ -395,7 +549,7 @@ const pBintakeQs = {
   },
   blurredVisionOnAndOff: {
     english: "Is your blurriness on-and-off?",
-    spanish: "¿Tu borrosidad es intermitente?",
+    spanish: "¿Tu vision borrosa es intermitente?",
   },
   blurredVisionOneEye: {
     english: "Is your blurriness in one eye?",
@@ -406,11 +560,11 @@ const pBintakeQs = {
     spanish: "¿Tienes visión borrosa en ambos ojos?",
   },
   doubleVision: {
-    english: "¿Sufres de alguna visión doble?",
-    spanish: "¿Sufres de alguna visión doble?",
+    english: "Are you experiencing any double vision?",
+    spanish: "¿Tienes visión doble?",
   },
   doubleVisionStart: {
-    english: "When did Double vision start?",
+    english: "When did double vision start?",
     spanish: "¿Cuándo empezó la visión doble?",
   },
   doubleVisionConstant: {
@@ -418,69 +572,77 @@ const pBintakeQs = {
     spanish: "¿Tu doble visión es constante?",
   },
   doubleVisionOnAndOff: {
-    english: "Is your Double Vision on-and-off?",
-    spanish: "¿Su visión doble se enciende y apaga?",
-  },
-  doubleVisionOneEye: {
-    english: "Is your Double Vision in one eye?",
-    spanish: "¿Tu Visión Doble está en un ojo?",
-  },
-  doubleVisionBothEyes: {
-    english: "Is your Double Vision in both eyes?",
-    spanish: "¿Tu Visión Doble es en ambos ojos?",
+    english: "Is your double vision on-and-off?",
+    spanish: "¿Tu visión doble es intermitente?",
   },
   lightSensitivity: {
-    english: "Are you suffering from any Light sensitivity?",
-    spanish: "¿Sufres de alguna sensibilidad a la luz?",
+    english: "Are you experiencing any sensitivty to light after the fight?",
+    spanish: "¿Sientes alguna sensibilidad a Light después de la pelea?",
   },
   lightSensitivityStart: {
-    english: "When did you notice Light Sensitivity?",
-    spanish: "¿Cuándo notaste la sensibilidad a la luz?",
+    english: "When did you notice the eye pain from light?",
+    spanish: "¿Cuándo notaste el dolor en los ojos por la luz?",
   },
   lightSensitivityConstant: {
-    english: "Is your Light Sensitivity constant?",
-    spanish: "¿Tu sensibilidad a la luz es constante?",
+    english: "Is your light sensitivity all the time?",
+    spanish: "¿Tu sensibilidad a la luz es todo el tiempo?",
   },
   lightSensitivityOnAndOff: {
-    english: "Is your Light Sensitivity on-and-off?",
-    spanish: "¿Está activada y desactivada su sensibilidad a la luz?",
-  },
-  lightSensitivityTrigger: {
-    english: "Do certain types of light affect your Light Sensitivity",
-    spanish: "¿Ciertos tipos de luz afectan su sensibilidad a la luz?",
+    english: "Is your light sensitivity on-and-off?",
+    spanish: "¿Tu sensibilidad a la luz es intermitente?",
   },
   lightSensitivityScale: {
     english:
-      "On a scale of 1-10 (10 = painfully sensitive), rate your sensitivity",
+      "On a scale of 1-5 (5 = very painful), how painful is light to your eyes?",
     spanish:
-      "En una escala del 1 al 10 (10 = dolorosamente sensible), califique su sensibilidad",
+      "En una escala del 1 al 5 (5 = muy doloroso), ¿qué tan dolorosa es la luz para ti?",
   },
   neckPain: {
-    english: "Have you experienced any Neck Pain?",
+    english: "Have you experienced any neck pain?",
     spanish: "¿Ha experimentado algún dolor de cuello?",
   },
+  neckPainStart: {
+    english: "When did your neck pain start?",
+    spanish: "¿Cuándo empezó tu dolor de cuello?",
+  },
   neckPainScale: {
-    english: "On a scale of 1-10 (10 = very painful), rate your neck pain",
+    english: "On a scale of 1-5 (5 = very painful), rate your neck pain",
     spanish:
-      "En una escala de 1 a 10 (10 = muy doloroso), califique su dolor de cuello",
+      "En una escala del 1 al 5 (5 = muy doloroso), califique su dolor de cuello",
   },
   lowerBackPain: {
     english: "Have you experienced any Lower Back Pain?",
     spanish: "¿Ha experimentado algún dolor lumbar?",
   },
+  lowerBackPainStart: {
+    english: "When did your lower back pain start?",
+    spanish: "¿Cuándo empezó tu dolor de espalda?",
+  },
   lowerBackPainScale: {
-    english:
-      "On a scale of 1-10 (10 = very painful), rate your lower back pain",
+    english: "On a scale of 1-5 (5 = very painful), rate your lower back pain",
     spanish:
-      "En una escala de 1 a 10 (10 = muy doloroso), califique su dolor de espalda baja",
+      "En una escala del 1 al 5 (5 = muy doloroso), califique su dolor de espalda baja",
+  },
+  symptoms: {
+    english: "Select Any other symptoms you have experienced after the fight.",
+    spanish:
+      "Seleccione Cualquier otro síntoma que haya experimentado después de la pelea.",
+  },
+  comments: {
+    english: "Enter Comments or Details Here: enter (500 characters)",
+    spanish: "Ingrese comentarios o detalles aquí",
+  },
+  additionalPIds: {
+    english: "Additional Photos",
+    spanish: "Fotos adicionales",
   },
 };
 
 const PbIntakeOptions = {
   result: [
     { english: "Decision", spanish: "Decisión" },
-    { english: "TKO", spanish: "TKO" },
-    { english: "KO", spanish: "KO" },
+    { english: "TKO", spanish: "Nocaut tecnico" },
+    { english: "KO", spanish: "Nocaut" },
     { english: "Submission", spanish: "Envío" },
     { english: "Tap Out", spanish: "Rendirse" },
   ],
@@ -500,6 +662,13 @@ const PbIntakeOptions = {
       spanish: "Asesoramiento/tratamiento médico rechazado",
     },
   ],
+  drugsOrAlcohol: [
+    { english: "Not at all", spanish: "Para nada" },
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+    { english: "All Days", spanish: "Todos los días" },
+  ],
   headacheExplain: [
     { english: "Mild headaches", spanish: "Dolores de cabeza leves" },
     { english: "Moderate headaches", spanish: "Dolores de cabeza moderados" },
@@ -508,69 +677,100 @@ const PbIntakeOptions = {
       spanish: "Dolores de cabeza severos",
     },
   ],
+  daysOneToThree: [
+    { english: "Day 1", spanish: "Día 1" },
+    { english: "Day 2", spanish: "Día 2" },
+    { english: "Day 3", spanish: "Día 3" },
+  ],
   concentrateExplain: [
     { english: "Sometimes", spanish: "A veces" },
     { english: "Often", spanish: "A menudo" },
-    {
-      english: "All the time",
-      spanish: "Todo el tiempo",
-    },
-  ],
-  depressionExplain: [
-    { english: "Sometimes", spanish: "A veces" },
-    { english: "Often", spanish: "A menudo" },
-    {
-      english: "All the time",
-      spanish: "Todo el tiempo",
-    },
+    { english: "All the time", spanish: "Todo el tiempo" },
   ],
   irritable: [
     { english: "Not at all", spanish: "Para nada" },
-    {
-      english: "Sometimes I feel irritable and easily get angered",
-      spanish: "A veces me siento irritable y me enojo fácilmente.",
-    },
-    {
-      english: "Often I feel irritable and easily get angered",
-      spanish: "A menudo me siento irritable y me enojo fácilmente.",
-    },
-    {
-      english: "I feel irritable and I get easily get angered all the time",
-      spanish: "Me siento irritable y me enojo fácilmente todo el tiempo.",
-    },
+    { english: "Sometimes", spanish: "A veces." },
+    { english: "Often", spanish: "A menudo." },
+    { english: "All the time", spanish: "Todo el tiempo." },
+  ],
+  ringingConstant: [
+    { english: "A lot", spanish: "Mucho" },
+    { english: "Sometimes", spanish: "A veces" },
+  ],
+  hearingBothEars: [
+    { english: "One ear", spanish: "Un oído" },
+    { english: "Both ears", spanish: "Ambos oídos" },
   ],
   sleeping: [
-    { english: "I sleep very well", spanish: "Duermo muy bien." },
-    {
-      english: "I sleep good most of the time",
-      spanish: "Duermo bien la mayor parte del tiempo.",
-    },
-    {
-      english: "I hardly get good sleep",
-      spanish: "casi no duermo bien.",
-    },
-    {
-      english: "Im not sleeping",
-      spanish: "No estoy durmiendo.",
-    },
-  ],
-  neckPainExplain: [
-    { english: "Sometimes", spanish: "A veces" },
-    { english: "Often", spanish: "A menudo" },
-    {
-      english: "All the time",
-      spanish: "Todo el tiempo",
-    },
-    { english: "Right now", spanish: "Ahora mismo" },
-  ],
-  lowerBackPainExplain: [
-    { english: "Sometimes", spanish: "A veces" },
-    { english: "Often", spanish: "A menudo" },
-    {
-      english: "All the time",
-      spanish: "Todo el tiempo",
-    },
-    { english: "Right now", spanish: "Ahora mismo" },
+    { english: "0-1", spanish: "0-1" },
+    { english: "1-3", spanish: "1-3" },
+    { english: "4-6", spanish: "4-6" },
+    { english: "7-9", spanish: "7-9" },
+    { english: "More", spanish: "Mas" },
   ],
 };
-export { intakeQs, pBintakeQs, PbIntakeOptions };
+
+const pbHeaders = {
+  pgOne: {
+    english:
+      "Head injuries are serious. Answer the following questions for tonight and the next 3 days after your fight.",
+    spanish:
+      "Las lesiones en la cabeza son graves. Responda las siguientes preguntas para esta noche y los próximos 3 días después de su pelea.",
+  },
+  pgTwo: {
+    english:
+      "For tonight and the next 3 days, answer the below questions to see if you have suffered a head injury after your fight.",
+    spanish:
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para ver si sufrió una lesión en la cabeza después de su pelea.",
+  },
+  pgThree: {
+    english:
+      "For tonight and the next 3 days, answer the questions below to monitor your headache(s) and dizziness after the fight.",
+    spanish:
+      "Para esta noche y los próximos 3 días, responda las preguntas a continuación para controlar sus dolores de cabeza y mareos después de la pelea.",
+  },
+  pgFour: {
+    english:
+      "For tonight and the next 3 days, answer the questions below to monitor your memory and mood.",
+    spanish:
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para controlar su memoria y estado de ánimo.",
+  },
+  pgFive: {
+    english:
+      "For tonight and the next 3 days, answer the below questions to monitor your hearing.",
+    spanish:
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para controlar su audiencia.",
+  },
+  pgSix: {
+    english:
+      "For tonight and the next 3 days, answer the below questions to monitor your sleep habits.",
+    spanish:
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para controlar sus hábitos de sueño.",
+  },
+  pgSeven: {
+    english:
+      "For tonight and the next 3 days, answer the below questions to monitor how you respond to loud sounds.",
+    spanish:
+      "Durante esta noche y los próximos 3 días, responda las siguientes preguntas para controlar cómo responde a los sonidos fuertes.",
+  },
+  pgEight: {
+    english:
+      "For tonight and the next 3 days, answer the below questions to monitor your vision.",
+    spanish:
+      "Para esta noche y los próximos 3 días, responda las siguientes preguntas para controlar su visión.",
+  },
+  pgNine: {
+    english:
+      "For tonight and the next 3 days, answer the below questions to monitor your neck and back pain.",
+    spanish:
+      "Durante esta noche y los próximos 3 días, responda las siguientes preguntas para controlar su dolor de cuello y espalda.",
+  },
+  pgTen: {
+    english:
+      "For tonight and the next 3 days, select Any other symptoms you have experienced.",
+    spanish:
+      "Para esta noche y los próximos 3 días, seleccione cualquier otro síntoma que haya experimentado.",
+  },
+};
+
+export { intakeQs, intakeOptions, pBintakeQs, PbIntakeOptions, pbHeaders };

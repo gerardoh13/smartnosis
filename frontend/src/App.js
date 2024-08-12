@@ -80,7 +80,6 @@ function App() {
       setToken(providerToken);
       return { valid: true };
     } catch (errors) {
-      console.log(errors);
       return { valid: false, errors };
     }
   };

@@ -58,6 +58,18 @@ class Staff {
    * Throws BadRequestError on duplicates.
    **/
 
+  static async checkDupe(email) {
+    const duplicateCheck = await db.query(
+      `SELECT email
+           FROM staff
+           WHERE email = $1`,
+      [email]
+    );
+    if (duplicateCheck.rows[0]) {
+      throw new BadRequestError(`Duplicate email: ${email}`);
+    }
+  }
+
   static async register({
     providerId,
     firstName,
@@ -66,16 +78,7 @@ class Staff {
     title,
     password,
   }) {
-    const duplicateCheck = await db.query(
-      `SELECT email
-           FROM staff
-           WHERE email = $1`,
-      [email]
-    );
-
-    if (duplicateCheck.rows[0]) {
-      throw new BadRequestError(`Duplicate email: ${email}`);
-    }
+    this.checkDupe(email);
 
     // const adminCheck = await db.query(
     //   `SELECT h.email AS "hcpEmail",

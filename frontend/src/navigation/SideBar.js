@@ -12,6 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import IconButton from "@mui/material/IconButton";
 import QrCodeIcon from "@mui/icons-material/QrCode";
+import SportsMmaIcon from '@mui/icons-material/SportsMma';
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import ProviderContext from "../common/ProviderContext";
@@ -111,6 +112,15 @@ export default function SideBar({ toggleDrawer, open, setCurrView }) {
               <QrCodeIcon />
             </ListItemIcon>
             <ListItemText primary="QR Code" />
+          </ListItemButton>
+        </ListItem>
+                {/* toggle intake */}
+                <ListItem disablePadding>
+          <ListItemButton onClick={() => handleClick("PBAssessment")}>
+            <ListItemIcon>
+              <SportsMmaIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Post-Bout"} />
           </ListItemButton>
         </ListItem>
         {/* Admin */}

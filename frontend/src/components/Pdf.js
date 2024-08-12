@@ -13,9 +13,7 @@ function PDF({ intake }) {
   const calculateAge = (date) => {
     const birthDate = new Date(date);
     const currentDate = new Date();
-    // Calculate the difference in years
     let age = currentDate.getFullYear() - birthDate.getFullYear();
-    // Adjust the age if the birthday hasn't occurred yet this year
     if (
       currentDate.getMonth() < birthDate.getMonth() ||
       (currentDate.getMonth() === birthDate.getMonth() &&
@@ -23,7 +21,6 @@ function PDF({ intake }) {
     ) {
       age--;
     }
-
     return age;
   };
 
@@ -37,6 +34,8 @@ function PDF({ intake }) {
       paddingTop: 35,
       paddingBottom: 65,
       paddingHorizontal: 35,
+      flexDirection: "row",
+      flexWrap: "wrap",
     },
     sect: {
       marginBottom: 1,
@@ -64,11 +63,11 @@ function PDF({ intake }) {
     },
     imgRow: {
       flexDirection: "row",
-      justifyContent: "space-between", // Align images with space between them
+      justifyContent: "space-between",
       marginTop: 10,
     },
     imageContainer: {
-      width: "50%", // Set the width to half of the page
+      width: "50%",
     },
     insCardImg: {
       width: "100%",
@@ -100,28 +99,34 @@ function PDF({ intake }) {
       fontFamily: "Times-Roman",
       marginBottom: 10,
       marginTop: 10,
-      border: "2px solid #b3e5fc", // Border color and width
-      borderRadius: 10, // Border radius for rounded corners
-      padding: 10, // Padding inside the container
+      border: "2px solid #b3e5fc",
+      borderRadius: 10,
+      padding: 10,
     },
     columnLeft: {
       flexDirection: "column",
-      textAlign: "right",
       width: "50%",
-      marginRight: 5,
+      paddingRight: 10,
     },
     columnRight: {
       flexDirection: "column",
       width: "50%",
-      textDecoration: "underline",
+      paddingLeft: 10,
+    },
+    flexContainer: {
+      flexDirection: "row",
+      width: "100%",
+    },
+    flexColumn: {
+      flexDirection: "column",
+      width: "50%",
     },
   });
 
   return (
     <Document>
       <Page style={styles.body}>
-        <Image style={styles.image} src="/smartnosis-logo.jpg" />
-
+        <Image style={styles.image} src="/BW-Smartnosis-Logo.png" />
         <View style={styles.textRow}>
           <View style={styles.columnLeft}>
             <Text>Date:</Text>
@@ -136,115 +141,212 @@ function PDF({ intake }) {
             </Text>
             <Text>{intake.insurance}</Text>
             <Text>{intake.phone}</Text>
-            <Text>{intake.insurance}</Text>
+            <Text>{intake.email}</Text>
             <Text>{intake.address1}</Text>
             {intake.address2 ? <Text> {intake.address2}</Text> : null}
             <Text>
-              {" "}
               {intake.city}, {intake.state} {intake.zip}
             </Text>
           </View>
         </View>
 
-        <Text style={styles.sect}>
-          <Text style={styles.inlineUnderline}>Patient Name:</Text>
-          <Text style={styles.inlineBold}>
-            {` ${intake.firstName} ${
-              intake.middleName ? intake.middleName + " " : ""
-            }${intake.lastName}`}
-          </Text>
-        </Text>
-        <Text style={styles.text}>
-          <Text style={styles.inlineUnderline}>D.O.B:</Text>
-          <Text style={styles.inlineBold}>
-            {" "}
-            {intake.dob}, {calculateAge(intake.dob)}{" "}
-            {calculateAge(intake.dob) > 1 && calculateAge(intake.dob) !== 0
-              ? "years"
-              : "year"}{" "}
-            old
-          </Text>
-        </Text>
-        <Text style={styles.text}>
-          <Text style={styles.inlineUnderline}>Sex:</Text>
-          <Text style={styles.inlineBold}> {intake.sex}</Text>
-        </Text>
+        <View style={styles.flexContainer}>
+          <View style={styles.flexColumn}>
+            <Text style={styles.sect}>
+              <Text style={styles.inlineBold}>Patient Name: </Text>
+              <Text style={styles.inlineUnderline}>
+                {`${intake.firstName} ${
+                  intake.middleName ? intake.middleName + " " : ""
+                }${intake.lastName}`}
+              </Text>
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.inlineBold}>D.O.B: </Text>
+              <Text style={styles.inlineUnderline}>
+                {intake.dob}, {calculateAge(intake.dob)}{" "}
+                {calculateAge(intake.dob) > 1 && calculateAge(intake.dob) !== 0
+                  ? "years"
+                  : "year"}{" "}
+                old
+              </Text>
+            </Text>
+            <Text style={styles.text}>
+              <Text style={styles.inlineBold}>Sex: </Text>
+              <Text style={styles.inlineUnderline}> {intake.sex}</Text>
+            </Text>
 
-        <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
-          Reason for Visit:
-        </Text>
-        {intake.symptoms.length
-          ? intake.symptoms.map((s) => (
-              <Text style={styles.bulletPoint} key={s}>
-                • {s}
-              </Text>
-            ))
-          : null}
-        <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
-          Patient Health History:
-        </Text>
-        {intake.conditions.length
-          ? intake.conditions.map((s) => (
-              <Text style={styles.bulletPoint} key={s}>
-                • {s}
-              </Text>
-            ))
-          : null}
+            <Text style={{ ...styles.sect, ...styles.inlineBold }}>
+              Reason for Visit:
+            </Text>
+            {intake.symptoms.length ? (
+              intake.symptoms.map((s) => (
+                <Text style={styles.bulletPoint} key={s}>
+                  • {s}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.bulletPoint}>• N/A</Text>
+            )}
+            <Text style={{ ...styles.sect, ...styles.inlineBold }}>
+              Have you Been Diagnosed (past/present):
+            </Text>
+            {intake.conditions.length ? (
+              intake.conditions.map((s) => (
+                <Text style={styles.bulletPoint} key={s}>
+                  • {s}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.bulletPoint}>• N/A</Text>
+            )}
 
-        {intake.insurance === "Yes" ? (
-          <>
-            <Text style={{ ...styles.sect, ...styles.inlineUnderline }}>
-              Insurance Provider:
+            <Text style={styles.sect}>
+              <Text style={styles.inlineBold}>Tobacco Use: </Text>
+              <Text style={styles.inlineUnderline}>{intake.tobaccoUse}</Text>
             </Text>
-            <Text style={styles.bulletPoint}>
-              • Provider: {intake.insProvider}
+
+            <Text style={styles.sect}>
+              <Text style={styles.inlineBold}>Alcohol Use: </Text>
+              <Text style={styles.inlineUnderline}>{intake.alcoholUse}</Text>
             </Text>
-            <Text style={styles.bulletPoint}>
-              • Relationship to Insured: {intake.insRelationship}
+
+            <Text style={styles.sect}>
+              <Text style={styles.inlineBold}>Drug Use: </Text>
+              <Text style={styles.inlineUnderline}>{intake.drugUse}</Text>
             </Text>
-            {intake.insuranceId ? (
-              <Text style={styles.bulletPoint}>
-                • Insurance Id: {intake.insuranceId}
-              </Text>
-            ) : null}
-            {intake.insGroupNumber ? (
-              <Text style={styles.bulletPoint}>
-                • Group Number: {intake.insGroupNumber}
-              </Text>
-            ) : null}
-            {intake.insGroupName ? (
-              <Text style={styles.bulletPoint}>
-                • Group Name: {intake.insGroupName}
-              </Text>
-            ) : null}
-            {intake.insBackPId || intake.insFrontPId ? (
-              <View style={styles.imgRow}>
-                {intake.insFrontPId ? (
-                  <View style={styles.imageContainer}>
-                    <Text style={styles.imgDescription}>
-                      Front of Insurance Card
+
+            {intake.insurance === "Yes" ? (
+              <>
+                <Text style={{ ...styles.sect, ...styles.inlineBold }}>
+                  Insurance Information:
+                </Text>
+                <Text style={{ ...styles.sect, ...styles.bulletPoint }}>
+                  <Text style={styles.inlineBold}>- Provider: </Text>
+                  <Text style={styles.inlineUnderline}>
+                    {intake.insProvider}
+                  </Text>
+                </Text>
+
+                <Text style={{ ...styles.sect, ...styles.bulletPoint }}>
+                  <Text style={styles.inlineBold}>
+                    - Relationship to Insured:{" "}
+                  </Text>
+                  <Text style={styles.inlineUnderline}>
+                    {intake.insRelationship}
+                  </Text>
+                </Text>
+
+                {intake.insuranceId ? (
+                  <Text style={{ ...styles.sect, ...styles.bulletPoint }}>
+                    <Text style={styles.inlineBold}>- Insurance Id:</Text>
+                    <Text style={styles.inlineUnderline}>
+                      {intake.insuranceId}
                     </Text>
-                    <Image
-                      style={styles.insCardImg}
-                      src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insFrontPId}.jpg`}
-                    />
+                  </Text>
+                ) : null}
+                {intake.insGroupNumber ? (
+                  <Text style={{ ...styles.sect, ...styles.bulletPoint }}>
+                    <Text style={styles.inlineBold}>- Group Number: </Text>
+                    <Text style={styles.inlineUnderline}>
+                      {intake.insGroupNumber}
+                    </Text>
+                  </Text>
+                ) : null}
+                {intake.insGroupName ? (
+                  <Text style={{ ...styles.sect, ...styles.bulletPoint }}>
+                    <Text style={styles.inlineBold}>- Group Name: </Text>
+                    <Text style={styles.inlineUnderline}>
+                      {intake.insGroupName}
+                    </Text>
+                  </Text>
+                ) : null}
+                {intake.insBackPId || intake.insFrontPId ? (
+                  <View style={styles.imgRow}>
+                    {intake.insFrontPId ? (
+                      <View style={styles.imageContainer}>
+                        <Text style={styles.imgDescription}>
+                          Front of Insurance Card
+                        </Text>
+                        <Image
+                          style={styles.insCardImg}
+                          src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insFrontPId}.jpg`}
+                        />
+                      </View>
+                    ) : null}
+                    {intake.insBackPId ? (
+                      <View style={styles.imageContainer}>
+                        <Text style={styles.imgDescription}>
+                          Back of Insurance Card
+                        </Text>
+                        <Image
+                          style={styles.insCardImg}
+                          src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insBackPId}.jpg`}
+                        />
+                      </View>
+                    ) : null}
                   </View>
                 ) : null}
-                {intake.insBackPId ? (
-                  <View style={styles.imageContainer}>
-                    <Text style={styles.imgDescription}>
-                      Back of Insurance Card
-                    </Text>
-                    <Image
-                      style={styles.insCardImg}
-                      src={`https://res.cloudinary.com/dolnu62zm/image/upload/v1694500921/${intake.insBackPId}.jpg`}
-                    />
-                  </View>
-                ) : null}
-              </View>
+              </>
             ) : null}
-          </>
-        ) : null}
+          </View>
+
+          <View style={styles.flexColumn}>
+            <Text style={{ ...styles.sect, ...styles.inlineBold }}>
+              Family Medical History:
+            </Text>
+            <Text style={{ ...styles.sect, ...styles.inlineBold }}>
+              - Mother:
+            </Text>
+            {intake.motherHistory.length ? (
+              intake.motherHistory.map((s) => (
+                <Text style={styles.bulletPoint} key={s}>
+                  • {s}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.bulletPoint}>• N/A</Text>
+            )}
+
+            <Text style={{ ...styles.sect, ...styles.inlineBold }}>
+              - Father:
+            </Text>
+            {intake.fatherHistory.length ? (
+              intake.fatherHistory.map((s) => (
+                <Text style={styles.bulletPoint} key={s}>
+                  • {s}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.bulletPoint}>• N/A</Text>
+            )}
+
+            <Text style={{ ...styles.sect, ...styles.inlineBold }}>
+              - Grandparents:
+            </Text>
+            {intake.grandparentsHistory.length ? (
+              intake.grandparentsHistory.map((s) => (
+                <Text style={styles.bulletPoint} key={s}>
+                  • {s}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.bulletPoint}>• N/A</Text>
+            )}
+
+            <Text style={{ ...styles.sect, ...styles.inlineBold }}>
+              - Siblings:
+            </Text>
+            {intake.siblingHistory.length ? (
+              intake.siblingHistory.map((s) => (
+                <Text style={styles.bulletPoint} key={s}>
+                  • {s}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.bulletPoint}>• N/A</Text>
+            )}
+          </View>
+        </View>
 
         <Text
           style={styles.pageNumber}
@@ -258,4 +360,5 @@ function PDF({ intake }) {
     </Document>
   );
 }
+
 export default PDF;

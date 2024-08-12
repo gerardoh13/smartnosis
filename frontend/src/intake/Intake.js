@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import { deleteNulls } from "../common/commonFuncs";
 import DisclaimerModal from "../components/DisclaimerModal";
 import LangToggle from "../common/LangToggle";
-import { intakeQs } from "../common/translations";
+import { intakeOptions, intakeQs } from "../common/translations";
 
 function Intake({ setCurrView }) {
   const INITIAL_STATE = {
@@ -24,6 +24,8 @@ function Intake({ setCurrView }) {
     middleName: "",
     dob: "",
     sex: "",
+    sexOrientation: "",
+    ethnicity: "",
     address1: "",
     address2: "",
     city: "",
@@ -51,11 +53,17 @@ function Intake({ setCurrView }) {
 
   const INITIAL_MED_HISTORY = {
     tobaccoUse: "",
+    cigsPerDay: "",
     alcoholUse: "",
     drugUse: "",
     otherDrugUse: "",
     symptoms: new Set(),
     conditions: new Set(),
+    motherHistory: new Set(),
+    fatherHistory: new Set(),
+    grandparentsHistory: new Set(),
+    siblingHistory: new Set(),
+    comments: "",
   };
 
   const [formData, setFormData] = useState(INITIAL_STATE);
@@ -163,6 +171,13 @@ function Intake({ setCurrView }) {
     let medHistoryCopy = { ...medHistory };
     medHistoryCopy.symptoms = Array.from(medHistoryCopy.symptoms);
     medHistoryCopy.conditions = Array.from(medHistoryCopy.conditions);
+    medHistoryCopy.motherHistory = Array.from(medHistoryCopy.motherHistory);
+    medHistoryCopy.fatherHistory = Array.from(medHistoryCopy.fatherHistory);
+    medHistoryCopy.grandparentsHistory = Array.from(
+      medHistoryCopy.grandparentsHistory
+    );
+    medHistoryCopy.siblingHistory = Array.from(medHistoryCopy.siblingHistory);
+
     if (medHistoryCopy.drugUse === "Other")
       medHistoryCopy.drugUse = medHistoryCopy.otherDrugUse;
     return medHistoryCopy;
@@ -175,11 +190,6 @@ function Intake({ setCurrView }) {
     if (dataCopy.insurance === "Yes")
       dataCopy = { ...dataCopy, ...formatInsData(dataCopy) };
     deleteNulls(dataCopy);
-    //
-    delete dataCopy.tobaccoUse;
-    delete dataCopy.alcoholUse;
-    delete dataCopy.drugUse;
-    //
     if (query.get("appointment")) dataCopy.apptId = query.get("appointment");
     return dataCopy;
   };
@@ -193,6 +203,7 @@ function Intake({ setCurrView }) {
   const submit = async () => {
     let formattedData = formatData();
     await SmartnosisApi.addIntake(formattedData);
+    console.log(formattedData);
     setFormData(INITIAL_STATE);
     setMedHistory(INITIAL_MED_HISTORY);
     setInsuranceData(INITIAL_INSURANCE_STATE);
@@ -218,7 +229,12 @@ function Intake({ setCurrView }) {
   };
 
   const handleSelect = (name, value, type) => {
-    const func = type === "medHistory" ? setMedHistory : setInsuranceData;
+    const func =
+      type === "medHistory"
+        ? setMedHistory
+        : type === "formData"
+        ? setFormData
+        : setInsuranceData;
     func((data) => ({
       ...data,
       [name]: value,
@@ -302,7 +318,9 @@ function Intake({ setCurrView }) {
       medHistory.drugUse,
       medHistory.tobaccoUse,
     ];
-    if (medHistory.drugUse === "Other") fields.push(medHistory.otherDrugUse);
+    if (medHistory.drugUse === "Yes") fields.push(medHistory.otherDrugUse);
+    if (medHistory.tobaccoUse === "Cigarettes")
+      fields.push(medHistory.cigsPerDay);
     return fields.every(Boolean);
   };
 
@@ -317,8 +335,10 @@ function Intake({ setCurrView }) {
           maxDate={maxDate}
           handlePhones={handlePhones}
           handleKeydown={handleKeydown}
+          handleSelect={handleSelect}
           complete={stepOneComplete}
           intakeQs={intakeQs}
+          intakeOptions={intakeOptions}
           language={language}
         />
       );
@@ -372,8 +392,10 @@ function Intake({ setCurrView }) {
           changeStep={changeStep}
           complete={stepFourComplete}
           handleSelect={handleSelect}
+          handleCheckbox={handleCheckbox}
           submit={submit}
           intakeQs={intakeQs}
+          intakeOptions={intakeOptions}
           language={language}
         />
       );
@@ -396,7 +418,7 @@ function Intake({ setCurrView }) {
       <div className="card">
         <div className="card-body">
           <img
-            src="smartnosis-logo.jpg"
+            src="BW-Smartnosis-Logo.png"
             className="rounded mx-auto d-block w60 mt-2"
             alt="smartnosis logo"
           />
@@ -420,7 +442,11 @@ function Intake({ setCurrView }) {
           ) : null}
           <div className="float-end">
             <div className="col-12 col-lg-4">
-              <LangToggle language={language} setLanguage={setLanguage} />
+              <LangToggle
+                language={language}
+                setLanguage={setLanguage}
+                langOptions={["spanish"]}
+              />
             </div>
           </div>
         </div>
@@ -449,28 +475,33 @@ function Intake({ setCurrView }) {
                 className={`step ${
                   stepOneComplete() || complete ? "finish" : ""
                 } ${step === 0 ? "active" : ""}`}
+                onClick={() => setStep(0)}
               ></span>
               {formData.insurance === "Yes" ? (
                 <span
                   className={`step ${stepInsuranceComplete() ? "finish" : ""} ${
                     step === 0.5 ? "active" : ""
                   }`}
+                  onClick={() => setStep(0.5)}
                 ></span>
               ) : null}
               <span
                 className={`step ${step > 0.5 || complete ? "finish" : ""} ${
                   step === 1 ? "active" : ""
                 }`}
+                onClick={() => setStep(1)}
               ></span>
               <span
                 className={`step ${step > 1 || complete ? "finish" : ""} ${
                   step === 2 ? "active" : ""
                 }`}
+                onClick={() => setStep(2)}
               ></span>
               <span
                 className={`step ${
                   stepFourComplete() || complete ? "finish" : ""
                 } ${step === 3 ? "active" : ""}`}
+                onClick={() => setStep(3)}
               ></span>
             </div>
           </div>

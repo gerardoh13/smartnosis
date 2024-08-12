@@ -110,8 +110,10 @@ class Provider {
       [providerId]
     );
 
+    const sentHcpInvites = hcpInvites.rows.length ? hcpInvites.rows[0].sent : [];
+
     const hcpInvitations = {
-      sent: hcpInvites.rows[0].sent || [],
+      sent: sentHcpInvites,
       active: hcpActive.rows || [],
     };
 
@@ -131,8 +133,12 @@ class Provider {
       [providerId]
     );
 
+    const sentStaffInvites = staffInvites.rows.length
+      ? staffInvites.rows[0].sent
+      : [];
+
     const staffInvitations = {
-      sent: staffInvites.rows[0].sent || [],
+      sent: sentStaffInvites,
       active: staffActive.rows || [],
     };
     const invitations = { hcps: hcpInvitations, staff: staffInvitations };

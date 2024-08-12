@@ -96,56 +96,56 @@ function ResetPwd() {
             {errors.length ? <Alerts msgs={errors} /> : null}
             {success ? (
               <>
-              <Link to="/" className="btn btn-primary form-control">Go Back to Login</Link>
+                <Link to="/" className="btn btn-primary form-control">
+                  Go Back to Login
+                </Link>
               </>
             ) : (
-                <form onSubmit={handleSubmitNewPwd}>
-                  <div className="form-floating my-4">
-                    <input
-                      className="form-control"
-                      type="text"
-                      id="email"
-                      value={formData.email}
-                      placeholder="email"
-                      required
-                      disabled
-                      readOnly
-                    />
-                    <label htmlFor="email">Email:</label>
-                  </div>
-                  <div className="form-floating mb-4">
-                    <input
-                      className="form-control"
-                      type="password"
-                      name="password"
-                      id="password"
-                      value={formData.password}
-                      placeholder="password"
-                      required
-                      autoComplete="current-password"
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="password">Password:</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input
-                      className="form-control"
-                      type="password"
-                      name="confirmPwd"
-                      id="confirmPwd"
-                      value={formData.confirmPwd}
-                      placeholder="confirm password"
-                      autoComplete="confirm-password"
-                      required
-                      minLength="5"
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="confirmPwd">Confirm Password</label>
-                  </div>
-                  <button className="btn btn-primary form-control">
-                    Submit
-                  </button>
-                </form>
+              <form onSubmit={handleSubmitNewPwd}>
+                <div className="form-floating my-4">
+                  <input
+                    className="form-control"
+                    type="text"
+                    id="email"
+                    value={formData.email}
+                    placeholder="email"
+                    required
+                    disabled
+                    readOnly
+                  />
+                  <label htmlFor="email">Email:</label>
+                </div>
+                <div className="form-floating mb-4">
+                  <input
+                    className="form-control"
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={formData.password}
+                    placeholder="password"
+                    required
+                    autoComplete="current-password"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="password">Password:</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    className="form-control"
+                    type="password"
+                    name="confirmPwd"
+                    id="confirmPwd"
+                    value={formData.confirmPwd}
+                    placeholder="confirm password"
+                    autoComplete="confirm-password"
+                    required
+                    minLength="5"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="confirmPwd">Confirm Password</label>
+                </div>
+                <button className="btn btn-primary form-control">Submit</button>
+              </form>
             )}
           </>
         ) : (
@@ -168,7 +168,7 @@ function ResetPwd() {
                       placeholder="email"
                       required
                       autoComplete="email"
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value.toLowerCase())}
                     />
                     <button className="btn btn-primary">Submit</button>
                   </div>
