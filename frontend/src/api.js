@@ -133,6 +133,24 @@ class SmartnosisApi {
     );
     return res;
   }
+
+  // ------------------STRIPE CHECKOUT ---------------------------
+  static async createCheckoutSession(){
+    let res = await this.request(
+      `/stripe/create-checkout-session`, {}, "post"
+    );
+    return res;
+  }
+
+  static async createPortalSession(session_id){
+    let res = await this.request(
+      `/stripe/create-portal-session`, {session_id}, "post"
+    );
+    return res;
+  }
+
 }
+
+
 
 export default SmartnosisApi;

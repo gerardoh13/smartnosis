@@ -1,14 +1,12 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import IntakeCheckout from "./IntakeCheckout";
+import SmartnosisApi from "../api";
 
  
 function RegisterStripe({
-  emails,
   changeStep,
   step,
-  submit,
-  adminRole,
   setCheckoutId,
   orgType
 }) {
@@ -64,8 +62,7 @@ function RegisterStripe({
         {/* <Logo />  ADD SMARTNOSIS LOGO*/}
         <stripe-pricing-table
       pricing-table-id="prctbl_1P31qjKudO6a4edUF1pE5oI4"
-      publishable-key="pk_test_51Ofz4oKudO6a4edU76f17soL1r4xJvTQgaCDeSh3ppbLWPYzR346OiyVFSMRn7y0yS35ZwSX3eDWga1nwjkcxRwf00BBNOi3lO"
-    >
+      publishable-key={process.env.REACT_APP_PRODUCT_TABLE_KEY}>
     </stripe-pricing-table>
       </div>
      {/* { <form action="/create-checkout-session" method="POST">
@@ -80,6 +77,21 @@ function RegisterStripe({
 
 
 const SuccessDisplay = ({ sessionId }) => {
+
+  const saveLocalSession = (data) => {
+    localStorage.setItem("session-initiated", JSON.stringify(data));
+  };
+
+  useEffect(()=>{
+    if(sessionId){
+      let session = loadLocalSession()
+      if(session){
+        session.stripeSessionId = sessionId
+        saveLocalSession(session)
+      }
+    }
+  }, [])
+
     return (
       <section>
         <div className="product Box-root">
@@ -88,7 +100,12 @@ const SuccessDisplay = ({ sessionId }) => {
             <h3>Subscription successful!</h3>
           </div>
         </div>
-        <form action="/create-portal-session" method="POST">
+        <form onSubmit={async (e)=>{
+          e.preventDefault()
+          await SmartnosisApi.createPortalSession(sessionId)
+          // action="/stripe/create-portal-session" method="POST"
+        }}
+        >
           <input
             type="hidden"
             id="session-id"
@@ -102,6 +119,14 @@ const SuccessDisplay = ({ sessionId }) => {
       </section>
     );
   };
+  
+  let loadLocalSession = () => {
+    const session = JSON.parse(localStorage.getItem("session-initiated"));
+    if (session) {
+      return(session);
+    } else return null
+  };
+
 
   useEffect(() =>{
     // console.log('we got an id', checkoutId)
@@ -126,30 +151,13 @@ const SuccessDisplay = ({ sessionId }) => {
             let id = query.get('checkoutSessionId')
             setIntakeCheckoutId(id)
         }
+        
+        let session = loadLocalSession()
+        if(session && session.stripeSessionId){
+          setCheckoutId(session.stripeSessionId)
+        } 
+
       }, []);
-
-// const Message = ({ message }) => (
-//     <section>
-//       <p>{message}</p>
-//     </section>
-//   );
-
-//   useEffect(() => {
-//     // Check to see if this is a redirect back from Checkout
-//     const query = new URLSearchParams(window.location.search);
-
-//     if (query.get('success')) {
-//       setSuccess(true);
-//       setSessionId(query.get('session_id'));
-//     }
-
-//     if (query.get('canceled')) {
-//       setSuccess(false);
-//       setMessage(
-//         "Order canceled -- continue to shop around and checkout when you're ready."
-//       );
-//     }
-//   }, [sessionId]);
 
 let StripeCheckout
 if(orgType !== 'hcp'){ StripeCheckout = <IntakeCheckout /> }
@@ -160,8 +168,7 @@ else { StripeCheckout = <ProductDisplay /> }
     <form onSubmit={handleSubmit}>
       <p>Set up your billing account</p>
       {!checkoutId && !intakeCheckoutId && StripeCheckout}
-        {checkoutId || intakeCheckoutId && <SuccessDisplay sessionId={checkoutId} /> }
-     {/* {<Message message={message} />;} */}
+        {checkoutId || intakeCheckoutId && <SuccessDisplay sessionId={checkoutId || intakeCheckoutId} /> }
 
       <div className="row mt-4">
         <div className="col">
